@@ -284,17 +284,17 @@ a.header-button { /* double selectors to override default a element text-decorat
 
 #searchInput::-webkit-input-placeholder {
 	color: #808080;
-    	font-weight: 700;
+	font-weight: 700;
 }
 
 #searchInput::-moz-placeholder {
-    	color: #808080;
-    	font-weight: 700;
+	color: #808080;
+	font-weight: 700;
 }
 
 #searchInput::-ms-input-placeholder {
-    	color: #808080;
-    	font-weight: 700;
+	color: #808080;
+	font-weight: 700;
 }
 
 #header-categories {

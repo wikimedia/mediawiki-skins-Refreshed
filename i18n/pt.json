@@ -1,4 +1,8 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Anúncio"
+	"@metadata": {
+		"authors": [
+			"Vitorvicentevalente"
+		]
+	},
+	"refreshed-advert": "Publicidade"
 }

@@ -1,3 +1,4 @@
+/* Font loader file for _all_ browsers, despite the legacy name. See SkinRefreshed::initPage() for details. */
 @font-face {
 	font-family: 'Lato';
 	font-style: normal;

@@ -296,7 +296,9 @@ class RefreshedTemplate extends BaseTemplate {
 					</div>
 					<?php
 				}
-				?>
+
+				// Hook point for injecting ads
+				Hooks::run( 'RefreshedInSidebar', array( $this ) ); ?>
 			</div>
 		</aside>
 		<div id="content-wrapper" class="mw-body">

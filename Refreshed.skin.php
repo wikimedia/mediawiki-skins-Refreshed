@@ -539,7 +539,7 @@ class RefreshedTemplate extends BaseTemplate {
 			$footerIcons = $this->getFooterIcons( 'icononly' );
 			if ( count( $footerIcons ) > 0 ) { ?>
 				<ul class="footer-row">
-				<? foreach ( $footerIcons as $blockName => $footerIcons ) {
+				<?php foreach ( $footerIcons as $blockName => $footerIcons ) {
 						foreach ( $footerIcons as $icon ) {
 							?>
 							<li class="footer-row-item"><?php echo $skin->makeFooterIcon( $icon ); ?></li>

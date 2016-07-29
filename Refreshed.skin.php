@@ -104,8 +104,8 @@ class RefreshedTemplate extends BaseTemplate {
 				if ( $wgRefreshedHeader['dropdown'] ) { // if there is a site dropdown (so there are multiple wikis)
 					?>
 					<div id="site-info-main" class="multiple-wikis">
-						<a class="main header-button" href="<?php echo $wgRefreshedHeader['url'] ?>"><?php echo $wgRefreshedHeader['img'] ?></a><a class="header-button fade-trigger site-info-arrow"><span class="arrow wikiglyph wikiglyph-caret-down"></span></a>
-						<ul class="header-menu fadable faded">
+						<a class="main header-button" href="<?php echo $wgRefreshedHeader['url'] ?>"><?php echo $wgRefreshedHeader['img'] ?></a><a class="header-button collapse-trigger site-info-arrow"><span class="arrow wikiglyph wikiglyph-caret-down"></span></a>
+						<ul class="header-menu collapsible collapsed">
 							<?php
 							foreach ( $wgRefreshedHeader['dropdown'] as $url => $img ) {
 								?>
@@ -157,7 +157,7 @@ class RefreshedTemplate extends BaseTemplate {
 			?>
 
 			<section id="user-info">
-				<a class="header-button fade-trigger">
+				<a class="header-button collapse-trigger">
 					<?php
 					$avatarImage = '';
 					// Show the user's avatar image in the top left drop-down
@@ -188,7 +188,7 @@ class RefreshedTemplate extends BaseTemplate {
 					}
 					?>
 				</a>
-				<ul class="header-menu fadable faded">
+				<ul class="header-menu collapsible collapsed">
 					<?php
 					// generate user tools (and notifications item in user tools if needed)
 					$personalToolsCount = 0;
@@ -221,11 +221,11 @@ class RefreshedTemplate extends BaseTemplate {
 					foreach ( $headerNav as $main => $sub ) {
 						?>
 						<div class="page-item<?php echo ( $sub ? ' page-item-has-children' : '' ) ?>">
-							<a class="header-button fade-trigger">
+							<a class="header-button collapse-trigger">
 								<span class="header-category-name"><?php echo htmlspecialchars( $main ) ?></span>
 								<span class="arrow wikiglyph wikiglyph-caret-down"></span>
 							</a>
-							<ul class="header-menu fadable faded">
+							<ul class="header-menu collapsible collapsed">
 								<?php
 									foreach ( $sub as $key => $item ) {
 										$item['class'] = 'header-dropdown-item';
@@ -364,8 +364,8 @@ class RefreshedTemplate extends BaseTemplate {
 											$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated = true;
 											?>
 											<div class="toolbox-container">
-												<a class="toolbox-link fade-trigger"><?php echo $this->getMsg( 'moredotdotdot' )->text() ?></a>
-												<div class="standard-toolbox-dropdown fadable faded">
+												<a class="toolbox-link collapse-trigger"><?php echo $this->getMsg( 'moredotdotdot' )->text() ?></a>
+												<div class="standard-toolbox-dropdown collapsible collapsed">
 													<div class="dropdown-triangle"></div>
 													<ul>
 										<?php
@@ -407,8 +407,8 @@ class RefreshedTemplate extends BaseTemplate {
 								}
 							?>
 								<div class="toolbox-container">
-									<a class="toolbox-link fade-trigger"><?php echo $this->getMsg( 'toolbox' )->text() ?></a>
-									<div class="standard-toolbox-dropdown fadable faded">
+									<a class="toolbox-link collapse-trigger"><?php echo $this->getMsg( 'toolbox' )->text() ?></a>
+									<div class="standard-toolbox-dropdown collapsible collapsed">
 										<div class="dropdown-triangle"></div>
 										<ul>
 											<?php

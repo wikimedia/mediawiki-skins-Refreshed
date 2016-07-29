@@ -1,3 +1,20 @@
+.collapsible {
+	-ms-transition: max-height 0.4s ease;
+	transition: max-height 0.4s ease;
+	/*max-height: 50vh; /* capping the sidebar height at half the height of the window */
+	visibility: visible;
+	overflow: hidden;
+	height: auto;
+}
+
+.collapsed {
+	-ms-transition: max-height 0.2s ease, visibility 0.2s;
+	transition: max-height 0.2s ease, visibility 0.2s;
+	max-height: 0 !important;
+	visibility: hidden;
+	overflow: hidden;
+}
+
 .fadable {
 	-ms-transition: opacity 0.2s ease;
 	transition: opacity 0.2s ease;

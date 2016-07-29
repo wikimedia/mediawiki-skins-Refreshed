@@ -13,6 +13,16 @@ window.Refreshed = {
 	headerSearchIsOpen: false,
 	sidebarIsOpen: false,
 
+	setCollapsibleMaxHeights: function() {
+		var currentHeight = 0;
+		$( '.collapsible' ).each( function () {
+			currentHeight = $( this )[0].scrollHeight;
+			//scrollHeight determines the height ignoring the max-height property
+			//(which is 0 if the dropdown is hidden on page load)
+			$( this ).css( { 'max-height': currentHeight + 'px' } );
+		});
+	},
+
 	shouldToggleFixedToolbox: function() {
 		if ( !Refreshed.toolboxIsFixed ) {
 			// reassign this variable every time so it doesn't break if the
@@ -37,11 +47,20 @@ window.Refreshed = {
 	showHideOverflowingDropdowns: function() {
 		$( '.page-item-has-children' ).each( function() {
 			if ( $( this ).offset().top > $( '#header-wrapper' ).height() + $( '#header-wrapper' ).offset().top ) { // if the .page-item is beneath the bottom of the header (and so it's cut off by overflow:hidden)
-				$( this ).children( '.children' ).css({'display': 'none'});
+				$( this ).children( '.children' ).css( { 'display': 'none' } );
 				$( this ).removeClass( 'header-button-active' );
 				$( this ).children( '.header-button' ).children( '.arrow' ).removeClass( 'rotate' );
 			}
 		} );
+	},
+
+	toggleCollapse: function( trigger ) {
+		$( trigger ).siblings( '.collapsible' ).addBack( '.collapsible' ).toggleClass( 'collapsed' );
+		$( trigger ).children( '.arrow' ).toggleClass( 'rotate' );
+		if ( $( trigger ).hasClass( 'header-button' ) ) {
+			$( trigger ).toggleClass( 'header-button-active' );
+		}
+		$( trigger ).parent().toggleClass( 'open-collapsible-parent' );
 	},
 
 	toggleFade: function( trigger ) {
@@ -108,6 +127,8 @@ $( document ).ready( function() {
 		Refreshed.toggleFixedToolbox();
 	}
 
+	Refreshed.setCollapsibleMaxHeights();
+
 	$( window ).scroll( function() {
 		if ( Refreshed.shouldToggleFixedToolbox() ) {
 			Refreshed.toggleFixedToolbox();
@@ -131,6 +152,25 @@ $( document ).ready( function() {
 	} );
 
 	// working code for dropdowns. Note: simple code like this is much better than complicated like below :)
+	$( 'a.header-button.collapse-trigger' ).click( function( e ) {
+		Refreshed.toggleCollapse( this );
+	} );
+
+	$( 'a.toolbox-link.collapse-trigger' ).click( function( e ) {
+		Refreshed.toggleCollapse( this );
+	} );
+
+	$( document ).click( function( e ) {
+		$( '.open-collapsible-parent' ).each( function () {
+			// target each .open-collapsible-parent (i.e., each parent of an open .collapsible element)
+			if ( !$( e.target ).closest( $( this ) ).length ) {
+				// if starting from the element clicked and moving up the DOM, we don't
+				// run into that the current .open-collapsible-parent...
+				Refreshed.toggleCollapse( $( this ).children( '.collapse-trigger' ) );
+			}
+		});
+	} );
+
 	$( 'a.header-button.fade-trigger' ).click( function( e ) {
 		Refreshed.toggleFade( this );
 	} );
@@ -141,10 +181,7 @@ $( document ).ready( function() {
 
 	$( document ).click( function( e ) {
 		$( '.open-fadable-parent' ).each( function () {
-			// target each .open-fadable-parent (i.e., each parent of an open .fadable element)
 			if ( !$( e.target ).closest( $( this ) ).length ) {
-				// if starting from the element clicked and moving up the DOM, we don't
-				// run into that the current .open-fadable-parent...
 				Refreshed.toggleFade( $( this ).children( '.fade-trigger' ) );
 			}
 		});

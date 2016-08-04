@@ -1,5 +1,9 @@
 {
 	"@metadata": [],
 	"refreshed-advert": "The header shown above the footer advert",
-	"refreshed-navigation": "Navigational menus in Refreshed's header, following a similar format to MediaWiki:Sidebar"
+	"refreshed-navigation": "Navigational menus in Refreshed's header, following a similar format to MediaWiki:Sidebar",
+	"refreshed-this-wiki-mobile-logo": "URL to the mobile wordmark logo, if any",
+	"refreshed-this-wiki-url": "URL to the wiki's main page or some other page where clicking the wiki wordmark should take the user to; if not customized, which is the default, the user is taken to the wiki's main page",
+	"refreshed-this-wiki-wordmark": "URL to the wiki's wordmark logo (which should be 144x30px), because the Refreshed skin does not use [[mediawikiwiki:Manual:$wgLogo|$wgLogo]]",
+	"refreshed-wiki-dropdown": "Message for configuring the wiki dropdown menu.\nThe syntax is:* Name of the wiki|URL to the wiki's logo|Wiki's URL\nEntries are separated by newlines.\nFor example:\n* English Wikipedia|http://www.example.com/images/wikipedia-wordmark-logo.svg|https://en.wikipedia.org\n* Brickipedia|http://images.brickimedia.org/b/b4/Brickipedia.svg|http://en.brickimedia.org/"
 }

@@ -58,8 +58,6 @@ class SkinRefreshed extends SkinTemplate {
 	}
 
 	function setupSkinUserCss( OutputPage $out ) {
-		global $wgStylePath;
-
 		parent::setupSkinUserCss( $out );
 
 		// Add CSS via ResourceLoader
@@ -72,11 +70,125 @@ class SkinRefreshed extends SkinTemplate {
 }
 
 class RefreshedTemplate extends BaseTemplate {
+	/**
+	 * Parses MediaWiki:Refreshed-wiki-dropdown.
+	 * Forked from Games' parseSidebarMenu(), which in turn was forked from
+	 * Monaco's parseSidebarMenu(), but none of these three methods are
+	 * identical.
+	 *
+	 * @param string $messageKey Message name
+	 * @return array
+	 */
+	private function parseDropDownMenu( $messageKey ) {
+		$lines = $this->getLines( $messageKey );
+		$nodes = array();
+		$i = 0;
+
+		if ( is_array( $lines ) ) {
+			foreach ( $lines as $line ) {
+				# ignore empty lines
+				if ( strlen( $line ) == 0 ) {
+					continue;
+				}
+
+				$node = self::parseItem( $line );
+				for ( $x = $i; $x >= 0; $x-- ) {
+					if ( $x == 0 ) {
+						break;
+					}
+				}
+
+				$nodes[$i + 1] = $node;
+				$i++;
+			}
+		}
+
+		return $nodes;
+	}
+
+	/**
+	 * Parse one pipe-separated line from MediaWiki message to array with
+	 * indexes 'logo', 'href' and 'wiki_name'.
+	 *
+	 * @param string $line Line (beginning with a *) from a MediaWiki: message
+	 * @return array
+	 */
+	public static function parseItem( $line ) {
+		// trim spaces and asterisks from line and then split it to maximum three chunks
+		$line_temp = explode( '|', trim( $line, '* ' ), 3 );
+
+		// trim [ and ] from line to have just http://en.wikipedia.org instead
+		// of [http://en.wikipedia.org] for external links
+		$line_temp[0] = trim( $line_temp[0], '[]' );
+
+		if ( count( $line_temp ) >= 2 && $line_temp[1] != '' ) {
+			$logo = trim( $line_temp[1] );
+		} else {
+			$logo = trim( $line_temp[0] );
+		}
+
+		if (
+			isset( $line_temp[2] ) &&
+			preg_match( '/^(?:' . wfUrlProtocols() . ')/', $line_temp[2] )
+		)
+		{
+			$href = $line_temp[2];
+		} else {
+			$href = '#';
+		}
+
+		return array(
+			'logo' => $logo,
+			'href' => $href,
+			'wiki_name' => $line_temp[0]
+		);
+	}
+
+	/**
+	 * @param string $messageKey Name of a MediaWiki: message
+	 * @return array|null Array if $messageKey has been given, otherwise null
+	 */
+	private function getMessageAsArray( $messageKey ) {
+		$messageObj = $this->getSkin()->msg( $messageKey )->inContentLanguage();
+		if ( !$messageObj->isDisabled() ) {
+			$lines = explode( "\n", $messageObj->text() );
+			if ( count( $lines ) > 0 ) {
+				return $lines;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param string $messageKey Name of a MediaWiki: message
+	 * @return array
+	 */
+	private function getLines( $messageKey ) {
+		$title = Title::newFromText( $messageKey, NS_MEDIAWIKI );
+		$revision = Revision::newFromTitle( $title );
+		if ( is_object( $revision ) ) {
+			if ( trim( $revision->getText() ) != '' ) {
+				$temp = $this->getMessageAsArray( $messageKey );
+				if ( count( $temp ) > 0 ) {
+					wfDebugLog( 'Refreshed', sprintf( 'Get LOCAL %s, which contains %s lines', $messageKey, count( $temp ) ) );
+					$lines = $temp;
+				}
+			}
+		}
+
+		if ( empty( $lines ) ) {
+			$lines = $this->getMessageAsArray( $messageKey );
+			wfDebugLog( 'Refreshed', sprintf( 'Get %s, which contains %s lines', $messageKey, count( $lines ) ) );
+		}
+
+		return $lines;
+	}
 
 	public function execute() {
-		global $wgStylePath, $wgRefreshedHeader, $wgMemc;
+		global $wgMemc;
 
 		$skin = $this->getSkin();
+		$config = $skin->getConfig();
 		$user = $skin->getUser();
 
 		// Title processing
@@ -84,14 +196,43 @@ class RefreshedTemplate extends BaseTemplate {
 		$title = $titleBase->getSubjectPage();
 		$titleNamespace = $titleBase->getNamespace();
 
-		$refreshedImagePath = "$wgStylePath/Refreshed/refreshed/images";
-
 		$key = wfMemcKey( 'refreshed', 'header' );
 		$headerNav = $wgMemc->get( $key );
 		if ( !$headerNav ) {
 			$headerNav = array();
 			$skin->addToSidebar( $headerNav, 'refreshed-navigation' );
-			$wgMemc->set( $key, $headerNav , 60 * 60 * 24 ); // 24 hours
+			$wgMemc->set( $key, $headerNav, 60 * 60 * 24 ); // 24 hours
+		}
+
+		$dropdownCacheKey = wfMemcKey( 'refreshed', 'dropdownmenu' );
+		$dropdownNav = $wgMemc->get( $dropdownCacheKey );
+		if ( !$dropdownNav ) {
+			$dropdownNav = $this->parseDropDownMenu( 'Refreshed-wiki-dropdown' );
+			$wgMemc->set( $dropdownCacheKey, $dropdownNav, 60 * 60 * 24 ); // 24 hours
+		}
+
+		$thisWikiURLMsg = $skin->msg( 'refreshed-this-wiki-url' );
+		if ( $thisWikiURLMsg->isDisabled() ) {
+			$thisWikiURL = htmlspecialchars( Title::newMainPage()->getFullURL() );
+		} else {
+			$thisWikiURL = $skin->msg( 'refreshed-this-wiki-url' )->escaped();
+		}
+		$thisWikiWordmarkLogo = $skin->msg( 'refreshed-this-wiki-wordmark' )->escaped();
+		$logoImgElement = Html::element( 'img', array(
+			'src' => $thisWikiWordmarkLogo,
+			'alt' => $config->get( 'Sitename' ),
+			'width' => 144,
+			'height' => 30
+		) );
+		$thisWikiMobileLogo = $skin->msg( 'refreshed-this-wiki-mobile-logo' );
+		$thisWikiMobileLogoImgElement = '';
+		if ( !$thisWikiMobileLogo->isDisabled() ) {
+			$thisWikiMobileLogoImgElement = Html::element( 'img', array(
+				'src' => $thisWikiMobileLogo->escaped(),
+				'alt' => $config->get( 'Sitename' ),
+				// 'width' => ???,
+				// 'height' => ???
+			) );
 		}
 
 		// Output the <html> tag and whatnot
@@ -101,16 +242,22 @@ class RefreshedTemplate extends BaseTemplate {
 		<header id="header-wrapper">
 			<section id="site-info">
 				<?php
-				if ( $wgRefreshedHeader['dropdown'] ) { // if there is a site dropdown (so there are multiple wikis)
+				if ( $dropdownNav ) { // if there is a site dropdown (so there are multiple wikis)
 					?>
 					<div id="site-info-main" class="multiple-wikis">
-						<a class="main header-button" href="<?php echo $wgRefreshedHeader['url'] ?>"><?php echo $wgRefreshedHeader['img'] ?></a><a class="header-button collapse-trigger site-info-arrow"><span class="arrow wikiglyph wikiglyph-caret-down"></span></a>
+						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $logoImgElement ?></a><a class="header-button collapse-trigger site-info-arrow"><span class="arrow wikiglyph wikiglyph-caret-down"></span></a>
 						<ul class="header-menu collapsible collapsed">
 							<?php
-							foreach ( $wgRefreshedHeader['dropdown'] as $url => $img ) {
+							foreach ( $dropdownNav as $index => $entry ) {
+								$dropDownLogo = Html::element( 'img', array(
+									'src' => $entry['logo'],
+									'alt' => $entry['wiki_name'],
+									'width' => 144,
+									'height' => 30
+								) );
 								?>
 								<li class="header-dropdown-item">
-									<a href="<?php echo $url ?>"><?php echo $img ?></a>
+									<a href="<?php echo htmlspecialchars( $entry['href'] ) ?>"><?php echo $dropDownLogo ?></a>
 								</li>
 								<?php
 							}
@@ -121,14 +268,14 @@ class RefreshedTemplate extends BaseTemplate {
 				} else {
 					?>
 					<div id="site-info-main">
-						<a class="main header-button" href="<?php echo $wgRefreshedHeader['url'] ?>"><?php echo $wgRefreshedHeader['img'] ?></a>
+						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $logoImgElement ?></a>
 					</div>
 				<?php
 				}
-				if ( isset( $wgRefreshedHeader['mobileimg'] ) ) { //if a mobile logo has been defined
+				if ( !$thisWikiMobileLogo->isDisabled() ) { // if a mobile logo has been defined
 					?>
 					<div id="site-info-mobile">
-						<a class="main header-button" href="<?php echo $wgRefreshedHeader['url'] ?>"><?php echo $wgRefreshedHeader['mobileimg'] ?></a>
+						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $thisWikiMobileLogoImgElement ?></a>
 					</div>
 					<?php
 				}
@@ -248,7 +395,7 @@ class RefreshedTemplate extends BaseTemplate {
 		<aside id="sidebar-wrapper">
 			<a class="sidebar-shower header-button"></a>
 			<div id="sidebar-logo">
-				<a class="main" href="<?php echo $wgRefreshedHeader['url'] ?>"><?php echo $wgRefreshedHeader['img'] ?></a>
+				<a class="main" href="<?php echo $thisWikiURL ?>"><?php echo $thisWikiWordmarkLogo ?></a>
 			</div>
 			<div id="sidebar">
 				<?php

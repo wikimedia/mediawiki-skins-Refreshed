@@ -29,13 +29,6 @@
 		"SkinRefreshed": "Refreshed.skin.php",
 		"RefreshedTemplate": "Refreshed.skin.php"
 	},
-	"config": {
-		"RefreshedHeader": {
-			"img": "<img src=\"http://meta.brickimedia.org/skins/Refreshed/refreshed/images/brickimedia.svg\" width=\"144\" alt=\"\" />",
-			"url": "http://meta.brickimedia.org/wiki/Main_Page",
-			"dropdown": {}
-		}
-	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
 		"remoteSkinPath": "Refreshed"

@@ -1,4 +1,10 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Werbung"
+	"@metadata": {
+		"authors": [
+			"Metalhead64"
+		]
+	},
+	"refreshed-advert": "Werbung",
+	"refreshed-this-wiki-wordmark": "",
+	"refreshed-wiki-dropdown": ""
 }

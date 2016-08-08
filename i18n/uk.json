@@ -1,4 +1,10 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Реклама"
+	"@metadata": {
+		"authors": [
+			"Piramidion"
+		]
+	},
+	"refreshed-advert": "Реклама",
+	"refreshed-this-wiki-wordmark": "",
+	"refreshed-wiki-dropdown": ""
 }

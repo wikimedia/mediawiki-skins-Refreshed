@@ -560,9 +560,21 @@ class RefreshedTemplate extends BaseTemplate {
 										<ul>
 											<?php
 											foreach ( $toolbox as $tool => $toolData ) { // generates toolbox tools inside dropdown (e.g. "upload file")
+												if ( $tool == 'feeds' ) {
+													// HACK! Technically this should
+													// use $wgAdvertisedFeedTypes, which
+													// *can* include 'rss' in addition
+													// to 'atom', but only 'atom'
+													// is enabled by default.
+													// I wasn't able to get 'rss' working
+													// locally either, so...
+													$dataForLink = $toolData['links']['atom'];
+												} else {
+													$dataForLink = $toolData;
+												}
 												?>
 												<li class="toolbox-dropdown-item tool-dropdown-item toolbox-dropdown-tool">
-													<?php echo $this->makeLink( $tool, $toolData, array(
+													<?php echo $this->makeLink( $tool, $dataForLink, array(
 														'text-wrapper' => array(
 															'tag' => 'span',
 															'attributes' => array(

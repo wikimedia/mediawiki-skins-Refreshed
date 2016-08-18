@@ -507,6 +507,15 @@ a.header-button { /* double selectors to override default a element text-decorat
 	border-top: 1px solid #ccc; /* divide the tools from the page actions */
 }
 
+/* Feed icons on pages like Special:RecentChanges etc. */
+a.feedlink {
+	margin-left: 0.5em;
+}
+
+a.feedlink span.toolbox-item-text {
+	margin-left: 2em;
+}
+
 .fixed-toolbox {
 	padding-left: 0.9em; /* 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size) */
 	position: fixed;

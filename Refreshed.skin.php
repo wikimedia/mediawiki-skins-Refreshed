@@ -395,7 +395,7 @@ class RefreshedTemplate extends BaseTemplate {
 		<aside id="sidebar-wrapper">
 			<a class="sidebar-shower header-button"></a>
 			<div id="sidebar-logo">
-				<a class="main" href="<?php echo $thisWikiURL ?>"><?php echo $thisWikiWordmarkLogo ?></a>
+				<a class="main" href="<?php echo $thisWikiURL ?>"><?php echo $logoImgElement ?></a>
 			</div>
 			<div id="sidebar">
 				<?php

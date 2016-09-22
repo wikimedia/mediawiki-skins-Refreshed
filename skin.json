@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "3.1.2",
+	"version": "3.1.3",
 	"author": [
 		"Adam Carter",
 		"George Barnick",
@@ -14,7 +14,7 @@
 		"Lewis Cawte"
 	],
 	"url": "https://www.mediawiki.org/wiki/Skin:Refreshed",
-	"description": "A clean, modern MediaWiki skin with extensive CSS customisability",
+	"descriptionmsg": "refreshed-desc",
 	"license-name": "GPL-2.0+",
 	"type": "skin",
 	"ValidSkinNames": {

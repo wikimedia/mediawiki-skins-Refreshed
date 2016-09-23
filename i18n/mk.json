@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Реклама"
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"refreshed-advert": "Реклама",
+	"refreshed-desc": "Чисто и современо руво за МедијаВики со голема прилагодливост на CSS"
 }

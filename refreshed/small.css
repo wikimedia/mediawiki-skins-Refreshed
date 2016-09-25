@@ -308,10 +308,6 @@ a.small-tool { /* inclusion of the "a" is necessary to override the standard a e
 }
 
 /* CONTENT AREA ********************************************/
-.nosmall, .articleFeedbackv5 {
-	display: none !important;
-}
-
 /* Hide ads on mobile until mobile ads are implemented */
 #advert {
 	display: none;

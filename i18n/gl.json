@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Anuncio"
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"refreshed-advert": "Anuncio",
+	"refreshed-desc": "Unha aparencia limpa e moderna de MediaWiki cunha ampla personalización mediante CSS"
 }

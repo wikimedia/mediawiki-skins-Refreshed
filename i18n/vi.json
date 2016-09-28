@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Quảng cáo"
+	"@metadata": {
+		"authors": [
+			"Minh Nguyen"
+		]
+	},
+	"refreshed-advert": "Quảng cáo",
+	"refreshed-desc": "Giao diện gọn gàng, hiện đại cho MediaWiki có nhiều khả năng tùy chỉnh dùng CSS"
 }

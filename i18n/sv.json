@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Annons"
+	"@metadata": {
+		"authors": [
+			"WikiPhoenix"
+		]
+	},
+	"refreshed-advert": "Annons",
+	"refreshed-desc": "Ett rent och modernt MediaWiki-utseende med omfattande CSS-anpassningsbarhet"
 }

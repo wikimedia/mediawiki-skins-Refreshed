@@ -167,7 +167,8 @@ class RefreshedTemplate extends BaseTemplate {
 		$title = Title::newFromText( $messageKey, NS_MEDIAWIKI );
 		$revision = Revision::newFromTitle( $title );
 		if ( is_object( $revision ) ) {
-			if ( trim( $revision->getText() ) != '' ) {
+			$contentText = ContentHandler::getContentText( $revision->getContent() );
+			if ( trim( $contentText ) != '' ) {
 				$temp = $this->getMessageAsArray( $messageKey );
 				if ( count( $temp ) > 0 ) {
 					wfDebugLog( 'Refreshed', sprintf( 'Get LOCAL %s, which contains %s lines', $messageKey, count( $temp ) ) );

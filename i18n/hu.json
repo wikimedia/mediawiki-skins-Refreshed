@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dj"
+			"Dj",
+			"Tacsipacsi"
 		]
 	},
-	"refreshed-advert": "Hirdetés"
+	"refreshed-advert": "Hirdetés",
+	"refreshed-desc": "Egy letisztult, modern MediaWiki-felület kiterjedt CSS-testreszabhatósággal"
 }

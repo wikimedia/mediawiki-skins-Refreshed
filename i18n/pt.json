@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Vitorvicentevalente"
+			"Vitorvicentevalente",
+			"Hamilton Abreu"
 		]
 	},
 	"refreshed-advert": "Publicidade",
-	"refreshed-desc": "Um moderno e limpo tema MediaWiki, com uma ampla possibilidade de personalização de CSS"
+	"refreshed-desc": "Um tema MediaWiki moderno e limpo, com ampla possibilidade de personalização usando CSS"
 }

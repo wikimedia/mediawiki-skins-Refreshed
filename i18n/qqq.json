@@ -1,6 +1,10 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "The header shown above the footer advert",
+	"@metadata": {
+		"authors": [
+			"Liuxinyu970226"
+		]
+	},
+	"refreshed-advert": "The header shown above the footer advert\n{{Identical|Advertisement}}",
 	"refreshed-navigation": "Navigational menus in Refreshed's header, following a similar format to MediaWiki:Sidebar",
 	"refreshed-this-wiki-mobile-logo": "URL to the mobile wordmark logo, if any",
 	"refreshed-this-wiki-url": "URL to the wiki's main page or some other page where clicking the wiki wordmark should take the user to; if not customized, which is the default, the user is taken to the wiki's main page",

@@ -458,10 +458,13 @@ class RefreshedTemplate extends BaseTemplate {
 				</div>
 			<?php
 			}
+			// Only output this if we need to (T153625)
+			if ( $this->data['newtalk'] ) {
 			?>
 			<div id="new-talk">
 				<?php $this->html( 'newtalk' ) ?>
 			</div>
+			<?php } ?>
 			<main id="content">
 				<article>
 					<header id="content-heading">

@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Anuncio"
+	"@metadata": {
+		"authors": [
+			"Dgstranz"
+		]
+	},
+	"refreshed-advert": "Anuncio",
+	"refreshed-desc": "Un tema MediaWiki moderno y limpio, con amplias posibilidades de personalización con CSS"
 }

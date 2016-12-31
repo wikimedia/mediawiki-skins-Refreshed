@@ -6,7 +6,7 @@
 		]
 	},
 	"refreshed-advert": "The header shown above the footer advert\n{{Identical|Advertisement}}",
-	"refreshed-desc": "{{desc|name=Refreshed|url=https://www.mediawiki.org/wiki/Skin:Refreshed}}",
+	"refreshed-desc": "{{desc|name=Refreshed|url=https://www.mediawiki.org/wiki/Skin:Refreshed|what=skin}}",
 	"refreshed-navigation": "Navigational menus in Refreshed's header, following a similar format to MediaWiki:Sidebar",
 	"refreshed-this-wiki-mobile-logo": "URL to the mobile wordmark logo, if any",
 	"refreshed-this-wiki-url": "URL to the wiki's main page or some other page where clicking the wiki wordmark should take the user to; if not customized, which is the default, the user is taken to the wiki's main page",

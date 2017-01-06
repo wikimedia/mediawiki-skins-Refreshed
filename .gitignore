@@ -49,6 +49,8 @@ x64/
 build/
 [Bb]in/
 [Oo]bj/
+node_modules/
+vendor/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

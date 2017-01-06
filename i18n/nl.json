@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Advertentie"
+	"@metadata": {
+		"authors": [
+			"Mainframe98"
+		]
+	},
+	"refreshed-advert": "Advertentie",
+	"refreshed-desc": "Een nette, moderne MediaWiki vormgeving met uitgebreide CSS aanpasbaarheid"
 }

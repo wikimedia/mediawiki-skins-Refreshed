@@ -100,7 +100,7 @@ window.Refreshed = {
 	}
 };
 
-$( document ).ready( function() {
+$( function() {
 	if ( navigator.userAgent.toLowerCase().match( /(iPad|iPhone|iPod)/i ) ) { // detect if on an iOS device
 		Refreshed.usingIOS = true;
 	}
@@ -202,8 +202,8 @@ $( document ).ready( function() {
 	$( 'a#fade-overlay' ).click( function( e ) {
 		// Unfortunately breaking this into two doesn't work. It might be
 		// because the .fade-overlay-triggered-by-SOMETHING classes aren't
-		// applied yet on $( document ).ready() (and this function is inside
-		// the $( document ).ready() ), so as far as the code is concerned
+		// applied yet on $() (and this function is inside
+		// the $() ), so as far as the code is concerned
 		// elements with that class don't exist.
 		if ( $( this ).hasClass( 'fade-overlay-triggered-by-sidebar' ) ) {
 			Refreshed.toggleSidebar();

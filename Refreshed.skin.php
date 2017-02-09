@@ -287,7 +287,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 			<?php
 			// test if Echo is installed
-			if ( class_exists( 'EchoHooks' ) ) {
+			if ( ExtensionRegistry::getInstance()->isLoaded( 'Echo' ) ) {
 				?>
 				<div id="echo" role="log"></div>
 				<?php

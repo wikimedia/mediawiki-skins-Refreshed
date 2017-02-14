@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Termininja"
+			"Termininja",
+			"StanProg"
 		]
 	},
-	"refreshed-advert": "Реклама"
+	"refreshed-advert": "Реклама",
+	"refreshed-desc": "Изчистен, модерен облик за MediaWiki с богати възможности за стилизиране с CSS"
 }

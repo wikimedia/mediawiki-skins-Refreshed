@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "広告"
+	"@metadata": {
+		"authors": [
+			"Otokoume"
+		]
+	},
+	"refreshed-advert": "広告",
+	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンなスキン"
 }

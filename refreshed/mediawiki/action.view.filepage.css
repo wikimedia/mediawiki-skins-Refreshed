@@ -1,0 +1,5 @@
+/* stopping images on file pages from overflowing */
+.fullImageLink img {
+	max-width: 100%;
+	height: auto;
+}

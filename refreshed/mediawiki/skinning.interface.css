@@ -1,0 +1,51 @@
+#siteSub,
+#contentSub {
+	margin: 0;
+	padding: 0 0 0.25em 0;
+	font-size: 0.8em;
+}
+
+#localNotice {
+	margin-bottom: 0em !important;
+}
+
+/* Category links */
+#catlinks {
+	background: none;
+	margin: 0 0.9em -.5em 0.9em;
+	padding: 0;
+	border: 0;
+	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.catlinks li {
+	border-color: #ddd;
+}
+
+.printfooter {
+	display: none;
+}
+
+/* stopping wikitables from overflowing, adding .scrollshadow-type scrolling */
+#bodyContent .wikitable {
+	overflow-x: auto;
+	display: block;
+	border: 0;
+	/* same as .scrollshadow, but #f9f9f9 instead of white */
+	background:
+		linear-gradient(90deg, #f9f9f9 20%, rgba(255,255,255,0)),
+		linear-gradient(270deg, #f9f9f9 20%, rgba(255,255,255,0)) 100% 0,
+		linear-gradient(90deg, #e3e3e3 10%, rgba(255,255,255,0)),
+		linear-gradient(270deg, #e3e3e3 10%, rgba(255,255,255,0)) 100% 0;
+	background-repeat: no-repeat;
+	background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+	background-attachment: local, local, scroll, scroll;
+}
+
+/* [[MediaWiki:Noarticletext]] (the notice shown on nonexistent pages) */
+div.noarticletext {
+	border: 1px solid #ccc;
+	background: #fff;
+	color: #000;
+	padding: 0.2em 1em;
+}

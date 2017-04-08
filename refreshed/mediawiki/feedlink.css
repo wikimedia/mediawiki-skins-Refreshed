@@ -1,0 +1,8 @@
+/* Feed icons on pages like Special:RecentChanges etc. */
+a.feedlink {
+	margin-left: 0.5em;
+}
+
+a.feedlink span.toolbox-item-text {
+	margin-left: 2em;
+}

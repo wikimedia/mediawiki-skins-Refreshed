@@ -1,0 +1,5 @@
+/* Fix for login/signup form pages not displaying in content section */
+#userlogin,
+#userloginForm {
+	float: none;
+}

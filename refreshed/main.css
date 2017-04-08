@@ -510,15 +510,6 @@ a.header-button { /* double selectors to override default a element text-decorat
 	border-top: 1px solid #ccc; /* divide the tools from the page actions */
 }
 
-/* Feed icons on pages like Special:RecentChanges etc. */
-a.feedlink {
-	margin-left: 0.5em;
-}
-
-a.feedlink span.toolbox-item-text {
-	margin-left: 2em;
-}
-
 .fixed-toolbox {
 	padding-left: 0.9em; /* 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size) */
 	position: fixed;
@@ -537,13 +528,6 @@ a.feedlink span.toolbox-item-text {
 
 #main-title-messages {
 	border-bottom: 1px solid #ddd;
-}
-
-#siteSub,
-#contentSub {
-	margin: 0;
-	padding: 0 0 0.25em 0;
-	font-size: 0.8em;
 }
 
 #back-to-subject {
@@ -707,37 +691,6 @@ a.feedlink span.toolbox-item-text {
 }
 
 /******************************** CONTENT/OTHER THINGS BEYOND CONTROL ******************************/
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: "Lato", "Helvetica", "Arial", sans-serif;
-	line-height: 1.3;
-	border-color: #ddd;
-}
-
-h2, h3 {
-	font-weight: bold;
-}
-
-h4,
-h5,
-h6 {
-	font-weight: normal;
-}
-
-/* Fix for login/signup form pages not displaying in content section */
-#userlogin,
-#userloginForm {
-	float: none;
-}
-
-#localNotice {
-	margin-bottom: 0em !important;
-}
-
-.printfooter {
-	display: none;
-}
-
 #cats {
 	padding: 1em;
 }
@@ -746,140 +699,9 @@ h6 {
 	margin-top: 0;
 }
 
-/* stopping wikitables from overflowing, adding .scrollshadow-type scrolling */
-#bodyContent .wikitable {
-	overflow-x: auto;
-	display: block;
-	border: 0;
-	/* same as .scrollshadow, but #f9f9f9 instead of white */
-	background:
-		linear-gradient(90deg, #f9f9f9 20%, rgba(255,255,255,0)),
-		linear-gradient(270deg, #f9f9f9 20%, rgba(255,255,255,0)) 100% 0,
-		linear-gradient(90deg, #e3e3e3 10%, rgba(255,255,255,0)),
-		linear-gradient(270deg, #e3e3e3 10%, rgba(255,255,255,0)) 100% 0;
-	background-repeat: no-repeat;
-	background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
-	background-attachment: local, local, scroll, scroll;
-}
-
 /* Search suggestions */
 .header-suggestions { /* there are two .suggestions elements on Special:Search; we only want to apply the CSS to the .header-suggestions element that appears beneath the header, which is first */
 	z-index: 10000 !important;
 	position: fixed !important;
 	top: 2.5em !important; /* there is some JS doing odd stuff, this forces our value */
-}
-
-/* Category links */
-#catlinks {
-	background: none;
-	margin: 0 0.9em -.5em 0.9em;
-	padding: 0;
-	border: 0;
-	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-}
-
-.catlinks li {
-	border-color: #ddd;
-}
-
-/* refresh-ify postedit, reset all the shadows and stuff */
-.postedit {
-	font-family: "Lato", sans-serif !important;
-	font-size: 1.1em !important;
-	line-height: 1em !important;
-	top: 3px !important;
-	border: none !important;
-	text-shadow: none !important;
-	border-radius: 0 !important;
-	box-shadow: none !important;
-}
-
-/* Fix funky diff padding to make diffs fully readable */
-td.diff-addedline .diffchange, td.diff-deletedline .diffchange {
-	padding: 0;
-}
-
-/* Better line spacing on recent changes */
-table.mw-enhanced-rc {
-	line-height: 1.5em;
-}
-
-/* "Updated since your last visit" marker on the page history of pages that are on your watchlist */
-span.updatedmarker {
-	background-color: #0f0;
-	color: #000;
-}
-
-/* [[MediaWiki:Noarticletext]] (the notice shown on nonexistent pages) */
-div.noarticletext {
-	border: 1px solid #ccc;
-	background: #fff;
-	color: #000;
-	padding: 0.2em 1em;
-}
-
-/* Extension:Echo fixes */
-
-#echo {
-	float: right; /* so Echo doesn't push menu items out of the header when the mobile logo is enabled */
-	padding-top: 1em;
-	line-height: 0;
-}
-
-#echo li {
-	display: inline;
-	margin-left: 0.5em;
-	line-height: 1;
-}
-
-#pt-mytalk a.mw-echo-alert { /* "you have new messages" alert in the personal tools dropdown */
-	white-space: normal;
-	color: #555555 !important; /* 6 digits instead of 3 because Echo's CSS uses 6 to define the color in the standard state (!important to override color on hover) */
-}
-
-.pt-mytalk a.mw-echo-alert:hover {
-	background-color: #FAB951;
-}
-
-#pt-notifications-personaltools { /* "Notifications" item in the personal tools dropdown */
-	display: none;
-}
-
-#pt-notifications {
-	display: inline;
-	float: right;
-	margin: 0.9em 0 0 0;
-}
-
-.mw-echo-overlay {
-	position: fixed !important;
-	z-index: 999999 !important;
-	width: 20em !important;
-	top: 3em !important;
-	left: auto !important;
-	right: 1em !important;
-}
-
-.mw-echo-overlay:before,
-.mw-echo-overlay::before {
-	left: 114px !important; /* centering dropdown arrow on notifications badge */
-}
-
-#echo .oo-ui-labelElement-label {
-	font-size: 1.125em;
-}
-
-.mw-echo-ui-notificationBadgeButtonPopupWidget .oo-ui-popupWidget-footer .oo-ui-buttonElement > .oo-ui-buttonElement-button {
-	line-height: 1.5 !important;
-}
-
-.mw-echo-state .mw-echo-content {
-	font-size: 0.875em;
-	line-height: 1.5;
-}
-
-/* stopping images on file pages from overflowing */
-.fullImageLink img {
-	max-width: 100%;
-	height: auto;
 }

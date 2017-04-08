@@ -1,0 +1,5 @@
+/* Fix funky diff padding to make diffs fully readable */
+td.diff-addedline .diffchange,
+td.diff-deletedline .diffchange {
+	padding: 0;
+}

@@ -423,15 +423,17 @@ class RefreshedTemplate extends BaseTemplate {
 
 				if ( $this->data['language_urls'] ) {
 					?>
-					<div class="main"><?php $this->getMsg( 'otherlanguages' )->text() ?></div>
-						<ul id="languages">
-							<?php
-							foreach ( $this->data['language_urls'] as $key => $link ) {
-								echo $this->makeListItem( $key, $link, array( 'link-class' => 'sub', 'link-fallback' => 'span' ) );
-							}
-							?>
-						</ul>
-					</div>
+					<section class="sidebar-section">
+						<h1 class="main"><?php echo $this->getMsg( 'otherlanguages' )->text() ?></h1>
+							<ul id="languages">
+								<?php
+								foreach ( $this->data['language_urls'] as $key => $link ) {
+									echo $this->makeListItem( $key, $link, array( 'link-class' => 'sub', 'link-fallback' => 'span' ) );
+								}
+								?>
+							</ul>
+						</div>
+					</section>
 					<?php
 				}
 

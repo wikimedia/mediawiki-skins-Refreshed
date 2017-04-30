@@ -296,35 +296,44 @@ class RefreshedTemplate extends BaseTemplate {
 
 			<section id="user-info">
 				<a class="header-button collapse-trigger">
+					<span class="arrow wikiglyph wikiglyph-caret-down"></span>
 					<?php
-					$avatarImage = '';
+					$avatarElement = '';
+					// display the user's username if logged in, otherwise display the "login" message
+					$usernameText = $this->data['loggedin'] ? $user->getName() : $this->getMsg( 'login' )->text();
 					// Show the user's avatar image in the top left drop-down
 					// menu, but only if SocialProfile is installed
 					if ( class_exists( 'wAvatar' ) ) {
 						$avatar = new wAvatar( $user->getId(), 'l' );
-						$avatarImage = $avatar->getAvatarURL( array(
-							'width' => 30,
-							'class' => 'avatar'
+						$avatarElement = $avatar->getAvatarURL( array(
+							'class' => 'avatar avatar-image'
 						) );
-						?>
-						<span class="arrow wikiglyph wikiglyph-caret-down"></span>
-						<?php echo $avatarImage ?>
-						<span class="username"><?php echo $user->getName() ?></span>
-					<?php
 					} elseif ( $this->data['loggedin'] ) { // if no SocialProfile but user is logged in
-						?>
-						<span class="arrow wikiglyph wikiglyph-caret-down"></span>
-						<span class="avatar-no-socialprofile wikiglyph wikiglyph-user-smile"></span>
-						<span class="username username-nosocialprofile-registered"><?php echo $user->getName() ?></span>
-					<?php
-					} else { // if no SocialProfile but user is not logged in
-						?>
-						<span class="arrow wikiglyph wikiglyph-caret-down"></span>
-						<span class="avatar-no-socialprofile wikiglyph wikiglyph-user-sleep"></span>
-						<span class="username username-nosocialprofile-anon"><?php echo $this->getMsg( 'login' )->text() ?></span>
-						<?php
+						if ( $this->getMsg( 'refreshed-icon-logged-in' )->isDisabled() ) { // if wiki has not set a custom image for logged in users
+							$avatarElement = Html::element( 'span', array(
+								'class' => 'avatar avatar-no-socialprofile wikiglyph wikiglyph-user-smile'
+							) );
+						} else { // if wiki has set custom image for logged in users
+							$avatarElement = Html::element( 'img', array(
+								'src' => $this->getMsg( 'refreshed-icon-logged-in' )->escaped(),
+								'class' => 'avatar avatar-no-socialprofile avatar-image'
+							) );
+						}
+					} else { // if no SocialProfile but user is logged out
+						if ( $this->getMsg( 'refreshed-icon-logged-out' )->isDisabled() ) { // if wiki has not set a custom image for logged out users
+							$avatarElement = Html::element( 'span', array(
+								'class' => 'avatar avatar-no-socialprofile wikiglyph wikiglyph-user-sleep'
+							) );
+						} else { // if wiki has set custom image for logged out users
+							$avatarElement = Html::element( 'img', array(
+								'src' => $this->getMsg( 'refreshed-icon-logged-out' )->escaped(),
+								'class' => 'avatar avatar-no-socialprofile avatar-image'
+							) );
+						}
 					}
+					echo $avatarElement;
 					?>
+					<span class="username"><?php echo $usernameText ?></span>
 				</a>
 				<ul class="header-menu collapsible collapsed">
 					<?php

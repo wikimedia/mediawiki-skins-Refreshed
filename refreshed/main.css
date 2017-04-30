@@ -119,17 +119,20 @@ a.header-button { /* double selectors to override default a element text-decorat
 
 .avatar {
 	width: 30px;
-	padding-left: 0.25em;
-	padding-right: 0.25em;
 }
 
-.avatar-no-socialprofile.wikiglyph-user-sleep,
-.avatar-no-socialprofile.wikiglyph-user-smile,
-.wikiglyph-magnifying-glass {
+.avatar-image {
+	padding-left: 0.25em;
+	padding-right: 0.25em; /* this class is added to image avatars because they should have padding but the default WikiFont ones shouldn't */
+}
+
+.header-button .wikiglyph-user-sleep,
+.header-button .wikiglyph-user-smile,
+.header-button .wikiglyph-magnifying-glass {
 	display: inline-block;
 	vertical-align: middle;
 	font-size: 2em;
-	line-height: 1em; /* That is, the line-height is the font size. The line-height and the vertical-align together vertically center the icon. c*/
+	line-height: 1em; /* That is, the line-height is the font size. The line-height and the vertical-align together vertically center the icon. */
 }
 
 .no-show {

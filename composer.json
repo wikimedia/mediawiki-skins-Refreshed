@@ -26,9 +26,17 @@
 		"php": ">=5.3.0",
 		"param-processor/param-processor": "~1.0.0"
 	},
-	"autoload": {
-		"files": [
-			"Refreshed.skin.php"
+	"config": {
+		"optimize-autoloader": true,
+		"prepend-autoloader": false
+	},
+	"require-dev": {
+		"jakub-onderka/php-parallel-lint": "0.9.2",
+		"jakub-onderka/php-console-highlighter": "0.3.2"
+	},
+	"scripts": {
+		"test": [
+			"parallel-lint . --exclude vendor"
 		]
 	}
 }

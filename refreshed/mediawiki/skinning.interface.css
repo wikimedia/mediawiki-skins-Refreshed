@@ -5,6 +5,10 @@
 	font-size: 0.8em;
 }
 
+#site-notice {
+	display: inline-block;
+}
+
 #localNotice {
 	margin-bottom: 0em !important;
 }

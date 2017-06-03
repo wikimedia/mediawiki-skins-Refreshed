@@ -260,7 +260,7 @@ $( function() {
 /* Fix for Echo in Refreshed */
 if ( document.getElementById( 'echo' ) ) {
 	$( '#pt-notifications-alert' ).prependTo( '#echo' );
-	$( '#pt-notifications-message' ).prependTo( '#echo' );
+	$( '#pt-notifications-notice' ).prependTo( '#echo' );
 }
 
 if ( $( '.mw-echo-notifications-badge' ).hasClass( 'mw-echo-unread-notifications' ) ) {

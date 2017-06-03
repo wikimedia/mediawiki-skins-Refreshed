@@ -2,8 +2,17 @@
 	display: none;
 }
 
-#pt-notifications {
-	display: inline;
-	float: right;
-	margin: 0.9em 0 0 0;
+.header-dropdown-item {
+	&#pt-notifications-notice,
+ 	&#pt-notifications-alert {
+		float: right;
+		display: inline;
+		margin: 0.9em 0.2em 0 0;
+		a {
+			color: transparent;
+		}
+		&:hover {
+			background: none;
+		}
+	}
 }

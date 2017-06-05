@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "3.2.2",
+	"version": "3.2.3",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -40,19 +40,19 @@
 				"refreshed/wikifont/wikiglyphs.css": {
 					"media": "screen"
 				},
-				"refreshed/main.css": {
+				"refreshed/styles/screen/main.css": {
 					"media": "screen"
 				},
-				"refreshed/small.css": {
+				"refreshed/styles/screen/small.css": {
 					"media": "(max-width: 600px)"
 				},
-				"refreshed/medium.css": {
+				"refreshed/styles/screen/medium.css": {
 					"media": "(min-width: 601px) and (max-width: 1000px)"
 				},
-				"refreshed/big.css": {
+				"refreshed/styles/screen/big.css": {
 					"media": "(min-width: 1001px)"
 				},
-				"refreshed/print.css": {
+				"refreshed/styles/print/print.css": {
 					"media": "print"
 				}
 			},
@@ -60,7 +60,7 @@
 		},
 		"skins.refreshed.js": {
 			"scripts": [
-				"refreshed/refreshed.js"
+				"refreshed/scripts/refreshed.js"
 			],
 			"dependencies": [
 				"mediawiki.api",

@@ -38,7 +38,7 @@ class SkinRefreshed extends SkinTemplate {
 		// See https://phabricator.wikimedia.org/T134653 for more info.
 		$out->addHeadItem( 'webfontfix',
 			 Html::element( 'link', array(
-				'href' => $wgLocalStylePath . '/Refreshed/refreshed/iefontfix.css',
+				'href' => $wgLocalStylePath . '/Refreshed/refreshed/styles/screen/iefontfix.css',
 				'rel' => 'stylesheet'
 			) )
 		);

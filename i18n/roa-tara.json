@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Pubblecetà"
+	"@metadata": {
+		"authors": [
+			"Joetaras"
+		]
+	},
+	"refreshed-advert": "Pubblecetà",
+	"refreshed-desc": "'N'inderfacce utende de MediaUicchi pulite, moderne cu 'na personalizzazione de CSS larie assaije"
 }

@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"!Silent"
+			"!Silent",
+			"Felipe L. Ewald"
 		]
 	},
-	"refreshed-advert": "Publicidade",
-	"refreshed-desc": "Um tema MediaWiki moderno e limpo, com ampla possibilidade de customização usando CSS"
+	"refreshed-advert": "Anúncio",
+	"refreshed-desc": "Um tema MediaWiki moderno e limpo, com ampla customização usando CSS"
 }

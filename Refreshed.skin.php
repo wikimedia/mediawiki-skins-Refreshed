@@ -450,7 +450,7 @@ class RefreshedTemplate extends BaseTemplate {
 				Hooks::run( 'RefreshedInSidebar', array( $this ) ); ?>
 			</div>
 		</aside>
-		<div id="content-wrapper" class="mw-body">
+		<div id="content-wrapper" class="mw-body-content">
 			<?php
 			if ( $this->data['sitenotice'] ) {
 				?>

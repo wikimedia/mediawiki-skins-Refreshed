@@ -307,9 +307,9 @@ a.header-button { /* double selectors to override default a element text-decorat
 }
 
 #content-heading {
-	/* padding-bottom: 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size);
-	 padding-left: 0.25em (padding on top of .standard-toolbox) + 1.5em (height of .standard-toolbox) + 0.75em (padding on bottom of .standard-toolbox) */
-	padding: 0.5em 0 0.9em 2.5em;
+	/* padding-left/right: 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size);
+	 padding-bottom: 0.25em (padding on top of .standard-toolbox) + 1.5em (height of .standard-toolbox) + 0.75em (padding on bottom of .standard-toolbox) */
+	padding: 0.5em 0.9em 2.5em 0.9em;
 	position: relative;
 }
 

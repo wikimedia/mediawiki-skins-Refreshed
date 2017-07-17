@@ -469,6 +469,11 @@ class RefreshedTemplate extends BaseTemplate {
 			<main id="content">
 				<article>
 					<header id="content-heading">
+						<?php
+						if ( method_exists( $this, 'getIndicators' ) ) {
+							echo $this->getIndicators();
+						}
+						?>
 						<h1 id="firstHeading" class="scroll-shadow"><?php $this->html( 'title' ) ?></h1>
 						<div id="main-title-messages">
 							<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>
@@ -480,11 +485,6 @@ class RefreshedTemplate extends BaseTemplate {
 							}
 							?>
 						</div>
-						<?php
-						if ( method_exists( $this, 'getIndicators' ) ) {
-							echo $this->getIndicators();
-						}
-						?>
 						<div class="standard-toolbox static-toolbox" role="menubar">
 							<?php
 							$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated = false;

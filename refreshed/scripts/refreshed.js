@@ -15,7 +15,7 @@ window.Refreshed = {
 
 	setCollapsibleMaxHeights: function() {
 		var currentHeight = 0;
-		$( '.collapsible' ).each( function () {
+		$( '.refreshed-menu-collapsible' ).each( function () {
 			currentHeight = $( this )[0].scrollHeight;
 			//scrollHeight determines the height ignoring the max-height property
 			//(which is 0 if the dropdown is hidden on page load)
@@ -55,7 +55,7 @@ window.Refreshed = {
 	},
 
 	toggleCollapse: function( trigger ) {
-		$( trigger ).siblings( '.collapsible' ).addBack( '.collapsible' ).toggleClass( 'collapsed' );
+		$( trigger ).siblings( '.refreshed-menu-collapsible' ).addBack( '.refreshed-menu-collapsible' ).toggleClass( 'refreshed-menu-collapsed' );
 		$( trigger ).children( '.arrow' ).toggleClass( 'rotate' );
 		if ( $( trigger ).hasClass( 'header-button' ) ) {
 			$( trigger ).toggleClass( 'header-button-active' );

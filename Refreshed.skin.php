@@ -237,7 +237,7 @@ class RefreshedTemplate extends BaseTemplate {
 					?>
 					<div id="site-info-main" class="multiple-wikis">
 						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $logoImgElement ?></a><a class="header-button collapse-trigger site-info-arrow"><span class="arrow wikiglyph wikiglyph-caret-down"></span></a>
-						<ul class="header-menu collapsible collapsed">
+						<ul class="header-menu refreshed-menu-collapsible refreshed-menu-collapsed">
 							<?php
 							foreach ( $dropdownNav as $index => $entry ) {
 								$dropDownLogo = Html::element( 'img', array(
@@ -335,7 +335,7 @@ class RefreshedTemplate extends BaseTemplate {
 					?>
 					<span class="username"><?php echo $usernameText ?></span>
 				</a>
-				<ul class="header-menu collapsible collapsed">
+				<ul class="header-menu refreshed-menu-collapsible refreshed-menu-collapsed">
 					<?php
 					// generate user tools (and notifications item in user tools if needed)
 					$personalToolsCount = 0;
@@ -372,7 +372,7 @@ class RefreshedTemplate extends BaseTemplate {
 								<span class="header-category-name"><?php echo htmlspecialchars( $main ) ?></span>
 								<span class="arrow wikiglyph wikiglyph-caret-down"></span>
 							</a>
-							<ul class="header-menu collapsible collapsed">
+							<ul class="header-menu refreshed-menu-collapsible refreshed-menu-collapsed">
 								<?php
 									foreach ( $sub as $key => $item ) {
 										$item['class'] = 'header-dropdown-item';
@@ -517,7 +517,7 @@ class RefreshedTemplate extends BaseTemplate {
 											?>
 											<div class="toolbox-container">
 												<a class="toolbox-link collapse-trigger"><?php echo $this->getMsg( 'moredotdotdot' )->text() ?></a>
-												<div class="standard-toolbox-dropdown collapsible collapsed">
+												<div class="standard-toolbox-dropdown refreshed-menu-collapsible refreshed-menu-collapsed">
 													<div class="dropdown-triangle"></div>
 													<ul>
 										<?php
@@ -560,7 +560,7 @@ class RefreshedTemplate extends BaseTemplate {
 							?>
 								<div class="toolbox-container">
 									<a class="toolbox-link collapse-trigger"><?php echo $this->getMsg( 'toolbox' )->text() ?></a>
-									<div class="standard-toolbox-dropdown collapsible collapsed">
+									<div class="standard-toolbox-dropdown refreshed-menu-collapsible refreshed-menu-collapsed">
 										<div class="dropdown-triangle"></div>
 										<ul>
 											<?php

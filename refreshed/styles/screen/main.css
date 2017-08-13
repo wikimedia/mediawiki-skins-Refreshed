@@ -172,7 +172,7 @@ a.header-button { /* double selectors to override default a element text-decorat
 	top: 0;
 	right: -3em;
 	background-color: #194a8d;
-	background-image: url(../../images/icon-rightbar.png);
+	background-image: url(../../images/icon-sidebar-toggle.png);
 	background-size: 3em;
 	display: none;
 	-ms-transition: right 0.2s ease 0s;

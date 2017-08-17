@@ -1,4 +1,9 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "إعلان"
+	"@metadata": {
+		"authors": [
+			"ديفيد"
+		]
+	},
+	"refreshed-advert": "إعلان",
+	"refreshed-desc": "برنامج ميدياويكي مساعد نظيف وحديث مع CSS شامل يمكن تخصيصه"
 }

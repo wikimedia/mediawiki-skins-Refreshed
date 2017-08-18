@@ -129,16 +129,6 @@
 	font-size: 1.313em !important;
 }
 
-/* Extension:Echo fixes */
-#pt-notifications {
-	margin-right: 0.75em;
-}
-
-.mw-echo-overlay:before,
-.mw-echo-overlay::before {
-	left: 238px !important; /* centering dropdown arrow on notifications badge */
-}
-
 /* Image thumbnails */
 .thumb {
 	width: 100% !important;

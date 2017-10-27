@@ -51,6 +51,7 @@ build/
 [Oo]bj/
 node_modules/
 vendor/
+composer.lock
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

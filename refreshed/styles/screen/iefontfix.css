@@ -37,10 +37,10 @@
 
 @font-face {
 	font-family: 'WikiFont-Glyphs';
-	src: url('wikifont/WikiFont-Glyphs.eot'); /* IE9 Compat Modes */
-	src: url('wikifont/WikiFont-Glyphs.woff') format('woff'), /* Modern Browsers */
-		url('wikifont/WikiFont-Glyphs.ttf') format('truetype'), /* Safari, Android, iOS */
-		url('wikifont/WikiFont-Glyphs.svg#8088f7bbbdba5c9832b27edb3dfcdf09') format('svg'); /* Legacy iOS */
+	src: url('../../wikifont/WikiFont-Glyphs.eot'); /* IE9 Compat Modes */
+	src: url('../../wikifont/WikiFont-Glyphs.woff') format('woff'), /* Modern Browsers */
+		url('../../wikifont/WikiFont-Glyphs.ttf') format('truetype'), /* Safari, Android, iOS */
+		url('../../wikifont/WikiFont-Glyphs.svg#8088f7bbbdba5c9832b27edb3dfcdf09') format('svg'); /* Legacy iOS */
 }
 
 #header .wikiglyph-caret-down:before {

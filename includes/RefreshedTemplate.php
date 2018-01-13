@@ -128,7 +128,7 @@ class RefreshedTemplate extends BaseTemplate {
 		$title = $titleBase->getSubjectPage();
 		$titleNamespace = $titleBase->getNamespace();
 
-		$key = wfMemcKey( 'refreshed', 'header' );
+		$key = $wgMemc->makeKey( 'refreshed', 'header' );
 		$headerNav = $wgMemc->get( $key );
 		if ( !$headerNav ) {
 			$headerNav = array();
@@ -136,7 +136,7 @@ class RefreshedTemplate extends BaseTemplate {
 			$wgMemc->set( $key, $headerNav, 60 * 60 * 24 ); // 24 hours
 		}
 
-		$dropdownCacheKey = wfMemcKey( 'refreshed', 'dropdownmenu' );
+		$dropdownCacheKey = $wgMemc->makeKey( 'refreshed', 'dropdownmenu' );
 		$dropdownNav = $wgMemc->get( $dropdownCacheKey );
 		if ( !$dropdownNav ) {
 			$dropdownNav = $this->parseDropDownMenu( 'Refreshed-wiki-dropdown' );

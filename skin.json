@@ -55,8 +55,7 @@
 				"refreshed/styles/print/print.css": {
 					"media": "print"
 				}
-			},
-			"position": "top"
+			}
 		},
 		"skins.refreshed.js": {
 			"scripts": [
@@ -65,8 +64,7 @@
 			"dependencies": [
 				"mediawiki.api",
 				"mediawiki.util"
-			],
-			"position": "bottom"
+			]
 		}
 	},
 	"ResourceModuleSkinStyles": {

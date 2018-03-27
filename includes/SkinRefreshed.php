@@ -5,7 +5,6 @@ class SkinRefreshed extends SkinTemplate {
 	public $skinname = 'refreshed',
 		$stylename = 'refreshed',
 		$template = 'RefreshedTemplate',
-		$useHeadElement = true,
 		$headerNav = array();
 
 	/**

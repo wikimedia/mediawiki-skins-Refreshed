@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ykhwong"
+			"Ykhwong",
+			"Revi"
 		]
 	},
-	"refreshed-advert": "광고"
+	"refreshed-advert": "광고",
+	"refreshed-desc": "깨끗하고, 현대적이며 강력한 CSS 커스터마이즈가 가능한 미디어위키 스킨"
 }

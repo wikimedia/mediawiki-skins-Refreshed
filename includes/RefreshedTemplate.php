@@ -176,7 +176,7 @@ class RefreshedTemplate extends BaseTemplate {
 				<?php
 				if ( $dropdownNav ) { // if there is a site dropdown (so there are multiple wikis)
 					?>
-					<div id="site-info-main" class="multiple-wikis">
+					<nav id="site-info-main" class="multiple-wikis">
 						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $logoImgElement ?></a><a class="header-button collapse-trigger site-info-arrow"><span class="arrow wikiglyph wikiglyph-caret-down"></span></a>
 						<ul class="header-menu refreshed-menu-collapsible refreshed-menu-collapsed">
 							<?php
@@ -195,7 +195,7 @@ class RefreshedTemplate extends BaseTemplate {
 							}
 							?>
 						</ul>
-					</div>
+					</nav>
 					<?php
 				} else {
 					?>

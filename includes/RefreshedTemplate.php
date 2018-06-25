@@ -12,7 +12,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 */
 	private function parseDropDownMenu( $messageKey ) {
 		$lines = $this->getLines( $messageKey );
-		$nodes = array();
+		$nodes = [];
 		$i = 0;
 
 		if ( is_array( $lines ) ) {
@@ -68,11 +68,11 @@ class RefreshedTemplate extends BaseTemplate {
 			$href = '#';
 		}
 
-		return array(
+		return [
 			'logo' => $logo,
 			'href' => $href,
 			'wiki_name' => $line_temp[0]
-		);
+		];
 	}
 
 	/**
@@ -131,7 +131,7 @@ class RefreshedTemplate extends BaseTemplate {
 		$key = $wgMemc->makeKey( 'refreshed', 'header' );
 		$headerNav = $wgMemc->get( $key );
 		if ( !$headerNav ) {
-			$headerNav = array();
+			$headerNav = [];
 			$skin->addToSidebar( $headerNav, 'refreshed-navigation' );
 			$wgMemc->set( $key, $headerNav, 60 * 60 * 24 ); // 24 hours
 		}
@@ -150,21 +150,21 @@ class RefreshedTemplate extends BaseTemplate {
 			$thisWikiURL = $skin->msg( 'refreshed-this-wiki-url' )->escaped();
 		}
 		$thisWikiWordmarkLogo = $skin->msg( 'refreshed-this-wiki-wordmark' )->escaped();
-		$logoImgElement = Html::element( 'img', array(
+		$logoImgElement = Html::element( 'img', [
 			'src' => $thisWikiWordmarkLogo,
 			'alt' => $config->get( 'Sitename' ),
 			'width' => 144,
 			'height' => 30
-		) );
+		] );
 		$thisWikiMobileLogo = $skin->msg( 'refreshed-this-wiki-mobile-logo' );
 		$thisWikiMobileLogoImgElement = '';
 		if ( !$thisWikiMobileLogo->isDisabled() ) {
-			$thisWikiMobileLogoImgElement = Html::element( 'img', array(
+			$thisWikiMobileLogoImgElement = Html::element( 'img', [
 				'src' => $thisWikiMobileLogo->escaped(),
 				'alt' => $config->get( 'Sitename' ),
 				// 'width' => ???,
 				// 'height' => ???
-			) );
+			] );
 		}
 
 		// Output the <html> tag and whatnot
@@ -181,12 +181,12 @@ class RefreshedTemplate extends BaseTemplate {
 						<ul class="header-menu refreshed-menu-collapsible refreshed-menu-collapsed">
 							<?php
 							foreach ( $dropdownNav as $index => $entry ) {
-								$dropDownLogo = Html::element( 'img', array(
+								$dropDownLogo = Html::element( 'img', [
 									'src' => $entry['logo'],
 									'alt' => $entry['wiki_name'],
 									'width' => 144,
 									'height' => 30
-								) );
+								] );
 								?>
 								<li class="header-dropdown-item">
 									<a href="<?php echo htmlspecialchars( $entry['href'] ) ?>"><?php echo $dropDownLogo ?></a>
@@ -222,7 +222,7 @@ class RefreshedTemplate extends BaseTemplate {
 				</a>
 				<form class="search-form fadable faded" action="<?php $this->text( 'wgScript' ) ?>" method="get">
 					<input type="hidden" name="title" value="<?php $this->text( 'searchtitle' ) ?>"/>
-					<?php echo $this->makeSearchInput( array( 'id' => 'searchInput' ) ); ?>
+					<?php echo $this->makeSearchInput( [ 'id' => 'searchInput' ] ); ?>
 				</form>
 			</section>
 
@@ -246,30 +246,30 @@ class RefreshedTemplate extends BaseTemplate {
 					// menu, but only if SocialProfile is installed
 					if ( class_exists( 'wAvatar' ) ) {
 						$avatar = new wAvatar( $user->getId(), 'l' );
-						$avatarElement = $avatar->getAvatarURL( array(
+						$avatarElement = $avatar->getAvatarURL( [
 							'class' => 'avatar avatar-image'
-						) );
+						] );
 					} elseif ( $this->data['loggedin'] ) { // if no SocialProfile but user is logged in
 						if ( $this->getMsg( 'refreshed-icon-logged-in' )->isDisabled() ) { // if wiki has not set a custom image for logged in users
-							$avatarElement = Html::element( 'span', array(
+							$avatarElement = Html::element( 'span', [
 								'class' => 'avatar avatar-no-socialprofile wikiglyph wikiglyph-user-smile'
-							) );
+							] );
 						} else { // if wiki has set custom image for logged in users
-							$avatarElement = Html::element( 'img', array(
+							$avatarElement = Html::element( 'img', [
 								'src' => $this->getMsg( 'refreshed-icon-logged-in' )->escaped(),
 								'class' => 'avatar avatar-no-socialprofile avatar-image'
-							) );
+							] );
 						}
 					} else { // if no SocialProfile but user is logged out
 						if ( $this->getMsg( 'refreshed-icon-logged-out' )->isDisabled() ) { // if wiki has not set a custom image for logged out users
-							$avatarElement = Html::element( 'span', array(
+							$avatarElement = Html::element( 'span', [
 								'class' => 'avatar avatar-no-socialprofile wikiglyph wikiglyph-user-sleep'
-							) );
+							] );
 						} else { // if wiki has set custom image for logged out users
-							$avatarElement = Html::element( 'img', array(
+							$avatarElement = Html::element( 'img', [
 								'src' => $this->getMsg( 'refreshed-icon-logged-out' )->escaped(),
 								'class' => 'avatar avatar-no-socialprofile avatar-image'
-							) );
+							] );
 						}
 					}
 					echo $avatarElement;
@@ -355,10 +355,10 @@ class RefreshedTemplate extends BaseTemplate {
 									echo $this->makeListItem(
 										$key,
 										$action,
-										array(
+										[
 											'link-class' => 'sub',
 											'link-fallback' => 'span'
-										)
+										]
 									);
 								}
 							} else {
@@ -378,7 +378,7 @@ class RefreshedTemplate extends BaseTemplate {
 							<ul id="languages">
 								<?php
 								foreach ( $this->data['language_urls'] as $key => $link ) {
-									echo $this->makeListItem( $key, $link, array( 'link-class' => 'sub', 'link-fallback' => 'span' ) );
+									echo $this->makeListItem( $key, $link, [ 'link-class' => 'sub', 'link-fallback' => 'span' ] );
 								}
 								?>
 							</ul>
@@ -388,7 +388,7 @@ class RefreshedTemplate extends BaseTemplate {
 				}
 
 				// Hook point for injecting ads
-				Hooks::run( 'RefreshedInSidebar', array( $this ) ); ?>
+				Hooks::run( 'RefreshedInSidebar', [ $this ] ); ?>
 			</div>
 		</aside>
 		<div id="content-wrapper" class="mw-body-content">
@@ -439,11 +439,11 @@ class RefreshedTemplate extends BaseTemplate {
 							if ( sizeof( $this->data['content_actions'] ) > 1 ) {
 								foreach ( $this->data['content_actions'] as $key => $action ) {
 									if ( !$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated ) { // this runs until all the actions outside the dropdown have been generated (generates actions outside dropdown)
-										echo $this->makeLink( $key, $action, array(
-											'text-wrapper' => array(
+										echo $this->makeLink( $key, $action, [
+											'text-wrapper' => [
 												'tag' => 'span'
-											)
-										) );
+											]
+										] );
 										$amountOfToolsGenerated++;
 										if (
 											sizeof( $this->data['content_actions'] ) == $amountOfToolsGenerated ||
@@ -466,14 +466,14 @@ class RefreshedTemplate extends BaseTemplate {
 									} else { // generates actions inside dropdown
 										?>
 										<li class="toolbox-dropdown-item toolbox-dropdown-page-action">
-											<?php echo $this->makeLink( $key, $action, array(
-												'text-wrapper' => array(
+											<?php echo $this->makeLink( $key, $action, [
+												'text-wrapper' => [
 													'tag' => 'span',
-													'attributes' => array(
+													'attributes' => [
 														'class' => 'toolbox-item-text'
-													)
-												)
-											) );
+													]
+												]
+											] );
 											?>
 										</li>
 										<?php
@@ -482,14 +482,14 @@ class RefreshedTemplate extends BaseTemplate {
 								foreach ( $toolbox as $tool => $toolData ) { // generates toolbox tools inside dropdown (e.g. "upload file")
 									?>
 									<li class="toolbox-dropdown-item toolbox-dropdown-tool">
-										<?php echo $this->makeLink( $tool, $toolData, array(
-											'text-wrapper' => array(
+										<?php echo $this->makeLink( $tool, $toolData, [
+											'text-wrapper' => [
 												'tag' => 'span',
-												'attributes' => array(
+												'attributes' => [
 													'class' => 'toolbox-item-text'
-												)
-											)
-										) );
+												]
+											]
+										] );
 										?>
 									</li>
 									<?php
@@ -520,14 +520,14 @@ class RefreshedTemplate extends BaseTemplate {
 												}
 												?>
 												<li class="toolbox-dropdown-item tool-dropdown-item toolbox-dropdown-tool">
-													<?php echo $this->makeLink( $tool, $dataForLink, array(
-														'text-wrapper' => array(
+													<?php echo $this->makeLink( $tool, $dataForLink, [
+														'text-wrapper' => [
 															'tag' => 'span',
-															'attributes' => array(
+															'attributes' => [
 																'class' => 'toolbox-item-text'
-															)
-														)
-													) );
+															]
+														]
+													] );
 													?>
 											</li>
 												<?php
@@ -535,7 +535,7 @@ class RefreshedTemplate extends BaseTemplate {
 							}
 							// Avoid PHP 7.1 warning of passing $this by reference
 							$template = $this;
-							Hooks::run( 'SkinTemplateToolboxEnd', array( &$template, true ) );
+							Hooks::run( 'SkinTemplateToolboxEnd', [ &$template, true ] );
 							?>
 										</ul>
 								</div>
@@ -546,7 +546,7 @@ class RefreshedTemplate extends BaseTemplate {
 							echo Linker::link(
 								$title,
 								$this->getMsg( 'backlinksubtitle', $title->getPrefixedText() )->escaped(),
-								array( 'id' => 'back-to-subject' )
+								[ 'id' => 'back-to-subject' ]
 							);
 						}
 						?>
@@ -556,12 +556,12 @@ class RefreshedTemplate extends BaseTemplate {
 					$pageTab = key( $this->data['content_actions'] );
 					$isEditing = in_array(
 						$skin->getRequest()->getText( 'action' ),
-						array( 'edit', 'submit' )
+						[ 'edit', 'submit' ]
 					);
 
 					// determining how many tools need to be generated
 					$totalSmallToolsToGenerate = 0;
-					$listOfToolsToGenerate = array(
+					$listOfToolsToGenerate = [
 						'wikiglyph wikiglyph-speech-bubbles' => 'ca-talk',
 						'wikiglyph wikiglyph-pencil-lock-full' => 'ca-viewsource',
 						'wikiglyph wikiglyph-pencil' => 'ca-edit',
@@ -572,7 +572,7 @@ class RefreshedTemplate extends BaseTemplate {
 						'wikiglyph wikiglyph-unlock' => 'ca-unprotect',
 						'wikiglyph wikiglyph-star' => 'ca-watch',
 						'wikiglyph wikiglyph-unstar' => 'ca-unwatch'
-					);
+					];
 
 					foreach ( $this->data['content_actions'] as $action ) {
 						if ( in_array( $action['id'], $listOfToolsToGenerate ) ) { // if the icon in question is one of the listed ones
@@ -626,7 +626,7 @@ class RefreshedTemplate extends BaseTemplate {
 		<footer id="footer">
 			<?php
 			$footerExtra = '';
-			Hooks::run( 'RefreshedFooter', array( &$footerExtra ) );
+			Hooks::run( 'RefreshedFooter', [ &$footerExtra ] );
 			echo $footerExtra;
 
 			foreach ( $this->getFooterLinks() as $category => $links ) {

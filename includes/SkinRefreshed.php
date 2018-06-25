@@ -5,7 +5,7 @@ class SkinRefreshed extends SkinTemplate {
 	public $skinname = 'refreshed',
 		$stylename = 'refreshed',
 		$template = 'RefreshedTemplate',
-		$headerNav = array();
+		$headerNav = [];
 
 	/**
 	 * Initializes OutputPage and sets up skin-specific parameters
@@ -21,10 +21,10 @@ class SkinRefreshed extends SkinTemplate {
 
 		// prevent iOS from zooming out when the sidebar is opened
 		$out->addHeadItem( 'viewportforios',
-			Html::element( 'meta', array(
+			Html::element( 'meta', [
 				'name' => 'viewport',
 				'content' => 'width=device-width, initial-scale=1.0'
-			) )
+			] )
 		);
 
 		// Inject webfont loader CSS file inline here so that it'll work even for IE11
@@ -36,10 +36,10 @@ class SkinRefreshed extends SkinTemplate {
 		// under IE(11).
 		// See https://phabricator.wikimedia.org/T134653 for more info.
 		$out->addHeadItem( 'webfontfix',
-			 Html::element( 'link', array(
+			 Html::element( 'link', [
 				'href' => $wgLocalStylePath . '/Refreshed/refreshed/styles/screen/iefontfix.css',
 				'rel' => 'stylesheet'
-			) )
+			] )
 		);
 
 		// Add JavaScript via ResourceLoader
@@ -50,10 +50,10 @@ class SkinRefreshed extends SkinTemplate {
 		parent::setupSkinUserCss( $out );
 
 		// Add CSS via ResourceLoader
-		$out->addModuleStyles( array(
+		$out->addModuleStyles( [
 			'mediawiki.skinning.interface',
 			'mediawiki.skinning.content.externallinks',
 			'skins.refreshed'
-		) );
+		] );
 	}
 }

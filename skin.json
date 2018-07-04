@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "3.4.1",
+	"version": "3.4.2",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -29,6 +29,9 @@
 	"AutoloadClasses": {
 		"SkinRefreshed": "includes/SkinRefreshed.php",
 		"RefreshedTemplate": "includes/RefreshedTemplate.php"
+	},
+	"Hooks": {
+		"PageContentSaveComplete": "SkinRefreshed::onPageContentSaveComplete"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",

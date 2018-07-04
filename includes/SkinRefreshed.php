@@ -56,4 +56,41 @@ class SkinRefreshed extends SkinTemplate {
 			'skins.refreshed'
 		] );
 	}
+
+	/**
+	 * Updates memcached data when a new version of some Refreshed interface message
+	 * is saved.
+	 * The caching is done in RefreshedTemplate::execute().
+	 *
+	 * @see https://phabricator.wikimedia.org/T166943
+	 */
+	public static function onPageContentSaveComplete( $wikiPage, $user, $content, $summary, $isMinor, $isWatch, $section, $flags, $revision, $status, $baseRevId ) {
+		global $wgLang, $wgContLang, $wgMemc;
+
+		$cache = ( $wgLang->getCode() == $wgContLang->getCode() );
+
+		if ( !$cache ) {
+			return true;
+		}
+
+		$title = $wikiPage->getTitle();
+		if (
+			$title instanceof Title &&
+			$title->inNamespace( NS_MEDIAWIKI )
+		)
+		{
+			$pageName = $title->getText();
+			$cacheKey = '';
+			if ( $pageName == 'Refreshed-wiki-dropdown' ) {
+				$cacheKey = $wgMemc->makeKey( 'refreshed', 'dropdownmenu' );
+			} elseif ( $pageName == 'Refreshed-navigation' ) {
+				$cacheKey = $wgMemc->makeKey( 'refreshed', 'header' );
+			}
+
+			if ( $cacheKey ) {
+				$wgMemc->delete( $cacheKey );
+			}
+		}
+	}
+
 }

@@ -110,7 +110,14 @@ class RefreshedTemplate extends BaseTemplate {
 
 		if ( empty( $lines ) ) {
 			$lines = $this->getMessageAsArray( $messageKey );
-			wfDebugLog( 'Refreshed', sprintf( 'Get %s, which contains %s lines', $messageKey, count( $lines ) ) );
+			// if $lines isn't countable, should log a different debug message that does not include count( $lines )
+			// since in PHP 7.2 and beyond, counting non-countable objects prompts a warning that will break the
+			// page
+			if (is_array($lines) || $lines instanceof Countable) {
+				wfDebugLog( 'Refreshed', sprintf( 'Get %s, which contains %s lines', $messageKey, count( $lines ) ) );
+			} else {
+				wfDebugLog( 'Refreshed', sprintf( 'Get %s, which is empty', $messageKey ) );
+			}
 		}
 
 		return $lines;

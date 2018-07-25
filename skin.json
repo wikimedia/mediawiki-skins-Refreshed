@@ -30,6 +30,9 @@
 		"SkinRefreshed": "includes/SkinRefreshed.php",
 		"RefreshedTemplate": "includes/RefreshedTemplate.php"
 	},
+	"Hooks": {
+		"PageContentSaveComplete": "SkinRefreshed::onPageContentSaveComplete"
+	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",
 		"remoteSkinPath": "Refreshed"

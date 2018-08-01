@@ -70,6 +70,9 @@ body {
 	background-color: #103ca2;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Gradient(GradientType=1,StartColorStr=#040f28,EndColorStr=#103ca2)"; /* IE9+ */
 	background-image: linear-gradient(to left, #040f28 0, #103ca2 50%, #040f28 100%);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
 
 #header-wrapper img {
@@ -88,16 +91,6 @@ a.header-button { /* double selectors to override default a element text-decorat
 	text-decoration: none;
 }
 
-.header-button .arrow {
-	display: inline-block;
-	-ms-transition: transform 0.5s;
-	transition: transform 0.5s;
-}
-
-.arrow.rotate {
-	transform: rotate(-180deg);
-}
-
 .header-dropdown-item a {
 	color: #fff;
 }
@@ -112,18 +105,8 @@ a.header-button { /* double selectors to override default a element text-decorat
 	background-color: midnightblue;
 }
 
-#user-info {
-	float: right;
-	position: relative; /* the dropdown is position: absolute; and should be right: 0; relative to its parent, so the parent needs position: relative; */
-}
-
-.avatar {
-	width: 30px;
-}
-
-.avatar-image {
-	padding-left: 0.25em;
-	padding-right: 0.25em; /* this class is added to image avatars because they should have padding but the default WikiFont ones shouldn't */
+.header-section {
+    display: inline-block; /* sections don't fill up whole header width, blocking each other */
 }
 
 .header-button .wikiglyph-user-sleep,
@@ -157,6 +140,18 @@ a.header-button { /* double selectors to override default a element text-decorat
 	padding: 0.2em 0.4em 0.2em 0.4em;
 }
 
+
+#header-categories-user-info-search-wrapper {
+	display: flex;
+	flex-direction: row-reverse; /* when only one item inside (#user-info-search-wrapper), push it to the right side (LTR) or left (RTL) */
+	justify-content: space-between;
+	width: 100%; /* fill all the space not occupied by #site-info */
+}
+
+#user-info-search-wrapper {
+	flex-shrink: 0; /* when this user info hits the header categories, the header categories should shrink, but the user info shouldn't */
+}
+
 #user-info .header-menu {
 	right: 0;
 	width: 11em;
@@ -172,15 +167,9 @@ a.header-button { /* double selectors to override default a element text-decorat
 	top: 0;
 	right: -3em;
 	background-color: #194a8d;
-	background-image: url(../../images/icon-sidebar-toggle.png);
-	background-size: 3em;
 	display: none;
 	-ms-transition: right 0.2s ease 0s;
 	transition: right 0.2s ease 0s;
-}
-
-#site-info {
-	float: left;
 }
 
 #site-info .header-menu {
@@ -201,10 +190,6 @@ a.header-button { /* double selectors to override default a element text-decorat
 	width: 12em;
 	color: #fff;
 	font-weight: bold;
-}
-
-.site-info-arrow {
-	width: 2em;
 }
 
 #site-info-main.multiple-wikis .header-menu {
@@ -279,8 +264,22 @@ a.header-button { /* double selectors to override default a element text-decorat
 }
 
 #header-categories {
+	position: relative;
 	height: 100%;
-	overflow: hidden; /* hide categories that get cut off when the window is too small */
+}
+
+/* Dummy wrapper so the header categories experience overflow-x: hidden and overflow-y: visible.
+Inspired by https://stackoverflow.com/a/29687454. Since .refreshed-header-category-dropdown-tray
+has position: absolute, it'll pop out of the overflow: hidden. Since .refreshed-dropdown
+does not have position: absolute, it will stay hidden if the screen is too narrow and it wraps
+out of the header. */
+#header-categories-overflow-wrapper {
+	overflow: hidden;
+	height: 100%;
+}
+
+.header-category-dropdown {
+	display: inline-block; /* so header category dropdowns don't fill up the whole space in #header-categories */
 }
 
 .page-item {
@@ -368,83 +367,32 @@ a.header-button { /* double selectors to override default a element text-decorat
 	border-bottom: 0.25em solid;
 }
 
-.standard-toolbox > a:before,
-.standard-toolbox-dropdown a:before {
-	font-family: 'WikiFont-Glyphs';
-	font-size: 1.25em;
-	vertical-align: sub;
+.refreshed-icon {
+	width: auto;
+	height: 1em;
+	fill: currentColor;
+	vertical-align: text-bottom;
 }
 
-.standard-toolbox [id^='ca-nstab-']:before {
-	content: '\e100'; /* article */
+.avatar {
+	width: 30px;
+	height: auto;
+	vertical-align: middle;
 }
 
-.standard-toolbox #ca-talk:before {
-	content: '\e227'; /* speech-bubbles */
+.avatar-image {
+	padding-left: 0.25em;
+	padding-right: 0.25em; /* this class is added to image avatars because they should have padding but the default WikiFont ones shouldn't */
 }
 
-.standard-toolbox #ca-edit:before {
-	content: '\e220'; /* edit */
-}
-
-.standard-toolbox #ca-viewsource:before {
-	content: '\e007'; /* eye */
-}
-
-.standard-toolbox #ca-history:before {
-	content: '\e011'; /* clock */
-}
-
-.standard-toolbox #ca-delete:before {
-	content: '\e130'; /* trash */
-}
-
-.standard-toolbox #ca-move:before {
-	content: '\e013'; /* move */
-}
-
-.standard-toolbox #ca-protect:before {
-	content: '\e019'; /* unlock */
-}
-
-.standard-toolbox #ca-unprotect:before {
-	content: '\e018'; /* lock */
-}
-
-.standard-toolbox #ca-watch:before {
-	content: '\e002'; /* star */
-}
-
-.standard-toolbox #ca-unwatch:before {
-	content: '\e003'; /* unstar */
-}
-
-.standard-toolbox #ca-wikilove:before {
-	content: '\e001'; /* heart */
-}
-
-.standard-toolbox #t-contributions:before {
-	content: '\e243'; /* signature */
-}
-
-.standard-toolbox #t-blockip:before {
-	content: '\e132'; /* block */
-}
-
-.standard-toolbox #t-emailuser:before {
-	content: '\e016'; /* message */
-}
-
-.standard-toolbox #t-upload:before {
-	content: '\e028'; /* upload */
-}
-
-.standard-toolbox #t-print:before {
-	content: '\e009'; /* printer */
-}
-
-.standard-toolbox #t-permalink:before {
-	content: '\e242'; /* link */
+.refreshed-icon-menu {
+	width: 1.5em;
+	height: auto;
+	vertical-align: top;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .standard-toolbox-dropdown {
@@ -699,4 +647,124 @@ a.header-button { /* double selectors to override default a element text-decorat
 	z-index: 10000 !important;
 	position: fixed !important;
 	top: 2.5em !important; /* there is some JS doing odd stuff, this forces our value */
+}
+
+
+/* dropdowns */
+#site-navigation-dropdown {
+	position: relative;
+	z-index: 1000; /* 1 less than .refreshed-logo-current to ensure that logo appears in front of the site navigation dropdown */
+	width: 100%; /* so tray can fit width of sidebar area rather than default width */
+}
+
+#site-navigation-dropdown-button {
+	width: 2em;
+}
+
+#site-navigation-dropdown-tray {
+	width: 100%; /* ensure tray is as wide as #site-info */
+}
+
+.refreshed-dropdown:hover .refreshed-dropdown-tray,
+.refreshed-dropdown:hover .refreshed-dropdown-triangle,
+.refreshed-dropdown:active .refreshed-dropdown-tray,
+.refreshed-dropdown:active .refreshed-dropdown-triangle {
+	display: block; /* show the tray and dropdown arrow */
+}
+
+.refreshed-dropdown-tray {
+	background: #fff; /* same as .refrehed-dropdown-button:after border-bottom color */
+	position: absolute;
+	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
+	padding: .5em 0;
+	display: none;
+	/* This width notably more than the max-width of .refreshed-dropdown-triangle
+	(see its CSS for explanation).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	width: 12em;
+	margin: 0;
+	margin-top: -3px; /* opposite of bottom of .refreshed-dropdown-button:after to ensure arrow lines up with tray */
+	line-height: 1.2em;
+	z-index: 999; /* so top part of dropdown doesn't get covered by another .refreshed-dropdown-button */
+}
+
+.refreshed-dropdown-button {
+	position: relative;
+}
+
+/*
+	Why this element exists:
+	Originally the triangle was a pseudoelement attached to .refreshed-dropdown-button.
+	We'd center it relative to the button using left: 50%; and transform: translateX(-50%).
+	This doesn't work when the button width is more than twice dropdown width:
+	the triangle is so far right it looks disconnected from the dropdown.
+	One solution is to set a maximum amount left the triangle can be.
+	To set a maximum left amount we could use max-width.
+	However the way the pseudoelement was set up, it needs width: 0 for the triangle to actually be a triangle.
+	So we couldn't solve this problem by changing the pseudoelement's width.
+	Instead we customize the width of a dummy element, then make the triangle at its top center with a pseudoelement.
+*/
+.refreshed-dropdown-triangle {
+	width: 50%;
+	/* This max-width is notably less than width of .refreshed-dropdown-tray
+	so the triangle doesn't appear disconnected from tray. Having the max-width
+	equal the width wouldn't work: the triangle is centered on the right (LTR) or
+	left (RTL) edge of .refreshed-dropdown-triangle, so if
+	.refreshed-dropdown-triangle is the same width as a dropdown, the arrow will
+	peek off of it. We just make the max-width less, without figuring out the
+	exact number where the triangle would be on the edge of the dropdown, because
+	we don't want the triangle to be on the exact edge of the dropdown anyway if
+	possible (it looks weird).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	max-width: 11em;
+	height: 0;
+	position: relative;
+	bottom: 0;
+	left: 0;
+	margin: 0;
+	display: none;
+}
+.refreshed-dropdown-triangle:after {
+	content: "";
+	border-left: .4em solid transparent;
+	border-right: .4em solid transparent;
+	border-bottom: .4em solid #fff; /* same as .refreshed-dropdown-tray background-color */
+	position: absolute;
+	bottom: 3px; /* opposite of margin-top of .refreshed-dropdown-tray to ensure arrow lines up with tray */
+	left: 100%;
+	transform: translateX(-50%);
+}
+
+.refreshed-dropdown-tray a {
+	color: #000;
+	font-size: .9em;
+	padding: .4em;
+	text-align: initial;
+	text-align: center;
+}
+
+.refreshed-dropdown-tray img {
+	max-width: 100%;
+}
+.refreshed-dropdown-tray a:hover {
+	color: #000;
+}
+
+.refreshed-dropdown-tray li {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+}
+
+.refreshed-logo-current {
+	position: relative;
+	z-index: 1001; /* 1 more than .refreshed-dropdown to ensure that logo appears in front of the site navigation dropdown */
+}
+
+.refreshed-logo img {
+	/* keep the logo from exceeding the space of the header (for current logo)
+	or being inconveniently big (for logos in dropdown) */
+	max-height: 2em;
 }

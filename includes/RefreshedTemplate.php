@@ -1,6 +1,7 @@
 <?php
 
 class RefreshedTemplate extends BaseTemplate {
+	// list of inline svg icons used throughout the skin
 	private static $iconList = [
 		'dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-dropdown-expand ooui-icon-expand">
 														<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
@@ -118,6 +119,7 @@ class RefreshedTemplate extends BaseTemplate {
 													<path d="M10.58 3A3 3 0 0 1 11 4.5a3 3 0 0 1-6 0A3 3 0 0 1 5.42 3H1v12a2 2 0 0 0 2 2h12V3z"/>
 												</svg>'
 	];
+
 	/**
 	 * Parses MediaWiki:Refreshed-wiki-dropdown.
 	 * Forked from Games' parseSidebarMenu(), which in turn was forked from
@@ -157,7 +159,8 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Helper method for parseSiteNavigationDropdownMenu.
 	 * Parse one pipe-separated line from MediaWiki message to an array with
-	 * indexes "wikiName" (string), "logoURL" (string|null), "wikiURL" (string|null)
+	 * indexes "wikiName" (string), "logoURL" (string|null),
+	 * "wikiURL" (string|null)
 	 * (This array will eventually be used to construct a link in the site
 	 * dropdown via renderSiteNavigationDropdownItems.)
 	 * Each line follows this format of text seperated by pipe symbols:
@@ -172,7 +175,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @return array attributes for the resulting link
 	 */
 	public static function parseSiteNavigationDropdownItem( $line ) {
-		// trim spaces and asterisks from line and then split it to maximum three chunks
+		// trim spaces and asterisks from line and split it to maximum three chunks
 		$line_temp = explode( '|', trim( $line, '* ' ), 3 );
 
 		// Likewise we assume the logoURL will be null and the wiki URL will be #,
@@ -238,9 +241,9 @@ class RefreshedTemplate extends BaseTemplate {
 
 		if ( empty( $lines ) ) {
 			$lines = $this->getMessageAsArray( $messageKey );
-			// if $lines isn't countable, should log a different debug message that does not include count( $lines )
-			// since in PHP 7.2 and beyond, counting non-countable objects prompts a warning that will break the
-			// page
+			// if $lines isn't countable, should log a different debug message that
+			// does not include count( $lines ) since in PHP 7.2 and beyond, counting
+			// non-countable objects prompts a warning that will break the page
 			if ( is_array( $lines ) || $lines instanceof Countable ) {
 				wfDebugLog( 'Refreshed', sprintf( 'Get %s, which contains %s lines', $messageKey, count( $lines ) ) );
 			} else {
@@ -298,9 +301,12 @@ class RefreshedTemplate extends BaseTemplate {
 	 * be parsed for whatever reason, the list item is returned without
 	 * adding the icon.)
 	 * @param string $iconName the name of the icon
-	 * @param string $key the "$key" for the standard makeLink/makeListItem (see docs)
-	 * @param array $item the "$item" for the standard makeLink/makeListItem (see docs)
-	 * @param array $options the "$options" for the standard makeLink/makeListItem (see docs); optional
+	 * @param string $key the "$key" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $item the "$item" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $options the "$options" for the standard makeLink/makeListItem
+	 *  (see docs); optional
 	 * @return string string representing the list item
 	 */
 	private function makeListItemWithIcon( $iconName = '', $key, $item, $options = [] ) {
@@ -315,9 +321,12 @@ class RefreshedTemplate extends BaseTemplate {
 	 * be parsed for whatever reason, the link is returned without
 	 * adding the icon.)
 	 * @param string $iconName the name of the icon
-	 * @param string $key the "$key" for the standard makeLink/makeListItem (see docs)
-	 * @param array $item the "$item" for the standard makeLink/makeListItem (see docs)
-	 * @param array $options the "$options" for the standard makeLink/makeListItem (see docs); optional
+	 * @param string $key the "$key" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $item the "$item" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $options the "$options" for the standard makeLink/makeListItem
+	 *  (see docs); optional
 	 * @return string string representing the link
 	 */
 	private function makeLinkWithIcon( $iconName = '', $key, $item, $options = [] ) {
@@ -336,9 +345,12 @@ class RefreshedTemplate extends BaseTemplate {
 	 * adding the icon.)
 	 * @param string $mode Expects either 'list item' or 'link'
 	 * @param string $iconName the name of the icon
-	 * @param string $key the "$key" for the standard makeLink/makeListItem (see docs)
-	 * @param array $item the "$item" for the standard makeLink/makeListItem (see docs)
-	 * @param array $options the "$options" for the standard makeLink/makeListItem (see docs); optional
+	 * @param string $key the "$key" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $item the "$item" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $options the "$options" for the standard makeLink/makeListItem
+	 *  (see docs); optional
 	 * @return string string representing the list item/link
 	 */
 	private function makeElementWithIconHelper( $mode, $iconName, $key, $item, $options ) {
@@ -406,7 +418,8 @@ class RefreshedTemplate extends BaseTemplate {
 	 * Given $text, load it into a DOMDocument as HTML. If all goes as planned
 	 * (the input doesn't break the parser), return the resulting DOMDocument.
 	 * Otherwise, echo errors and return false.
-	 * @param string $text the text to interpret as HTML (shouldn't contain html or body tags)
+	 * @param string $text the text to interpret as HTML (shouldn't contain html
+	 *  or body tags)
 	 * @return DOMDocument|bool DOMDocument if no errors, otherwise false
 	 */
 	private function loadHTMLHandleErrors( $text ) {
@@ -474,19 +487,60 @@ class RefreshedTemplate extends BaseTemplate {
 		return $this->getMsg( 'login' )->text();
 	}
 
+	/**
+	 * Get the personal tools and rearrange them into "dropdown" and "extra"
+	 * tools. The "dropdown" tools are the ones that should go into the user info
+	 * dropdown, and the "extra" tools (like Echo ones) are ones that should be
+	 * placed next to the user dropdown.
+	 * Inspired by and partially adapted from the Timeless skin's getUserLinks
+	 * function.
+	 * @return array $rearrangedPersonalTools where the key "dropdown" contains
+	 *  the dropdown tools, and the key "extra" contains the extra tools.
+	 */
+	 private function getAndRearrangePersonalTools() {
+		 $dropdownTools = $this->getPersonalTools();
+		 $extraTools = [];
+		 // list of tool names that should be removed from the dropdown tools and be
+		 // added to the extra tools
+		 // (these tools are echo badges)
+		 $toolsToMove = [ 'notifications-alert', 'notifications-notice' ];
+
+		 foreach ( $toolsToMove as $currentToolToMove ) {
+			 if ( isset( $dropdownTools[$currentToolToMove] ) ) {
+				 $extraTools[$currentToolToMove] = $dropdownTools[$currentToolToMove];
+				 unset( $dropdownTools[$currentToolToMove] );
+			 }
+		 }
+		 return [ 'dropdown' => $dropdownTools, 'extra' => $extraTools ];
+	 }
 
 	/**
-	 * Render the list items to be displayed in the header's user dropdown.
+	 * Render the list items to be displayed next to the user dropdown
+	 * (e.g., for Echo).
+	 * Inspired by how Timeless handles Echo.
+	 * @param array $extraPersonalTools
 	 */
-	private function renderUserDropdownItems() {
-		foreach ( $this->getPersonalTools() as $keyAndIconName => $item ) {
-			echo $this->makeListItemWithIcon( $keyAndIconName, $keyAndIconName, $item );
+	private function renderExtraPersonalTools( $extraPersonalTools ) {
+		foreach ( $extraPersonalTools as $key => $item ) {
+			echo $this->makeListItem( $key, $item );
 		}
 	}
 
 	/**
+	 * Render the list items to be displayed in the header's user dropdown.
+	 * @param array $dropdownPersonalTools
+	 */
+	private function renderUserDropdownItems( $dropdownPersonalTools ) {
+		foreach ( $dropdownPersonalTools as $keyAndIconName => $item ) {
+			echo $this->makeListItemWithIcon( $keyAndIconName, $keyAndIconName, $item );
+		}
+	}
+
+
+	/**
 	 * Render the items of the site navigation dropdown to appear in the header.
-	 * @param array $siteNavigationDropdown an array containing info for the site navigation dropdown
+	 * @param array $siteNavigationDropdown an array containing info for the site
+	 *  navigation dropdown
 	 */
 	private function renderSiteNavigationDropdownItems( $siteNavigationDropdown ) {
 		// (each item in $siteNavigationDropdown was an output of
@@ -508,7 +562,8 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render the items of the header category dropdown to appear in the header.
-	 * @param array $headerCategoryDropdown an array containing info for a header category dropdown
+	 * @param array $headerCategoryDropdown an array containing info for a header
+	 *  category dropdown
 	 */
 	private function renderHeaderCategoryDropdownItems( $headerCategoryDropdown ) {
 		foreach ( $headerCategoryDropdown as $key => $value ) {
@@ -521,10 +576,13 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Output as a string an anchor for a wiki, with the wiki's logo inside.
 	 * @param string $wikiName the wiki's name
-	 * @param string|null $logoURL URL to the wiki's logo image (if null, render logo as text)
+	 * @param string|null $logoURL URL to the wiki's logo image (if null, render
+	 *  logo as text)
 	 * @param string $wikiURL the URL the anchor goes to
-	 * @param string $classList a list of the classes to add to the outputted anchor element
-	 * @param string $wikiTitle (optional) text to use as the anchor's title attribute instead of $wikiName
+	 * @param string $classList a list of the classes to add to the outputted
+	 *  anchor element
+	 * @param string $wikiTitle (optional) text to use as the anchor's title
+	 *  attribute instead of $wikiName
 	 * @return string HTML of the logo anchor
 	*/
 	private function makeWikiLinkWithLogo( $wikiName, $logoURL, $wikiURL, $classList, $wikiTitle = '' ) {
@@ -609,7 +667,12 @@ class RefreshedTemplate extends BaseTemplate {
 			] );
 		}
 
-		// allow error handling in makeElementWithIconHelper: see https://secure.php.net/manual/en/simplexml.examples-errors.php
+		$personalTools = $this->getAndRearrangePersonalTools();
+		$dropdownPersonalTools = $personalTools['dropdown'];
+		$extraPersonalTools = $personalTools['extra'];
+
+		// allow error handling in makeElementWithIconHelper:
+		// see https://secure.php.net/manual/en/simplexml.examples-errors.php
 		libxml_use_internal_errors( true );
 
 		// Output the <html> tag and whatnot
@@ -653,16 +716,28 @@ class RefreshedTemplate extends BaseTemplate {
 			</section>
 			<div id="header-categories-user-info-search-wrapper">
 				<div id="user-info-search-wrapper">
-					<section id="user-info" class="refreshed-dropdown header-section">
-						<a id="user-dropdown-button" class="refreshed-dropdown-button header-button">
-							<?php echo $this->makeAvatar( $user ) ?>
-							<span class="refreshed-username"><?php echo $this->makeUsernameText( $user ) ?></span>
-							<?php $this->renderIcon( 'dropdown-expand' ) ?>
-							<div class="refreshed-dropdown-triangle"></div>
-						</a>
-						<ul id="user-dropdown-tray" class="refreshed-dropdown-tray">
-							<?php $this->renderUserDropdownItems() ?>
-						</ul>
+					<section id="user-info" class="header-section">
+						<?php if ( $extraPersonalTools ) { // if there are extra personal tools (e.g., for Echo)
+							?>
+							<div id="extra-personal-tools">
+								<ul id="extra-personal-tools-tray" class="personal-tools">
+									<?php $this->renderExtraPersonalTools( $extraPersonalTools ) ?>
+								</ul>
+							</div>
+							<?php
+						}
+						?>
+						<div id="user-info-dropdown" class="refreshed-dropdown">
+							<a id="user-info-dropdown-button" class="refreshed-dropdown-button header-button">
+								<?php echo $this->makeAvatar( $user ) ?>
+								<span class="refreshed-username"><?php echo $this->makeUsernameText( $user ) ?></span>
+								<?php $this->renderIcon( 'dropdown-expand' ) ?>
+								<div class="refreshed-dropdown-triangle"></div>
+							</a>
+							<ul id="user-info-dropdown-tray" class="refreshed-dropdown-tray personal-tools">
+								<?php $this->renderUserDropdownItems( $dropdownPersonalTools ) ?>
+							</ul>
+						</div>
 					</section>
 					<section class="search header-section">
 						<a class="search-shower header-button fade-trigger fadable">
@@ -700,14 +775,6 @@ class RefreshedTemplate extends BaseTemplate {
 							?>
 						</div>
 					</section>
-					<?php
-				}
-				?>
-				<?php
-				// test if Echo is installed
-				if ( ExtensionRegistry::getInstance()->isLoaded( 'Echo' ) ) {
-					?>
-					<div id="echo" role="log"></div>
 					<?php
 				}
 				?>

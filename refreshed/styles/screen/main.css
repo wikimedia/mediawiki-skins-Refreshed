@@ -105,7 +105,10 @@ a.header-button { /* double selectors to override default a element text-decorat
 	background-color: midnightblue;
 }
 
-.header-section {
+.header-section,
+.header-category-dropdown,
+#user-info-dropdown,
+#extra-personal-tools {
     display: inline-block; /* sections don't fill up whole header width, blocking each other */
 }
 
@@ -150,6 +153,21 @@ a.header-button { /* double selectors to override default a element text-decorat
 
 #user-info-search-wrapper {
 	flex-shrink: 0; /* when this user info hits the header categories, the header categories should shrink, but the user info shouldn't */
+}
+
+#extra-personal-tools-tray {
+	margin: 0;
+	display: inline-block;
+}
+
+#extra-personal-tools-tray li {
+	display: inline-block;
+	margin: 0 0.75em 0 0; /* adapted from Timeless's #personal-extra li rule */
+}
+
+#pt-notifications-notice,
+#pt-notifications-alert {
+	vertical-align: middle; /* (more or less) center the echo badges */
 }
 
 #user-info .header-menu {
@@ -216,7 +234,7 @@ a.header-button { /* double selectors to override default a element text-decorat
 }
 
 #header-wrapper .search {
-	width: 11em;
+	width: 15em; /* same as #searchInput */
 	height: 2em;
 	display: inline-block;
 	float: right;
@@ -244,7 +262,7 @@ a.header-button { /* double selectors to override default a element text-decorat
 	box-sizing: border-box;
 	-webkit-appearance: none; /* prevent Safari from styling input box */
 	border-radius: 0; /* prevent iOS from adding rounded corners to input box */
-	width: 11em;
+	width: 15em; /* same as #header-wrapper .search */
 	height: 100%;
 }
 
@@ -276,10 +294,6 @@ out of the header. */
 #header-categories-overflow-wrapper {
 	overflow: hidden;
 	height: 100%;
-}
-
-.header-category-dropdown {
-	display: inline-block; /* so header category dropdowns don't fill up the whole space in #header-categories */
 }
 
 .page-item {
@@ -686,7 +700,11 @@ out of the header. */
 	margin: 0;
 	margin-top: -3px; /* opposite of bottom of .refreshed-dropdown-button:after to ensure arrow lines up with tray */
 	line-height: 1.2em;
-	z-index: 999; /* so top part of dropdown doesn't get covered by another .refreshed-dropdown-button */
+	/* so top part of dropdown doesn't get covered by another
+	.refreshed-dropdown-button; 1 less than z-index of
+	.refreshed-dropdown-triangle to ensure the triangle appears above the
+	dropdown and thus is not underneath its drop shadow */
+	z-index: 999;
 }
 
 .refreshed-dropdown-button {
@@ -724,6 +742,9 @@ out of the header. */
 	bottom: 0;
 	left: 0;
 	margin: 0;
+	/* 1 more than z-index of .refreshed-dropdown-triangle to ensure the triangle
+	appears above the dropdown and thus is not underneath its drop shadow */
+	z-index: 1000;
 	display: none;
 }
 .refreshed-dropdown-triangle:after {

@@ -114,10 +114,13 @@ class RefreshedTemplate extends BaseTemplate {
 		'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-info ooui-icon-info">
 								<path d="M9.5 16A6.61 6.61 0 0 1 3 9.5 6.61 6.61 0 0 1 9.5 3 6.61 6.61 0 0 1 16 9.5 6.63 6.63 0 0 1 9.5 16zm0-14A7.5 7.5 0 1 0 17 9.5 7.5 7.5 0 0 0 9.5 2zm.5 6v4.08h1V13H8.07v-.92H9V9H8V8zM9 6h1v1H9z"/>
 							</svg>',
-		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-smwbrowserlink refreshed-icon-puzzle-ltr">
+		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-smwbrowserlink ooui-icon-puzzle-ltr">
 													<circle cx="17" cy="10" r="3"/>
 													<path d="M10.58 3A3 3 0 0 1 11 4.5a3 3 0 0 1-6 0A3 3 0 0 1 5.42 3H1v12a2 2 0 0 0 2 2h12V3z"/>
-												</svg>'
+												</svg>',
+		'search' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-search ooui-icon-search">
+									<path d="M19 17l-5.15-5.15a7 7 0 1 0-2 2L17 19zM3.5 8A4.5 4.5 0 1 1 8 12.5 4.5 4.5 0 0 1 3.5 8z"/>
+								</svg>'
 	];
 
 	/**
@@ -528,10 +531,11 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render the list items to be displayed in the header's user dropdown.
-	 * @param array $dropdownPersonalTools
+	 * @param array $personalTools
 	 */
 	private function renderUserDropdownItems( $dropdownPersonalTools ) {
 		foreach ( $dropdownPersonalTools as $keyAndIconName => $item ) {
+			$item['class'] = 'refreshed-dropdown-item header-dropdown-item user-info-dropdown-item';
 			echo $this->makeListItemWithIcon( $keyAndIconName, $keyAndIconName, $item );
 		}
 	}
@@ -564,11 +568,14 @@ class RefreshedTemplate extends BaseTemplate {
 	 * Render the items of the header category dropdown to appear in the header.
 	 * @param array $headerCategoryDropdown an array containing info for a header
 	 *  category dropdown
+	 * @param int $headerCategoryIndex which number header category is being
+	 *  generated
 	 */
-	private function renderHeaderCategoryDropdownItems( $headerCategoryDropdown ) {
+	private function renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $headerCategoryIndex ) {
+		$classList = 'refreshed-dropdown-item header-dropdown-item header-category-dropdown-item header-category-' . strval( $headerCategoryIndex ) . '-dropdown-item';
 		foreach ( $headerCategoryDropdown as $key => $value ) {
 			echo Html::rawElement( 'li', [
-				'class' => 'refreshed-dropdown-item header-dropdown-item header-category-dropdown-item'
+				'class' => $classList,
 			], $this->makeLink( $key, $value ) );
 		}
 	}
@@ -594,7 +601,8 @@ class RefreshedTemplate extends BaseTemplate {
 		// If wikiURL is null, we're making a text logo. Otherwise, we're making an
 		// image logo.
 		if ( $logoURL === null ) {
-			return Html::element( 'a', $anchorAttribs, $wikiName );
+			$text = Html::element( 'span', [ 'class' => 'header-text' ], $wikiName );
+			return Html::rawElement( 'a', $anchorAttribs, $text );
 		} else {
 			$image = Html::element( 'img', [
 				'src' => $logoURL,
@@ -653,9 +661,8 @@ class RefreshedTemplate extends BaseTemplate {
 		$thisWikiName = $config->get( 'Sitename' );
 
 		// anchor containing this wiki's logo
-		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current main header-button', $skin->msg( 'Tooltip-p-logo' ) );
-		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current main', $skin->msg( 'Tooltip-p-logo' ) );
-
+		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current header-button', $skin->msg( 'Tooltip-p-logo' ) );
+		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current refreshed-logo-sidebar-current header-button', $skin->msg( 'Tooltip-p-logo' ) );
 
 		$thisWikiMobileLogo = $skin->msg( 'refreshed-this-wiki-mobile-logo' );
 		$thisWikiMobileLogoImgElement = '';
@@ -678,19 +685,22 @@ class RefreshedTemplate extends BaseTemplate {
 		// Output the <html> tag and whatnot
 		$this->html( 'headelement' );
 		?>
-		<a id="fade-overlay" role="presentation"></a>
+		<input type="checkbox" id="sidebar-toggler-checkbox" class="header-checkbox">
 		<header id="header-wrapper">
 			<section id="site-info" class="header-section">
 				<?php
 				if ( $siteNavigationDropdown ) { // if there is a site dropdown (so there are multiple wikis)
 					?>
 					<nav id="site-info-main" class="multiple-wikis">
-						<?php echo $thisWikiLinkWithLogo ?>
 						<div id="site-navigation-dropdown" class="refreshed-dropdown">
-							<a id="site-navigation-dropdown-button" class="refreshed-dropdown-button header-button">
-								<?php $this->renderIcon( 'dropdown-expand' ) ?>
-								<div class="refreshed-dropdown-triangle"></div>
-							</a>
+							<?php echo $thisWikiLinkWithLogo ?>
+							<input type="checkbox" id="site-navigation-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
+							<label for="site-navigation-dropdown-checkbox" id="site-navigation-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+								<div id="site-navigation-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
+									<?php $this->renderIcon( 'dropdown-expand' ) ?>
+									<span class="refreshed-dropdown-triangle"></span>
+								</div>
+							</label>
 							<ul id="site-navigation-dropdown-tray" class="refreshed-dropdown-tray">
 								<?php $this->renderSiteNavigationDropdownItems( $siteNavigationDropdown ); ?>
 							</ul>
@@ -714,42 +724,65 @@ class RefreshedTemplate extends BaseTemplate {
 				}
 				?>
 			</section>
-			<div id="header-categories-user-info-search-wrapper">
+			<div id="sidebar-toggler-header-categories-user-info-search-wrapper">
 				<div id="user-info-search-wrapper">
 					<section id="user-info" class="header-section">
 						<?php if ( $extraPersonalTools ) { // if there are extra personal tools (e.g., for Echo)
 							?>
 							<div id="extra-personal-tools">
-								<ul id="extra-personal-tools-tray" class="personal-tools">
-									<?php $this->renderExtraPersonalTools( $extraPersonalTools ) ?>
+								<ul id="extra-personal-tools-tray">
+									<?php $this->renderExtraPersonalTools( $extraPersonalTools )?>
 								</ul>
 							</div>
 							<?php
 						}
 						?>
 						<div id="user-info-dropdown" class="refreshed-dropdown">
-							<a id="user-info-dropdown-button" class="refreshed-dropdown-button header-button">
-								<?php echo $this->makeAvatar( $user ) ?>
-								<span class="refreshed-username"><?php echo $this->makeUsernameText( $user ) ?></span>
-								<?php $this->renderIcon( 'dropdown-expand' ) ?>
-								<div class="refreshed-dropdown-triangle"></div>
-							</a>
+							<input type="checkbox" id="user-info-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
+							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+								<div id="user-info-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
+									<?php echo $this->makeAvatar( $user ) ?>
+									<span class="refreshed-username header-text"><?php echo $this->makeUsernameText( $user ) ?></span>
+									<?php $this->renderIcon( 'dropdown-expand' ) ?>
+									<span class="refreshed-dropdown-triangle"></span>
+								</div>
+							</label>
 							<ul id="user-info-dropdown-tray" class="refreshed-dropdown-tray personal-tools">
 								<?php $this->renderUserDropdownItems( $dropdownPersonalTools ) ?>
 							</ul>
 						</div>
 					</section>
-					<section class="search header-section">
-						<a class="search-shower header-button fade-trigger fadable">
-							<span class="wikiglyph wikiglyph-magnifying-glass"></span>
-						</a>
-						<a class="search-closer header-button fade-trigger fadable faded">
-							<span class="wikiglyph wikiglyph-x"></span>
-						</a>
-						<form class="search-form fadable faded" action="<?php $this->text( 'wgScript' ) ?>" method="get">
-							<input type="hidden" name="title" value="<?php $this->text( 'searchtitle' ) ?>"/>
-							<?php echo $this->makeSearchInput( [ 'id' => 'searchInput' ] ) ?>
-						</form>
+					<section id="header-search" class="header-section">
+						<div id="header-search-dropdown" class="refreshed-dropdown">
+							<input type="checkbox" id="header-search-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
+							<label for="header-search-dropdown-checkbox" id="header-search-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+								<div id="header-search-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless">
+									<?php $this->renderIcon( 'search' ) ?>
+									<span class="refreshed-dropdown-triangle"></span>
+								</div>
+							</label>
+							<form id="header-search-dropdown-tray" class="search-form refreshed-dropdown-tray-small refreshed-dropdown-tray-medium" action="<?php $this->text( 'wgScript' ) ?>" method="get">
+								<input type="hidden" name="title" value="<?php $this->text( 'searchtitle' ) ?>"/>
+								<?php
+								echo $this->makeSearchInput( [ 'id' => 'searchInput' ] );
+								/* The below comment is from Vector:
+								 * We construct two buttons (for 'go' and 'fulltext' search modes),
+								 * but only one will be visible and actionable at a time (they are
+								 * overlaid on top of each other in CSS).
+								 * * Browsers will use the 'fulltext' one by default (as it's the
+								 *   first in tree-order), which is desirable when they are unable
+								 *   to show search suggestions (either due to being broken or
+								 *   having JavaScript turned off).
+								 * * The mediawiki.searchSuggest module, after doing tests for the
+								 *   broken browsers, removes the 'fulltext' button and handles
+								 *   'fulltext' search itself; this will reveal the 'go' button and
+								 *   cause it to be used.
+								 */
+								echo $this->makeSearchButton( 'fulltext', [ 'id' => 'mw-searchButton', 'class' => 'searchButton mw-fallbackSearchButton' ] );
+								echo $this->makeSearchButton( 'go', [ 'id' => 'searchButton', 'class' => 'searchButton' ] );
+								?>
+							</form>
+						</div>
 					</section>
 				</div>
 				<?php
@@ -758,19 +791,29 @@ class RefreshedTemplate extends BaseTemplate {
 					<section id="header-categories" class="header-section">
 						<div id="header-categories-overflow-wrapper">
 							<?php
+							$headerCategoryIndex = 0;
 							foreach ( $headerCategoriesDropdowns as $name => $headerCategoryDropdown ) {
+								$currentDropdownID = 'header-category-dropdown-' . $headerCategoryIndex;
+								$currentCheckboxID = 'header-category-dropdown-checkbox-' . $headerCategoryIndex;
+								$currentToggleID = 'header-category-dropdown-toggle-' . $headerCategoryIndex;
+								$currentButtonID = 'header-category-dropdown-button-' . $headerCategoryIndex;
+								$currentTrayID = 'header-category-dropdown-tray-' . $headerCategoryIndex;
 								?>
-								<div class="refreshed-dropdown header-category-dropdown">
-									<a class="refreshed-dropdown-button header-button header-category-button">
-										<span class="header-category-name"><?php echo htmlspecialchars( $name ) ?></span>
-										<?php $this->renderIcon( 'dropdown-expand' ) ?>
-										<div class="refreshed-dropdown-triangle"></div>
-									</a>
-									<ul class="refreshed-header-category-dropdown-tray refreshed-dropdown-tray">
-										<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown ); ?>
+								<div id="<?php echo $currentDropdownID ?>" class="refreshed-dropdown header-category-dropdown">
+									<input type="checkbox" id="<?php echo $currentCheckboxID ?>" class="refreshed-dropdown-checkbox header-checkbox">
+									<label for="<?php echo $currentCheckboxID ?>" id="<?php echo $currentToggleID ?>" class="refreshed-dropdown-toggle header-toggle">
+										<div id="<?php echo $currentButtonID ?>" class="refreshed-dropdown-button header-button header-category-dropdown-button">
+											<span class="header-category-name header-text"><?php echo htmlspecialchars( $name ) ?></span>
+											<?php $this->renderIcon( 'dropdown-expand' ) ?>
+											<span class="refreshed-dropdown-triangle"></span>
+										</div>
+									</label>
+									<ul id="<?php echo $currentTrayID ?>" class="header-category-dropdown-tray refreshed-dropdown-tray">
+										<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $headerCategoryIndex ); ?>
 									</ul>
 								</div>
 								<?php
+								$headerCategoryIndex++;
 							}
 							?>
 						</div>
@@ -778,14 +821,20 @@ class RefreshedTemplate extends BaseTemplate {
 					<?php
 				}
 				?>
+				<section id="sidebar-toggler" class="header-section">
+					<label for="sidebar-toggler-checkbox" id="sidebar-toggler-toggle" class="header-toggle">
+						<div id="sidebar-toggle-button" class="header-button header-button-textless-small">
+							<?php $this->renderIcon( 'menu' ); ?>
+						</div>
+					</label>
+				</section>
 			</div>
 		</header>
 		<aside id="sidebar-wrapper">
-			<a class="sidebar-shower header-button"><?php $this->renderIcon( 'menu' ); ?></a>
-			<div id="sidebar-logo">
-				<?php echo $thisWikiLinkWithSidebarLogo ?>
-			</div>
 			<div id="sidebar">
+				<section id="sidebar-logo" class="sidebar-section">
+					<?php echo $thisWikiLinkWithSidebarLogo ?>
+				</section>
 				<?php
 				unset( $this->data['sidebar']['SEARCH'] );
 				unset( $this->data['sidebar']['TOOLBOX'] );
@@ -793,7 +842,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 				foreach ( $this->data['sidebar'] as $main => $sub ) {
 					?>
-					<section class="sidebar-section">
+					<section class="sidebar-content sidebar-section">
 						<h1 class="main"><?php echo htmlspecialchars( $main ) ?></h1>
 						<ul>
 							<?php

@@ -253,7 +253,7 @@ $( function() {
 		}
 	} );*/
 	setTimeout( function () { // wait a bit so the .suggestions elements can be added in (if we don't wait we'll be targeting nothing and it won't work)...
-		$( '.suggestions' ).first().addClass( 'header-suggestions' ); // add class to first .suggestions element
+		$( '.suggestions' ).last().addClass( 'header-suggestions' ); // add class to first .suggestions element
 	}, 100 );
 } );
 

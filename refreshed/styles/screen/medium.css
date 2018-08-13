@@ -1,10 +1,5 @@
 /* anything between 601px and 1000px - tablets, big phones in landscape, very small laptops */
 
-#sidebar-wrapper {
-	width: 10em;
-	left: 0 !important; /* preventing sidebar from moving left of viewport if not on mobile */
-}
-
 #sidebar {
 	font-size: 0.875em;
 }
@@ -58,36 +53,155 @@
 	left: 10em;
 }
 
-#header-wrapper .search {
-	width: auto;
-	height: 3em;
+/* handle the header buttons that contain no text (only icon/image) on medium */
+.header-button-textless,
+.header-button-textless-medium {
+	width: 3em; /* same as height of #header-wrapper */
+}
+
+/* If a header button has its text hidden on medium, hide the vertical-align
+helper as it messes up horizontal spacing when only an icon/image is present.
+Also, hide the actual text and dropdown arrows. */
+.header-button-textless-medium .header-text {
+	display: none;
+}
+
+.header-button-textless-medium svg,
+.header-button-textless-medium img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.refreshed-dropdown-tray-medium {
+	background: #fff; /* same as .refreshed-dropdown-triangle:after border-bottom color */
+	position: absolute;
+	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	display: none;
+	margin: 0;
+	/* margin-top is opposite of bottom of .refreshed-dropdown-triangle:after to
+	ensure arrow lines up with tray */
+	/* also same as .header-suggestions margin-top on medium/small */
+	margin-top: -3px;
+	line-height: 1.2em;
+	/* 1 more than z-index of .header-checkbox ~ .header-toggle::after (etc.)
+	so the dropdown appears above the dropdown close overlay.
+	1 less than z-index of .refreshed-dropdown-triangle to ensure the triangle
+	appears above the dropdown and thus is not underneath its drop shadow */
+	z-index: 2;
+}
+
+.refreshed-dropdown-tray-medium img {
+	max-width: 100%;
+}
+
+.refreshed-dropdown-tray-medium li {
+	margin: 0;
+	list-style: none;
 	padding: 0;
+}
+
+/* Dropdowns use the "checkbox hack":
+see https://css-tricks.com/the-checkbox-hack/ */
+.refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-tray-medium {
+	display: block;
+}
+
+#user-info-dropdown-tray {
+	/* This width notably more than the max-width of .refreshed-dropdown-triangle
+	(see its CSS for explanation).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	width: 12em;
+}
+
+#header-search-dropdown-tray {
+	/* This width notably more than the max-width of .refreshed-dropdown-triangle
+	(see its CSS for explanation).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	width: 15em; 	/* same as width of .header-suggestions */
+	box-sizing: border-box; /* padding counts toward width */
+}
+
+.refreshed-dropdown-triangle {
+	/* This max-width is notably less than width of .refreshed-dropdown-tray
+	so the triangle doesn't appear disconnected from tray. Having the max-width
+	equal the width wouldn't work: the triangle is centered on the right (LTR) or
+	left (RTL) edge of .refreshed-dropdown-triangle, so if
+	.refreshed-dropdown-triangle is the same width as a dropdown, the arrow will
+	peek off of it. We just make the max-width less, without figuring out the
+	exact number where the triangle would be on the edge of the dropdown, because
+	we don't want the triangle to be on the exact edge of the dropdown anyway if
+	possible (it looks weird).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	max-width: 11em;
+}
+
+/* force the user info and search trays 1em from the right because otherwise
+their rightmost parts will be off the viewport */
+#user-info-dropdown-tray,
+#header-search-dropdown-tray {
+	right: 1em;
+}
+
+#sidebar-toggler {
+	display: none;
+}
+
+#sidebar-wrapper {
+	top: 3em; /* same as height of #header-wrapper */
+	left: 0;
+	width: 10em;
+}
+
+#sidebar-logo {
+	display: none;
+}
+
+#header-search {
 	margin-right: 1em;
 }
 
-#header-wrapper .search-form {
-	display: block;
-	position: absolute;
-	top: 3em;
-	right: 1em;
-	padding: 0.5em;
-	width: 15em;
-	height: auto; /* overriding 100% in main.css (used to center search bar on big) */
-	background-color: midnightblue;
+#header-search-dropdown-tray {
+	/* .header-suggestions relies on padding-top/bottom, see its CSS for more */
+	/* padding-left/right is same as .searchButton's top/bottom/right */
+	padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 
 #searchInput { /* header search box */
+	outline: 0;
 	width: 100%;
-	font-size: 1em; /* enlarging and preventing zoom on input on focus */
-	height: 2.5em;
+	border-bottom: 3px solid transparent;
+	/* padding-right is 0.5em more than padding-right of .searchButton to leave
+	room for it */
+	padding-right: 2.5em;
 }
 
-.search-shower {
-	display: block;
-	visibility: visible; /* for the small version of the header search to work, the .faded class is added to .search-shower when it's clicked; this overrides it since we always want the icon visible on medium */
-	opacity: 1;
-	padding-left: 0.25em;
-	padding-right: 0.25em;
+#searchInput:focus {
+	border-color: currentColor;
+}
+
+.searchButton {
+	/* take up full height and stick to right side of #searchInput */
+	top: 50%;
+	transform: translateY(-50%);
+	right: 0.5em;
+}
+
+[dir="ltr"] .searchButton {
+	/* ooui-icon-arrowNext-ltr */
+	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M10%202L8.59%203.42%2014.17%209H2v2h12.17l-5.58%205.59L10%2018l8-8-8-8z%22%2F%3E%3C%2Fsvg%3E%0A );
+}
+
+[dir="rtl"] .searchButton {
+	/* ooui-icon-arrowNext-rtl */
+	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2%2010l8%208%201.4-1.4L5.8%2011H18V9H5.8l5.6-5.6L10%202z%22%2F%3E%3C%2Fsvg%3E );
 }
 
 #searchText,
@@ -117,16 +231,24 @@
 }
 
 .header-suggestions {
-	top: 6.5em !important; /* 3em for the header, 3.5em for the search bar */
-	right: 1em !important;
-	width: 16em !important;
-	font-size: 1em !important;
-	border: 0 !important;
-	margin-top: -3px !important; /* getting rid of gap between suggestions and search box */
+	position: fixed !important;
+	top: 6em !important; /* height of #header-wrapper + height of #header-search-dropdown-tray */
+	margin-top: -3px !important; /* same as margin-top of .refreshed-dropdown-triangle, opposite of bottom of .refreshed-dropdown-triangle:after */
+	right: 1em !important; /* same as right of #header-search-dropdown-tray */
+	width: 15em !important; /* same as width of #header-search-dropdown-tray */
+	max-height: calc( 35vh - 6em ); /* hopefully small enough the keyboard doesn't block it: height so the bottom of the suggestions is no more than 35% down the page */
+	overflow-y: scroll !important;
 }
 
-.header-suggestions div {
-	font-size: 1.313em !important;
+.header-suggestions .suggestions-result {
+	padding: 0.5em 0.25em !important;
+	border-bottom: 1px solid #ddd;
+}
+
+.header-suggestions .suggestions-special {
+	padding: 0.5em 0.25em !important;
+	margin-top: 0 !important;
+	border: 0 !important;
 }
 
 /* Image thumbnails */

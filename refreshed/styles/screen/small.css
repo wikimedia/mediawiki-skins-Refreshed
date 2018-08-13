@@ -1,72 +1,115 @@
 /* anything 600px and under - phones */
 
-.header-button .wikiglyph {
-	line-height: 2.75em;
-	height: 2.75em; /* line-height and height equal to the parent's height (3em) plus vertical-align:text-bottom in wikiglyphs.css vertically centers the icons */
-}
-
-.header-button .wikiglyph {
-	font-size: 2.75em;
-	line-height: 1em;
-}
-
 #header-wrapper {
-	height: 2.75em;
-	line-height: 2.75em;
+	height: 2.75em; /* .header-suggestions relies on this, see its CSS for more */
+}
+
+/* handle the header buttons that contain no text (only icon/image) on small */
+.header-button-textless,
+.header-button-textless-small {
+	width: 2.75em; /* same as height of #header-wrapper */
+}
+
+/* If a header button has its text hidden on small, hide the text and dropdown
+arrows. */
+.header-button-textless-small .header-text {
+	display: none;
+}
+
+.header-button-textless-small svg,
+.header-button-textless-small img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+/* hide dropdown arrow for the user info dropdown button */
+#user-info-dropdown-button .refreshed-icon-dropdown-expand {
+	display: none;
+}
+
+.refreshed-dropdown-tray-small {
+	background: #fff; /* same as .refreshed-dropdown-triangle:after border-bottom color */
+	position: absolute;
+	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	display: none;
+	margin: 0;
+	/* margin-top is opposite of bottom of .refreshed-dropdown-triangle:after to
+	ensure arrow lines up with tray */
+	/* also same as .header-suggestions margin-top on medium/small */
+	margin-top: -3px;
+	line-height: 1.2em;
+	/* 1 more than z-index of .header-checkbox ~ .header-toggle::after (etc.)
+	so the dropdown appears above the dropdown close overlay.
+	1 less than z-index of .refreshed-dropdown-triangle to ensure the triangle
+	appears above the dropdown and thus is not underneath its drop shadow */
+	z-index: 2;
+}
+
+.refreshed-dropdown-tray-small img {
+	max-width: 100%;
+}
+
+.refreshed-dropdown-tray-small li {
+	margin: 0;
+	list-style: none;
+	padding: 0;
+}
+
+/* Dropdowns use the "checkbox hack":
+see https://css-tricks.com/the-checkbox-hack/ */
+.refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-tray-small {
+	display: block;
+}
+
+.refreshed-dropdown-tray,
+.refreshed-dropdown-tray-small {
+	/* force dropdown trays to take up the full viewport width */
+	/* This width notably more than the max-width of .refreshed-dropdown-triangle
+	(see its CSS for explanation).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	width: 100%; /* same as width of .header-suggestions */
+	left: 0;
+}
+
+.refreshed-dropdown-triangle {
+	/* This max-width is notably less than width of .refreshed-dropdown-tray
+	so the triangle doesn't appear disconnected from tray. Having the max-width
+	equal the width wouldn't work: the triangle is centered on the right (LTR) or
+	left (RTL) edge of .refreshed-dropdown-triangle, so if
+	.refreshed-dropdown-triangle is the same width as a dropdown, the arrow will
+	peek off of it. We just make the max-width less, without figuring out the
+	exact number where the triangle would be on the edge of the dropdown, because
+	we don't want the triangle to be on the exact edge of the dropdown anyway if
+	possible (it looks weird).
+	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray
+	have the same font size... */
+	max-width: 50vw;
 }
 
 #sidebar-wrapper {
-	position: fixed;
-	background: midnightblue;
-	left: -15em;
-	width: 15em;
 	top: 0;
-	z-index: 10002; /* appear above fade-overlay, which has z-index 10001 */
-	-ms-transition: 0.2s ease;
-	transition: 0.2s ease;
+	width: 75%;
+	left: -75%;
+	z-index: 10001; /* 1 greater than #header-wrapper so appears above header */
+	background: #194a8d;
+	-ms-transition: left 0.2s ease;
+	transition: left 0.2s ease;
 }
 
-.sidebar-open {
+#sidebar-toggler-checkbox:checked ~ #sidebar-wrapper {
 	left: 0;
-	-ms-transform: translateX(15em);
-	transform: translateX(15em);
-}
-
-#sidebar {
-	top: 2.75em;
-	font-size: 13pt;
-}
-
-#sidebar a {
-	display: inline;
-}
-
-#sidebar a:hover {
-	border: 0;
-	margin-left: 5px;
-}
-
-.header-button {
-	width: 2.75em;
-	height: 2.75em;
-	padding: 0;
-	text-align: center;
-}
-
-.sidebar-shower {
-	display: block;
-	background-size: 2.75em;
-	right: -2.75em;
-}
-
-.sidebar-shower-hidden {
-	right: 0 !important;
+	/* only apply the box shadow when the sidebar is opened so the shadow doesn't
+	appear on the edge of the screen when the sidebar is closed (just off the edge
+	of the screen) */
+	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
 }
 
 #sidebar-logo {
-	position: absolute;
-	top: 0;
-	left: 0;
 	display: block;
 	width: 100%;
 	height: 2.75em;
@@ -95,41 +138,42 @@
 	display: inline-block;
 }
 
-#header-wrapper .search {
-	width: 2.75em;
-	height: 2.75em;
-	padding: 0;
-	margin-right: 0;
-}
-
-.search-closer {
-	display: block;
-}
-
-#header-wrapper .search-form {
-	width: calc(100% - 3.25em); /* 100% - 2.75em for the close search button -0.25em of padding-left -0.25em of padding-right */
-	height: calc(100% - 0.5em); /* 100% -0.25em of padding-top - 0.35em of padding-bottom */
-	position: absolute;
-	top: 0;
-	left: 0;
-	padding: 0.25em;
-	z-index: 1; /* appear over the user icon, which doesn't have a specified z-index */
+#header-search-dropdown-tray {
+	/* .header-suggestions relies on padding-top/bottom, see its CSS for more */
+	/* padding-left/right is same as .searchButton's top/bottom/right */
+	padding-left: 0.5em;
+  padding-right: 0.5em;
+	box-sizing: border-box; /* padding counts toward width */
 }
 
 #searchInput { /* header search box */
+	outline: 0;
 	width: 100%;
-	height: 100%;
-	font-size: 1.25em;
-	vertical-align: text-bottom;
+	border-bottom: 3px solid transparent;
+	/* padding-right is 0.5em more than padding-right of .searchButton to leave
+	room for it */
+	padding-right: 2.5em;
 }
 
-.search-open #searchInput {
-	display: block;
+#searchInput:focus {
+	border-color: currentColor;
 }
 
-.search-shower {
-	display: block;
-	margin-right: 0;
+.searchButton {
+	/* take up full height and stick to right side of #searchInput. */
+	top: 50%;
+	transform: translateY(-50%);
+	right: 0.5em;
+}
+
+[dir="ltr"] .searchButton {
+	/* ooui-icon-arrowNext-ltr */
+	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M10%202L8.59%203.42%2014.17%209H2v2h12.17l-5.58%205.59L10%2018l8-8-8-8z%22%2F%3E%3C%2Fsvg%3E%0A );
+}
+
+[dir="rtl"] .searchButton {
+	/* ooui-icon-arrowNext-rtl */
+	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2%2010l8%208%201.4-1.4L5.8%2011H18V9H5.8l5.6-5.6L10%202z%22%2F%3E%3C%2Fsvg%3E );
 }
 
 #searchText,
@@ -157,32 +201,6 @@
 	max-width: 100%; /* prevent search results from overflowing */
 }
 
-#user-info .header-button {
-	width: 2.75em;
-	padding: 0;
-}
-
-#user-info .arrow,
-.refreshed-username {
-	display: none;
-}
-
-.avatar {
-	margin-top: 7px; /* avatar has height of 30px, header has height of 2.75em or 44px; to center, margin-top = (44px - 30px) / 2 = 7px */
-}
-
-#user-info .header-menu {
-	top: 2.75em;
-	background-color: midnightblue;
-	padding: 0.15em 0 0.15em 0;
-}
-
-#user-info .header-menu a {
-	text-align: left;
-	padding-left: 15px;
-	font-weight: normal;
-}
-
 #user-info .header-menu a:hover {
 	color: #ccc;
 }
@@ -191,8 +209,14 @@
 	color: #f47d64;
 }
 
-#site-info .header-menu img {
-	font-size: 16px; /* resetting font size for logos in menu so they are the same height as the one outside the menu */
+/* Echo fix on small screens per https://phabricator.wikimedia.org/T126106#2655009 */
+.oo-ui-popupWidget-popup {
+	width: 340px !important;
+	left: 120px !important;
+}
+
+.oo-ui-popupWidget-body {
+	width: 100%;
 }
 
 #content-wrapper {
@@ -318,17 +342,14 @@ a.small-tool { /* inclusion of the "a" is necessary to override the standard a e
 	display: block;
 }
 
-/* Suggestions box under search */
 .header-suggestions {
-	top: 2.75em !important;
+	position: fixed !important;
+	top: 5.75em !important; /* height of #header-wrapper + height of #header-search-dropdown-tray */
+	margin-top: -3px !important; /* same as margin-top of .refreshed-dropdown-triangle, opposite of bottom of .refreshed-dropdown-triangle:after */
 	left: 0 !important;
-	width: 100% !important;
-	font-size: 16px !important;
-	z-index: 10001 !important; /* place above #fade-overlay, which has z-index of 10000 because it has the .fade-overlay-triggered-by-search class */
-}
-
-.header-suggestions div {
-	font-size: 1.313em;
+	width: 100% !important; /* same as width of .refreshed-dropdown-tray */
+	max-height: calc( 35vh - 5.75em ); /* hopefully small enough the keyboard doesn't block it: height so the bottom of the suggestions is no more than 35% down the page */
+	overflow-y: scroll !important;
 }
 
 .header-suggestions .suggestions-result {
@@ -336,24 +357,9 @@ a.small-tool { /* inclusion of the "a" is necessary to override the standard a e
 	border-bottom: 1px solid #ddd;
 }
 
-.header-suggestions .suggestions-result:hover,
-.header-suggestions .suggestions-special:hover { /* making search suggestions change color when focused (e.g., tapped on mobile); this CSS is adapted from the .suggestions-result-current class */
-	background-color: #4C59a6;
-	color: #fff;
-}
-
-.header-suggestions .suggestions-special:hover div {
-	color: #fff; /* for whatever reason it doesn't want to have white text unless this is added too */
-}
-
 .header-suggestions .suggestions-special {
 	padding: 0.5em 0.25em !important;
 	margin-top: 0 !important;
-	border: 0 !important;
-	border-bottom: 1px solid #ddd !important;
-}
-
-.header-suggestions .suggestions-results {
 	border: 0 !important;
 }
 

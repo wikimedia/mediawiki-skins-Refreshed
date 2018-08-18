@@ -1,11 +1,34 @@
 /* anything 1001px and over - most laptops, desktops */
 
+#header-wrapper {
+	/* .header-suggestions relies on height, see its CSS for more */
+	/* height is opposite of margin-top of #explore-header-categories-dropdowns */
+	/* etc. (search for 3em to find more) */
+	height: 3em;
+}
+
+#explore-header-categories-dropdowns {
+	margin-top: -3em; /* opposite of height of #header-wrapper */
+}
+
+.header-category-dropdown-button,
+#user-info-dropdown-button {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
 /* vertically center text, images, etc.: https://stackoverflow.com/a/33049392 */
 #header-search-dropdown-tray {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	line-height: 1;
+}
+
+.header-category-dropdown-button,
+#user-info-dropdown-button {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 
 /* handle the header buttons that contain no text (only icon/image) on big */
@@ -19,6 +42,11 @@ helper as it messes up horizontal spacing when only an icon/image is present.
 Also, hide the actual text and dropdown arrows. */
 .header-button-textless-big .header-text {
 	display: none;
+}
+
+.avatar,
+.refreshed-icon-refreshed-explore {
+	margin-right: 0.25em;
 }
 
 .header-button-textless-big svg,

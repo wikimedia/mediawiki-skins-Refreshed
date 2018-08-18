@@ -1,5 +1,16 @@
 /* anything between 601px and 1000px - tablets, big phones in landscape, very small laptops */
 
+#header-wrapper {
+	/* .header-suggestions relies on height, see its CSS for more */
+	/* height is opposite of margin-top of #explore-header-categories-dropdowns */
+	/* etc. (search for 3em to find more) */
+	height: 3em;
+}
+
+#explore-header-categories-dropdowns {
+	margin-top: -3em; /* opposite of height of #header-wrapper */
+}
+
 #sidebar {
 	font-size: 0.875em;
 }
@@ -15,10 +26,6 @@
 }
 
 #small-toolbox-wrapper {
-	display: none;
-}
-
-#header-categories {
 	display: none;
 }
 
@@ -74,6 +81,11 @@ Also, hide the actual text and dropdown arrows. */
 	transform: translate(-50%, -50%);
 }
 
+.avatar,
+.refreshed-icon-refreshed-explore {
+	margin-right: 0.25em;
+}
+
 .refreshed-dropdown-tray-medium {
 	background: #fff; /* same as .refreshed-dropdown-triangle:after border-bottom color */
 	position: absolute;
@@ -110,7 +122,13 @@ see https://css-tricks.com/the-checkbox-hack/ */
 	display: block;
 }
 
-#user-info-dropdown-tray {
+.header-category-dropdown-button,
+#user-info-dropdown-button {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+.refreshed-dropdown-tray {
 	/* This width notably more than the max-width of .refreshed-dropdown-triangle
 	(see its CSS for explanation).
 	NOTE: This assumes .refreshed-dropdown-triangle and .refreshed-dropdown-tray

@@ -1,7 +1,14 @@
 /* anything 600px and under - phones */
 
 #header-wrapper {
-	height: 2.75em; /* .header-suggestions relies on this, see its CSS for more */
+	/* .header-suggestions relies on height, see its CSS for more */
+	/* height is opposite of margin-top of #explore-header-categories-dropdowns */
+	/* etc. (search for 2.75em to find more) */
+	height: 2.75em;
+}
+
+#explore-header-categories-dropdowns {
+	margin-top: -2.75em; /* opposite of height of #header-wrapper */
 }
 
 /* handle the header buttons that contain no text (only icon/image) on small */
@@ -25,7 +32,7 @@ arrows. */
 }
 
 /* hide dropdown arrow for the user info dropdown button */
-#user-info-dropdown-button .refreshed-icon-dropdown-expand {
+#user-info-dropdown-button .refreshed-icon-refreshed-dropdown-expand {
 	display: none;
 }
 
@@ -112,7 +119,7 @@ see https://css-tricks.com/the-checkbox-hack/ */
 #sidebar-logo {
 	display: block;
 	width: 100%;
-	height: 2.75em;
+	height: 2.75em; /* same as height of header-wrapper */
 	text-align: center;
 	padding: 0.5em 0;
 }
@@ -220,10 +227,10 @@ see https://css-tricks.com/the-checkbox-hack/ */
 }
 
 #content-wrapper {
-	top: 2.75em;
+	top: 2.75em; /* same as height of header-wrapper */
 }
 
-#header-categories {
+#explore-header-categories {
 	display: none;
 }
 

@@ -1,3 +1,7 @@
+#sidebar-toggler-header-categories-user-info-search-wrapper {
+	position: relative;
+}
+
 .refreshed-menu-collapsible {
 	-ms-transition: max-height 0.4s ease;
 	transition: max-height 0.4s ease;
@@ -38,7 +42,6 @@ body {
 #header-wrapper {
 	-webkit-font-smoothing: antialiased;
 	width: 100%;
-	height: 3em;
 	z-index: 1099; /* very high value to guarantee no elements on wikis will appear above it; same as .header-suggestions and .mw-echo-ui-overlay */
 	position: fixed;
 	background-color: #103ca2;
@@ -231,41 +234,97 @@ input[type="search"]::-webkit-search-decoration {
 	z-index: 1;
 }
 
-#header-categories {
+#explore-header-categories {
 	position: relative;
-	height: 100%;
 }
 
-/* Dummy wrapper so the header categories experience overflow-x: hidden and overflow-y: visible.
-Inspired by https://stackoverflow.com/a/29687454. Since .refreshed-header-category-dropdown-tray
-has position: absolute, it'll pop out of the overflow: hidden. Since .refreshed-dropdown
-does not have position: absolute, it will stay hidden if the screen is too narrow and it wraps
-out of the header. */
-#header-categories-overflow-wrapper {
+/* Wrapper so the header categories experience overflow-x: hidden and
+overflow-y: visible. Inspired by https://stackoverflow.com/a/29687454. Since
+.refreshed-header-category-dropdown-tray has position: absolute, it'll pop out
+of the overflow: hidden. Since .refreshed-dropdown does not have
+position: absolute, it will stay hidden if the screen is too narrow and it wraps
+out of the header. For more see
+https://css-tricks.com/popping-hidden-overflow/. */
+#explore-header-categories-overflow-hider {
 	overflow: hidden;
+}
+
+
+/* Small element so that #explore-header-categories-dropdowns isn't the first
+non-zero-width child of #explore-header-categories-overflow-hider. That way when
+the viewport is too narrow for both #explore-header-categories-sibling and
+#explore-header-categories-dropdowns, the entirety of
+#explore-header-categories-dropdowns will wrap onto the next line, revealing
+the explore button which is at the top of it. */
+#explore-header-categories-sibling {
+	display: inline-block;
+	/* width is same as margin-left of #explore-dropdown
+	and opposite of margin-left of #explore-header-categories-dropdowns */
+	width: 1px;
+}
+
+#explore-header-categories-dropdowns {
+	display: inline-block;
+	/* margin-left is opposite of width of #explore-header-categories-sibling
+	and opposite of margin-left of #explore-dropdown */
+	margin-left: -1px;
+	/* Appears pushed up 100% of its height, so the second row (header categories)
+	is visible in the header. When the viewport gets too narrow, the element moves
+	down a line, making its first row (the explore button) visible. */
+}
+
+/* when JS is disabled, show the Explore button without the header categories */
+.client-nojs #header-categories-dropdowns,
+.explore-only #header-categories-dropdowns {
+	display: none;
+}
+
+.client-nojs #explore-header-categories-dropdowns,
+.explore-only #explore-header-categories-dropdowns {
+	margin-top: 0;
+}
+
+.client-nojs #explore-dropdown,
+.explore-only #explore-dropdown {
+	margin-left: 0;
 }
 
 .page-item {
 	display: inline-block;
 }
 
-.header-category-dropdown-button,
-#user-info-dropdown-button {
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-}
-
-#header-categories a:hover,
-#header-categories a:focus {
+#explore-header-categories a:hover,
+#explore-header-categories a:focus {
 	text-decoration: none;
 }
 
-#header-categories li img {
-	margin: 0.5em 3px 4px;
+/* .refreshed-dropdown-item included for specificity */
+.refreshed-dropdown-item .explore-submenu-dropdown-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
-#header-categories .header-menu {
-	width: 10em;
+.explore-submenu-dropdown {
+	position: relative; /* place child dropdown relative to this */
+}
+
+.refreshed-dropdown-checkbox:checked ~ .explore-submenu-dropdown-tray {
+	display: block;
+	position: absolute;
+	left: 100%;
+	top: -0.5em; /* opposite of padding-top of .refreshed-dropdown-tray */
+	margin-top: 0;
+}
+
+#explore-dropdown {
+	/* margin-left is same as width of #explore-header-categories-sibling
+	and opposite of margin-left of #explore-header-categories-dropdowns */
+	margin-left: 1px;
+}
+
+#explore-dropdown-tray .refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-toggle::after {
+	background: transparent;
 }
 
 #content-heading {
@@ -340,18 +399,18 @@ out of the header. */
 .avatar {
 	width: 30px;
 	height: auto;
-	margin-right: 0.25em;
 }
 
-.refreshed-icon-menu,
-.refreshed-icon-search {
+.refreshed-icon-refreshed-menu,
+.refreshed-icon-search,
+.refreshed-icon-refreshed-explore {
 	width: 1.5em;
 	height: auto;
 }
 
-.refreshed-icon-dropdown-expand {
+/* add margin to dropdown expand element (but not for the site info dropdown) */
+#sidebar-toggler-header-categories-user-info-search-wrapper .refreshed-icon-refreshed-dropdown-expand {
 	margin-left: 0.25em;
-	margin-right: 0.25em;
 }
 
 .standard-toolbox-dropdown {
@@ -398,7 +457,8 @@ out of the header. */
 .refreshed-dropdown-item a:hover,
 .refreshed-dropdown-item a:focus,
 .sidebar-content a:hover,
-.sidebar-content a:active {
+.sidebar-content a:active,
+.refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-toggle .explore-submenu-dropdown-button {
 	border-color: currentColor;
 }
 
@@ -419,7 +479,8 @@ out of the header. */
 	padding-left: 1em;
 }
 
-.refreshed-dropdown-item a:hover {
+.refreshed-dropdown-item a:hover,
+.refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-toggle .explore-submenu-dropdown-button {
 	background-color: #eee;
 }
 
@@ -653,6 +714,9 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	z-index: 1;
 	pointer-events: none;
 	transition: background-color 0.1s ease;
+	/* include the box-sizing so we can be confident that jQuery's outerHeight()
+	matches the actual height of the header */
+	box-sizing: border-box;
 }
 
 .header-checkbox:checked ~ .header-toggle::after,
@@ -714,13 +778,15 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	background: #fff; /* same as .refreshed-dropdown-triangle:after border-bottom color */
 	position: absolute;
 	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
+	/* padding-top is opposite of top of
+	.refreshed-dropdown-checkbox:checked ~ .explore-submenu-dropdown-tray */
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	display: none;
 	margin: 0;
 	/* margin-top is opposite of bottom of .refreshed-dropdown-triangle:after to
 	ensure arrow lines up with tray */
-	/* also same as .header-suggestions margin-top on medium/small */
+	/* also same as margin-top of .header-suggestions on medium/small */
 	margin-top: -3px;
 	line-height: 1.2em;
 	/* 1 more than z-index of .header-checkbox ~ .header-toggle::after (etc.)
@@ -759,5 +825,5 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 }
 
 .mw-echo-ui-overlay {
-	z-index: 1099; /* same as #header-wrapper and .header-suggestions */
+	z-index: 1099 !important; /* same as #header-wrapper and .header-suggestions */
 }

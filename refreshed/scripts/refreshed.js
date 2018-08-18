@@ -136,6 +136,31 @@ $( function() {
 	} );
 
 	$( window ).resize( function() {
+		// uncheck checkboxes that may have stayed checked despite their button
+		// disappearing (for example the header category checkboxes may stay
+		// checked, so their dropdowns may stay open, after the viewport shrinks
+		// and the header category buttons disappear)
+
+		var checkbox = null;
+		var button = null;
+		var headerTopCoord = 0;
+		var buttonTopCoord = 0;
+		var headerBottomCoord = 0;
+		var buttonBottomCoord = 0;
+		$( '.refreshed-dropdown-tray:visible' ).each( function() {
+			checkbox = $( this ).siblings( '.refreshed-dropdown-checkbox' ).first();
+			button = $( this ).siblings( '.refreshed-dropdown-toggle' ).first().children( '.refreshed-dropdown-button' ).first();
+			// if the button has overflowed, its bottom is above the top of the
+			// header, or its top is above the bottom of the header
+			headerTopCoord = $( '#header-wrapper' ).offset().top;
+			buttonTopCoord = $( button ).offset().top;
+			headerBottomCoord = headerTopCoord + $( '#header-wrapper' ).outerHeight();
+			buttonBottomCoord = buttonTopCoord + $( button ).outerHeight();
+			if ( buttonBottomCoord <= headerTopCoord || buttonTopCoord >= headerBottomCoord ) {
+				checkbox.prop( 'checked', false );
+			}
+		} );
+
 		if ( $( window ).width() >= Refreshed.thresholdForBigCSS ) {
 			Refreshed.windowIsBig = true;
 		} else {
@@ -149,6 +174,15 @@ $( function() {
 		}
 
 		Refreshed.showHideOverflowingDropdowns();
+	} );
+
+	$( '#header-search-dropdown-checkbox' ).change( function() {
+		// reset the contents of the search bar
+		$( '#searchInput' ).val( '' );
+		// give search bar focus if opening
+		if ( this.checked ) {
+			$( '#searchInput' ).focus();
+		}
 	} );
 
 	// working code for dropdowns. Note: simple code like this is much better than complicated like below :)

@@ -2,125 +2,181 @@
 
 class RefreshedTemplate extends BaseTemplate {
 	// list of inline svg icons used throughout the skin
-	private static $iconList = [
-		'dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-dropdown-expand ooui-icon-expand">
-														<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
-													</svg>',
-		'user-loggedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-loggedin ooui-icon-userActive avatar avatar-no-socialprofile">
-													<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
-													<circle cx="10" cy="6" r="5"/>
-												</svg>',
-		'user-anon' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-anon ooui-icon-userAnonymous avatar avatar-no-socialprofile">
-											<path d="M15 2H5L4 8h12l-1-6zM0 10s2 1 10 1 10-1 10-1l-4-2H4zm6 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm8 0a3 3 0 1 0 3 3 3 3 0 0 0-3-3z"/>
-											<path d="M8 14h4v1H8z"/>
+	private static $iconListAllDirections = [
+		'blockip' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-blockip ooui-icon-block">
+										<path d="M10 1a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm5 10H5V9h10z"/>
+									</svg>',
+		'citethispage' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-cite ooui-icon-reference">
+									<path d="M15 1v9l-2.78-2.78L9.44 10V1H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/>
+								</svg>',
+		'close' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-close ooui-icon-close">
+									<path d="M3.636 2.224l14.142 14.142-1.414 1.414L2.222 3.638z"/>
+									<path d="M17.776 3.636L3.634 17.778 2.22 16.364 16.362 2.222z"/>
+								</svg>',
+		'delete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-delete ooui-icon-trash">
+									<path d="M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z"/>
+								</svg>',
+		'refreshed-dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-dropdown-expand ooui-icon-expand">
+																			<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
+																		</svg>',
+		'edit' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-edit ooui-icon-edit">
+								<path d="M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z"/>
+							</svg>',
+		'emailuser' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-emailuser ooui-icon-message">
+											<path d="M0 8v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-10 4z"/>
+											<path d="M18 2H2a2 2 0 0 0-2 2v2l10 4 10-4V4a2 2 0 0 0-2-2z"/>
 										</svg>',
-		'menu' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-menu ooui-icon-menu">
-								<path d="M1 3v2h18V3zm0 8h18V9H1zm0 6h18v-2H1z"/>
+		'history' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-history ooui-icon-history">
+										<path d="M9 6v5h.06l2.48 2.47 1.41-1.41L11 10.11V6H9z"/>
+										<path d="M10 1a9 9 0 0 0-7.85 13.35L.5 16H6v-5.5l-2.38 2.38A7 7 0 1 1 10 17v2a9 9 0 0 0 0-18z"/>
+									</svg>',
+		'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-info ooui-icon-info">
+								<path d="M9.5 16A6.61 6.61 0 0 1 3 9.5 6.61 6.61 0 0 1 9.5 3 6.61 6.61 0 0 1 16 9.5 6.63 6.63 0 0 1 9.5 16zm0-14A7.5 7.5 0 1 0 17 9.5 7.5 7.5 0 0 0 9.5 2zm.5 6v4.08h1V13H8.07v-.92H9V9H8V8zM9 6h1v1H9z"/>
 							</svg>',
 		'more' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-more ooui-icon-ellipsis">
 								<circle cx="10" cy="10" r="2"/>
 								<circle cx="3" cy="10" r="2"/>
 								<circle cx="17" cy="10" r="2"/>
 							</svg>',
-		'close' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-close ooui-icon-close">
-									<path d="M3.636 2.224l14.142 14.142-1.414 1.414L2.222 3.638z"/>
-									<path d="M17.776 3.636L3.634 17.778 2.22 16.364 16.362 2.222z"/>
-								</svg>',
-		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-nstab ooui-icon-article-ltr">
-									<path d="M15 1H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM5 4h5v1H5zm0 2h5v1H5zm0 2h5v1H5zm10 7H5v-1h10zm0-2H5v-1h10zm0-2H5v-1h10zm0-2h-4V4h4z"/>
-								</svg>',
-		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-talk ooui-icon-speechBubbles-ltr">
-								<path d="M18 4h-1v7a2 2 0 0 1-2 2H4v1a2 2 0 0 0 2 2h10l4 4V6a2 2 0 0 0-2-2z"/>
-								<path d="M14 0H2a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-							</svg>',
-		'viewsource' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-viewsource ooui-icon-eye">
-											<path d="M10 7.5a2.5 2.5 0 1 0 2.5 2.5A2.5 2.5 0 0 0 10 7.5zm0 7a4.5 4.5 0 1 1 4.5-4.5 4.5 4.5 0 0 1-4.5 4.5zM10 3C3 3 0 10 0 10s3 7 10 7 10-7 10-7-3-7-10-7z"/>
-										</svg>',
-		'edit' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-edit ooui-icon-edit">
-								<path d="M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z"/>
-							</svg>',
-		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-addsection ooui-icon-speechBubbleAdd-ltr">
-											<path d="M17 1H3a2 2 0 0 0-2 2v16l4-4h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-2 8h-4v4H9V9H5V7h4V3h2v4h4z"/>
-										</svg>',
-		'history' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-history ooui-icon-history">
-										<path d="M9 6v5h.06l2.48 2.47 1.41-1.41L11 10.11V6H9z"/>
-										<path d="M10 1a9 9 0 0 0-7.85 13.35L.5 16H6v-5.5l-2.38 2.38A7 7 0 1 1 10 17v2a9 9 0 0 0 0-18z"/>
-									</svg>',
-		'delete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-delete ooui-icon-trash">
-									<path d="M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z"/>
-								</svg>',
-		'undelete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-undelete ooui-icon-unTrash">
-										<path d="M16 14.78L6.22 5l-1-1-2-2-2-2L0 1.22l4 4V17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-1.8l2.8 2.8 1.2-1.22zM17 4V2h-3.5l-1-1h-5l-1 1h-.84l2 2H17zm-1 1H8.66L16 12.34V5z"/>
-									</svg>',
 		'move' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-move ooui-icon-move">
 								<path d="M19 10l-4-3v2h-4V5h2l-3-4-3 4h2v4H5V7l-4 3 4 3v-2h4v4H7l3 4 3-4h-2v-4h4v2l4-3z"/>
 							</svg>',
-		'protect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-protect ooui-icon-unLock">
-										<path d="M16.07 8H15V5s0-5-5-5a4.63 4.63 0 0 0-4.88 4h2C7.31 2.93 8 2 10 2c3 0 3 2 3 3.5V8H3.93A1.93 1.93 0 0 0 2 9.93v8.15A1.93 1.93 0 0 0 3.93 20h12.14A1.93 1.93 0 0 0 18 18.07V9.93A1.93 1.93 0 0 0 16.07 8zM10 16a2 2 0 1 1 2-2 2 2 0 0 1-2 2z"/>
-									</svg>',
-		'unprotect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-unprotect ooui-icon-lock">
-										<path d="M16.07 8H15V5s0-5-5-5-5 5-5 5v3H3.93A1.93 1.93 0 0 0 2 9.93v8.15A1.93 1.93 0 0 0 3.93 20h12.14A1.93 1.93 0 0 0 18 18.07V9.93A1.93 1.93 0 0 0 16.07 8zM10 16a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm3-8H7V5.5C7 4 7 2 10 2s3 2 3 3.5z"/>
-									</svg>',
-		'watch' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-watch ooui-icon-star">
-									<path d="M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7zm-10 6.9l-3.76 2.27 1-4.28L3.5 8.5h4.61L10 4.6l1.9 3.9h4.6l-3.73 3.4 1 4.28z"/>
-								</svg>',
-		'unwatch' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-unwatch ooui-icon-unStar">
-										<path d="M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7z"/>
-									</svg>',
-		'wikilove' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-wikilove ooui-icon-heart">
-										<path d="M14.75 1A5.24 5.24 0 0 0 10 4 5.24 5.24 0 0 0 0 6.25C0 11.75 10 19 10 19s10-7.25 10-12.75A5.25 5.25 0 0 0 14.75 1z"/>
-									</svg>',
-		'purge' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-purge ooui-icon-reload">
-									<path d="M15.65 4.35A8 8 0 1 0 17.4 13h-2.22a6 6 0 1 1-1-7.22L11 9h7V2z"/>
-								</svg>',
-		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-report-problem refreshed-icon-feedback-ltr">
-													<path d="M19 16L2 12a3.83 3.83 0 0 1-1-2.5A3.83 3.83 0 0 1 2 7l17-4z"/>
-													<rect width="4" height="8" x="4" y="9" rx="2" ry="2"/>
-												</svg>',
-		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-whatlinkshere ooui-icon-references-ltr">
-													<path d="M3 6v12h4V6H3zm3 10H4v-1h2v1zm0-3H4v-1h2v1zm2-7v12h4V6H8zm3 10H9v-1h2v1zm0-3H9v-1h2v1zm.934-5.353L18 18l3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zM18.06 12.17l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
-												</svg>',
-		'recentchangeslinked' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-recentchangeslinked ooui-icon-stripeSummary-ltr">
-																<path d="M1 7h18v2H1zm0 4h14v2H1z"/>
-															</svg>',
-		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-contributions ooui-icon-signature-ltr">
-													<path d="M0 18h20v1H0zm-.003-6.155l1.06-1.06 4.363 4.362-1.06 1.06z"/>
-													<path d="M.004 15.147l4.363-4.363 1.06 1.061-4.362 4.363zM17 5c0 9-11 9-11 9v-1.5s8 .5 9.5-6.5C16 4 15 2.5 14 2.5S11 4 10.75 10c-.08 2 .75 4.5 3.25 4.5 1.5 0 2-1 3.5-1a2.07 2.07 0 0 1 2.25 2.5h-1.5s.13-1-.5-1C16 15 16 16 14 16c0 0-4.75 0-4.75-6S12 1 14 1c.5 0 3 0 3 4z"/>
-												</svg>',
-		'blockip' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-blockip ooui-icon-block">
-										<path d="M10 1a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm5 10H5V9h10z"/>
-									</svg>',
-		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-log refreshed-icon-viewDetails-ltr">
-								<path d="M8 6h9v2H8zm0-3h11v2H8zM1 3h6v6H1zm7 11h9v2H8zm0-3h11v2H8zm-7 0h6v6H1z"/>
-							</svg>',
-		'emailuser' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-emailuser ooui-icon-message">
-											<path d="M0 8v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-10 4z"/>
-											<path d="M18 2H2a2 2 0 0 0-2 2v2l10 4 10-4V4a2 2 0 0 0-2-2z"/>
-										</svg>',
-		'userrights' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-userrights ooui-icon-key">
-											<path d="M15 6a1.54 1.54 0 0 1-1.5-1.5 1.5 1.5 0 0 1 3 0A1.54 1.54 0 0 1 15 6zm-1.5-5A5.55 5.55 0 0 0 8 6.5a6.81 6.81 0 0 0 .7 2.8L1 17v2h4v-2h2v-2h2l3.2-3.2a5.85 5.85 0 0 0 1.3.2A5.55 5.55 0 0 0 19 6.5 5.55 5.55 0 0 0 13.5 1z"/>
-										</svg>',
-		'upload' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-upload ooui-icon-upload">
-									<path d="M17 12v5H3v-5H1v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5z"/>
-									<path d="M15 7l-5-6-5 6h4v8h2V7h4z"/>
-								</svg>',
-		'print' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-print ooui-icon-printer">
-									<path d="M5 1h10v4H5zm12 5H3a2 2 0 0 0-2 2v7h4v4h10v-4h4V8a2 2 0 0 0-2-2zm-3 12H6v-6h8zm2-8a1 1 0 1 1 1-1 1 1 0 0 1-1 1z"/>
-								</svg>',
 		'permalink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-permalink ooui-icon-link">
 											<path d="M4.83 15h2.91a4.88 4.88 0 0 1-1.55-2H5a3 3 0 1 1 0-6h3a3 3 0 0 1 2.82 4h2.1a4.82 4.82 0 0 0 .08-.83v-.34A4.83 4.83 0 0 0 8.17 5H4.83A4.83 4.83 0 0 0 0 9.83v.34A4.83 4.83 0 0 0 4.83 15z"/>
 											<path d="M15.17 5h-2.91a4.88 4.88 0 0 1 1.55 2H15a3 3 0 1 1 0 6h-3a3 3 0 0 1-2.82-4h-2.1a4.82 4.82 0 0 0-.08.83v.34A4.83 4.83 0 0 0 11.83 15h3.34A4.83 4.83 0 0 0 20 10.17v-.34A4.83 4.83 0 0 0 15.17 5z"/>
 										</svg>',
-		'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-info ooui-icon-info">
-								<path d="M9.5 16A6.61 6.61 0 0 1 3 9.5 6.61 6.61 0 0 1 9.5 3 6.61 6.61 0 0 1 16 9.5 6.63 6.63 0 0 1 9.5 16zm0-14A7.5 7.5 0 1 0 17 9.5 7.5 7.5 0 0 0 9.5 2zm.5 6v4.08h1V13H8.07v-.92H9V9H8V8zM9 6h1v1H9z"/>
+		'print' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-print ooui-icon-printer">
+									<path d="M5 1h10v4H5zm12 5H3a2 2 0 0 0-2 2v7h4v4h10v-4h4V8a2 2 0 0 0-2-2zm-3 12H6v-6h8zm2-8a1 1 0 1 1 1-1 1 1 0 0 1-1 1z"/>
+								</svg>',
+		'protect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-protect ooui-icon-unLock">
+										<path d="M16.07 8H15V5s0-5-5-5a4.63 4.63 0 0 0-4.88 4h2C7.31 2.93 8 2 10 2c3 0 3 2 3 3.5V8H3.93A1.93 1.93 0 0 0 2 9.93v8.15A1.93 1.93 0 0 0 3.93 20h12.14A1.93 1.93 0 0 0 18 18.07V9.93A1.93 1.93 0 0 0 16.07 8zM10 16a2 2 0 1 1 2-2 2 2 0 0 1-2 2z"/>
+									</svg>',
+		'purge' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-purge ooui-icon-reload">
+									<path d="M15.65 4.35A8 8 0 1 0 17.4 13h-2.22a6 6 0 1 1-1-7.22L11 9h7V2z"/>
+								</svg>',
+		'recentchangeslinked' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-recentchangeslinked ooui-icon-mapTrail">
+																<path d="M20 6l-1-1-1.5 1.5L16 5l-1 1 1.5 1.5L15 9l1 1 1.5-1.5L19 10l1-1-1.5-1.5L20 6zm-9 8.5A3.54 3.54 0 0 1 7.5 18a3.5 3.5 0 0 1 0-7 3.54 3.54 0 0 1 3.5 3.5z"/>
+																<circle cx="7" cy="3" r="2"/>
+																<circle cx="13" cy="7" r="1"/>
+																<circle cx="10" cy="6" r="1"/>
+																<circle cx="3" cy="3" r="1"/>
+																<circle cx="1" cy="6" r="1"/>
+																<circle cx="1" cy="9" r="1"/>
+																<circle cx="3" cy="12" r="1"/>
+															</svg>',
+		'refreshed-menu' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-menu ooui-icon-menu">
+								<path d="M1 3v2h18V3zm0 8h18V9H1zm0 6h18v-2H1z"/>
 							</svg>',
-		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-smwbrowserlink ooui-icon-puzzle-ltr">
+		'search' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-search ooui-icon-search">
+									<path d="M19 17l-5.15-5.15a7 7 0 1 0-2 2L17 19zM3.5 8A4.5 4.5 0 1 1 8 12.5 4.5 4.5 0 0 1 3.5 8z"/>
+								</svg>',
+		'undelete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-undelete ooui-icon-unTrash">
+										<path d="M16 14.78L6.22 5l-1-1-2-2-2-2L0 1.22l4 4V17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-1.8l2.8 2.8 1.2-1.22zM17 4V2h-3.5l-1-1h-5l-1 1h-.84l2 2H17zm-1 1H8.66L16 12.34V5z"/>
+									</svg>',
+		'unprotect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-unprotect ooui-icon-lock">
+										<path d="M16.07 8H15V5s0-5-5-5-5 5-5 5v3H3.93A1.93 1.93 0 0 0 2 9.93v8.15A1.93 1.93 0 0 0 3.93 20h12.14A1.93 1.93 0 0 0 18 18.07V9.93A1.93 1.93 0 0 0 16.07 8zM10 16a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm3-8H7V5.5C7 4 7 2 10 2s3 2 3 3.5z"/>
+									</svg>',
+		'unwatch' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-unwatch ooui-icon-unStar">
+										<path d="M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7z"/>
+									</svg>',
+		'upload' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-upload ooui-icon-upload">
+									<path d="M17 12v5H3v-5H1v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5z"/>
+									<path d="M15 7l-5-6-5 6h4v8h2V7h4z"/>
+								</svg>',
+		'user-anon' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-anon ooui-icon-userAnonymous avatar avatar-no-socialprofile">
+											<path d="M15 2H5L4 8h12l-1-6zM0 10s2 1 10 1 10-1 10-1l-4-2H4zm6 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm8 0a3 3 0 1 0 3 3 3 3 0 0 0-3-3z"/>
+											<path d="M8 14h4v1H8z"/>
+										</svg>',
+		'user-loggedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-loggedin ooui-icon-userActive avatar avatar-no-socialprofile">
+													<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
+													<circle cx="10" cy="6" r="5"/>
+												</svg>',
+		'userrights' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-userrights ooui-icon-key">
+											<path d="M15 6a1.54 1.54 0 0 1-1.5-1.5 1.5 1.5 0 0 1 3 0A1.54 1.54 0 0 1 15 6zm-1.5-5A5.55 5.55 0 0 0 8 6.5a6.81 6.81 0 0 0 .7 2.8L1 17v2h4v-2h2v-2h2l3.2-3.2a5.85 5.85 0 0 0 1.3.2A5.55 5.55 0 0 0 19 6.5 5.55 5.55 0 0 0 13.5 1z"/>
+										</svg>',
+		'viewsource' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-viewsource ooui-icon-eye">
+											<path d="M10 7.5a2.5 2.5 0 1 0 2.5 2.5A2.5 2.5 0 0 0 10 7.5zm0 7a4.5 4.5 0 1 1 4.5-4.5 4.5 4.5 0 0 1-4.5 4.5zM10 3C3 3 0 10 0 10s3 7 10 7 10-7 10-7-3-7-10-7z"/>
+										</svg>',
+		'watch' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-watch ooui-icon-star">
+									<path d="M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7zm-10 6.9l-3.76 2.27 1-4.28L3.5 8.5h4.61L10 4.6l1.9 3.9h4.6l-3.73 3.4 1 4.28z"/>
+								</svg>',
+		'wikilove' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-wikilove ooui-icon-heart">
+										<path d="M14.75 1A5.24 5.24 0 0 0 10 4 5.24 5.24 0 0 0 0 6.25C0 11.75 10 19 10 19s10-7.25 10-12.75A5.25 5.25 0 0 0 14.75 1z"/>
+									</svg>'
+	];
+
+	private static $iconListLTR = [
+		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-addsection ooui-icon-speechBubbleAdd-ltr">
+											<path d="M17 1H3a2 2 0 0 0-2 2v16l4-4h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-2 8h-4v4H9V9H5V7h4V3h2v4h4z"/>
+										</svg>',
+		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-contributions ooui-icon-signature-ltr">
+													<path d="M0 18h20v1H0zm-.003-6.155l1.06-1.06 4.363 4.362-1.06 1.06z"/>
+													<path d="M.004 15.147l4.363-4.363 1.06 1.061-4.362 4.363zM17 5c0 9-11 9-11 9v-1.5s8 .5 9.5-6.5C16 4 15 2.5 14 2.5S11 4 10.75 10c-.08 2 .75 4.5 3.25 4.5 1.5 0 2-1 3.5-1a2.07 2.07 0 0 1 2.25 2.5h-1.5s.13-1-.5-1C16 15 16 16 14 16c0 0-4.75 0-4.75-6S12 1 14 1c.5 0 3 0 3 4z"/>
+												</svg>',
+		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-log refreshed-icon-viewDetails-ltr">
+								<path d="M8 6h9v2H8zm0-3h11v2H8zM1 3h6v6H1zm7 11h9v2H8zm0-3h11v2H8zm-7 0h6v6H1z"/>
+							</svg>',
+		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-nstab ooui-icon-article-ltr">
+									<path d="M15 1H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM5 4h5v1H5zm0 2h5v1H5zm0 2h5v1H5zm10 7H5v-1h10zm0-2H5v-1h10zm0-2H5v-1h10zm0-2h-4V4h4z"/>
+								</svg>',
+		'refreshed-explore' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-refreshed-explore ooui-icon-map-ltr">
+															<path d="M13 3L7 1 1 3v16l6-2 6 2 6-2V1zM7 14.89l-4 1.36V4.35L7 3zm10 .75L13 17V5.1l4-1.36z"/>
+														</svg>',
+		'refreshed-submenu-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-refreshed-submenu-expand ooui-icon-next-ltr">
+																		<path d="M6.2 1L4.8 2.5l7.4 7.5-7.4 7.5L6.2 19l9-9z"/>
+																	</svg>',
+		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-report-problem ooui-icon-feedback-ltr">
+													<path d="M19 16L2 12a3.83 3.83 0 0 1-1-2.5A3.83 3.83 0 0 1 2 7l17-4z"/>
+													<rect width="4" height="8" x="4" y="9" rx="2" ry="2"/>
+												</svg>',
+		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-smwbrowserlink ooui-icon-puzzle-ltr">
 													<circle cx="17" cy="10" r="3"/>
 													<path d="M10.58 3A3 3 0 0 1 11 4.5a3 3 0 0 1-6 0A3 3 0 0 1 5.42 3H1v12a2 2 0 0 0 2 2h12V3z"/>
 												</svg>',
-		'search' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-search ooui-icon-search">
-									<path d="M19 17l-5.15-5.15a7 7 0 1 0-2 2L17 19zM3.5 8A4.5 4.5 0 1 1 8 12.5 4.5 4.5 0 0 1 3.5 8z"/>
-								</svg>'
+		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-talk ooui-icon-speechBubbles-ltr">
+								<path d="M18 4h-1v7a2 2 0 0 1-2 2H4v1a2 2 0 0 0 2 2h10l4 4V6a2 2 0 0 0-2-2z"/>
+								<path d="M14 0H2a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+							</svg>',
+		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-whatlinkshere ooui-icon-references-ltr">
+													<path d="M3 6v12h4V6H3zm3 10H4v-1h2v1zm0-3H4v-1h2v1zm2-7v12h4V6H8zm3 10H9v-1h2v1zm0-3H9v-1h2v1zm.934-5.353L18 18l3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zM18.06 12.17l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
+												</svg>'
+	];
+
+	private static $iconListRTL = [
+		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-addsection ooui-icon-speechBubbleAdd-rtl">
+											<path d="M1 3v10c0 1.1.9 2 2 2h12l4 4V3c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2zm4 4h4V3h2v4h4v2h-4v4H9V9H5V7z"/>
+										</svg>',
+		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-contributions ooui-icon-signature-rtl">
+													<path d="M0 18h20v1H0zm14.542-2.883l4.384-4.384 1.06 1.06-4.384 4.384z"/>
+													<path d="M14.54 11.86l1.06-1.062 4.384 4.384-1.06 1.061zM6 1c2 0 4.8 3 4.8 9S6 16 6 16c-2 0-2-1-3.8-1-.6 0-.5 1-.5 1H.2c0-.2-.1-.4 0-.7.1-1.1 1.1-2 2.3-1.8 1.5 0 2 1 3.5 1 2.5 0 3.3-2.5 3.3-4.5C9 4 7 2.5 6 2.5S4 4 4.5 6C6 13 14 12.5 14 12.5V14S3 14 3 5c0-4 2.5-4 3-4z"/>
+												</svg>',
+		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-log refreshed-icon-viewDetails-rtl">
+								<path d="M12 8H3V6h9v2zm0-3H1V3h11v2zm1-2h6v6h-6zm-1 13H3v-2h9v2zm0-3H1v-2h11v2zm1-2h6v6h-6z"/>
+							</svg>',
+		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-nstab ooui-icon-article-rtl">
+									<path d="M3 3v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2zm12 2h-5V4h5zm0 2h-5V6h5zm0 2h-5V8h5zM5 14h10v1H5zm0-2h10v1H5zm0-2h10v1H5zm0-6h4v5H5z"/>
+								</svg>',
+		'refreshed-explore' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-refreshed-explore ooui-icon-map-rtl">
+															<path d="M1 1v16l6 2 6-2 6 2V3l-6-2-6 2zm12 2l4 1.36v11.9l-4-1.36zM3 3.74L7 5.1V17l-4-1.36z"/>
+														</svg>',
+		'refreshed-submenu-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-refreshed-submenu-expand ooui-icon-next-rtl">
+																		<path d="M4.8 10l9 9 1.4-1.5L7.8 10l7.4-7.5L13.8 1z"/>
+																	</svg>',
+		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-report-problem ooui-icon-feedback-rtl">
+													<path d="M1 3l17 4c.6.7 1 1.6 1 2.5 0 .9-.4 1.8-1 2.5L1 16V3z"/>
+													<path d="M16 11v4c0 1.1-.9 2-2 2s-2-.9-2-2v-4c0-1.1.9-2 2-2s2 .9 2 2z"/>
+												</svg>',
+		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-smwbrowserlink ooui-icon-puzzle-rtl">
+													<circle cx="3" cy="10" r="3"/>
+													<path d="M9.42 3A2.94 2.94 0 0 0 9 4.5a3 3 0 0 0 6 0 2.94 2.94 0 0 0-.42-1.5H19v12a2 2 0 0 1-2 2H5V3z"/>
+												</svg>',
+		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-talk ooui-icon-speechBubbles-rtl">
+								<path d="M0 6v14l4-4h10c1.1 0 2-.9 2-2v-1H5c-1.1 0-2-.9-2-2V4H2C.9 4 0 4.9 0 6z"/>
+								<path d="M4 2v8c0 1.1.9 2 2 2h10l4 4V2c0-1.1-.9-2-2-2H6C4.9 0 4 .9 4 2z"/>
+							</svg>',
+		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-whatlinkshere ooui-icon-references-rtl">
+													<path d="M21.449 6v12h-4V6h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-2-7v12h-4V6h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-.934-5.353L6.449 18 3 15.979 9.065 5.625l3.45 2.022zm-7.643 7.111l1.726 1.012.506-.862-1.725-1.012-.507.862zm1.517-2.588l1.725 1.011.506-.862-1.726-1.012-.505.863z"/>
+												</svg>'
 	];
 
 	/**
@@ -263,7 +319,6 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @return string
 	 */
 	private function makeIcon( $iconName ) {
-		// print_r($iconList);
 		// return null if $iconName isn't a string or is the empty string
 		if ( !is_string( $iconName ) || $iconName === '' ) {
 			return '';
@@ -280,8 +335,18 @@ class RefreshedTemplate extends BaseTemplate {
 			$iconName = 'nstab';
 		}
 
-		if ( array_key_exists( $iconName, self::$iconList ) ) {
-			return self::$iconList[$iconName];
+		// Get the icon if it is in the list of all icons.
+		// If not, get the icon if it is in the list of the LTR/RTL icons
+		// (depending on the user interface language).
+		if ( array_key_exists( $iconName, self::$iconListAllDirections ) ) {
+			return self::$iconListAllDirections[$iconName];
+		} else {
+			$languageDirection = $this->getSkin()->getLanguage()->getDir();
+			if ( $languageDirection === 'ltr' && array_key_exists( $iconName, self::$iconListLTR ) ) {
+				return self::$iconListLTR[$iconName];
+			} elseif ( $languageDirection === 'rtl' && array_key_exists( $iconName, self::$iconListRTL ) ) {
+				return self::$iconListRTL[$iconName];
+			}
 		}
 
 		return '';
@@ -312,8 +377,8 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs); optional
 	 * @return string string representing the list item
 	 */
-	private function makeListItemWithIcon( $iconName = '', $key, $item, $options = [] ) {
-		return $this->makeElementWithIconHelper( 'list item', $iconName, $key, $item, $options );
+	private function makeListItemWithIconAtStart( $iconName = '', $key, $item, $options = [] ) {
+		return $this->makeElementWithIconHelper( 'list item', $iconName, $key, $item, $options, 'start' );
 	}
 
 	/**
@@ -332,20 +397,61 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs); optional
 	 * @return string string representing the link
 	 */
-	private function makeLinkWithIcon( $iconName = '', $key, $item, $options = [] ) {
-		return $this->makeElementWithIconHelper( 'link', $iconName, $key, $item, $options );
+	private function makeLinkWithIconAtStart( $iconName = '', $key, $item, $options = [] ) {
+		return $this->makeElementWithIconHelper( 'link', $iconName, $key, $item, $options, 'start' );
 	}
 
 	/**
-	 * Helper method for makeListItemWithIcon and makeLinkWithIcon.
+	 * Generate a list item using BaseTemplate::makeListItem() that contains the
+	 * inline SVG icon specified by $iconName just after the actual link text,
+	 * assuming $iconName is specified.
+	 * (If the icon name isn't recognized, or the list item or icon HTML can't
+	 * be parsed for whatever reason, the list item is returned without
+	 * adding the icon.)
+	 * @param string $iconName the name of the icon
+	 * @param string $key the "$key" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $item the "$item" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $options the "$options" for the standard makeLink/makeListItem
+	 *  (see docs); optional
+	 * @return string string representing the list item
+	 */
+	private function makeListItemWithIconAtEnd( $iconName = '', $key, $item, $options = [] ) {
+		return $this->makeElementWithIconHelper( 'list item', $iconName, $key, $item, $options, 'end' );
+	}
+
+	/**
+	 * Generate a link using BaseTemplate::makeLink() that contains the
+	 * inline SVG icon specified by $iconName just after the actual link text,
+	 * assuming $iconName is specified.
+	 * (If the icon name isn't recognized, or the link or icon HTML can't
+	 * be parsed for whatever reason, the link is returned without
+	 * adding the icon.)
+	 * @param string $iconName the name of the icon
+	 * @param string $key the "$key" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $item the "$item" for the standard makeLink/makeListItem
+	 *  (see docs)
+	 * @param array $options the "$options" for the standard makeLink/makeListItem
+	 *  (see docs); optional
+	 * @return string string representing the link
+	 */
+	private function makeLinkWithIconAtEnd( $iconName = '', $key, $item, $options = [] ) {
+		return $this->makeElementWithIconHelper( 'link', $iconName, $key, $item, $options, 'end' );
+	}
+
+	/**
+	 * Helper method for makeListItemWithIconAtStart, makeLinkWithIconAtStart,
+	 * makeListItemWithIconAtEnd, and makeLinkWithIconAtEnd.
 	 *
 	 * Depending on $mode, generate a) a list item containing a link using
 	 * BaseTemplate::makeListItem() or b) just a link using
-	 * BaseTemplate::makeLink(). Before the actual link text, there is the inline
-	 * SVG icon specified by $iconName, assuming $iconName is specified.
-	 * (If the icon name isn't recognized, or the list item/link or icon HTML
-	 * can't be parsed for whatever reason, the list item/link is returned without
-	 * adding the icon.)
+	 * BaseTemplate::makeLink(). Before or after (depending on settings) the
+	 * actual link text, there is the inline SVG icon specified by $iconName,
+	 * assuming $iconName is specified. (If the icon name isn't recognized, or the=
+	 * list item/link or icon HTML can't be parsed for whatever reason, the list
+	 * item/link is returned without adding the icon.)
 	 * @param string $mode Expects either 'list item' or 'link'
 	 * @param string $iconName the name of the icon
 	 * @param string $key the "$key" for the standard makeLink/makeListItem
@@ -354,11 +460,13 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs)
 	 * @param array $options the "$options" for the standard makeLink/makeListItem
 	 *  (see docs); optional
+	 * @param string $iconPosition where to put the icon within the list item or
+	 *  link; expects either 'start' or 'end'
 	 * @return string string representing the list item/link
 	 */
-	private function makeElementWithIconHelper( $mode, $iconName, $key, $item, $options ) {
+	private function makeElementWithIconHelper( $mode, $iconName, $key, $item, $options, $iconPosition ) {
 		// Based on the $mode, either make a list item or link without any icon
-		// added yet. If the $mode is invalid, return null.
+		// added yet.
 		if ( $mode === 'list item' ) {
 			$outputUnedited = $this->makeListItem( $key, $item, $options );
 		} elseif ( $mode === 'link' ) {
@@ -397,20 +505,29 @@ class RefreshedTemplate extends BaseTemplate {
 		// is produced by makeListItem or makeLink, which we haven't modified.
 		$firstATagInListItemOrLink = $xpath->query( '(//a)[1]' )->item( 0 );
 
-		// Find the child of the first a tag from the last line. Note this may not
-		// exist (if a tag is empty), in which case it's null.
-		$firstATagChild = $firstATagInListItemOrLink->firstChild;
+		// Find the first/last child of the first a tag from the last line. Note
+		// this may not exist (if a tag is empty), in which case it's null.
+		if ( $iconPosition === 'start' ) {
+			$firstATagChild = $firstATagInListItemOrLink->firstChild;
+		} elseif ( $iconPosition === 'end' ) {
+			$firstATagChild = $firstATagInListItemOrLink->lastChild;
+		}
 
 		$iconInIconDOM = $iconDOM->documentElement;
 		// Currently the icon is in the iconDOM. We have to put a copy of it in
 		// $listItemOrLinkDOM so we can add the icon to the list item/link
 		$iconInListItemOrLinkDOM = $listItemOrLinkDOM->importNode( $iconInIconDOM, true );
 
-		// add the icon to the very beginning of the first a tag
+		// add the icon to the very beginning/end of the first a tag depending on
+		// config settings
 		if ( $firstATagChild === null ) {
 			$firstATagInListItemOrLink->appendChild( $iconInListItemOrLinkDOM );
 		} else {
-			$firstATagInListItemOrLink->insertBefore( $iconInListItemOrLinkDOM, $firstATagChild );
+			if ( $iconPosition === 'start' ) {
+				$firstATagInListItemOrLink->insertBefore( $iconInListItemOrLinkDOM, $firstATagChild );
+			} elseif ( $iconPosition === 'end' ) {
+				$firstATagInListItemOrLink->appendChild( $iconInListItemOrLinkDOM );
+			}
 		}
 
 		return $listItemOrLinkDOM->saveHTML();
@@ -536,7 +653,7 @@ class RefreshedTemplate extends BaseTemplate {
 	private function renderUserDropdownItems( $dropdownPersonalTools ) {
 		foreach ( $dropdownPersonalTools as $keyAndIconName => $item ) {
 			$item['class'] = 'refreshed-dropdown-item header-dropdown-item user-info-dropdown-item';
-			echo $this->makeListItemWithIcon( $keyAndIconName, $keyAndIconName, $item );
+			echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item );
 		}
 	}
 
@@ -550,7 +667,7 @@ class RefreshedTemplate extends BaseTemplate {
 		// (each item in $siteNavigationDropdown was an output of
 		// parseSiteNavigationDropdownItem)
 		// we're making a bunch of list items here (<li> elements, but NOT ones
-		// created via makeListItem or makeListItemWithIcon...)
+		// created via makeListItem or makeListItemWithIconAtStart...)
 
 		// the classes to add to each of the dropdown anchors
 		$classList = 'refreshed-logo refreshed-logo-other';
@@ -561,22 +678,6 @@ class RefreshedTemplate extends BaseTemplate {
 			echo Html::rawElement( 'li', [
 				'class' => 'refreshed-dropdown-item header-dropdown-item site-navigation-dropdown-item'
 			], $this->makeWikiLinkWithLogo( $wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'], $wikiLogoInfo['wikiURL'], $classList ) );
-		}
-	}
-
-	/**
-	 * Render the items of the header category dropdown to appear in the header.
-	 * @param array $headerCategoryDropdown an array containing info for a header
-	 *  category dropdown
-	 * @param int $headerCategoryIndex which number header category is being
-	 *  generated
-	 */
-	private function renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $headerCategoryIndex ) {
-		$classList = 'refreshed-dropdown-item header-dropdown-item header-category-dropdown-item header-category-' . strval( $headerCategoryIndex ) . '-dropdown-item';
-		foreach ( $headerCategoryDropdown as $key => $value ) {
-			echo Html::rawElement( 'li', [
-				'class' => $classList,
-			], $this->makeLink( $key, $value ) );
 		}
 	}
 
@@ -612,8 +713,28 @@ class RefreshedTemplate extends BaseTemplate {
 		}
 	}
 
+	/**
+	 * Render the items of the header category dropdown to appear in the header.
+	 * @param array $headerCategoryDropdown an array containing info for a header
+	 *  category dropdown
+	 * @param string $prefix a prefix to attach to some of the classes of each li
+	 *  (such as 'header-category')
+	 * @param int $index which number header category's dropdown is being
+	 *  generated
+	 */
+	private function renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $index, $prefix ) {
+		$commonClassList = 'refreshed-dropdown-item header-dropdown-item';
+		$prefixedClassList = $prefix . '-dropdown-item ' . $prefix . '-' . strval( $index ) . '-dropdown-item';
+		$classList = $commonClassList . $prefixedClassList;
+		foreach ( $headerCategoryDropdown as $key => $value ) {
+			echo Html::rawElement( 'li', [
+				'class' => $classList,
+			], $this->makeLink( $key, $value ) );
+		}
+	}
+
 	public function execute() {
-		global $wgMemc;
+		global $wgMemc, $wgRefreshedUseExploreWithoutHeaderCategories;
 
 		$skin = $this->getSkin();
 		$config = $skin->getConfig();
@@ -697,7 +818,7 @@ class RefreshedTemplate extends BaseTemplate {
 							<input type="checkbox" id="site-navigation-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
 							<label for="site-navigation-dropdown-checkbox" id="site-navigation-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
 								<div id="site-navigation-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
-									<?php $this->renderIcon( 'dropdown-expand' ) ?>
+									<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 									<span class="refreshed-dropdown-triangle"></span>
 								</div>
 							</label>
@@ -743,7 +864,7 @@ class RefreshedTemplate extends BaseTemplate {
 								<div id="user-info-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
 									<?php echo $this->makeAvatar( $user ) ?>
 									<span class="refreshed-username header-text"><?php echo $this->makeUsernameText( $user ) ?></span>
-									<?php $this->renderIcon( 'dropdown-expand' ) ?>
+									<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 									<span class="refreshed-dropdown-triangle"></span>
 								</div>
 							</label>
@@ -788,34 +909,68 @@ class RefreshedTemplate extends BaseTemplate {
 				<?php
 				if ( $headerCategoriesDropdowns ) {
 					?>
-					<section id="header-categories" class="header-section">
-						<div id="header-categories-overflow-wrapper">
-							<?php
-							$headerCategoryIndex = 0;
-							foreach ( $headerCategoriesDropdowns as $name => $headerCategoryDropdown ) {
-								$currentDropdownID = 'header-category-dropdown-' . $headerCategoryIndex;
-								$currentCheckboxID = 'header-category-dropdown-checkbox-' . $headerCategoryIndex;
-								$currentToggleID = 'header-category-dropdown-toggle-' . $headerCategoryIndex;
-								$currentButtonID = 'header-category-dropdown-button-' . $headerCategoryIndex;
-								$currentTrayID = 'header-category-dropdown-tray-' . $headerCategoryIndex;
-								?>
-								<div id="<?php echo $currentDropdownID ?>" class="refreshed-dropdown header-category-dropdown">
-									<input type="checkbox" id="<?php echo $currentCheckboxID ?>" class="refreshed-dropdown-checkbox header-checkbox">
-									<label for="<?php echo $currentCheckboxID ?>" id="<?php echo $currentToggleID ?>" class="refreshed-dropdown-toggle header-toggle">
-										<div id="<?php echo $currentButtonID ?>" class="refreshed-dropdown-button header-button header-category-dropdown-button">
-											<span class="header-category-name header-text"><?php echo htmlspecialchars( $name ) ?></span>
-											<?php $this->renderIcon( 'dropdown-expand' ) ?>
+					<section id="explore-header-categories" class="header-section<?php if ( $wgRefreshedUseExploreWithoutHeaderCategories ) { echo ' explore-only'; } ?>">
+						<div id="explore-header-categories-overflow-hider"><!--
+						--><div id="explore-header-categories-sibling"></div><!--
+						--><div id="explore-header-categories-dropdowns">
+								<div id="explore-dropdown" class="refreshed-dropdown">
+									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
+									<label for="explore-dropdown-checkbox" id="explore-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+										<div id="explore-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
+											<?php $this->renderIcon( 'refreshed-explore' ) ?>
+											<span class="header-category-name header-text"><?php echo $this->getMsg( 'Refreshed-explore' )->text() ?></span>
+											<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 											<span class="refreshed-dropdown-triangle"></span>
 										</div>
 									</label>
-									<ul id="<?php echo $currentTrayID ?>" class="header-category-dropdown-tray refreshed-dropdown-tray">
-										<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $headerCategoryIndex ); ?>
+									<ul id="explore-dropdown-tray" class="refreshed-dropdown-tray">
+
+										<?php
+										$exploreIndex = 0;
+										foreach ( $headerCategoriesDropdowns as $name => $headerCategoryDropdown ) {
+											?>
+											<li id="explore-submenu-<?php echo $exploreIndex ?>-dropdown" class="refreshed-dropdown explore-submenu-dropdown refreshed-dropdown-item">
+												<input type="checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
+												<label for="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+													<a id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-button" class="refreshed-dropdown-button explore-submenu-dropdown-button">
+														<div class="explore-submenu-name"><?php echo htmlspecialchars( $name ) ?></div>
+														<div><?php $this->renderIcon( 'refreshed-submenu-expand' ) ?></div>
+													</a>
+												</label>
+												<ul id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-tray" class="explore-submenu-dropdown-tray refreshed-dropdown-tray">
+													<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $exploreIndex, 'explore-submenu' ); ?>
+												</ul>
+											</li>
+											<?php
+											$exploreIndex++;
+										}
+										?>
 									</ul>
 								</div>
-								<?php
-								$headerCategoryIndex++;
-							}
-							?>
+								<div id="header-categories-dropdowns">
+									<?php
+									$headerCategoryIndex = 0;
+									foreach ( $headerCategoriesDropdowns as $name => $headerCategoryDropdown ) {
+										?>
+										<div id="header-category-<?php echo $headerCategoryIndex ?>-dropdown" class="refreshed-dropdown header-category-dropdown">
+											<input type="checkbox" id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
+											<label for="header-category-<?php echo $headerCategoryIndex ?>-dropdown-checkbox" id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+												<div id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
+													<span class="header-category-name header-text"><?php echo htmlspecialchars( $name ) ?></span>
+													<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
+													<span class="refreshed-dropdown-triangle"></span>
+												</div>
+											</label>
+											<ul id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-tray" class="header-category-dropdown-tray refreshed-dropdown-tray">
+												<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $headerCategoryIndex, 'header-category' ); ?>
+											</ul>
+										</div>
+										<?php
+										$headerCategoryIndex++;
+									}
+									?>
+								</div>
+							</div>
 						</div>
 					</section>
 					<?php
@@ -824,7 +979,7 @@ class RefreshedTemplate extends BaseTemplate {
 				<section id="sidebar-toggler" class="header-section">
 					<label for="sidebar-toggler-checkbox" id="sidebar-toggler-toggle" class="header-toggle">
 						<div id="sidebar-toggle-button" class="header-button header-button-textless-small">
-							<?php $this->renderIcon( 'menu' ); ?>
+							<?php $this->renderIcon( 'refreshed-menu' ); ?>
 						</div>
 					</label>
 				</section>
@@ -936,7 +1091,7 @@ class RefreshedTemplate extends BaseTemplate {
 								foreach ( $this->data['content_actions'] as $key => $action ) {
 									if ( !$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated ) { // this runs until all the actions outside the dropdown have been generated (generates actions outside dropdown)
 										// echo $key;
-										echo $this->makeLinkWithIcon( $key, $key, $action, [
+										echo $this->makeLinkWithIconAtStart( $key, $key, $action, [
 											'text-wrapper' => [
 												'tag' => 'span'
 											]
@@ -963,7 +1118,7 @@ class RefreshedTemplate extends BaseTemplate {
 									} else { // generates actions inside dropdown
 										?>
 										<li class="toolbox-dropdown-item toolbox-dropdown-page-action">
-											<?php echo $this->makeListItemWithIcon( $key, $key, $action, [
+											<?php echo $this->makeListItemWithIconAtStart( $key, $key, $action, [
 												'text-wrapper' => [
 													'tag' => 'span',
 													'attributes' => [
@@ -979,7 +1134,7 @@ class RefreshedTemplate extends BaseTemplate {
 								foreach ( $toolbox as $tool => $toolData ) { // generates toolbox tools inside dropdown (e.g. "upload file")
 									?>
 									<li class="toolbox-dropdown-item toolbox-dropdown-tool">
-										<?php echo $this->makeListItemWithIcon( $tool, $tool, $toolData, [
+										<?php echo $this->makeListItemWithIconAtStart( $tool, $tool, $toolData, [
 											'text-wrapper' => [
 												'tag' => 'span',
 												'attributes' => [
@@ -993,7 +1148,7 @@ class RefreshedTemplate extends BaseTemplate {
 								}
 							} else { // if there aren't actions like edit, etc. (so a "tools" link is needed instead of a "more..." link)
 								foreach ( $this->data['content_actions'] as $key => $action ) { // generates first link (i.e. "page" button on the mainspace, "special page" on Special namespace, etc.); the foreach loop should once run once since there should only be one link
-									echo $this->makeLinkWithIcon( $key, $key, $action );
+									echo $this->makeLinkWithIconAtStart( $key, $key, $action );
 								}
 							?>
 								<div class="toolbox-container">
@@ -1017,7 +1172,7 @@ class RefreshedTemplate extends BaseTemplate {
 												}
 												?>
 												<li class="toolbox-dropdown-item tool-dropdown-item toolbox-dropdown-tool">
-													<?php echo $this->makeLinkWithIcon( $tool, $tool, $dataForLink, [
+													<?php echo $this->makeLinkWithIconAtStart( $tool, $tool, $dataForLink, [
 														'text-wrapper' => [
 															'tag' => 'span',
 															'attributes' => [

@@ -85,7 +85,7 @@ Also, hide the actual text and dropdown arrows. */
 	/* also same as .header-suggestions margin-top on medium/small */
 	margin-top: -3px;
 	line-height: 1.2em;
-	/* 1 more than z-index of .header-checkbox ~ .header-toggle::after (etc.)
+	/* 1 more than z-index of .refreshed-checkbox ~ .refreshed-toggle::after (etc.)
 	so the dropdown appears above the dropdown close overlay.
 	1 less than z-index of .refreshed-dropdown-triangle to ensure the triangle
 	appears above the dropdown and thus is not underneath its drop shadow */
@@ -157,6 +157,11 @@ see https://css-tricks.com/the-checkbox-hack/ */
 }
 
 #sidebar-logo {
+	display: none;
+}
+
+#site-navigation-sidebar,
+#header-categories-sidebar {
 	display: none;
 }
 

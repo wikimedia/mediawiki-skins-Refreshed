@@ -65,7 +65,11 @@ same height */
 #header-wrapper section,
 #header-wrapper nav,
 #header-wrapper a,
-#header-wrapper label {
+#header-wrapper label,
+#site-navigation-sidebar div,
+#site-navigation-sidebar nav,
+#site-navigation-sidebar a,
+#site-navigation-sidebar label {
 	height: 100%;
 	vertical-align: top;
 }
@@ -86,8 +90,10 @@ same height */
 }
 
 .header-button:hover,
-.header-checkbox:checked ~ .header-toggle .header-button,
-.header-button-active { /* defined at bottom so this overrides individual elements' background-color properties */
+.refreshed-checkbox:checked ~ .refreshed-toggle .header-button,
+.refreshed-checkbox:checked ~ .refreshed-toggle .refreshed-collapsible-button,
+.refreshed-checkbox:checked ~ .site-navigation-sidebar-logo-wrapper .refreshed-collapsible-button,
+.refreshed-collapsible-tray { /* defined at bottom so this overrides individual elements' background-color properties */
 	background-color: midnightblue;
 }
 
@@ -120,7 +126,7 @@ because a button that is textless at all screen sizes shouldn't have any
 	display: flex;
 	flex-direction: row-reverse; /* when only one item inside (#user-info-search-wrapper), push it to the right side (LTR) or left (RTL) */
 	justify-content: space-between;
-	width: 100%; /* fill all the space not occupied by #site-info */
+	width: 100%; /* fill all the space not occupied by #site-navigation-header */
 }
 
 #user-info-search-wrapper {
@@ -142,7 +148,19 @@ because a button that is textless at all screen sizes shouldn't have any
 	vertical-align: middle; /* (more or less) center the echo badges */
 }
 
-#site-info-main {
+.site-navigation {
+	text-align: center;
+}
+
+#site-navigation-sidebar {
+	padding-bottom: 1.5em;
+}
+
+#site-navigation-sidebar .site-navigation-sidebar-logo-wrapper { /* #site-navigation-sidebar for specificity */
+	height: 3em;
+}
+
+#site-navigation-header .site-navigation-full-logos {
 	width: 12em;
 }
 
@@ -155,16 +173,16 @@ because a button that is textless at all screen sizes shouldn't have any
 	height: 100%;
 }
 
-#site-info-main.multiple-wikis .refreshed-logo-current {
+.multiple-wikis .refreshed-logo-current {
 	width: 10em;
-	float: left; /* prevent arrow from being bumped down */
 }
 
-#site-navigation-dropdown-tray {
-	text-align: center;
+#site-navigation-header-dropdown-toggle,
+#site-navigation-sidebar-collapsible-toggle {
+		display: inline-block; /* prevent arrow from being bumped down */
 }
 
-#site-info-mobile {
+.site-navigation-icon-logos {
 	display: none;
 	height: 2.75em;
 	width: 2.75em;
@@ -172,9 +190,10 @@ because a button that is textless at all screen sizes shouldn't have any
 	padding: 0 0.25em;
 }
 
-#site-info-mobile .header-button {
+.site-navigation-icon-logos .header-button {
 	display: block;
 }
+
 
 #searchInput {
 	border: 0;
@@ -298,8 +317,10 @@ the explore button which is at the top of it. */
 	text-decoration: none;
 }
 
-/* .refreshed-dropdown-item included for specificity */
-.refreshed-dropdown-item .explore-submenu-dropdown-button {
+/* .refreshed-dropdown-item included for specificity;
+These rules ensure the icon inside is vertically centered alongside the text */
+.refreshed-dropdown-item .explore-submenu-dropdown-button,
+.refreshed-collapsible-toggle {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -442,8 +463,17 @@ the explore button which is at the top of it. */
 	left: 0.1em;
 }
 
+.sidebar-section {
+	margin-top: 0.25em;
+}
+
+.sidebar-section:first-of-type {
+	margin-top: 0;
+}
+
 /* the dropdown/sidebar links where a side border appears on hover */
 .refreshed-dropdown-item a,
+.refreshed-collapsible-item a,
 .sidebar-content a {
 	display: block;
 	padding-top: 0.2em;
@@ -456,20 +486,24 @@ the explore button which is at the top of it. */
 
 .refreshed-dropdown-item a:hover,
 .refreshed-dropdown-item a:focus,
+.refreshed-collapsible-item a:hover,
+.refreshed-collapsible-item a:focus,
 .sidebar-content a:hover,
 .sidebar-content a:active,
 .refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-toggle .explore-submenu-dropdown-button {
 	border-color: currentColor;
 }
 
-.sidebar-content a {
+#sidebar a {
 	color: currentColor;
-	padding-left: 1.5em;
+}
+#sidebar a:hover,
+#sidebar a:active, {
+	color: #eee;
 }
 
-.sidebar-content a:hover,
-.sidebar-content a:active, {
-	color: #eee;
+.sidebar-content a {
+	padding-left: 1.5em;
 }
 
 .refreshed-dropdown-item a {
@@ -607,18 +641,36 @@ the explore button which is at the top of it. */
 	padding: 0;
 }
 
-.sidebar-section .main {
+.sidebar-header {
 	color: currentColor;
 	border: 0;
 	margin: 0;
-	margin-left: 0.5em;
-	margin-top: 0.5em;
 	padding: 0;
+	/* padding-left is same as padding-right of
+	.header-categories-sidebar-collapsible-icons-wrapper */
+	padding-left: 0.5em;
+	padding-right: 1em;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
 	font-size: 1em;
 }
 
-.sidebar-section:first-of-type h1 {
-	margin-top: 0;
+.header-categories-sidebar-collapsible-icons-wrapper {
+	padding-right: 0.5em; /* same as padding-left of .sidebar-header */
+}
+
+.header-category-collapsible-button {
+	width: 100%;
+	line-height: initial;
+}
+
+.header-category-sidebar-name {
+	width: 100%;
+	text-align: left;
+}
+
+.refreshed-icon-refreshed-sidebar-collapse {
+	display: none;
 }
 
 .toolbox-container {
@@ -671,17 +723,17 @@ the explore button which is at the top of it. */
 }
 
 /* dropdowns */
-#site-navigation-dropdown {
+#site-navigation-header-dropdown {
 	position: relative;
 	width: 100%; /* so tray can fit width of sidebar area rather than default width */
 }
 
-#site-navigation-dropdown-button {
+.site-navigation-button {
 	width: 2em;
 }
 
-#site-navigation-dropdown-tray {
-	width: 100%; /* ensure tray is as wide as #site-info */
+#site-navigation-header-dropdown-tray {
+	width: 100%; /* ensure tray is as wide as #site-navigation-header */
 }
 
 /* Dropdowns use the "checkbox hack":
@@ -698,7 +750,7 @@ their contents. The second selector is useful for the sidebar toggle checkbox,
 because it is not a sibling of the elements it affects (it can't be, since the
 two elements are in different containers). The checkbox should affect the
 sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
-.header-checkbox ~ .header-toggle::after,
+.refreshed-dropdown-checkbox ~ .refreshed-toggle::after,
 #sidebar-toggler-checkbox ~ #header-wrapper #sidebar-toggler-toggle::after {
 	content: "";
 	position: fixed;
@@ -719,13 +771,13 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	box-sizing: border-box;
 }
 
-.header-checkbox:checked ~ .header-toggle::after,
+.refreshed-checkbox:checked ~ .refreshed-toggle::after,
 #sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-toggle::after {
 	background-color: rgba(0, 0, 0, 0.2);
 	pointer-events: auto;
 }
 
-.header-checkbox {
+.refreshed-checkbox {
 	position: fixed;
 	top: -9999px;
 	left: -9999px;
@@ -775,21 +827,24 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 }
 
 .refreshed-dropdown-tray {
-	background: #fff; /* same as .refreshed-dropdown-triangle:after border-bottom color */
-	position: absolute;
-	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
 	/* padding-top is opposite of top of
 	.refreshed-dropdown-checkbox:checked ~ .explore-submenu-dropdown-tray */
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	display: none;
 	margin: 0;
+	display: none;
+}
+
+.refreshed-dropdown-tray {
+	background: #fff; /* same as .refreshed-dropdown-triangle:after border-bottom color */
+	position: absolute;
+	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
 	/* margin-top is opposite of bottom of .refreshed-dropdown-triangle:after to
 	ensure arrow lines up with tray */
 	/* also same as margin-top of .header-suggestions on medium/small */
 	margin-top: -3px;
 	line-height: 1.2em;
-	/* 1 more than z-index of .header-checkbox ~ .header-toggle::after (etc.)
+	/* 1 more than z-index of .refreshed-checkbox ~ .refreshed-toggle::after (etc.)
 	so the dropdown appears above the dropdown close overlay.
 	1 less than z-index of .refreshed-dropdown-triangle to ensure the triangle
 	appears above the dropdown and thus is not underneath its drop shadow */
@@ -808,6 +863,30 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 
 #sidebar-toggle-button {
 	background-color: #194a8d;
+}
+
+/* collapsibles */
+.refreshed-collapsible-tray,
+.refreshed-icon-refreshed-collapsible-collapse {
+	display: none;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-collapsible-tray,
+.refreshed-checkbox:checked ~ .site-navigation-sidebar-logo-wrapper .refreshed-icon-refreshed-collapsible-collapse,
+.refreshed-checkbox:checked ~ .refreshed-collapsible-toggle .refreshed-icon-refreshed-collapsible-collapse {
+	display: block;
+}
+
+.refreshed-checkbox:checked ~ .site-navigation-sidebar-logo-wrapper .refreshed-icon-refreshed-collapsible-expand,
+.refreshed-checkbox:checked ~ .refreshed-collapsible-toggle .refreshed-collapsible-expand,
+.refreshed-checkbox:checked ~ .refreshed-collapsible-toggle .refreshed-icon-refreshed-collapsible-expand {
+	display: none;
+}
+
+/* selector doesn't get header category buttons... */
+
+ul.refreshed-collapsible-tray { /* ul for specificity */
+	padding-bottom: 0.2em;
 }
 
 .refreshed-logo img {

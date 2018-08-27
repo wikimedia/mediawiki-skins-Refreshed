@@ -16,9 +16,6 @@ class RefreshedTemplate extends BaseTemplate {
 		'delete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-delete ooui-icon-trash">
 									<path d="M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z"/>
 								</svg>',
-		'refreshed-dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-dropdown-expand ooui-icon-expand">
-																			<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
-																		</svg>',
 		'edit' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-edit ooui-icon-edit">
 								<path d="M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z"/>
 							</svg>',
@@ -64,6 +61,15 @@ class RefreshedTemplate extends BaseTemplate {
 																<circle cx="1" cy="9" r="1"/>
 																<circle cx="3" cy="12" r="1"/>
 															</svg>',
+		'refreshed-collapsible-collapse' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-collapsible-collapse ooui-icon-collapse">
+																					<path d="M1 13.75l1.5 1.5 7.5-7.5 7.5 7.5 1.5-1.5-9-9-9 9z"/>
+																				</svg>',
+		'refreshed-collapsible-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-collapsible-expand ooui-icon-expand">
+																				<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
+																			</svg>',
+		'refreshed-dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-dropdown-expand ooui-icon-expand">
+																			<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
+																		</svg>',
 		'refreshed-menu' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-menu ooui-icon-menu">
 								<path d="M1 3v2h18V3zm0 8h18V9H1zm0 6h18v-2H1z"/>
 							</svg>',
@@ -188,7 +194,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @param string $messageKey Message name
 	 * @return array
 	 */
-	private function parseSiteNavigationDropdownMenu( $messageKey ) {
+	private function parseSiteNavigationMenu( $messageKey ) {
 		$lines = $this->getLines( $messageKey );
 		$nodes = [];
 		$i = 0;
@@ -200,7 +206,7 @@ class RefreshedTemplate extends BaseTemplate {
 					continue;
 				}
 
-				$node = $this->parseSiteNavigationDropdownItem( $line );
+				$node = $this->parseSiteNavigationItem( $line );
 				for ( $x = $i; $x >= 0; $x-- ) {
 					if ( $x == 0 ) {
 						break;
@@ -216,12 +222,12 @@ class RefreshedTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Helper method for parseSiteNavigationDropdownMenu.
+	 * Helper method for parseSiteNavigationMenu.
 	 * Parse one pipe-separated line from MediaWiki message to an array with
 	 * indexes "wikiName" (string), "logoURL" (string|null),
 	 * "wikiURL" (string|null)
 	 * (This array will eventually be used to construct a link in the site
-	 * dropdown via renderSiteNavigationDropdownItems.)
+	 * dropdown via renderSiteNavigationItems.)
 	 * Each line follows this format of text seperated by pipe symbols:
 	 * name|logo URL|wiki URL.
 	 * Special cases:
@@ -233,7 +239,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @param string $line Line (beginning with a *) from a MediaWiki: message
 	 * @return array attributes for the resulting link
 	 */
-	public static function parseSiteNavigationDropdownItem( $line ) {
+	public static function parseSiteNavigationItem( $line ) {
 		// trim spaces and asterisks from line and split it to maximum three chunks
 		$line_temp = explode( '|', trim( $line, '* ' ), 3 );
 
@@ -657,27 +663,35 @@ class RefreshedTemplate extends BaseTemplate {
 		}
 	}
 
-
 	/**
-	 * Render the items of the site navigation dropdown to appear in the header.
-	 * @param array $siteNavigationDropdown an array containing info for the site
-	 *  navigation dropdown
+	 * Render the items of the site navigation dropdown/collapsible to appear
+	 * in the header/sidebar.
+	 * @param array $siteNavigation an array containing info for the site
+	 *  navigation colapsible
+	 * @param string $mode whether generating for a 'dropdown' or a 'collapsible'
+	 *  (affects class names)
 	 */
-	private function renderSiteNavigationDropdownItems( $siteNavigationDropdown ) {
-		// (each item in $siteNavigationDropdown was an output of
-		// parseSiteNavigationDropdownItem)
+	private function renderSiteNavigationItems( $siteNavigation, $mode ) {
+		// (each item in $siteNavigation was an output of
+		// parseSiteNavigationItem)
 		// we're making a bunch of list items here (<li> elements, but NOT ones
 		// created via makeListItem or makeListItemWithIconAtStart...)
 
 		// the classes to add to each of the dropdown anchors
-		$classList = 'refreshed-logo refreshed-logo-other';
+		$logoClassList = 'refreshed-logo refreshed-logo-other';
+		$listItemClassList = '';
+		if ( $mode === 'dropdown' ) {
+			$listItemClassList = 'refreshed-dropdown-item header-dropdown-item site-navigation-item';
+		} elseif ( $mode === 'collapsible' ) {
+			$listItemClassList = 'refreshed-collapsible-item site-navigation-item';
+		}
 
-		foreach ( $siteNavigationDropdown as $wikiLogoInfo ) {
+		foreach ( $siteNavigation as $wikiLogoInfo ) {
 			// send each of the parsed pieces of wiki logo info to renderWikiLogo
 			// for rendering
 			echo Html::rawElement( 'li', [
-				'class' => 'refreshed-dropdown-item header-dropdown-item site-navigation-dropdown-item'
-			], $this->makeWikiLinkWithLogo( $wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'], $wikiLogoInfo['wikiURL'], $classList ) );
+				'class' => 'refreshed-' . $mode . '-item site-navigation-item'
+			], $this->makeWikiLinkWithLogo( $wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'], $wikiLogoInfo['wikiURL'], $logoClassList ) );
 		}
 	}
 
@@ -714,16 +728,25 @@ class RefreshedTemplate extends BaseTemplate {
 	}
 
 	/**
-	 * Render the items of the header category dropdown to appear in the header.
+	 * Render the items of the header category dropdown/collapsible to appear in
+	 * the header/sidebar.
 	 * @param array $headerCategoryDropdown an array containing info for a header
 	 *  category dropdown
 	 * @param string $prefix a prefix to attach to some of the classes of each li
 	 *  (such as 'header-category')
+	 * @param string $mode whether generating for a 'dropdown' or a 'collapsible'
+	 *  (affects class names)
 	 * @param int $index which number header category's dropdown is being
 	 *  generated
 	 */
-	private function renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $index, $prefix ) {
-		$commonClassList = 'refreshed-dropdown-item header-dropdown-item';
+	private function renderHeaderCategoryItems( $headerCategoryDropdown, $index, $mode, $prefix ) {
+		$commonClassList = '';
+		if ( $mode === 'dropdown' ) {
+			$commonClassList = 'refreshed-dropdown-item header-dropdown-item ';
+		} elseif ( $mode === 'collapsible' ) {
+			$commonClassList = 'refreshed-collapsible-item ';
+		}
+
 		$prefixedClassList = $prefix . '-dropdown-item ' . $prefix . '-' . strval( $index ) . '-dropdown-item';
 		$classList = $commonClassList . $prefixedClassList;
 		foreach ( $headerCategoryDropdown as $key => $value ) {
@@ -746,18 +769,18 @@ class RefreshedTemplate extends BaseTemplate {
 		$titleNamespace = $titleBase->getNamespace();
 
 		$key = $wgMemc->makeKey( 'refreshed', 'header' );
-		$headerCategoriesDropdowns = $wgMemc->get( $key );
-		if ( !$headerCategoriesDropdowns ) {
-			$headerCategoriesDropdowns = [];
-			$skin->addToSidebar( $headerCategoriesDropdowns, 'refreshed-navigation' );
-			$wgMemc->set( $key, $headerCategoriesDropdowns, 60 * 60 * 24 ); // 24 hours
+		$headerCategories = $wgMemc->get( $key );
+		if ( !$headerCategories ) {
+			$headerCategories = [];
+			$skin->addToSidebar( $headerCategories, 'refreshed-navigation' );
+			$wgMemc->set( $key, $headerCategories, 60 * 60 * 24 ); // 24 hours
 		}
 
 		$dropdownCacheKey = $wgMemc->makeKey( 'refreshed', 'dropdownmenu' );
-		$siteNavigationDropdown = $wgMemc->get( $dropdownCacheKey );
-		if ( !$siteNavigationDropdown ) {
-			$siteNavigationDropdown = $this->parseSiteNavigationDropdownMenu( 'Refreshed-wiki-dropdown' );
-			$wgMemc->set( $dropdownCacheKey, $siteNavigationDropdown, 60 * 60 * 24 ); // 24 hours
+		$siteNavigation = $wgMemc->get( $dropdownCacheKey );
+		if ( !$siteNavigation ) {
+			$siteNavigation = $this->parseSiteNavigationMenu( 'Refreshed-wiki-dropdown' );
+			$wgMemc->set( $dropdownCacheKey, $siteNavigation, 60 * 60 * 24 ); // 24 hours
 		}
 
 		// url to this wiki's homepage/page you visit when logo is clicked;
@@ -806,31 +829,31 @@ class RefreshedTemplate extends BaseTemplate {
 		// Output the <html> tag and whatnot
 		$this->html( 'headelement' );
 		?>
-		<input type="checkbox" id="sidebar-toggler-checkbox" class="header-checkbox">
+		<input type="checkbox" id="sidebar-toggler-checkbox" class="refreshed-checkbox">
 		<header id="header-wrapper">
-			<section id="site-info" class="header-section">
+			<section id="site-navigation-header" class="site-navigation header-section">
 				<?php
-				if ( $siteNavigationDropdown ) { // if there is a site dropdown (so there are multiple wikis)
+				if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
 					?>
-					<nav id="site-info-main" class="multiple-wikis">
-						<div id="site-navigation-dropdown" class="refreshed-dropdown">
-							<?php echo $thisWikiLinkWithLogo ?>
-							<input type="checkbox" id="site-navigation-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
-							<label for="site-navigation-dropdown-checkbox" id="site-navigation-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
-								<div id="site-navigation-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
+					<nav class="site-navigation-full-logos multiple-wikis">
+						<div id="site-navigation-header-dropdown" class="refreshed-dropdown">
+							<?php echo $thisWikiLinkWithLogo ?><!--
+				 	 --><input type="checkbox" id="site-navigation-header-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox"><!--
+				   --><label for="site-navigation-header-dropdown-checkbox" id="site-navigation-header-dropdown-toggle" class="refreshed-dropdown-toggle refreshed-toggle">
+								<div class="refreshed-dropdown-button header-button header-button-textless-small site-navigation-button">
 									<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 									<span class="refreshed-dropdown-triangle"></span>
 								</div>
 							</label>
-							<ul id="site-navigation-dropdown-tray" class="refreshed-dropdown-tray">
-								<?php $this->renderSiteNavigationDropdownItems( $siteNavigationDropdown ); ?>
+							<ul id="site-navigation-header-dropdown-tray" class="refreshed-dropdown-tray">
+								<?php $this->renderSiteNavigationItems( $siteNavigation, 'dropdown' ); ?>
 							</ul>
 						</div>
 					</nav>
 					<?php
 				} else { // if only one wiki
 					?>
-					<div id="site-info-main">
+					<div class="site-navigation-full-logos">
 						<?php echo $thisWikiLinkWithLogo ?>
 					</div>
 				<?php
@@ -838,7 +861,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 				if ( !$thisWikiMobileLogo->isDisabled() ) { // if a mobile logo has been defined
 					?>
-					<div id="site-info-mobile">
+					<div class="site-navigation-icon-logos">
 						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $thisWikiMobileLogoImgElement ?></a>
 					</div>
 					<?php
@@ -859,8 +882,8 @@ class RefreshedTemplate extends BaseTemplate {
 						}
 						?>
 						<div id="user-info-dropdown" class="refreshed-dropdown">
-							<input type="checkbox" id="user-info-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
-							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+							<input type="checkbox" id="user-info-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-toggle" class="refreshed-dropdown-toggle refreshed-toggle">
 								<div id="user-info-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
 									<?php echo $this->makeAvatar( $user ) ?>
 									<span class="refreshed-username header-text"><?php echo $this->makeUsernameText( $user ) ?></span>
@@ -875,8 +898,8 @@ class RefreshedTemplate extends BaseTemplate {
 					</section>
 					<section id="header-search" class="header-section">
 						<div id="header-search-dropdown" class="refreshed-dropdown">
-							<input type="checkbox" id="header-search-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
-							<label for="header-search-dropdown-checkbox" id="header-search-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+							<input type="checkbox" id="header-search-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+							<label for="header-search-dropdown-checkbox" id="header-search-dropdown-toggle" class="refreshed-dropdown-toggle refreshed-toggle">
 								<div id="header-search-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless">
 									<?php $this->renderIcon( 'search' ) ?>
 									<span class="refreshed-dropdown-triangle"></span>
@@ -907,15 +930,15 @@ class RefreshedTemplate extends BaseTemplate {
 					</section>
 				</div>
 				<?php
-				if ( $headerCategoriesDropdowns ) {
+				if ( $headerCategories ) {
 					?>
 					<section id="explore-header-categories" class="header-section<?php if ( $wgRefreshedUseExploreWithoutHeaderCategories ) { echo ' explore-only'; } ?>">
 						<div id="explore-header-categories-overflow-hider"><!--
 						--><div id="explore-header-categories-sibling"></div><!--
 						--><div id="explore-header-categories-dropdowns">
 								<div id="explore-dropdown" class="refreshed-dropdown">
-									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
-									<label for="explore-dropdown-checkbox" id="explore-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+									<label for="explore-dropdown-checkbox" id="explore-dropdown-toggle" class="refreshed-dropdown-toggle refreshed-toggle">
 										<div id="explore-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
 											<?php $this->renderIcon( 'refreshed-explore' ) ?>
 											<span class="header-category-name header-text"><?php echo $this->getMsg( 'Refreshed-explore' )->text() ?></span>
@@ -927,18 +950,18 @@ class RefreshedTemplate extends BaseTemplate {
 
 										<?php
 										$exploreIndex = 0;
-										foreach ( $headerCategoriesDropdowns as $name => $headerCategoryDropdown ) {
+										foreach ( $headerCategories as $name => $headerCategoryDropdown ) {
 											?>
 											<li id="explore-submenu-<?php echo $exploreIndex ?>-dropdown" class="refreshed-dropdown explore-submenu-dropdown refreshed-dropdown-item">
-												<input type="checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
-												<label for="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
+												<input type="checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+												<label for="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-toggle" class="refreshed-dropdown-toggle refreshed-toggle">
 													<a id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-button" class="refreshed-dropdown-button explore-submenu-dropdown-button">
 														<div class="explore-submenu-name"><?php echo htmlspecialchars( $name ) ?></div>
 														<div><?php $this->renderIcon( 'refreshed-submenu-expand' ) ?></div>
 													</a>
 												</label>
 												<ul id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-tray" class="explore-submenu-dropdown-tray refreshed-dropdown-tray">
-													<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $exploreIndex, 'explore-submenu' ); ?>
+													<?php $this->renderHeaderCategoryItems( $headerCategoryDropdown, $exploreIndex, 'dropdown', 'explore-submenu' ); ?>
 												</ul>
 											</li>
 											<?php
@@ -949,24 +972,24 @@ class RefreshedTemplate extends BaseTemplate {
 								</div>
 								<div id="header-categories-dropdowns">
 									<?php
-									$headerCategoryIndex = 0;
-									foreach ( $headerCategoriesDropdowns as $name => $headerCategoryDropdown ) {
+									$headerCategoryDropdownIndex = 0;
+									foreach ( $headerCategories as $name => $headerCategoryDropdown ) {
 										?>
-										<div id="header-category-<?php echo $headerCategoryIndex ?>-dropdown" class="refreshed-dropdown header-category-dropdown">
-											<input type="checkbox" id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox header-checkbox">
-											<label for="header-category-<?php echo $headerCategoryIndex ?>-dropdown-checkbox" id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-toggle" class="refreshed-dropdown-toggle header-toggle">
-												<div id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
+										<div id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown" class="refreshed-dropdown header-category-dropdown">
+											<input type="checkbox" id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+											<label for="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-checkbox" id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-toggle" class="refreshed-dropdown-toggle refreshed-toggle">
+												<div id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
 													<span class="header-category-name header-text"><?php echo htmlspecialchars( $name ) ?></span>
 													<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 													<span class="refreshed-dropdown-triangle"></span>
 												</div>
 											</label>
-											<ul id="header-category-<?php echo $headerCategoryIndex ?>-dropdown-tray" class="header-category-dropdown-tray refreshed-dropdown-tray">
-												<?php $this->renderHeaderCategoryDropdownItems( $headerCategoryDropdown, $headerCategoryIndex, 'header-category' ); ?>
+											<ul id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-tray" class="header-category-dropdown-tray refreshed-dropdown-tray">
+												<?php $this->renderHeaderCategoryItems( $headerCategoryDropdown, $headerCategoryDropdownIndex, 'dropdown', 'header-category' ); ?>
 											</ul>
 										</div>
 										<?php
-										$headerCategoryIndex++;
+										$headerCategoryDropdownIndex++;
 									}
 									?>
 								</div>
@@ -977,9 +1000,9 @@ class RefreshedTemplate extends BaseTemplate {
 				}
 				?>
 				<section id="sidebar-toggler" class="header-section">
-					<label for="sidebar-toggler-checkbox" id="sidebar-toggler-toggle" class="header-toggle">
+					<label for="sidebar-toggler-checkbox" id="sidebar-toggler-toggle" class="refreshed-toggle">
 						<div id="sidebar-toggle-button" class="header-button header-button-textless-small">
-							<?php $this->renderIcon( 'refreshed-menu' ); ?>
+							<?php $this->renderIcon( 'refreshed-menu' ) ?>
 						</div>
 					</label>
 				</section>
@@ -987,10 +1010,68 @@ class RefreshedTemplate extends BaseTemplate {
 		</header>
 		<aside id="sidebar-wrapper">
 			<div id="sidebar">
-				<section id="sidebar-logo" class="sidebar-section">
-					<?php echo $thisWikiLinkWithSidebarLogo ?>
+				<section id="site-navigation-sidebar" class="site-navigation sidebar-section">
+					<?php
+					if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
+						?>
+						<nav class="site-navigation-full-logos multiple-wikis">
+							<div id="site-navigation-sidebar-collapsible" class="refreshed-collapsible">
+								<input type="checkbox" id="site-navigation-sidebar-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
+								<div class="site-navigation-sidebar-logo-wrapper">
+									<?php echo $thisWikiLinkWithSidebarLogo ?><!--
+							 --><label for="site-navigation-sidebar-collapsible-checkbox" id="site-navigation-sidebar-collapsible-toggle" class="refreshed-collapsible-toggle refreshed-toggle">
+										<div id="site-navigation-sidebar-collapsible-button" class="site-navigation-button refreshed-collapsible-button header-button">
+											<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
+											<?php $this->renderIcon( 'refreshed-collapsible-collapse' ) ?>
+										</div>
+									</label>
+								</div>
+								<ul id="site-navigation-sidebar-collapsible-tray" class="refreshed-collapsible-tray">
+									<?php $this->renderSiteNavigationItems( $siteNavigation, 'collapsible' ); ?>
+								</ul>
+							</div>
+						</nav>
+						<?php
+					} else { // if only one wiki
+						?>
+						<div class="site-navigation-full-logos site-navigation-sidebar-logo-wrapper">
+							<?php echo $thisWikiLinkWithLogo ?>
+						</div>
+					<?php
+					}
+					?>
 				</section>
 				<?php
+				if ( $headerCategories ) {
+					?>
+					<section id="header-categories-sidebar" class="sidebar-section sidebar-content">
+						<?php
+						$headerCategoryCollapsibleIndex = 0;
+						foreach ( $headerCategories as $name => $headerCategoryCollapsible ) {
+							?>
+							<div id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible" class="refreshed-collapsible header-category-collapsible sidebar-section">
+								<input type="checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
+								<label for="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-toggle" class="refreshed-collapsible-toggle refreshed-toggle">
+									<div id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-button" class="refreshed-collapsible-button header-button header-category-collapsible-button">
+										<h1 class="header-category-name sidebar-header header-category-sidebar-name"><?php echo htmlspecialchars( $name ) ?></h1>
+										<div class="header-categories-sidebar-collapsible-icons-wrapper">
+											<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
+											<?php $this->renderIcon( 'refreshed-collapsible-collapse' ) ?>
+										</div>
+									</div>
+								</label>
+								<ul id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-tray" class="header-category-collapsible-tray refreshed-collapsible-tray">
+									<?php $this->renderHeaderCategoryItems( $headerCategoryCollapsible, $headerCategoryCollapsibleIndex, 'collapsible', 'header-category' ); ?>
+								</ul>
+							</div>
+							<?php
+							$headerCategoryCollapsibleIndex++;
+						}
+						?>
+					</section>
+					<?php
+				}
+
 				unset( $this->data['sidebar']['SEARCH'] );
 				unset( $this->data['sidebar']['TOOLBOX'] );
 				unset( $this->data['sidebar']['LANGUAGES'] );
@@ -998,16 +1079,22 @@ class RefreshedTemplate extends BaseTemplate {
 				foreach ( $this->data['sidebar'] as $main => $sub ) {
 					?>
 					<section class="sidebar-content sidebar-section">
-						<h1 class="main"><?php echo htmlspecialchars( $main ) ?></h1>
+						<h1 class="sidebar-header"><?php echo htmlspecialchars( $main ) ?></h1>
 						<ul>
 							<?php
 							if ( is_array( $sub ) ) { // MW-generated stuff from the sidebar message
 								foreach ( $sub as $key => $action ) {
+									// append 'sidebar-item' class to a inside
+									if ( isset( $action['class'] ) ) {
+										$action['class'] .= ' sidebar-link';
+									} else {
+										$action['class'] = 'sidebar-link';
+									}
 									echo $this->makeListItem(
 										$key,
 										$action,
 										[
-											'link-class' => 'sub',
+											'link-class' => 'sidebar-item',
 											'link-fallback' => 'span'
 										]
 									);

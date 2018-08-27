@@ -49,7 +49,7 @@ arrows. */
 	/* also same as .header-suggestions margin-top on medium/small */
 	margin-top: -3px;
 	line-height: 1.2em;
-	/* 1 more than z-index of .header-checkbox ~ .header-toggle::after (etc.)
+	/* 1 more than z-index of .refreshed-checkbox ~ .refreshed-toggle::after (etc.)
 	so the dropdown appears above the dropdown close overlay.
 	1 less than z-index of .refreshed-dropdown-triangle to ensure the triangle
 	appears above the dropdown and thus is not underneath its drop shadow */
@@ -124,24 +124,15 @@ see https://css-tricks.com/the-checkbox-hack/ */
 	padding: 0.5em 0;
 }
 
-#site-info {
+#site-navigation-header {
 	display: inline-block; /* don't push menu items on the right side of the header off of the header */
 }
-#site-info-main {
+
+#site-navigation-header .site-navigation-full-logos {
 	display: none;
 }
 
-#site-info-main .arrow-link {
-	display: none !important;
-}
-
-#site-info-main:hover,
-#site-info-main a,
-#site-info-main a:hover {
-	background: none;
-}
-
-#site-info-mobile {
+#site-navigation-header .site-navigation-icon-logos {
 	display: inline-block;
 }
 

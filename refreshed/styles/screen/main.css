@@ -345,7 +345,6 @@ a.header-button { /* double selectors to override default a element text-decorat
 }
 
 .standard-toolbox a {
-	text-transform: lowercase;
 	font-weight: normal;
 	text-decoration: none;
 }

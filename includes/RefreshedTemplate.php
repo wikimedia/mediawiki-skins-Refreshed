@@ -473,14 +473,7 @@ class RefreshedTemplate extends BaseTemplate {
 									} else { // generates actions inside dropdown
 										?>
 										<li class="toolbox-dropdown-item toolbox-dropdown-page-action">
-											<?php echo $this->makeLink( $key, $action, [
-												'text-wrapper' => [
-													'tag' => 'span',
-													'attributes' => [
-														'class' => 'toolbox-item-text'
-													]
-												]
-											] );
+											<?php echo $this->makeLink( $key, $action );
 											?>
 										</li>
 										<?php
@@ -489,14 +482,7 @@ class RefreshedTemplate extends BaseTemplate {
 								foreach ( $toolbox as $tool => $toolData ) { // generates toolbox tools inside dropdown (e.g. "upload file")
 									?>
 									<li class="toolbox-dropdown-item toolbox-dropdown-tool">
-										<?php echo $this->makeLink( $tool, $toolData, [
-											'text-wrapper' => [
-												'tag' => 'span',
-												'attributes' => [
-													'class' => 'toolbox-item-text'
-												]
-											]
-										] );
+										<?php echo $this->makeLink( $tool, $toolData );
 										?>
 									</li>
 									<?php

@@ -494,11 +494,11 @@ a.header-button { /* double selectors to override default a element text-decorat
 .standard-toolbox-dropdown .toolbox-item-text {
 	display: inline-block;
 	margin-left: 2.5em;
-	text-indent: -1em; /* pulls first line of text 1em to the left, so if you add 1em of padding to the right subsequent lines will look indented */
+	text-indent: -1.23em;
 }
 
 .standard-toolbox-dropdown a:before {
-	position: absolute;
+	position: relative;
 }
 
 .standard-toolbox .toolbox-dropdown-page-action + .toolbox-dropdown-tool  {
@@ -506,6 +506,16 @@ a.header-button { /* double selectors to override default a element text-decorat
 	margin-top: .25em;
 	padding-top: .25em;
 	border-top: 1px solid #ccc; /* divide the tools from the page actions */
+}
+
+.toolbox-dropdown-tool a:before,
+#t-shorturl a:before,
+#ca-cargo-purge:before {
+    display: inline-block;
+    content: '';
+    position: relative;
+    width: 20px;
+    height: 20px;
 }
 
 .fixed-toolbox {

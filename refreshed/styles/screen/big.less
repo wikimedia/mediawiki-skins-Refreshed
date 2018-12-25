@@ -1,0 +1,114 @@
+@import 'variables.less';
+@import 'mediawiki.mixins';
+
+/*******************************************************************************
+************************************ HEADER ************************************
+*******************************************************************************/
+
+.header-height( @big-header-height );
+
+.header-button-textless,
+.header-button-textless-big {
+  width: @big-header-height;
+  padding: 0;
+}
+
+.refreshed-dropdown-tray {
+	width: @big-dropdown-tray-width;
+}
+
+.single-wiki .refreshed-logo-current {
+	min-width: @big-sidebar-width;
+}
+
+.site-navigation-logo-img {
+  max-width: @big-site-navigation-logo-img-max-width;
+}
+
+#site-navigation-header {
+  .site-navigation-icon-logos {
+    display: none;
+  }
+}
+
+#explore-header-categories-dropdowns {
+	margin-top: -( @big-header-height );
+}
+
+#sidebar-toggler {
+  display: none;
+}
+
+#header-search-dropdown-button {
+  display: none;
+}
+
+#header-search-dropdown-tray {
+  /* override normal search dropdown styles */
+  background: none;
+  margin: inherit;
+  padding: inherit;
+  top: 0;
+  height: inherit;
+  z-index: initial;
+  .box-shadow( none );
+  .flex-display( inline-flex );
+  .flex-justify-content( center );
+  .flex-align-items( center );
+
+  /* ensure .searchButton is positioned relative to this */
+  position: relative;
+
+  /* search dropdown should be wide enough to fit search bar */
+	width: @big-header-search-width;
+}
+
+.searchButton {
+	/* take up full height and stick to right side of #searchInput */
+	top: 0.5em;
+	bottom: 0.5em;
+	right: 0;
+	/* ooui-icon-search */
+	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M19%2017l-5.15-5.15a7%207%200%201%200-2%202L17%2019zM3.5%208A4.5%204.5%200%201%201%208%2012.5%204.5%204.5%200%200%201%203.5%208z%22%2F%3E%3C%2Fsvg%3E );
+}
+
+#user-info-search-wrapper {
+  margin-right: @big-content-margin-right;
+}
+
+#user-info-dropdown-button {
+  .extra-header-button-padding();
+}
+
+/*******************************************************************************
+************************************ SIDEBAR ***********************************
+*******************************************************************************/
+
+#sidebar-wrapper {
+  width: @big-sidebar-width;
+}
+
+#site-navigation-sidebar-header-categories-sidebar-wrapper {
+  display: none;
+}
+
+/*******************************************************************************
+************************************ CONTENT ***********************************
+*******************************************************************************/
+
+/* @TODO */
+
+#content-wrapper {
+  left: @big-sidebar-width;
+  right: 1em;
+}
+
+/*******************************************************************************
+************************************ FOOTER ************************************
+*******************************************************************************/
+
+/* @TODO */
+
+/*******************************************************************************
+************************************** OLD *************************************
+*******************************************************************************/

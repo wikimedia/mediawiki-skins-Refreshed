@@ -1,0 +1,105 @@
+@import 'variables.less';
+
+/*******************************************************************************
+************************************ HEADER ************************************
+*******************************************************************************/
+
+body {
+  overflow-x: hidden;
+}
+
+.header-height( @small-header-height );
+
+.header-button-textless,
+.header-button-textless-small {
+  width: @small-header-height;
+  padding: 0;
+}
+
+.refreshed-dropdown-tray {
+  left: 0;
+  right: 0;
+}
+
+.site-navigation-logo-img {
+  max-width: @small-site-navigation-logo-img-max-width;
+}
+
+#site-navigation-header {
+  .site-navigation-full-logos {
+    display: none;
+  }
+}
+
+#explore-header-categories {
+  display: none;
+}
+
+/* in case they are re-enabled using Refreshed.css */
+#explore-header-categories-dropdowns {
+	margin-top: -( @small-header-height );
+}
+
+#searchInput {
+  width: 100%;
+}
+
+.dropdown-searchInput( @small-header-search-width );
+
+.header-suggestions {
+  left: 0 !important;
+  right: 0 !important;
+}
+
+
+#user-info-dropdown-button {
+  .refreshed-username,
+  .refreshed-icon-refreshed-dropdown-expand {
+    display: none;
+  }
+}
+
+#user-info-dropdown-tray {
+  right: @small-content-margin-right;
+}
+
+/*******************************************************************************
+************************************ SIDEBAR ***********************************
+*******************************************************************************/
+
+#sidebar-wrapper {
+  width: @small-sidebar-width;
+  left: -( @small-sidebar-width );
+  background: @small-sidebar-background;
+  z-index: @small-z-index-sidebar;
+  .transition( left 0.2s ease );
+}
+
+#sidebar-toggler-checkbox:checked ~ #sidebar-wrapper {
+	left: 0;
+	/* only apply the box shadow when the sidebar is opened so the shadow doesn't
+	appear on the edge of the screen when the sidebar is closed (just off the edge
+	of the screen) */
+	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
+}
+
+/*******************************************************************************
+************************************ CONTENT ***********************************
+*******************************************************************************/
+
+/* @TODO */
+
+#content-wrapper {
+  left: 0;
+  right: 0;
+}
+
+/*******************************************************************************
+************************************ FOOTER ************************************
+*******************************************************************************/
+
+/* @TODO */
+
+/*******************************************************************************
+************************************** OLD *************************************
+*******************************************************************************/

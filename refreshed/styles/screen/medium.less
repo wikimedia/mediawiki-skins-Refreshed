@@ -1,0 +1,86 @@
+@import 'variables.less';
+
+/*******************************************************************************
+************************************ HEADER ************************************
+*******************************************************************************/
+
+.header-height( @medium-header-height );
+
+.header-button-textless,
+.header-button-textless-medium {
+  width: @medium-header-height;
+  padding: 0;
+}
+
+.refreshed-dropdown-tray {
+	width: @medium-dropdown-tray-width;
+}
+
+.single-wiki .refreshed-logo-current {
+	min-width: @big-sidebar-width;
+}
+
+.site-navigation-logo-img {
+  max-width: @medium-site-navigation-logo-img-max-width;
+}
+
+#site-navigation-header {
+  .site-navigation-icon-logos {
+    display: none;
+  }
+}
+
+#explore-header-categories-dropdowns {
+	margin-top: -( @medium-header-height );
+}
+
+#sidebar-toggler {
+  display: none;
+}
+
+.dropdown-searchInput( @medium-header-search-width );
+
+.header-suggestions {
+  right: 0 !important;
+}
+
+#user-info-dropdown-button {
+  .extra-header-button-padding();
+}
+
+#user-info-dropdown-tray {
+  right: @medium-content-margin-right;
+}
+
+/*******************************************************************************
+************************************ SIDEBAR ***********************************
+*******************************************************************************/
+
+#sidebar-wrapper {
+  width: @medium-sidebar-width;
+}
+
+#site-navigation-sidebar-header-categories-sidebar-wrapper {
+  display: none;
+}
+
+/*******************************************************************************
+************************************ CONTENT ***********************************
+*******************************************************************************/
+
+/* @TODO */
+
+#content-wrapper {
+  left: @medium-sidebar-width;
+  right: 0;
+}
+
+/*******************************************************************************
+************************************ FOOTER ************************************
+*******************************************************************************/
+
+/* @TODO */
+
+/*******************************************************************************
+************************************** OLD *************************************
+*******************************************************************************/

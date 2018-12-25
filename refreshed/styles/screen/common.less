@@ -1,0 +1,769 @@
+@import 'variables.less';
+
+body {
+	font-family: @heading-font-stack;
+	background: @body-background;
+	.font-color( @body-font-color );
+	margin: 0;
+}
+
+.refreshed-icon {
+	height: 1em;
+	fill: currentColor;
+}
+
+/*******************************************************************************
+**************************** DROPDOWNS/COLLAPSIBLES ****************************
+*******************************************************************************/
+
+/**** "checkbox hack" for dropdowns without JS ****/
+
+/* hide checkboxes */
+.refreshed-checkbox {
+	position: fixed;
+	top: -9999px;
+	left: -9999px;
+}
+
+/*** styles of things that are opened by the checkboxes ***/
+
+/** dropdowns **/
+
+/* style */
+
+/*
+	Why this element exists:
+	Originally the triangle was a pseudoelement attached to .refreshed-dropdown-button.
+	We'd center it relative to the button using left: 50%; and transform: translateX(-50%).
+	This doesn't work when the button width is more than twice dropdown width:
+	the triangle is so far right it looks disconnected from the dropdown.
+	One solution is to set a maximum amount left the triangle can be.
+	To set a maximum left amount we could use max-width.
+	However the way the pseudoelement was set up, it needs width: 0 for the triangle to actually be a triangle.
+	So we couldn't solve this problem by changing the pseudoelement's width.
+	Instead we customize the width of a dummy element, then make the triangle at its top center with a pseudoelement.
+*/
+.refreshed-dropdown-triangle {
+	display: none;
+	width: 50%;
+	height: 0;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	margin: 0;
+	z-index: @z-index-dropdown-triangle;
+	/* Since the dropdown triangle is above the dropdown tray, which is not covered
+	by the huge pseudoelement, hovering over it when the pseudoelement is open
+	causes the cursor to turn into a pointer (since the triangle is inside a label
+	element). Force the cursor to be the default one instead.
+	*/
+	cursor: auto;
+}
+
+.refreshed-dropdown-triangle::after {
+	content: "";
+	border-left: .4em solid transparent;
+	border-right: .4em solid transparent;
+	border-bottom: .4em solid @dropdown-tray-background-color;
+	position: absolute;
+	bottom: -( @dropdown-tray-margin-top );
+	left: 100%;
+	transform: translateX( -50% );
+}
+
+.refreshed-dropdown-tray {
+	padding-top: @dropdown-tray-vertical-padding;
+	padding-bottom: @dropdown-tray-vertical-padding;
+	margin: 0;
+	position: absolute;
+	margin-top: @dropdown-tray-margin-top;
+	line-height: 1.2em;
+	background: @dropdown-tray-background-color;
+	z-index: @z-index-dropdown-tray;
+	list-style-type: none;
+	.stack-box-shadow();
+
+	a {
+		.pretty-anchor( @hover-background-color: @dropdown-tray-hover-background-color );
+	}
+}
+
+/* when the dropdown is open, give the label a huge child so clicking anywhere
+outside the dropdown closes the box.
+The first selector is for when checkboxes can be placed as a prior sibling to
+their contents. The second selector is useful for the sidebar toggle checkbox,
+because it is not a sibling of the elements it affects (it can't be, since the
+two elements are in different containers). The checkbox should affect the
+sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
+.refreshed-dropdown-checkbox ~ .refreshed-dropdown-button::after,
+#sidebar-toggler-checkbox ~ #header-wrapper #sidebar-toggler-button::after {
+	content: "";
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	cursor: default;
+	/* z-index so this pseudoelement covers all dropdown buttons (the dropdown
+	buttons don't have a z-index, so the pseudoelement will cover them). */
+	z-index: @z-index-close-overlay;
+	pointer-events: none;
+	.transition( background-color 0.1s ease );
+	/* include the box-sizing so we can be confident that jQuery's outerHeight()
+	matches the actual height of the header */
+	.box-sizing( border-box );
+}
+
+/* a for specificity
+note these rules are overridden by .pretty-anchor() in
+.refreshed-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor
+so another copy is there too */
+a.explore-submenu-dropdown-anchor {
+	.flex-display();
+	.flex-justify-content( space-between );
+	.flex-align-items( center );
+
+	.refreshed-icon-refreshed-submenu-expand {
+		.flex( @grow: 0, @shrink: 0 );
+	}
+}
+
+.explore-submenu-dropdown {
+	position: relative; /* for proper submenu placement */
+}
+
+.explore-submenu-dropdown-tray {
+	left: 100%;
+	top: -( @dropdown-tray-vertical-padding );
+	margin-top: 0;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-dropdown-button,
+#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button {
+	background: @button-selected-background;
+}
+
+/* functionality */
+
+.refreshed-dropdown-tray {
+	display: none;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-dropdown-tray,
+.refreshed-checkbox:checked ~ .refreshed-dropdown-button .refreshed-dropdown-triangle {
+	display: block;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-dropdown-button::after,
+#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button::after {
+	background-color: @close-overlay-shadow-color;
+	pointer-events: auto;
+}
+
+#explore-dropdown-tray .refreshed-checkbox:checked ~ .refreshed-dropdown-button::after {
+	background: transparent;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor {
+	.pretty-anchor( @active: true, @hover-background-color: @dropdown-tray-hover-background-color );
+	/* override .pretty-anchor() styles (the rules below are copied from a.explore-submenu-dropdown-anchor) */
+	.flex-display();
+}
+
+/** collapsibles **/
+
+/* style */
+
+.refreshed-collapsible-button {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.header-category-collapsible-button {
+	padding: @header-category-collapsible-padding;
+}
+
+.header-category-sidebar-name {
+	.flex( @grow: 1, @shrink: 1 );
+	text-align: left;
+}
+
+.header-categories-sidebar-collapsible-icons-wrapper {
+	.flex( @grow: 0, @shrink: 0 );
+}
+
+/* remove the margin that's applied to adjacent svgs */
+.header-button svg.refreshed-icon {
+	margin: 0;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-collapsible-button,
+.refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-collapsible-button,
+.refreshed-collapsible-tray {
+	background: @button-selected-background;
+}
+
+/* functionality */
+
+.refreshed-icon-refreshed-collapsible-collapse,
+.refreshed-collapsible-tray {
+	display: none;
+}
+
+.refreshed-icon-refreshed-collapsible-expand {
+	display: block;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-collapsible-button .refreshed-icon-refreshed-collapsible-expand,
+.refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-icon-refreshed-collapsible-expand {
+	display: none;
+}
+
+.refreshed-checkbox:checked ~ .refreshed-collapsible-tray,
+.refreshed-checkbox:checked ~ .refreshed-collapsible-button .refreshed-icon-refreshed-collapsible-collapse,
+.refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-icon-refreshed-collapsible-collapse {
+	display: block;
+}
+
+/*******************************************************************************
+************************************ HEADER ************************************
+*******************************************************************************/
+
+/**** Header layout ****/
+
+#header-wrapper {
+	position: fixed;
+	width: 100%;
+	background: @header-background;
+	z-index: @z-index-header;
+	.flex-display();
+	.flex-direction( row );
+	.flex-justify-content( space-between );
+	.stack-box-shadow();
+	/* height: SIZE-header-height; */
+	.give-children-height();
+}
+
+.header-button {
+	.flex-display( inline-flex );
+	.flex-justify-content( center );
+	.flex-align-items( center );
+	cursor: pointer;
+	text-align: center;
+	position: relative; /* place dropdowns relative to matching .header-button */
+
+	/* remove default anchor styling (for text wiki logos) */
+	a& {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	&:hover {
+		background: @button-hover-background;
+	}
+
+	&:active {
+		background: @button-selected-background;
+	}
+}
+
+/* if multiple items inside a header button that's actually in the header (as
+opposed to the sidebar), space them out */
+#header-wrapper .header-button {
+	img,
+	svg,
+	.header-text {
+		&:not(:only-child):not(:first-child) {
+			margin-left: 0.25em;
+		}
+	}
+}
+
+.header-section {
+	display: inline-block;
+}
+
+#sidebar-toggler {
+	.flex( @grow: 0, @shrink: 0 );
+}
+
+#site-navigation-header {
+	.flex( @grow: 0, @shrink: 0 );
+}
+
+.site-navigation-logo-img {
+	/* width: SIZE-logo-img-width; */
+	.extra-header-button-padding();
+	.box-sizing( border-box ); /* padding should be included within the 100% width */
+}
+
+#site-navigation-header-dropdown .refreshed-dropdown-button {
+	width: @site-navigation-toggle-width;
+
+	.site-navigation-button {
+		width: 100%;
+	}
+}
+
+.site-navigation-tray,
+#sidebar-wrapper .site-navigation-tray { /* #sidebar-wrapper for specificity */
+	text-align: center;
+	padding-left: 0;
+	padding-right: 0;
+	a {
+		border: 0;
+	}
+}
+
+#header-categories-user-info-search-wrapper {
+	.flex( @grow: 1, @shrink: 1 );
+	.flex-display();
+	.flex-direction( row-reverse );
+}
+
+#user-info-search-wrapper {
+	/* when user info hits the header categories, the header categories should
+	shrink, but the user info shouldn't */
+	.flex( @grow: 0, @shrink: 0 );
+}
+
+#user-info-dropdown-button {
+	.avatar {
+		width: @avatar-width;
+		height: @avatar-height;
+	}
+}
+
+#header-search-dropdown-tray {
+	/* width: SIZE-header-search-width; */
+	box-sizing: border-box;
+}
+
+#searchInput {
+	border: 0;
+	/*font-size: 1em;
+	padding: 0.25em; /* .searchButton's background-size + #searchInput's padding-top + #searchInput's padding-bottom = #searchInput's height */
+	.box-sizing( border-box );
+	-webkit-appearance: none; /* prevent Safari from styling input box */
+	border-radius: 0; /* prevent iOS from adding rounded corners to input box */
+	font-size: @header-search-font-size;
+	height: @header-search-height;
+	padding: @header-search-padding;
+	padding-right: @header-search-height; /* make room for search button */
+	width: 100%;
+
+	.mixin-placeholder( { .searchInput-placeholder(); } );
+
+	/* prevent Safari from styling input box (adding text indent)
+	per https://stackoverflow.com/a/11128262 */
+	&::-webkit-search-decoration {
+		-webkit-appearance: none;
+	}
+}
+
+.searchButton {
+	background-color: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	font-size: inherit;
+	text-indent: -99999px;
+	width: @header-search-height;
+	height: @header-search-height;
+	background-position: center center;
+	background-size: 1.5em 1.5em;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
+#explore-header-categories {
+	.flex( @grow: 1, @shrink: 1 );
+}
+
+/* Wrapper so the header categories experience overflow-x: hidden and
+overflow-y: visible. Inspired by https://stackoverflow.com/a/29687454. Since
+.refreshed-header-category-dropdown-tray has position: absolute, it'll pop out
+of the overflow: hidden. Since .refreshed-dropdown does not have
+position: absolute, it will stay hidden if the screen is too narrow and it wraps
+out of the header. For more see
+https://css-tricks.com/popping-hidden-overflow/. */
+#explore-header-categories-overflow-hider {
+	overflow: hidden;
+}
+
+/* Small element so that #explore-header-categories-dropdowns isn't the first
+non-zero-width child of #explore-header-categories-overflow-hider. That way when
+the viewport is too narrow for both #explore-header-categories-sibling and
+#explore-header-categories-dropdowns, the entirety of
+#explore-header-categories-dropdowns will wrap onto the next line, revealing
+the explore button which is at the top of it. */
+#explore-header-categories-sibling {
+	display: inline-block;
+	width: @explore-header-categories-sibling-width;
+}
+
+#explore-header-categories-dropdowns {
+	display: inline-block;
+	margin-left: -( @explore-header-categories-sibling-width );
+	/* Appears pushed up 100% of its height, so the second row (header categories)
+	is visible in the header. When the viewport gets too narrow, the element moves
+	down a line, making its first row (the explore button) visible. */
+}
+
+#explore-dropdown {
+	margin-left: @explore-header-categories-sibling-width;
+}
+
+#explore-dropdown-button {
+	.extra-header-button-padding();
+}
+
+.header-category-dropdown {
+	display: inline-block;
+}
+
+.header-category-dropdown-button {
+	.extra-header-button-padding();
+}
+
+.header-suggestions {
+	.stack-box-shadow();
+
+	.suggestions-results {
+		border: 0 !important;
+		max-height: calc(30vh);
+		overflow-y: auto;
+	}
+
+	.suggestions-special {
+		border: 0;
+		.stack-box-shadow();
+	}
+}
+
+/*******************************************************************************
+************************************ SIDEBAR ***********************************
+*******************************************************************************/
+
+#sidebar-wrapper {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	overflow-y: auto;
+	padding-top: 1em;
+	/* width: @SIZE-sidebar-width; */
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: @sidebar-ul-padding-top 0 @sidebar-ul-padding-bottom 0;
+
+		a {
+			.pretty-anchor( @font-color: currentColor );
+		}
+	}
+}
+
+.sidebar-header {
+		margin-left: @sidebar-header-padding;
+}
+
+.sidebar-section {
+	padding-bottom: @sidebar-section-padding-bottom;
+}
+
+#site-navigation-sidebar-buttons-wrapper {
+	text-align: center;
+	height: @big-header-height;
+	.give-children-height();
+}
+
+#site-navigation-sidebar-collapsible-button {
+	width: @site-navigation-toggle-width;
+}
+
+/*******************************************************************************
+************************************ CONTENT ***********************************
+*******************************************************************************/
+
+/* @TODO */
+
+/*******************************************************************************
+************************************ FOOTER ************************************
+*******************************************************************************/
+
+/* @TODO */
+
+#footer {
+	display: none;
+}
+
+/*******************************************************************************
+************************************** OLD *************************************
+*******************************************************************************/
+
+.standard-toolbox-dropdown {
+	left: 0.5em;
+	z-index: 3;
+	background: #fff;
+	position: absolute;
+	width: 12em;
+	.stack-box-shadow();
+	border: 1px solid #ddd;
+	margin-top: 0.25em;
+}
+
+.standard-toolbox-dropdown ul {
+	list-style-type: none;
+	margin-left: 0;
+	margin-top: 0.25em;
+	margin-bottom: 0.25em;
+}
+
+.dropdown-triangle {
+	width: 0;
+	height: 0;
+	border-left: 0.5em solid transparent;
+	border-right: 0.5em solid transparent;
+	border-bottom: 0.5em solid #ccc;
+	position: absolute;
+	top: -.5em;
+	left: 0.1em;
+}
+
+.standard-toolbox-dropdown a {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	padding-left: 0.25em;
+	padding-top: 0.1em;
+	padding-bottom: 0.1em;
+	box-sizing: border-box; /* padding/border should be included within the 100% width */
+}
+
+.standard-toolbox-dropdown a:hover {
+	padding-left: 0;
+	border-left: 0.25em solid;
+	background-color: #eee;
+}
+
+.standard-toolbox-dropdown .toolbox-item-text {
+	display: inline-block;
+	margin-left: 2.5em;
+	text-indent: -1em; /* pulls first line of text 1em to the left, so if you add 1em of padding to the right subsequent lines will look indented */
+}
+
+.standard-toolbox-dropdown a:before {
+	position: absolute;
+}
+
+.standard-toolbox .toolbox-dropdown-page-action + .toolbox-dropdown-tool  {
+	/* first tool in the dropdown that is after a page action (so if no page actions are in the dropdown, this CSS doesn't target anything) */
+	margin-top: .25em;
+	padding-top: .25em;
+	border-top: 1px solid #ccc; /* divide the tools from the page actions */
+}
+
+.fixed-toolbox {
+	padding-left: 0.9em; /* 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size) */
+	position: fixed;
+	border-bottom: 0.25em solid #eee;
+	background: #fff;
+	top: @big-header-height; /* height of #header */
+	left: 12em; /* margin-left of #content-wrapper */
+	right: 1em; /* margin-right of #content-wrapper */
+	z-index: 9999; /* very high value to guarantee no elements on wikis will appear above it */
+}
+
+#main-title-messages {
+	border-bottom: 1px solid #ddd;
+}
+
+#back-to-subject {
+	display: none;
+	font-size: 1.25em;
+	padding-bottom: 0.25em;
+}
+
+#small-toolbox-wrapper {
+	display: none;
+}
+
+#site-notice {
+	width: 100%;
+	text-align: center;
+}
+
+#new-talk {
+	margin-left: 2em;
+}
+
+#content-wrapper {
+	min-height: 100%;
+	position: absolute;
+	z-index: 1;
+}
+
+#content {
+	background-color: #fff;
+	z-index: 1;
+	font-family: sans-serif;
+	border-bottom: 0.25em solid #eee;
+	padding-bottom: 1em;
+}
+
+#bodyContent {
+	padding: 0 1em;
+	line-height: 1.5em;
+	font-size: 0.875em;
+	word-wrap: break-word;
+	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	color: #252525;
+	overflow: auto;
+}
+
+#content-heading {
+	/* padding-left/right: 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size);
+	padding-bottom: 0.25em (padding on top of .standard-toolbox) + 1.5em (height of .standard-toolbox) + 0.75em (padding on bottom of .standard-toolbox) */
+	padding: 0.5em 0.9em 2.5em 0.9em;
+	position: relative;
+}
+
+#firstHeading {
+	font-size: 2.68em;
+	padding: 0;
+	margin-bottom: 0;
+	border: 0;
+}
+
+.mw-indicators {
+	float: right;
+}
+
+.mw-indicator {
+	display: inline;
+}
+
+.scroll-shadow {
+	background: none;
+}
+
+.toolbox-container {
+	display: inline-block;
+	position: relative;
+}
+
+.standard-toolbox {
+	height: 1.5em; /* 1em for the text, 0.25em for text padding-top, 0.25em for text padding-bottom; meanwhile the links take up 1.75em when you include their 0.25em border-bottom */
+	position: absolute;
+	bottom: 0.75em;
+}
+
+/* @TODO reimplement page tools and remove these rules */
+.refreshed-menu-collapsible {
+	-ms-transition: max-height 0.4s ease;
+	transition: max-height 0.4s ease;
+	visibility: visible;
+	overflow: hidden;
+	height: auto;
+}
+
+/* @TODO reimplement page tools and remove these rules */
+.refreshed-menu-collapsed {
+	-ms-transition: max-height 0.2s ease, visibility 0.2s;
+	transition: max-height 0.2s ease, visibility 0.2s;
+	max-height: 0 !important;
+	visibility: hidden;
+	overflow: hidden;
+}
+
+.toolbox-link {
+	cursor: pointer; /* doesn't have href so must be explicitly defined */
+}
+
+.standard-toolbox a {
+	text-transform: lowercase;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+.standard-toolbox > a,
+.standard-toolbox .toolbox-link {
+	/* page action links outside of the dropdown and the "more..."/"tools" button */
+	margin-left: 0.5em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+}
+
+.standard-toolbox > a:first-of-type {
+	margin-left: 0;
+}
+
+.standard-toolbox > a:hover,
+.standard-toolbox > a.selected,
+.standard-toolbox .toolbox-link:hover {
+	border-bottom: 0.25em solid;
+}
+
+/********** Footer **********/
+
+#footer {
+	position: relative;
+	top: 3.5em;
+	text-align: center;
+	padding-bottom: 15px;
+	color: #ccc;
+	line-height: 1.5em;
+}
+
+#footer a {
+	color: #fff;
+}
+
+#footer img {
+	vertical-align: text-top;
+}
+
+#footer #advert {
+	margin-bottom: 1em; /* enough spacing after ad */
+}
+
+#footer #advert p {
+	margin: 0;
+}
+
+.footer-row {
+	margin: 0;
+}
+.footer-row-item {
+	margin: 0 0.5em;
+	display: inline;
+}
+
+/******************************** CONTENT/OTHER THINGS BEYOND CONTROL ******************************/
+#cats {
+	padding: 1em;
+}
+
+#content-wrapper p:first-of-type {
+	margin-top: 0;
+}
+
+/* dropdowns */
+#site-navigation-header-dropdown {
+	position: relative;
+	width: 100%; /* so tray can fit width of sidebar area rather than default width */
+}
+
+.site-navigation-button {
+	width: 2em;
+}
+
+#site-navigation-header-dropdown-tray {
+	width: 100%; /* ensure tray is as wide as #site-navigation-header */
+}
+
+.mw-echo-ui-overlay {
+	z-index: @z-index-header !important; /* same as #header-wrapper and .header-suggestions */
+}

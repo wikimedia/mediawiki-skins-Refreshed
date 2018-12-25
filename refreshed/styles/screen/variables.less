@@ -1,0 +1,256 @@
+@import 'mediawiki.mixins';
+
+@z-index-header: 100; /* see https://www.mediawiki.org/wiki/Manual:Coding_conventions/CSS#z-index */
+@z-index-close-overlay: 1;
+/* More than @z-index-dropdown close-overlay so dropdowns appears above the close overlay.
+Less than @z-index-dropdown-triangle to ensure the triangle appears above the
+dropdown and thus is not underneath its drop shadow */
+@z-index-dropdown-tray: @z-index-close-overlay + 1;
+/* 1 more than z-index of .refreshed-dropdown-tray to ensure the triangle
+appears above the dropdown and thus is not underneath its drop shadow */
+@z-index-dropdown-triangle: @z-index-dropdown-tray + 1;
+@small-z-index-sidebar: @z-index-header + 1; /* so appears above all header stuff */
+
+@heading-font-stack: sans-serif; /* sidebar, header, content headings */
+@content-font-stack: sans-serif; /* dropdowns */
+
+/* content colors/backgrounds */
+@body-background: #194a8d;
+@body-font-color: #fff;
+@header-background: linear-gradient( to left, #040f28 0, #103ca2 50%, #040f28 100% );
+@button-hover-background: midnightblue;
+@button-selected-background: @button-hover-background;
+@small-sidebar-background: @body-background;
+
+@close-overlay-shadow-color: rgba( 0, 0, 0, 0.2 );
+@content-shadow-color: rgba( 75, 75, 75, 0.4 );
+
+@dropdown-tray-background-color: #fff;
+@dropdown-tray-hover-background-color: #eee;
+
+@header-category-collapsible-padding: 0.25em 0.25em 0.25em 0;
+
+@search-placeholder-text-color: #808080;
+@search-suggestions-border-color: #ddd;
+
+/* height of header */
+@big-header-height: 3em;
+@medium-header-height: 3em;
+@small-header-height: 2.5em;
+
+/* width of sidebar */
+@big-sidebar-width: 12em;
+@medium-sidebar-width: 10em;
+@small-sidebar-width: 10em;
+
+/* width of site navigation header section (wiki homepage link) */
+@site-navigation-toggle-width: 2em; /* this is also used for the sidebar */
+@big-site-navigation-logo-img-max-width: @big-sidebar-width - @site-navigation-toggle-width;
+@medium-site-navigation-logo-img-max-width: @big-site-navigation-logo-img-max-width;
+@small-site-navigation-logo-img-max-width: @big-site-navigation-logo-img-max-width;
+
+/* width for dropdown trays */
+@big-dropdown-tray-width: @big-sidebar-width;
+@medium-dropdown-tray-width: @big-dropdown-tray-width;
+@dropdown-tray-margin-top: -3px;
+@dropdown-tray-vertical-padding: 0.5em;
+
+/* dimensions of avatar (SocialProfile or default icons) */
+@avatar-width: 30px;
+@avatar-height: auto;
+
+/* width of placeholder that ensures proper explore button behavior on resize */
+@explore-header-categories-sibling-width: 1px;
+
+/* header search box */
+@header-search-font-size: 1em;
+@header-search-height: 2em;
+@header-search-padding: 0.5em;
+@big-header-search-width: 15em;
+@medium-header-search-width: 20em;
+@small-header-search-width: 100%;
+
+/* sidebar */
+@big-sidebar-width: 12em;
+@medium-sidebar-width: @big-sidebar-width;
+@small-sidebar-width: 75%;
+@sidebar-header-padding: 0.25em;
+@sidebar-section-padding-bottom: 0.25em;
+@sidebar-ul-padding-top: 0.25em;
+@sidebar-ul-padding-bottom: 0.5em;
+
+/* content position */
+@big-content-margin-right: 1em;
+@medium-content-margin-right: @big-content-margin-right;
+@small-content-margin-right: 0;
+
+/** mixins **/
+
+.font-color( @color ) {
+  color: @color;
+  fill: @color;
+}
+
+.stack-box-shadow() {
+  .box-shadow( 0 3px 9px 0 @content-shadow-color );
+}
+
+.header-height( @height ) {
+  #header-wrapper {
+    height: @height;
+  }
+  #content-wrapper {
+    top: @height;
+  }
+  #sidebar {
+    margin-top: @height;
+  }
+
+  .resize-header-icons( @height / 2 );
+}
+
+
+/* explicitly inherit height so the text/images/svg inside have access to the
+element's full height, and make sure they're all vertically aligned the same way
+(especially labels)--for example this ensures all .refreshed-dropdown-triangle
+elements are set to the same height */
+.give-children-height() {
+  div,
+  nav,
+  a,
+  label {
+    height: 100%;
+    vertical-align: top;
+  }
+}
+
+/* the dropdown/sidebar links where a side border appears on hover */
+.pretty-anchor( @active: false, @font-color: auto, @hover-background-color: initial ) {
+  fill: currentColor;
+  & when not ( @font-color = auto ) {
+    .font-color( @font-color );
+  }
+  display: block;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent; /* border-right for symmetry */
+  .box-sizing( border-box ); /* padding/border should be included within the 100% width */
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    /* use currentColor not @font-color because, for example,
+    if @font-color = auto, then setting border-color to @font-color would set
+    border-color to auto... that is, border-color would be the auto value for
+    border-color, not the auto value for color */
+    border-left-color: currentColor;
+    background-color: @hover-background-color;
+  }
+
+  & when ( @active = true ) {
+    border-left-color: currentColor;
+    background-color: @hover-background-color;
+  }
+}
+
+/* extra padding for some header buttons with text */
+.extra-header-button-padding() {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+/* style the default text for the search bar */
+.searchInput-placeholder() {
+  color: @search-placeholder-text-color;
+  font-weight: 700;
+}
+
+/* style the search bar when it's inside a dropdown (medium, small) */
+.dropdown-searchInput( @header-search-width ) {
+
+  #header-search-dropdown-tray {
+    padding-left: @header-search-padding;
+    padding-right: @header-search-padding;
+    width: @header-search-width;
+    right: 0;
+  }
+
+  #searchInput { /* header search box */
+  	outline: 0;
+  	border-bottom: 3px solid transparent;
+  	/* padding-right is 0.5em more than padding-right of .searchButton to leave
+  	room for it */
+    padding-left: @header-search-padding / 2;
+  	padding-right: @header-search-height + @header-search-padding;
+    width: 100%;
+  }
+
+  #searchInput:focus {
+  	border-color: currentColor;
+  }
+
+  .searchButton {
+  	/* take up full height and stick to right side of #searchInput */
+  	top: 50%;
+  	transform: translateY( -50% );
+  	right: @header-search-padding;
+  }
+
+  [dir="ltr"] .searchButton {
+  	/* ooui-icon-arrowNext-ltr */
+  	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M10%202L8.59%203.42%2014.17%209H2v2h12.17l-5.58%205.59L10%2018l8-8-8-8z%22%2F%3E%3C%2Fsvg%3E%0A );
+  }
+
+  [dir="rtl"] .searchButton {
+  	/* ooui-icon-arrowNext-rtl */
+  	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2%2010l8%208%201.4-1.4L5.8%2011H18V9H5.8l5.6-5.6L10%202z%22%2F%3E%3C%2Fsvg%3E );
+  }
+
+  .header-suggestions {
+    margin-top: @header-search-padding !important;
+    width: @header-search-width !important;
+
+    .suggestions-result {
+    	padding: @header-search-padding (@header-search-padding / 2) !important;
+    	border-bottom: 1px solid @search-suggestions-border-color;
+    }
+
+    .suggestions-special {
+    	padding: @header-search-padding (@header-search-padding / 2) !important;
+    	margin-top: 0 !important;
+    }
+  }
+}
+
+/* adjust size of header icons */
+.resize-header-icons( @width ) {
+  .refreshed-icon-refreshed-menu,
+  .refreshed-icon-search,
+  .refreshed-icon-refreshed-explore {
+    width: @width;
+    height: auto;
+  }
+}
+
+/* additional flex mixins */
+
+.flex-direction( @value ) {
+  -webkit-flex-direction: @value; // Chrome 21.0-, Safari 6.1-
+	-moz-flex-direction: @value; // Firefox 18.0-
+	flex-direction: @value;
+}
+
+.flex-justify-content( @value ) {
+  -webkit-justify-content: @value; // Chrome 21.0-, Safari 6.1-
+	-moz-justify-content: @value; // Firefox 18.0-
+	justify-content: @value;
+}
+
+.flex-align-items( @value ) {
+  -webkit-align-items: @value; // Safari 7.0-
+  align-items: @value;
+}

@@ -43,16 +43,19 @@
 				"refreshed/wikifont/wikiglyphs.css": {
 					"media": "screen"
 				},
-				"refreshed/styles/screen/main.css": {
+				"refreshed/styles/screen/variables.less": {
 					"media": "screen"
 				},
-				"refreshed/styles/screen/small.css": {
+				"refreshed/styles/screen/common.less": {
+					"media": "screen"
+				},
+				"refreshed/styles/screen/small.less": {
 					"media": "(max-width: 600px)"
 				},
-				"refreshed/styles/screen/medium.css": {
+				"refreshed/styles/screen/medium.less": {
 					"media": "(min-width: 601px) and (max-width: 1000px)"
 				},
-				"refreshed/styles/screen/big.css": {
+				"refreshed/styles/screen/big.less": {
 					"media": "(min-width: 1001px)"
 				},
 				"refreshed/styles/print/print.css": {

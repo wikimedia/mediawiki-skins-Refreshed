@@ -23,6 +23,9 @@ class RefreshedTemplate extends BaseTemplate {
 											<path d="M0 8v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-10 4z"/>
 											<path d="M18 2H2a2 2 0 0 0-2 2v2l10 4 10-4V4a2 2 0 0 0-2-2z"/>
 										</svg>',
+		'feeds' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="refreshed-icon refreshed-icon-feeds font-awesome-icon-rss-square">
+											<path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"/>
+										</svg>',
 		'history' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-history ooui-icon-history">
 										<path d="M9 6v5h.06l2.48 2.47 1.41-1.41L11 10.11V6H9z"/>
 										<path d="M10 1a9 9 0 0 0-7.85 13.35L.5 16H6v-5.5l-2.38 2.38A7 7 0 1 1 10 17v2a9 9 0 0 0 0-18z"/>
@@ -143,6 +146,10 @@ class RefreshedTemplate extends BaseTemplate {
 								<path d="M18 4h-1v7a2 2 0 0 1-2 2H4v1a2 2 0 0 0 2 2h10l4 4V6a2 2 0 0 0-2-2z"/>
 								<path d="M14 0H2a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
 							</svg>',
+		'view' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-view ooui-icon-book-ltr">
+								<path d="M15 2a7.65 7.65 0 0 0-5 2 7.65 7.65 0 0 0-5-2H1v15h4a7.65 7.65 0 0 1 5 2 7.65 7.65 0 0 1 5-2h4V2zm2.5 13.5H14a4.38 4.38 0 0 0-3 1V5s1-1.5 4-1.5h2.5z"/>
+								<path d="M9 3.5h2v1H9z"/>
+							</svg>',
 		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-whatlinkshere ooui-icon-references-ltr">
 													<path d="M3 6v12h4V6H3zm3 10H4v-1h2v1zm0-3H4v-1h2v1zm2-7v12h4V6H8zm3 10H9v-1h2v1zm0-3H9v-1h2v1zm.934-5.353L18 18l3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zM18.06 12.17l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
 												</svg>'
@@ -179,6 +186,10 @@ class RefreshedTemplate extends BaseTemplate {
 		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-talk ooui-icon-speechBubbles-rtl">
 								<path d="M0 6v14l4-4h10c1.1 0 2-.9 2-2v-1H5c-1.1 0-2-.9-2-2V4H2C.9 4 0 4.9 0 6z"/>
 								<path d="M4 2v8c0 1.1.9 2 2 2h10l4 4V2c0-1.1-.9-2-2-2H6C4.9 0 4 .9 4 2z"/>
+							</svg>',
+		'view' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-view ooui-icon-book-rtl">
+								<path d="M1 2v15h4a7.65 7.65 0 0 1 5 2 7.65 7.65 0 0 1 5-2h4V2h-4a7.65 7.65 0 0 0-5 2 7.65 7.65 0 0 0-5-2zm1.5 1.5H5C8 3.5 9 5 9 5v11.5a4.38 4.38 0 0 0-3-1H2.5z"/>
+								<path d="M9 3.5h2v1H9z"/>
 							</svg>',
 		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-whatlinkshere ooui-icon-references-rtl">
 													<path d="M21.449 6v12h-4V6h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-2-7v12h-4V6h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-.934-5.353L6.449 18 3 15.979 9.065 5.625l3.45 2.022zm-7.643 7.111l1.726 1.012.506-.862-1.725-1.012-.507.862zm1.517-2.588l1.725 1.011.506-.862-1.726-1.012-.505.863z"/>
@@ -659,7 +670,7 @@ class RefreshedTemplate extends BaseTemplate {
 	private function renderUserDropdownItems( $dropdownPersonalTools ) {
 		foreach ( $dropdownPersonalTools as $keyAndIconName => $item ) {
 			$item['class'] = 'refreshed-dropdown-item header-dropdown-item user-info-dropdown-item';
-			echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item );
+			echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, [ 'text-wrapper' => [ 'tag' => 'span' ] ] );
 		}
 	}
 
@@ -758,7 +769,98 @@ class RefreshedTemplate extends BaseTemplate {
 
 			echo Html::rawElement( 'li', [
 				'class' => $classList,
-			], $this->makeLink( $key, $value ) );
+			], $this->makeLink( $key, $value, [ 'text-wrapper' => [ 'tag' => 'span' ] ] ) );
+		}
+	}
+
+	/**
+	 * Sort all of the content actions into categories for easier use.
+	 * Inspired by and adapted from Skin:Timeless.
+	 * @param array $tools the tools to sort
+	 * @return array where each key is a category and each item is an array of
+	 *  the page tools in that category (if nothing is in a category, that
+	 *  category's key corresponds to an empty array)
+	 */
+	private function sortPageTools( $tools ) {
+		// which category each tool belongs in
+		$categories = [
+			'namespaces' => [ 'talk' ], // also anything starting with "nstab-"
+			'main-actions' => [ 've-edit', 'edit',	'view', 'history', 'addsection', 'viewsource' ],
+			'page-tools' => [ 'delete', 'rename', 'protect', 'unprotect', 'move', 'whatlinkshere', 'recentchangeslinked', 'print', 'permalink', 'info', 'citethispage', 'feeds' ],
+			'user-tools' => [ 'contributions', 'blockip', 'userrights', 'log', 'wikilove' ],
+			'watch' => [ 'watch', 'unwatch' ],
+			'other' => [ 'upload', 'specialpages' ] // and anything that doesn't fit in other categories
+		];
+
+		// populate the output array with an empty array for each category
+		$output = [];
+		foreach ( $categories as $category => $toolNamesInCurrentCategory ) {
+			$output[$category] = [];
+		}
+
+		// populate the output array with tools
+		foreach ( $tools as $toolName => $toolDetails ) {
+			// special case: if a key starts with "nstab-" then put it in namespaces
+			if ( strpos( $toolName, 'nstab-' ) === 0 ) {
+				$output['namespaces'][$toolName] = $toolDetails;
+			} else { // otherwise place the tool in its correct category
+				foreach ( $categories as $category => $toolNamesInCurrentCategory ) {
+					foreach ( $toolNamesInCurrentCategory as $toolNameInCurrentCategory ) {
+						if ( $toolName == $toolNameInCurrentCategory ) {
+							$output[$category][$toolName] = $toolDetails;
+							$toolPlaced = true;
+							// once tool is placed, move on to next tool (next iteration of
+							// outermost foreach)
+							continue 3;
+						}
+					}
+				}
+				// if tool hasn't been placed anywhere after all that, put it in 'other'
+				$output['other'][$toolName] = $toolDetails;
+			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Render the page tools in the toolbox dropdown.
+	 * @param array $pageTools an array of page tools generated by sortPageTools()
+	 */
+	private function renderToolboxDropdownItems( $pageTools ) {
+		$toolboxCategories = [ 'page-tools', 'user-tools' ];
+		foreach ( $toolboxCategories as $category ) {
+			if ( !empty( $pageTools[$category] ) ) {
+				echo Html::element( 'dt', [ 'class' => 'refreshed-dropdown-header' ], $this->getMsg( 'refreshed-' . $category  )->text() );
+				$this->renderPageToolsInCategory( 'list item', $pageTools, $category );
+			}
+		}
+	}
+
+	/**
+	 * Render the page tools that are in the given category, either as list items
+	 * (dd NOT li) or as links (a).
+	 * @param string $mode expects either 'list item' or 'link'
+	 * @param array $pageTools an array of page tools generated by sortPageTools()
+	 * @param string $category the category of list items being generated
+	 */
+
+	private function renderPageToolsInCategory( $mode, $pageTools, $category ) {
+		// if category is invalid, do nothing
+		if ( !array_key_exists( $category, $pageTools ) ) {
+			return;
+		}
+
+		$options = [ 'text-wrapper' => [ 'tag' => 'span' ] ];
+
+		if ( $mode == 'list item' ) {
+			foreach ( $pageTools[$category] as $keyAndIconName => $item ) {
+				echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, $options );
+			}
+		} elseif ( $mode == 'link' ) {
+			foreach ( $pageTools[$category] as $keyAndIconName => $item ) {
+				echo $this->makeLinkWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, $options );
+			}
 		}
 	}
 
@@ -827,6 +929,11 @@ class RefreshedTemplate extends BaseTemplate {
 		$personalTools = $this->getAndRearrangePersonalTools();
 		$dropdownPersonalTools = $personalTools['dropdown'];
 		$extraPersonalTools = $personalTools['extra'];
+
+		// @TODO remove toolbox
+		$toolbox = $this->getToolbox();
+		$pageTools = array_merge( $this->data['content_navigation']['views'], $this->data['content_actions'], $this->getToolbox() );
+		$pageTools = $this->sortPageTools( $pageTools );
 
 		// allow error handling in makeElementWithIconHelper:
 		// see https://secure.php.net/manual/en/simplexml.examples-errors.php
@@ -1141,7 +1248,7 @@ class RefreshedTemplate extends BaseTemplate {
 							echo $this->getIndicators();
 						}
 						?>
-						<h1 id="firstHeading" class="scroll-shadow"><?php $this->html( 'title' ) ?></h1>
+						<h1 id="firstHeading"><?php $this->html( 'title' ) ?></h1>
 						<div id="main-title-messages">
 							<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>
 							<?php
@@ -1153,121 +1260,58 @@ class RefreshedTemplate extends BaseTemplate {
 							?>
 						</div>
 						<div class="standard-toolbox static-toolbox" role="menubar">
-							<?php
-							$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated = false;
-							$amountOfToolsGenerated = 0;
-
-							$toolbox = $this->getToolbox();
-
-							// if there are actions like "edit," etc.
-							// (not counting generic toolbox tools like "upload file")
-							// in addition to non-page-specific ones like "page" (so a "more..." link is needed)
-							if ( sizeof( $this->data['content_actions'] ) > 1 ) {
-								foreach ( $this->data['content_actions'] as $key => $action ) {
-									if ( !$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated ) { // this runs until all the actions outside the dropdown have been generated (generates actions outside dropdown)
-										// echo $key;
-										echo $this->makeLinkWithIconAtStart( $key, $key, $action, [
-											'text-wrapper' => [
-												'tag' => 'span'
-											]
-										] );
-										$amountOfToolsGenerated++;
-										if (
-											sizeof( $this->data['content_actions'] ) == $amountOfToolsGenerated ||
-											$key == 'history' || $key == 'addsection' ||
-											$key == 'protect' || $key == 'unprotect'
-										)
-										{
-											// if this is the last action or it is the
-											// history, new section, or protect/unprotect action
-											// (whichever comes first)
-											$lastLinkOutsideOfStandardToolboxDropdownHasBeenGenerated = true;
-											?>
-											<div class="toolbox-container">
-												<a class="toolbox-link collapse-trigger"><?php echo $this->getMsg( 'moredotdotdot' )->text() ?></a>
-												<div class="standard-toolbox-dropdown refreshed-menu-collapsible refreshed-menu-collapsed">
-													<div class="dropdown-triangle"></div>
-													<ul>
-										<?php
-										}
-									} else { // generates actions inside dropdown
-										?>
-										<li class="toolbox-dropdown-item toolbox-dropdown-page-action">
-											<?php echo $this->makeListItemWithIconAtStart( $key, $key, $action, [
-												'text-wrapper' => [
-													'tag' => 'span',
-													'attributes' => [
-														'class' => 'toolbox-item-text'
-													]
-												]
-											] );
-											?>
-										</li>
-										<?php
-									}
-								}
-								foreach ( $toolbox as $tool => $toolData ) { // generates toolbox tools inside dropdown (e.g. "upload file")
+							<div class="toolbox-namespaces">
+								<?php $this->renderPageToolsInCategory( 'link', $pageTools, 'namespaces' ) ?>
+							</div>
+							<div id="toolbox-main-actions-toolbox-dropdowns-wrapper">
+								<div class="toolbox-main-actions">
+									<?php $this->renderPageToolsInCategory( 'link', $pageTools, 'main-actions' ) ?>
+								</div>
+								<?php if ( !empty( $pageTools['page-tools'] ) ) {
 									?>
-									<li class="toolbox-dropdown-item toolbox-dropdown-tool">
-										<?php echo $this->makeListItemWithIconAtStart( $tool, $tool, $toolData, [
-											'text-wrapper' => [
-												'tag' => 'span',
-												'attributes' => [
-													'class' => 'toolbox-item-text'
-												]
-											]
-										] );
-										?>
-									</li>
+									<div class="toolbox-dropdown refreshed-dropdown">
+										<input type="checkbox" id="toolbox-page-tools-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+										<label for="toolbox-page-tools-dropdown-checkbox" id="toolbox-page-tools-dropdown-button" class="refreshed-dropdown-button content-dropdown-button">
+											<span class="header-category-name header-text"><?php echo $this->getMsg( 'refreshed-page-tools' )->text()?></span>
+											<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
+											<span class="refreshed-dropdown-triangle"></span>
+										</label>
+										<ul class="toolbox-dropdown-tray refreshed-dropdown-tray">
+											<?php $this->renderPageToolsInCategory( 'list item', $pageTools, 'page-tools' ) ?>
+										</ul>
+									</div>
 									<?php
 								}
-							} else { // if there aren't actions like edit, etc. (so a "tools" link is needed instead of a "more..." link)
-								foreach ( $this->data['content_actions'] as $key => $action ) { // generates first link (i.e. "page" button on the mainspace, "special page" on Special namespace, etc.); the foreach loop should once run once since there should only be one link
-									echo $this->makeLinkWithIconAtStart( $key, $key, $action );
-								}
-							?>
-								<div class="toolbox-container">
-									<a class="toolbox-link collapse-trigger"><?php echo $this->getMsg( 'toolbox' )->text() ?></a>
-									<div class="standard-toolbox-dropdown refreshed-menu-collapsible refreshed-menu-collapsed">
-										<div class="dropdown-triangle"></div>
-										<ul>
-											<?php
-											foreach ( $toolbox as $tool => $toolData ) { // generates toolbox tools inside dropdown (e.g. "upload file")
-												if ( $tool == 'feeds' ) {
-													// HACK! Technically this should
-													// use $wgAdvertisedFeedTypes, which
-													// *can* include 'rss' in addition
-													// to 'atom', but only 'atom'
-													// is enabled by default.
-													// I wasn't able to get 'rss' working
-													// locally either, so...
-													$dataForLink = $toolData['links']['atom'];
-												} else {
-													$dataForLink = $toolData;
-												}
-												?>
-												<li class="toolbox-dropdown-item tool-dropdown-item toolbox-dropdown-tool">
-													<?php echo $this->makeLinkWithIconAtStart( $tool, $tool, $dataForLink, [
-														'text-wrapper' => [
-															'tag' => 'span',
-															'attributes' => [
-																'class' => 'toolbox-item-text'
-															]
-														]
-													] );
-													?>
-											</li>
-												<?php
-											}
-							}
-							// Avoid PHP 7.1 warning of passing $this by reference
-							$template = $this;
-							Hooks::run( 'SkinTemplateToolboxEnd', [ &$template, true ] );
-							?>
+								?>
+
+								<?php if ( !empty( $pageTools['user-tools'] ) ) {
+									?>
+									<div class="toolbox-dropdown refreshed-dropdown">
+										<input type="checkbox" id="toolbox-user-tools-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+										<label for="toolbox-user-tools-dropdown-checkbox" id="toolbox-user-tools-dropdown-button" class="refreshed-dropdown-button content-dropdown-button">
+											<span class="header-category-name header-text"><?php echo $this->getMsg( 'refreshed-user-tools' )->text()?></span>
+											<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
+											<span class="refreshed-dropdown-triangle"></span>
+										</label>
+										<ul class="toolbox-dropdown-tray refreshed-dropdown-tray">
+											<?php $this->renderPageToolsInCategory( 'list item', $pageTools, 'user-tools' ) ?>
 										</ul>
-								</div>
+									</div>
+									<?php
+								}
+								?>
 							</div>
-						</div>
+
+
+
+
+							<!-- <div class="toolbox-watch">
+								<?php //$this->renderPageToolsInCategory( 'link', $pageTools, 'watch' ) ?>
+							</div>
+							<div class="toolbox-other">
+								<?php //$this->renderPageToolsInCategory( 'list item', $pageTools, 'other' ) ?>
+							</div>
+						</div> -->
 						<?php
 						if ( MWNamespace::isTalk( $titleNamespace ) ) { // if talk namespace
 							echo Linker::link(

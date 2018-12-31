@@ -31,6 +31,32 @@ body {
 
 /* style */
 
+.refreshed-dropdown-button {
+	position: relative; /* place dropdowns relative to matching .header-button */
+}
+
+/* Make right: 0; sticks dropdown trays to the right edge of the dropdown,
+not the viewport */
+.toolbox-dropdown {
+	position: relative;
+}
+
+.toolbox-dropdown-tray {
+	right: 0;
+}
+
+.content-dropdown-button {
+	.flex-display( inline-flex );
+	.flex-align-items( center );
+	background: @content-dropdown-button-background;
+	padding: 0.25em;
+
+	&:hover,
+	&:active {
+		background: @content-dropdown-button-hover-background;
+	}
+}
+
 /*
 	Why this element exists:
 	Originally the triangle was a pseudoelement attached to .refreshed-dropdown-button.
@@ -81,10 +107,37 @@ body {
 	background: @dropdown-tray-background-color;
 	z-index: @z-index-dropdown-tray;
 	list-style-type: none;
+	color: @dropdown-tray-font-color;
 	.stack-box-shadow();
 
 	a {
-		.pretty-anchor( @hover-background-color: @dropdown-tray-hover-background-color );
+		.pretty-anchor( @active-background-color: @dropdown-tray-hover-background-color );
+		/* center any icons relative to the link text */
+		.flex-display( );
+		.flex-align-items( center );
+	}
+
+	.refreshed-icon {
+		.flex( @grow: 0, @shrink: 0 );
+		margin-right: 0.4em;
+	}
+
+	.refreshed-icon-refreshed-submenu-expand {
+		margin: 0;
+	}
+
+	span {
+		.flex( @grow: 1, @shrink: 1 );
+	}
+
+	dd {
+		margin: 0;
+	}
+
+	dt {
+		margin: 0;
+		margin-left: @dropdown-tray-vertical-padding;
+		margin-bottom: 0.1em;
 	}
 }
 
@@ -122,10 +175,6 @@ a.explore-submenu-dropdown-anchor {
 	.flex-display();
 	.flex-justify-content( space-between );
 	.flex-align-items( center );
-
-	.refreshed-icon-refreshed-submenu-expand {
-		.flex( @grow: 0, @shrink: 0 );
-	}
 }
 
 .explore-submenu-dropdown {
@@ -138,9 +187,19 @@ a.explore-submenu-dropdown-anchor {
 	margin-top: 0;
 }
 
-.refreshed-checkbox:checked ~ .refreshed-dropdown-button,
+.refreshed-checkbox:checked ~ .header-button.refreshed-dropdown-button,
 #sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button {
 	background: @button-selected-background;
+}
+
+.refreshed-checkbox:checked ~ .content-dropdown-button {
+	background: @content-dropdown-button-hover-background;
+}
+
+/* reset CSS of feed links */
+a.feedlink {
+	background-image: none;
+	margin: 0;
 }
 
 /* functionality */
@@ -165,7 +224,7 @@ a.explore-submenu-dropdown-anchor {
 }
 
 .refreshed-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor {
-	.pretty-anchor( @active: true, @hover-background-color: @dropdown-tray-hover-background-color );
+	.pretty-anchor( @active: true, @active-background-color: @dropdown-tray-hover-background-color );
 	/* override .pretty-anchor() styles (the rules below are copied from a.explore-submenu-dropdown-anchor) */
 	.flex-display();
 }
@@ -250,7 +309,6 @@ a.explore-submenu-dropdown-anchor {
 	.flex-align-items( center );
 	cursor: pointer;
 	text-align: center;
-	position: relative; /* place dropdowns relative to matching .header-button */
 
 	/* remove default anchor styling (for text wiki logos) */
 	a& {
@@ -326,6 +384,30 @@ opposed to the sidebar), space them out */
 	shrink, but the user info shouldn't */
 	.flex( @grow: 0, @shrink: 0 );
 }
+
+#extra-personal-tools,
+#user-info-dropdown {
+	display: inline-block;
+}
+
+#extra-personal-tools-tray {
+	.flex-display( inline-flex );
+	.flex-align-items( center );
+	margin: 0;
+	list-style: none;
+	height: 100%;
+}
+
+#pt-notifications-alert,
+#pt-notifications-notice {
+	margin: 0;
+	padding-right: 0.75em;
+}
+
+#pt-notifications-alert {
+	margin-right: 0.25em;
+}
+
 
 #user-info-dropdown-button {
 	.avatar {
@@ -489,6 +571,29 @@ the explore button which is at the top of it. */
 
 /* @TODO */
 
+#content-wrapper {
+	background-color: @content-backgound-color;
+	color: @content-font-color;
+}
+
+.standard-toolbox a {
+}
+
+#toolbox-main-actions-toolbox-dropdowns-wrapper {
+	float: right;
+}
+
+.toolbox-namespaces,
+.toolbox-main-actions,
+.toolbox-dropdown {
+	display: inline-block;
+}
+
+.toolbox-namespaces a,
+.toolbox-main-actions a {
+	.pretty-anchor( @border-side: vertical );
+	display: inline-block;
+}
 /*******************************************************************************
 ************************************ FOOTER ************************************
 *******************************************************************************/
@@ -600,14 +705,11 @@ the explore button which is at the top of it. */
 }
 
 #content-wrapper {
-	min-height: 100%;
 	position: absolute;
-	z-index: 1;
 }
 
 #content {
 	background-color: #fff;
-	z-index: 1;
 	font-family: sans-serif;
 	border-bottom: 0.25em solid #eee;
 	padding-bottom: 1em;
@@ -655,9 +757,9 @@ the explore button which is at the top of it. */
 }
 
 .standard-toolbox {
-	height: 1.5em; /* 1em for the text, 0.25em for text padding-top, 0.25em for text padding-bottom; meanwhile the links take up 1.75em when you include their 0.25em border-bottom */
-	position: absolute;
-	bottom: 0.75em;
+	//height: 1.5em; /* 1em for the text, 0.25em for text padding-top, 0.25em for text padding-bottom; meanwhile the links take up 1.75em when you include their 0.25em border-bottom */
+	//position: absolute;
+	//bottom: 0.75em;
 }
 
 /* @TODO reimplement page tools and remove these rules */
@@ -683,7 +785,6 @@ the explore button which is at the top of it. */
 }
 
 .standard-toolbox a {
-	text-transform: lowercase;
 	font-weight: normal;
 	text-decoration: none;
 }

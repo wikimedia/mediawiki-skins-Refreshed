@@ -1,7 +1,7 @@
 @import 'mediawiki.mixins';
 
 @z-index-header: 100; /* see https://www.mediawiki.org/wiki/Manual:Coding_conventions/CSS#z-index */
-@z-index-close-overlay: 1;
+@z-index-close-overlay: @z-index-header + 1;
 /* More than @z-index-dropdown close-overlay so dropdowns appears above the close overlay.
 Less than @z-index-dropdown-triangle to ensure the triangle appears above the
 dropdown and thus is not underneath its drop shadow */
@@ -21,12 +21,18 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @button-hover-background: midnightblue;
 @button-selected-background: @button-hover-background;
 @small-sidebar-background: @body-background;
+@content-backgound-color: #fff;
+@content-font-color: #000;
 
 @close-overlay-shadow-color: rgba( 0, 0, 0, 0.2 );
 @content-shadow-color: rgba( 75, 75, 75, 0.4 );
 
-@dropdown-tray-background-color: #fff;
+@dropdown-tray-background-color: @content-backgound-color;
 @dropdown-tray-hover-background-color: #eee;
+@dropdown-tray-font-color: @content-font-color;
+
+@content-dropdown-button-background: #eee;
+@content-dropdown-button-hover-background: #ddd;
 
 @header-category-collapsible-padding: 0.25em 0.25em 0.25em 0;
 
@@ -125,7 +131,7 @@ elements are set to the same height */
 }
 
 /* the dropdown/sidebar links where a side border appears on hover */
-.pretty-anchor( @active: false, @font-color: auto, @hover-background-color: initial ) {
+.pretty-anchor( @active: false, @font-color: auto, @active-background-color: initial, @border-side: horizontal ) {
   fill: currentColor;
   & when not ( @font-color = auto ) {
     .font-color( @font-color );
@@ -135,25 +141,52 @@ elements are set to the same height */
   padding-bottom: 0.2em;
   padding-left: 1em;
   padding-right: 1em;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent; /* border-right for symmetry */
+  border-left: 0.3em solid transparent;
+  border-right: 0.3em solid transparent; /* border-right for symmetry */
+  & when ( @border-side = vertical ) {
+    border-left: 0;
+    border-right: 0;
+    border-top: 0.3em solid transparent;
+    border-bottom: 0.3em solid transparent; /* border-bottom for symmetry */
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    margin-right: 0.3em;
+  }
   .box-sizing( border-box ); /* padding/border should be included within the 100% width */
   text-decoration: none;
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &.selected {
     /* use currentColor not @font-color because, for example,
     if @font-color = auto, then setting border-color to @font-color would set
     border-color to auto... that is, border-color would be the auto value for
     border-color, not the auto value for color */
     border-left-color: currentColor;
-    background-color: @hover-background-color;
+    & when ( @border-side = vertical ) {
+      border-left-color: transparent;
+      border-bottom-color: currentColor;
+    }
+  }
+
+  &:focus,
+  &:active,
+  &.selected {
+    background-color: @active-background-color;
   }
 
   & when ( @active = true ) {
     border-left-color: currentColor;
-    background-color: @hover-background-color;
+    & when ( @border-side = vertical ) {
+      border-left-color: transparent;
+      border-bottom-color: currentColor;
+    }
+    background-color: @active-background-color;
+  }
+
+  svg {
+    vertical-align: middle;
   }
 }
 

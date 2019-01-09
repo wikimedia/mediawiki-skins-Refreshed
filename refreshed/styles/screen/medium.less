@@ -1,6 +1,16 @@
 @import 'variables.less';
 
 /*******************************************************************************
+**************************** DROPDOWNS/COLLAPSIBLES ****************************
+*******************************************************************************/
+
+/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
+not the viewport */
+#toolbox-dropdown {
+	position: relative;
+}
+
+/*******************************************************************************
 ************************************ HEADER ************************************
 *******************************************************************************/
 
@@ -14,10 +24,6 @@
 
 .refreshed-dropdown-tray {
 	width: @medium-dropdown-tray-width;
-}
-
-.single-wiki .refreshed-logo-current {
-	min-width: @big-sidebar-width;
 }
 
 .site-navigation-logo-img {
@@ -34,13 +40,9 @@
 	margin-top: -( @medium-header-height );
 }
 
-#sidebar-toggler {
-  display: none;
-}
-
 .dropdown-searchInput( @medium-header-search-width );
 
-.header-suggestions {
+#header-suggestions {
   right: 0 !important;
 }
 
@@ -48,17 +50,12 @@
   .extra-header-button-padding();
 }
 
-#user-info-dropdown-tray {
-  right: @medium-content-margin-right;
-}
-
 /*******************************************************************************
 ************************************ SIDEBAR ***********************************
 *******************************************************************************/
 
-#sidebar-wrapper {
-  width: @medium-sidebar-width;
-}
+
+.use-sidebar-menu( @medium-sidebar-width, @sidebar-menu-background );
 
 #site-navigation-sidebar-header-categories-sidebar-wrapper {
   display: none;
@@ -70,9 +67,11 @@
 
 /* @TODO */
 
-#content-wrapper {
-  left: @medium-sidebar-width;
-  right: 0;
+.use-refreshed-toolbox-sticky( @medium-header-height );
+
+/* toolbox */
+a#back-to-subject { /* a for specificity */
+  display: none;
 }
 
 /*******************************************************************************

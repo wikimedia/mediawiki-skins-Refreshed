@@ -50,10 +50,10 @@
 					"media": "screen"
 				},
 				"refreshed/styles/screen/small.less": {
-					"media": "(max-width: 600px)"
+					"media": "(max-width: 719px)"
 				},
 				"refreshed/styles/screen/medium.less": {
-					"media": "(min-width: 601px) and (max-width: 1000px)"
+					"media": "(min-width: 720px) and (max-width: 1000px)"
 				},
 				"refreshed/styles/screen/big.less": {
 					"media": "(min-width: 1001px)"

@@ -1,6 +1,16 @@
 @import 'variables.less';
 
 /*******************************************************************************
+**************************** DROPDOWNS/COLLAPSIBLES ****************************
+*******************************************************************************/
+
+.refreshed-dropdown-tray {
+  left: 0;
+  right: 0;
+  font-size: @small-dropdown-tray-sidebar-font-size;
+}
+
+/*******************************************************************************
 ************************************ HEADER ************************************
 *******************************************************************************/
 
@@ -14,11 +24,6 @@ body {
 .header-button-textless-small {
   width: @small-header-height;
   padding: 0;
-}
-
-.refreshed-dropdown-tray {
-  left: 0;
-  right: 0;
 }
 
 .site-navigation-logo-img {
@@ -46,7 +51,7 @@ body {
 
 .dropdown-searchInput( @small-header-search-width );
 
-.header-suggestions {
+#header-suggestions {
   left: 0 !important;
   right: 0 !important;
 }
@@ -59,28 +64,14 @@ body {
   }
 }
 
-#user-info-dropdown-tray {
-  right: @small-content-margin-right;
-}
-
 /*******************************************************************************
 ************************************ SIDEBAR ***********************************
 *******************************************************************************/
 
-#sidebar-wrapper {
-  width: @small-sidebar-width;
-  left: -( @small-sidebar-width );
-  background: @small-sidebar-background;
-  z-index: @small-z-index-sidebar;
-  .transition( left 0.2s ease );
-}
+.use-sidebar-menu( @small-sidebar-width, @sidebar-menu-background );
 
-#sidebar-toggler-checkbox:checked ~ #sidebar-wrapper {
-	left: 0;
-	/* only apply the box shadow when the sidebar is opened so the shadow doesn't
-	appear on the edge of the screen when the sidebar is closed (just off the edge
-	of the screen) */
-	box-shadow: 0 3px 9px 0 rgba(75,75,75,0.4);
+#sidebar-wrapper {
+  font-size: @small-dropdown-tray-sidebar-font-size;
 }
 
 /*******************************************************************************
@@ -89,9 +80,38 @@ body {
 
 /* @TODO */
 
-#content-wrapper {
-  left: 0;
-  right: 0;
+#firstHeading,
+#main-title-messages {
+  text-align: center;
+}
+
+#main-title-messages,
+#refreshed-toolbox {
+  font-size: 1.25em;
+}
+
+/* toolbox */
+
+#refreshed-toolbox {
+  overflow-x: auto;
+}
+
+#toolbox-namespaces .ca-subject { /* #toolbox-namespaces for specificity */
+  display: none;
+}
+
+.selected#ca-talk {
+  display: none;
+}
+
+
+.inline-tool-text {
+  display: none;
+}
+
+.toolbox-main-actions > a,
+.combined-tools-dropdown {
+  margin-left: 0.75em;
 }
 
 /*******************************************************************************

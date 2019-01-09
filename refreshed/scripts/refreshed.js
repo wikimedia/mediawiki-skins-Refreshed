@@ -1,155 +1,135 @@
-/* global $ */
-window.Refreshed = {
-	toolboxDistanceFromTopWhenStatic: $( '.standard-toolbox' ).offset().top,
-	toolboxIsFixed: false,
-	usingIOS: false,
-	thresholdForSmallCSS: 601,
-	windowStartedSmall: false,
-	thresholdForBigCSS: 1001,
-	windowIsBig: false,
-	windowIsSmall: false,
-	widthOfSpecialSearchBar: 0,
-	widthOfSpecialSearchPowerSearchBar: 0,
-	headerSearchIsOpen: false,
-	sidebarIsOpen: false,
+/****** The code that runs in scroll events was written without jQuery for
+faster performance. Speed isn't as important here, so this code uses
+jQuery for readability. ******/
 
-	setCollapsibleMaxHeights: function() {
-		var currentHeight = 0;
-		$( '.refreshed-menu-collapsible' ).each( function () {
-			currentHeight = $( this )[0].scrollHeight;
-			//scrollHeight determines the height ignoring the max-height property
-			//(which is 0 if the dropdown is hidden on page load)
-			$( this ).css( { 'max-height': currentHeight + 'px' } );
-		});
-	},
+// based on https://stackoverflow.com/a/39993724
+if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
+	runRefreshedJS();
+} else {
+	document.addEventListener('DOMContentLoaded', function () {
+		runRefreshedJS();
+	} );
+}
 
-	shouldToggleFixedToolbox: function() {
-		if ( !Refreshed.toolboxIsFixed ) {
-			// reassign this variable every time so it doesn't break if the
-			// distance to the top changes somehow (e.g. sitenotice has animated height)
-			// --better safe than sorry
-			Refreshed.toolboxDistanceFromTopWhenStatic = $( '.standard-toolbox' ).offset().top;
-		}
-		distanceScrolled = $( window ).scrollTop();
-		toolboxShouldBeToggled = ( Refreshed.toolboxDistanceFromTopWhenStatic - distanceScrolled <= $( '#header-wrapper' ).height() && !Refreshed.toolboxIsFixed ) || ( Refreshed.toolboxDistanceFromTopWhenStatic - distanceScrolled > $( '#header-wrapper' ).height() && Refreshed.toolboxIsFixed ); // true if 1) the page is scrolled enough for .standard-toolbox to be fixed and it isn't or 2) page isn't scrolled enough for it to be fixed and it is
-		return toolboxShouldBeToggled;
-	},
+function runRefreshedJS() {
 
-	toggleFixedToolbox: function() {
-		$( '.standard-toolbox' ).toggleClass( 'fixed-toolbox' );
-		if ( $( '.standard-toolbox' ).hasClass( 'fixed-toolbox' ) ) {
-			Refreshed.toolboxIsFixed = true;
-		} else {
-			Refreshed.toolboxIsFixed = false;
-		}
-	},
+	var Refreshed = {
+		toolbox: document.getElementById( 'refreshed-toolbox' ),
+		stuckClass: 'refreshed-toolbox-stuck',
+		toolboxHasStuckClass: false,
+		searchInput: document.getElementById( 'searchInput' ),
+		suggestionsClass: 'suggestions',
+		headerSuggestionsId: 'header-suggestions',
+		body: document.body,
+		sidebarTogglerCheckbox: document.getElementById( 'sidebar-toggler-checkbox' ),
+		sidebarToggler: document.getElementById( 'sidebar-toggler' )
+	};
 
-	showHideOverflowingDropdowns: function() {
-		$( '.page-item-has-children' ).each( function() {
-			if ( $( this ).offset().top > $( '#header-wrapper' ).height() + $( '#header-wrapper' ).offset().top ) { // if the .page-item is beneath the bottom of the header (and so it's cut off by overflow:hidden)
-				$( this ).children( '.children' ).css( { 'display': 'none' } );
-				$( this ).removeClass( 'header-button-active' );
-				$( this ).children( '.header-button' ).children( '.arrow' ).removeClass( 'rotate' );
+	/*******************************************************************************
+	************************************ TOOLBOX ***********************************
+	*******************************************************************************/
+
+	/******** Add/remove class from toolbox based if toolbox is stuck/ not ********/
+
+	if ( CSS.supports( 'position: sticky' ) || CSS.supports( 'position: -webkit-sticky' ) ) {
+		Refreshed.toolboxHasStuckClass = Refreshed.toolbox.classList.contains( Refreshed.stuckClass );
+
+		// returns true if the toolbox's top property (in pixels) is the distance that
+		// the toolbox is from the top of the viewport, as in that case, it is stuck
+		Refreshed.toolboxIsStuck = function() {
+			return parseFloat( window.getComputedStyle( this.toolbox ).getPropertyValue( 'top' ) ) == this.toolbox.getBoundingClientRect().top;
+		};
+
+		// remove stuckClass from toolbox if toolbox isn't stuck;
+		// add stuckClass to toolbox if toolbox is stuck
+		Refreshed.updateToolboxClasses = function() {
+			if ( this.toolboxIsStuck() != this.toolboxHasStuckClass ) {
+				this.toolbox.classList.toggle( this.stuckClass );
+				this.toolboxHasStuckClass = !this.toolboxHasStuckClass;
 			}
+		};
+
+		// run once in case the toolbox starts out as stuck on page load
+		Refreshed.updateToolboxClasses();
+
+		// attach/detach the toolbox to the top depending on scroll position
+		window.addEventListener( 'scroll', function() {
+				Refreshed.updateToolboxClasses();
 		} );
-	},
-
-	toggleCollapse: function( trigger ) {
-		$( trigger ).siblings( '.refreshed-menu-collapsible' ).addBack( '.refreshed-menu-collapsible' ).toggleClass( 'refreshed-menu-collapsed' );
-		$( trigger ).children( '.arrow' ).toggleClass( 'rotate' );
-		if ( $( trigger ).hasClass( 'header-button' ) ) {
-			$( trigger ).toggleClass( 'header-button-active' );
-		}
-		$( trigger ).parent().toggleClass( 'open-collapsible-parent' );
-	},
-
-	toggleFade: function( trigger ) {
-		$( trigger ).siblings( '.fadable' ).addBack( '.fadable' ).toggleClass( 'faded' );
-		$( trigger ).children( '.arrow' ).toggleClass( 'rotate' );
-		if ( $( trigger ).hasClass( 'header-button' ) ) {
-			$( trigger ).toggleClass( 'header-button-active' );
-		}
-		$( trigger ).parent().toggleClass( 'open-fadable-parent' );
-	},
-
-	toggleHeaderSearch: function() {
-		$( '.sidebar-shower' ).toggleClass( 'sidebar-shower-hidden' );
-		$( '#fade-overlay' ).toggleClass( 'fade-overlay-active fade-overlay-triggered-by-search' ); // toggle the fade overlay
-		if ( Refreshed.windowIsSmall ) {
-			// On small, because .search-shower is replaced by .search-closer and
-			// vice-versa instead of the buttons appearing active, they take on
-			// the .header-button-active class when they shouldn't; this gets rid of it.
-			// On medium there's only .search-shower, so it functions properly
-			// and the class shouldn't be removed.
-			$( '.search-shower' ).removeClass( 'header-button-active' );
-			$( '.search-closer' ).removeClass( 'header-button-active' );
-		}
-		if ( Refreshed.headerSearchIsOpen ) {
-			$( '#searchInput' ).val( '' ).blur();
-		} else {
-			$( '#searchInput' ).focus();
-		}
-		Refreshed.headerSearchIsOpen = !Refreshed.headerSearchIsOpen;
-	},
-
-	toggleSidebar: function() {
-		$( '#sidebar-wrapper' ).toggleClass( 'sidebar-open' );
-		$( '#fade-overlay' ).toggleClass( 'fade-overlay-active fade-overlay-triggered-by-sidebar' ); // toggle the fade overlay
-		$( '.sidebar-shower' ).toggleClass( 'header-button-active' );
-		Refreshed.sidebarIsOpen = !Refreshed.sidebarIsOpen;
-	}
-};
-
-$( function() {
-	if ( navigator.userAgent.toLowerCase().match( /(iPad|iPhone|iPod)/i ) ) { // detect if on an iOS device
-		Refreshed.usingIOS = true;
 	}
 
-	if ( $( window ).width() < Refreshed.thresholdForSmallCSS ) {
-		Refreshed.windowStartedSmall = true;
-	}
+	/*******************************************************************************
+	************************************ SEARCH ************************************
+	*******************************************************************************/
 
-	// test if window is running big.css
-	if ( $( window ).width() >= Refreshed.thresholdForBigCSS ) {
-		Refreshed.windowIsBig = true;
-	} else {
-		Refreshed.windowIsBig = false;
-	}
+	/***************** Clear the search bar when it's not focused; ****************/
+	/*********** focus the search bar when the search button is opened ************/
 
-	// test if window is running small.css
-	if ( $( window ).width() <= Refreshed.thresholdForSmallCSS ) {
-		Refreshed.windowIsSmall = true;
-	} else {
-		Refreshed.windowIsSmall = false;
-	}
+	Refreshed.clearTopSearchBar = function() {
+		this.searchInput.value = '';
+	};
 
-	if ( Refreshed.shouldToggleFixedToolbox() ) {
-		Refreshed.toggleFixedToolbox();
-	}
+	Refreshed.focusTopSearchBar = function() {
+		this.searchInput.focus();
+	};
 
-	Refreshed.setCollapsibleMaxHeights();
-
-	$( window ).scroll( function() {
-		if ( Refreshed.shouldToggleFixedToolbox() ) {
-			Refreshed.toggleFixedToolbox();
+	$( '#header-search-dropdown-checkbox' ).change( function() {
+		Refreshed.clearTopSearchBar();
+		if ( this.checked ) {
+			Refreshed.focusTopSearchBar();
 		}
 	} );
 
-	$( window ).resize( function() {
-		// uncheck checkboxes that may have stayed checked despite their button
-		// disappearing (for example the header category checkboxes may stay
-		// checked, so their dropdowns may stay open, after the viewport shrinks
-		// and the header category buttons disappear)
+	/*********** Add class to the suggestions box for the header search ***********/
 
+	Refreshed.labelHeaderSuggestionsBox = function( headerSuggestions ) {
+		headerSuggestions.id = Refreshed.headerSuggestionsId;
+	};
+
+	// find the 1st search suggestions element that's added, give it the id
+	// Refreshed.headerSuggestionsId
+	Refreshed.mutationCallback = function( mutationList, observer ) {
+		mutationList.forEach( function( mutation ) {
+			if ( mutation.type == 'childList' ) {
+				var lastSuggestionsElement = null;
+				// get the first added search suggestions element
+				mutation.addedNodes.forEach( function( element ) {
+					if ( element.classList.contains( Refreshed.suggestionsClass ) ) {
+						// give the element the id Refreshed.headerSuggestionsId
+						Refreshed.labelHeaderSuggestionsBox( element );
+						// the goal is done; no need to keep observing/iterating
+						observer.disconnect();
+						return;
+					}
+				} );
+			}
+		} );
+	};
+
+	Refreshed.searchSuggestionsMutationObserver = new MutationObserver( Refreshed.mutationCallback );
+	Refreshed.searchSuggestionsMutationObserver.observe( Refreshed.body, { childList: true, attributes: false, subtree: false } );
+
+	/*******************************************************************************
+	*********************************** CHECKBOXES *********************************
+	*******************************************************************************/
+
+	/******** Hide dropdowns if their corresponding button is hidden; ***********/
+	/**************** hide sidebar when sidebar button is hidden ****************/
+
+	// for example, the header category checkboxes may stay checked, so their
+	// dropdowns may stay open, after the viewport shrinks and the header category
+	// buttons disappear
+
+	Refreshed.hideDropdownsWithHiddenButtons = function() {
 		var checkbox = null;
 		var button = null;
 		var headerTopCoord = 0;
 		var buttonTopCoord = 0;
 		var headerBottomCoord = 0;
 		var buttonBottomCoord = 0;
-		$( '.refreshed-dropdown-tray:visible' ).each( function() {
-			checkbox = $( this ).siblings( '.refreshed-dropdown-checkbox' ).first();
-			button = $( this ).siblings( '.refreshed-dropdown-toggle' ).first().children( '.refreshed-dropdown-button' ).first();
+		$( '.refreshed-dropdown-tray' ).not(':visible').each( function() {
+			checkbox = $( this ).siblings( '.refreshed-checkbox' ).first();
+			button = $( this ).siblings( '.refreshed-dropdown-button' ).first();
 			// if the button has overflowed, its bottom is above the top of the
 			// header, or its top is above the bottom of the header
 			headerTopCoord = $( '#header-wrapper' ).offset().top;
@@ -160,143 +140,17 @@ $( function() {
 				checkbox.prop( 'checked', false );
 			}
 		} );
+	};
 
-		if ( $( window ).width() >= Refreshed.thresholdForBigCSS ) {
-			Refreshed.windowIsBig = true;
-		} else {
-			Refreshed.windowIsBig = false;
+	Refreshed.hideSidebarWhenSidebarTogglerHidden = function() {
+		if ( Refreshed.sidebarTogglerCheckbox.checked && $( Refreshed.sidebarToggler ).is( ':hidden' ) ) {
+			Refreshed.sidebarTogglerCheckbox.checked = false;
 		}
+	};
 
-		if ( $( window ).width() <= Refreshed.thresholdForSmallCSS ) {
-			Refreshed.windowIsSmall = true;
-		} else {
-			Refreshed.windowIsSmall = false;
-		}
-
-		Refreshed.showHideOverflowingDropdowns();
+	window.addEventListener( 'resize', function() {
+			Refreshed.hideDropdownsWithHiddenButtons();
+			Refreshed.hideSidebarWhenSidebarTogglerHidden();
 	} );
 
-	$( '#header-search-dropdown-checkbox' ).change( function() {
-		// reset the contents of the search bar
-		$( '#searchInput' ).val( '' );
-		// give search bar focus if opening
-		if ( this.checked ) {
-			$( '#searchInput' ).focus();
-		}
-	} );
-
-	// working code for dropdowns. Note: simple code like this is much better than complicated like below :)
-	$( 'a.header-button.collapse-trigger' ).click( function( e ) {
-		Refreshed.toggleCollapse( this );
-	} );
-
-	$( 'a.toolbox-link.collapse-trigger' ).click( function( e ) {
-		Refreshed.toggleCollapse( this );
-	} );
-
-	$( document ).click( function( e ) {
-		$( '.open-collapsible-parent' ).each( function () {
-			// target each .open-collapsible-parent (i.e., each parent of an open .collapsible element)
-			if ( !$( e.target ).closest( $( this ) ).length ) {
-				// if starting from the element clicked and moving up the DOM, we don't
-				// run into that the current .open-collapsible-parent...
-				Refreshed.toggleCollapse( $( this ).children( '.collapse-trigger' ) );
-			}
-		});
-	} );
-
-	$( 'a.header-button.fade-trigger' ).click( function( e ) {
-		Refreshed.toggleFade( this );
-	} );
-
-	$( 'a.toolbox-link.fade-trigger' ).click( function( e ) {
-		Refreshed.toggleFade( this );
-	} );
-
-	$( document ).click( function( e ) {
-		$( '.open-fadable-parent' ).each( function () {
-			if ( !$( e.target ).closest( $( this ) ).length ) {
-				Refreshed.toggleFade( $( this ).children( '.fade-trigger' ) );
-			}
-		});
-	} );
-
-	$( 'a.sidebar-shower' ).click( function( e ) {
-		Refreshed.toggleSidebar();
-	} );
-
-	$( 'a.search-shower' ).click( function( e ) {
-		Refreshed.toggleHeaderSearch();
-	} );
-
-	$( 'a.search-closer' ).click( function( e ) {
-		Refreshed.toggleHeaderSearch();
-	} );
-
-	$( 'a#fade-overlay' ).click( function( e ) {
-		// Unfortunately breaking this into two doesn't work. It might be
-		// because the .fade-overlay-triggered-by-SOMETHING classes aren't
-		// applied yet on $() (and this function is inside
-		// the $() ), so as far as the code is concerned
-		// elements with that class don't exist.
-		if ( $( this ).hasClass( 'fade-overlay-triggered-by-sidebar' ) ) {
-			Refreshed.toggleSidebar();
-		} else if ( $( this ).hasClass( 'fade-overlay-triggered-by-search' ) ) {
-			Refreshed.toggleHeaderSearch();
-		}
-	} );
-
-	/* Useful to follow click propagation for debugging
-	$( '*' ).click( function ( e ) {
-		alert( '<' + this.nodeName + ' id="' + this.id + '" class="' + this.className + '">' );
-	} );
-	*/
-
-	/* Temporarily disabled to fix front-end bugs
-	$( '#icon-ca-watch, #icon-ca-unwatch' ).parent().tap( function( e ) {
-		// AJAX for watch icons
-		var action, api, $link, title, otherAction;
-
-		e.preventDefault();
-		e.stopPropagation();
-
-		title = mw.config.get( 'wgRelevantPageName', mw.config.get( 'wgPageName' ) );
-		mw.loader.load( ['mediawiki.notification'], null, true );
-		action = mw.util.getParamValue( 'action', this.href );
-		otherAction = action === 'watch' ? 'unwatch' : 'watch';
-		$link = $( this );
-		$( 'div', this ).attr( 'id', 'icon-ca-' + otherAction );
-		$( this ).attr( 'href', this.href.replace( action, otherAction ) );
-
-		api = new mw.Api();
-		api[action]( title )
-			.done( function ( watchResponse ) {
-				mw.notify( $.parseHTML( watchResponse.message ), {
-					tag: 'watch-self'
-				} );
-
-				$( '#wpWatchthis' ).prop( 'checked', watchResponse.watched !== undefined );
-			} );
-	} );
-	*/
-
-	/*$( '#sidebar-wrapper' ).on( 'swipeleft', function( e ) {
-		if ( Refreshed.sidebarIsOpen ) {
-			e.preventDefault(); // prevent user from accidentally clicking link on swipe
-			Refreshed.toggleSidebar();
-		}
-	} );*/
-	setTimeout( function () { // wait a bit so the .suggestions elements can be added in (if we don't wait we'll be targeting nothing and it won't work)...
-		$( '.suggestions' ).last().addClass( 'header-suggestions' ); // add class to first .suggestions element
-	}, 100 );
-} );
-
-/* Fix for Echo in Refreshed */
-if ( document.getElementById( 'echo' ) ) {
-	$( '#pt-notifications-alert' ).prependTo( '#echo' );
-	$( '#pt-notifications-notice' ).prependTo( '#echo' );
-}
-
-if ( $( '.mw-echo-notifications-badge' ).hasClass( 'mw-echo-unread-notifications' ) ) {
-	$( '#pt-notifications-personaltools a' ).addClass( 'pt-notifications-personaltools-unread' );
 }

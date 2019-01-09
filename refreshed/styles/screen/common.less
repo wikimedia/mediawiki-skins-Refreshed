@@ -8,7 +8,8 @@ body {
 }
 
 .refreshed-icon {
-	height: 1em;
+	width: auto; /* in execution, often same as @refreshed-icon-height */
+	height: @refreshed-icon-height;
 	fill: currentColor;
 }
 
@@ -33,25 +34,23 @@ body {
 
 .refreshed-dropdown-button {
 	position: relative; /* place dropdowns relative to matching .header-button */
+	cursor: pointer;
 }
 
-/* Make right: 0; sticks dropdown trays to the right edge of the dropdown,
-not the viewport */
-.toolbox-dropdown {
-	position: relative;
-}
-
-.toolbox-dropdown-tray {
+#toolbox-dropdown-tray {
 	right: 0;
 }
 
-.content-dropdown-button {
+#toolbox-dropdown-button {
 	.flex-display( inline-flex );
 	.flex-align-items( center );
 	background: @content-dropdown-button-background;
 	padding: 0.25em;
+	vertical-align: middle;
+	color: @content-dropdown-button-font-color;
 
 	&:hover,
+	&:focus,
 	&:active {
 		background: @content-dropdown-button-hover-background;
 	}
@@ -108,6 +107,8 @@ not the viewport */
 	z-index: @z-index-dropdown-tray;
 	list-style-type: none;
 	color: @dropdown-tray-font-color;
+	max-height: 60vh;
+	overflow-y: auto;
 	.stack-box-shadow();
 
 	a {
@@ -119,7 +120,7 @@ not the viewport */
 
 	.refreshed-icon {
 		.flex( @grow: 0, @shrink: 0 );
-		margin-right: 0.4em;
+		margin-right: @dropdown-tray-refreshed-icon-margin-left;
 	}
 
 	.refreshed-icon-refreshed-submenu-expand {
@@ -141,6 +142,18 @@ not the viewport */
 	}
 }
 
+/* giving the explore dropdown tray overflow: scroll would prevent the submenu
+dropdown trays from appearing */
+#explore-dropdown-tray {
+	max-height: initial;
+	overflow: initial;
+}
+/* if an item in the toolbox has no icon, push it left to align with the items
+that do have icons */
+#toolbox-dropdown-tray span:first-child {
+	margin-left: @refreshed-icon-height + @dropdown-tray-refreshed-icon-margin-left;
+}
+
 /* when the dropdown is open, give the label a huge child so clicking anywhere
 outside the dropdown closes the box.
 The first selector is for when checkboxes can be placed as a prior sibling to
@@ -148,8 +161,8 @@ their contents. The second selector is useful for the sidebar toggle checkbox,
 because it is not a sibling of the elements it affects (it can't be, since the
 two elements are in different containers). The checkbox should affect the
 sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
-.refreshed-dropdown-checkbox ~ .refreshed-dropdown-button::after,
-#sidebar-toggler-checkbox ~ #header-wrapper #sidebar-toggler-button::after {
+.refreshed-dropdown-button::after,
+#sidebar-toggler-button::after {
 	content: "";
 	position: fixed;
 	top: 0;
@@ -192,7 +205,7 @@ a.explore-submenu-dropdown-anchor {
 	background: @button-selected-background;
 }
 
-.refreshed-checkbox:checked ~ .content-dropdown-button {
+#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-button {
 	background: @content-dropdown-button-hover-background;
 }
 
@@ -209,12 +222,20 @@ a.feedlink {
 }
 
 .refreshed-checkbox:checked ~ .refreshed-dropdown-tray,
-.refreshed-checkbox:checked ~ .refreshed-dropdown-button .refreshed-dropdown-triangle {
+.refreshed-checkbox:checked ~ .refreshed-dropdown-button .refreshed-dropdown-triangle,
+#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-tray,
+#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-triangle {
 	display: block;
 }
 
+/* see variable definition in variables.less for explanation */
+#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox {
+	z-index: @z-index-refreshed-toolbox-stuck-when-dropdown-open;
+}
+
 .refreshed-checkbox:checked ~ .refreshed-dropdown-button::after,
-#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button::after {
+#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button::after,
+#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-button::after {
 	background-color: @close-overlay-shadow-color;
 	pointer-events: auto;
 }
@@ -251,10 +272,10 @@ a.feedlink {
 	.flex( @grow: 0, @shrink: 0 );
 }
 
-/* remove the margin that's applied to adjacent svgs */
-.header-button svg.refreshed-icon {
-	margin: 0;
-}
+// /* remove the margin that's applied to adjacent svgs */
+// .header-button svg.refreshed-icon {
+// 	margin: 0;
+// }
 
 .refreshed-checkbox:checked ~ .refreshed-collapsible-button,
 .refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-collapsible-button,
@@ -327,10 +348,12 @@ a.feedlink {
 
 /* if multiple items inside a header button that's actually in the header (as
 opposed to the sidebar), space them out */
-#header-wrapper .header-button {
+#header-wrapper .header-button,
+#refreshed-toolbox {
 	img,
 	svg,
-	.header-text {
+	.header-text,
+	.inline-tool-text {
 		&:not(:only-child):not(:first-child) {
 			margin-left: 0.25em;
 		}
@@ -349,7 +372,8 @@ opposed to the sidebar), space them out */
 	.flex( @grow: 0, @shrink: 0 );
 }
 
-.site-navigation-logo-img {
+.site-navigation-logo-img,
+.site-navigation-logo-text {
 	/* width: SIZE-logo-img-width; */
 	.extra-header-button-padding();
 	.box-sizing( border-box ); /* padding should be included within the 100% width */
@@ -509,7 +533,7 @@ the explore button which is at the top of it. */
 	.extra-header-button-padding();
 }
 
-.header-suggestions {
+#header-suggestions {
 	.stack-box-shadow();
 
 	.suggestions-results {
@@ -569,31 +593,114 @@ the explore button which is at the top of it. */
 ************************************ CONTENT ***********************************
 *******************************************************************************/
 
-/* @TODO */
-
 #content-wrapper {
+	position: absolute;
 	background-color: @content-backgound-color;
 	color: @content-font-color;
+	padding: @content-wrapper-padding;
 }
 
-.standard-toolbox a {
+#main-title-messages {
+	border-bottom: 1px solid @firstHeading-border-color;
 }
 
-#toolbox-main-actions-toolbox-dropdowns-wrapper {
-	float: right;
+#refreshed-toolbox {
+	z-index: @z-index-refreshed-toolbox;
+	padding-top: @pretty-anchor-border-width;
+	padding-bottom: @pretty-anchor-border-width;
+	.flex-display();
+	.flex-align-items( initial );
 }
 
-.toolbox-namespaces,
-.toolbox-main-actions,
-.toolbox-dropdown {
+#toolbox-namespaces {
+	.flex( @grow: 1, @shrink: 1 );
+}
+
+#toolbox-main-actions,
+#toolbox-dropdown {
+	.flex( @grow: 0, @shrink: 0 );
+}
+
+.toolbox-section {
 	display: inline-block;
+	vertical-align: top;
 }
 
-.toolbox-namespaces a,
-.toolbox-main-actions a {
+/* so #back-to-subject collapses correctly, per
+https://css-tricks.com/flexbox-truncated-text/ */
+.toolbox-namespaces {
+	min-width: 5em;
+}
+
+#back-to-subject {
+	border-bottom: initial;
+	font-size: 1.1em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	max-width: 100%;
+}
+
+#toolbox-namespaces a,
+#toolbox-main-actions a {
 	.pretty-anchor( @border-side: vertical );
+	margin-bottom: -( @pretty-anchor-border-width );
+	padding-top: 0;
 	display: inline-block;
 }
+
+#ca-watch,
+#ca-unwatch {
+	display: inline;
+	margin: 0;
+	vertical-align: middle;
+	padding-bottom: @pretty-anchor-border-width;
+
+	a {
+		border: 0;
+		display: inline-block;
+		text-indent: -9999px;
+		width: 1.2em;
+		height: 1.2em;
+		vertical-align: middle;
+		background-position: top right;
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+	}
+}
+
+[dir = ltr] {
+	#ca-watch,
+	#ca-unwatch {
+		.loading,
+		:hover {
+			/* ooui-icon-halfStar-ltr */
+			background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7zm-10 6.9V4.6l1.9 3.9h4.6l-3.73 3.4 1 4.28z'/%3E%3C/svg%3E );
+		}
+	}
+}
+
+[dir = rtl] {
+	#ca-watch,
+	#ca-unwatch {
+		.loading,
+		:hover {
+			/* ooui-icon-halfStar-rtl */
+			background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M5.4 12.5l-1.6 7 6.2-3.7 6.2 3.7-1.6-7L20 7h-7L10 .5 7 7H0l5.4 5.5zm.8 3.7l1-4.3-3.7-3.4h4.6L10 4.6v9.3l-3.8 2.3z'/%3E%3C/svg%3E );
+		}
+	}
+}
+
+#ca-unwatch a {
+	/* ooui-icon-unStar */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7z'/%3E%3C/svg%3E%0A );
+}
+
+#ca-watch a {
+	/* ooui-icon-star */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7zm-10 6.9l-3.76 2.27 1-4.28L3.5 8.5h4.61L10 4.6l1.9 3.9h4.6l-3.73 3.4 1 4.28z'/%3E%3C/svg%3E%0A );
+}
+
 /*******************************************************************************
 ************************************ FOOTER ************************************
 *******************************************************************************/
@@ -608,89 +715,6 @@ the explore button which is at the top of it. */
 ************************************** OLD *************************************
 *******************************************************************************/
 
-.standard-toolbox-dropdown {
-	left: 0.5em;
-	z-index: 3;
-	background: #fff;
-	position: absolute;
-	width: 12em;
-	.stack-box-shadow();
-	border: 1px solid #ddd;
-	margin-top: 0.25em;
-}
-
-.standard-toolbox-dropdown ul {
-	list-style-type: none;
-	margin-left: 0;
-	margin-top: 0.25em;
-	margin-bottom: 0.25em;
-}
-
-.dropdown-triangle {
-	width: 0;
-	height: 0;
-	border-left: 0.5em solid transparent;
-	border-right: 0.5em solid transparent;
-	border-bottom: 0.5em solid #ccc;
-	position: absolute;
-	top: -.5em;
-	left: 0.1em;
-}
-
-.standard-toolbox-dropdown a {
-	width: 100%;
-	height: 100%;
-	display: inline-block;
-	padding-left: 0.25em;
-	padding-top: 0.1em;
-	padding-bottom: 0.1em;
-	box-sizing: border-box; /* padding/border should be included within the 100% width */
-}
-
-.standard-toolbox-dropdown a:hover {
-	padding-left: 0;
-	border-left: 0.25em solid;
-	background-color: #eee;
-}
-
-.standard-toolbox-dropdown .toolbox-item-text {
-	display: inline-block;
-	margin-left: 2.5em;
-	text-indent: -1em; /* pulls first line of text 1em to the left, so if you add 1em of padding to the right subsequent lines will look indented */
-}
-
-.standard-toolbox-dropdown a:before {
-	position: absolute;
-}
-
-.standard-toolbox .toolbox-dropdown-page-action + .toolbox-dropdown-tool  {
-	/* first tool in the dropdown that is after a page action (so if no page actions are in the dropdown, this CSS doesn't target anything) */
-	margin-top: .25em;
-	padding-top: .25em;
-	border-top: 1px solid #ccc; /* divide the tools from the page actions */
-}
-
-.fixed-toolbox {
-	padding-left: 0.9em; /* 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size) */
-	position: fixed;
-	border-bottom: 0.25em solid #eee;
-	background: #fff;
-	top: @big-header-height; /* height of #header */
-	left: 12em; /* margin-left of #content-wrapper */
-	right: 1em; /* margin-right of #content-wrapper */
-	z-index: 9999; /* very high value to guarantee no elements on wikis will appear above it */
-}
-
-#main-title-messages {
-	border-bottom: 1px solid #ddd;
-}
-
-#back-to-subject {
-	display: none;
-	font-size: 1.25em;
-	padding-bottom: 0.25em;
-}
-
 #small-toolbox-wrapper {
 	display: none;
 }
@@ -704,32 +728,10 @@ the explore button which is at the top of it. */
 	margin-left: 2em;
 }
 
-#content-wrapper {
-	position: absolute;
-}
-
-#content {
-	background-color: #fff;
-	font-family: sans-serif;
-	border-bottom: 0.25em solid #eee;
-	padding-bottom: 1em;
-}
-
 #bodyContent {
-	padding: 0 1em;
 	line-height: 1.5em;
 	font-size: 0.875em;
 	word-wrap: break-word;
-	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-	color: #252525;
-	overflow: auto;
-}
-
-#content-heading {
-	/* padding-left/right: 1em (#bodyContent padding-left) * 0.9em (#bodyContent font-size);
-	padding-bottom: 0.25em (padding on top of .standard-toolbox) + 1.5em (height of .standard-toolbox) + 0.75em (padding on bottom of .standard-toolbox) */
-	padding: 0.5em 0.9em 2.5em 0.9em;
-	position: relative;
 }
 
 #firstHeading {
@@ -737,6 +739,7 @@ the explore button which is at the top of it. */
 	padding: 0;
 	margin-bottom: 0;
 	border: 0;
+	display: inline;
 }
 
 .mw-indicators {
@@ -745,66 +748,6 @@ the explore button which is at the top of it. */
 
 .mw-indicator {
 	display: inline;
-}
-
-.scroll-shadow {
-	background: none;
-}
-
-.toolbox-container {
-	display: inline-block;
-	position: relative;
-}
-
-.standard-toolbox {
-	//height: 1.5em; /* 1em for the text, 0.25em for text padding-top, 0.25em for text padding-bottom; meanwhile the links take up 1.75em when you include their 0.25em border-bottom */
-	//position: absolute;
-	//bottom: 0.75em;
-}
-
-/* @TODO reimplement page tools and remove these rules */
-.refreshed-menu-collapsible {
-	-ms-transition: max-height 0.4s ease;
-	transition: max-height 0.4s ease;
-	visibility: visible;
-	overflow: hidden;
-	height: auto;
-}
-
-/* @TODO reimplement page tools and remove these rules */
-.refreshed-menu-collapsed {
-	-ms-transition: max-height 0.2s ease, visibility 0.2s;
-	transition: max-height 0.2s ease, visibility 0.2s;
-	max-height: 0 !important;
-	visibility: hidden;
-	overflow: hidden;
-}
-
-.toolbox-link {
-	cursor: pointer; /* doesn't have href so must be explicitly defined */
-}
-
-.standard-toolbox a {
-	font-weight: normal;
-	text-decoration: none;
-}
-
-.standard-toolbox > a,
-.standard-toolbox .toolbox-link {
-	/* page action links outside of the dropdown and the "more..."/"tools" button */
-	margin-left: 0.5em;
-	padding-top: 0.25em;
-	padding-bottom: 0.25em;
-}
-
-.standard-toolbox > a:first-of-type {
-	margin-left: 0;
-}
-
-.standard-toolbox > a:hover,
-.standard-toolbox > a.selected,
-.standard-toolbox .toolbox-link:hover {
-	border-bottom: 0.25em solid;
 }
 
 /********** Footer **********/
@@ -866,5 +809,5 @@ the explore button which is at the top of it. */
 }
 
 .mw-echo-ui-overlay {
-	z-index: @z-index-header !important; /* same as #header-wrapper and .header-suggestions */
+	z-index: @z-index-header !important; /* same as #header-wrapper and #header-suggestions */
 }

@@ -2,6 +2,21 @@
 @import 'mediawiki.mixins';
 
 /*******************************************************************************
+**************************** DROPDOWNS/COLLAPSIBLES ****************************
+*******************************************************************************/
+
+/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
+not the viewport */
+#toolbox-dropdown {
+	position: relative;
+}
+
+/* toolbox */
+a#back-to-subject { /* a for specificity */
+  display: none;
+}
+
+/*******************************************************************************
 ************************************ HEADER ************************************
 *******************************************************************************/
 
@@ -72,10 +87,6 @@
 	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M19%2017l-5.15-5.15a7%207%200%201%200-2%202L17%2019zM3.5%208A4.5%204.5%200%201%201%208%2012.5%204.5%204.5%200%200%201%203.5%208z%22%2F%3E%3C%2Fsvg%3E );
 }
 
-#user-info-search-wrapper {
-  margin-right: @big-content-margin-right;
-}
-
 #user-info-dropdown-button {
   .extra-header-button-padding();
 }
@@ -98,10 +109,13 @@
 
 /* @TODO */
 
-#content-wrapper {
-  left: @big-sidebar-width;
-  right: 1em;
+.content-wrapper-width( @big-sidebar-width, @big-content-right );
+.use-refreshed-toolbox-sticky( @big-header-height );
+
+#back-to-subject {
+  display: none;
 }
+
 
 /*******************************************************************************
 ************************************ FOOTER ************************************

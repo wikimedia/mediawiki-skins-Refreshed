@@ -1,18 +1,34 @@
 @import 'mediawiki.mixins';
 
-@z-index-header: 100; /* see https://www.mediawiki.org/wiki/Manual:Coding_conventions/CSS#z-index */
+/* see https://www.mediawiki.org/wiki/Manual:Coding_conventions/CSS#z-index;
+we assign the header 101 not 100 so the toolbox can be beneath the header
+and still be above content */
+@z-index-header: 101;
+/* if there are any elements in #bodyContent that have their own stacking
+context, they will appear higher than #refreshed-toolbox since they appear
+later in the DOM. To prevent this, we give #refreshed-toolbox a positive
+z-index. Specifically, we assume the header has a high enough z-index to sit
+above everything in #bodyContent, and we set up a guaranteed index right below
+the header that's still above the content, so we use that. */
+@z-index-refreshed-toolbox: @z-index-header - 1;
+/* When the toolbox is stuck to the top and the dropdown is open, the toolbox
+should be placed higher than the header. Otherwise the close overlay for the
+dropdown appears behind the header. */
+@z-index-refreshed-toolbox-stuck-when-dropdown-open: @z-index-header + 1;
+/* close overlays should appear above the header */
 @z-index-close-overlay: @z-index-header + 1;
-/* More than @z-index-dropdown close-overlay so dropdowns appears above the close overlay.
-Less than @z-index-dropdown-triangle to ensure the triangle appears above the
-dropdown and thus is not underneath its drop shadow */
+/* More than @z-index-dropdown close-overlay so dropdowns appears above the
+close overlay. Less than @z-index-dropdown-triangle to ensure the triangle
+appears above the dropdown and thus is not underneath its drop shadow */
 @z-index-dropdown-tray: @z-index-close-overlay + 1;
 /* 1 more than z-index of .refreshed-dropdown-tray to ensure the triangle
 appears above the dropdown and thus is not underneath its drop shadow */
 @z-index-dropdown-triangle: @z-index-dropdown-tray + 1;
-@small-z-index-sidebar: @z-index-header + 1; /* so appears above all header stuff */
+/* so it appears above all header stuff and all close overlays */
+@z-index-sidebar-menu: @z-index-close-overlay + 1;
 
 @heading-font-stack: sans-serif; /* sidebar, header, content headings */
-@content-font-stack: sans-serif; /* dropdowns */
+@content-font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* dropdowns */
 
 /* content colors/backgrounds */
 @body-background: #194a8d;
@@ -20,9 +36,13 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @header-background: linear-gradient( to left, #040f28 0, #103ca2 50%, #040f28 100% );
 @button-hover-background: midnightblue;
 @button-selected-background: @button-hover-background;
-@small-sidebar-background: @body-background;
+@sidebar-menu-background: @body-background;
 @content-backgound-color: #fff;
-@content-font-color: #000;
+@content-font-color: #252525;
+
+@refreshed-icon-height: 1em;
+@dropdown-tray-refreshed-icon-margin-left: 0.4em;
+@pretty-anchor-border-width: 0.3em;
 
 @close-overlay-shadow-color: rgba( 0, 0, 0, 0.2 );
 @content-shadow-color: rgba( 75, 75, 75, 0.4 );
@@ -30,24 +50,23 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @dropdown-tray-background-color: @content-backgound-color;
 @dropdown-tray-hover-background-color: #eee;
 @dropdown-tray-font-color: @content-font-color;
+@small-dropdown-tray-sidebar-font-size: 1.2em;
 
 @content-dropdown-button-background: #eee;
 @content-dropdown-button-hover-background: #ddd;
+@content-dropdown-button-font-color: inherit;
 
 @header-category-collapsible-padding: 0.25em 0.25em 0.25em 0;
 
 @search-placeholder-text-color: #808080;
 @search-suggestions-border-color: #ddd;
 
+@firstHeading-border-color: #ddd;
+
 /* height of header */
 @big-header-height: 3em;
 @medium-header-height: 3em;
 @small-header-height: 2.5em;
-
-/* width of sidebar */
-@big-sidebar-width: 12em;
-@medium-sidebar-width: 10em;
-@small-sidebar-width: 10em;
 
 /* width of site navigation header section (wiki homepage link) */
 @site-navigation-toggle-width: 2em; /* this is also used for the sidebar */
@@ -85,10 +104,12 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @sidebar-ul-padding-top: 0.25em;
 @sidebar-ul-padding-bottom: 0.5em;
 
-/* content position */
-@big-content-margin-right: 1em;
-@medium-content-margin-right: @big-content-margin-right;
-@small-content-margin-right: 0;
+/* content position, padding */
+@big-content-right: 1em;
+@content-wrapper-padding: 1em;
+
+/* toolbox */
+@refreshed-toolbox-height: 2em;
 
 /** mixins **/
 
@@ -105,7 +126,8 @@ appears above the dropdown and thus is not underneath its drop shadow */
   #header-wrapper {
     height: @height;
   }
-  #content-wrapper {
+  #content-wrapper,
+  .refreshed-toolbox-stuck {
     top: @height;
   }
   #sidebar {
@@ -141,16 +163,16 @@ elements are set to the same height */
   padding-bottom: 0.2em;
   padding-left: 1em;
   padding-right: 1em;
-  border-left: 0.3em solid transparent;
-  border-right: 0.3em solid transparent; /* border-right for symmetry */
+  border-left: @pretty-anchor-border-width solid transparent;
+  border-right: @pretty-anchor-border-width solid transparent; /* border-right for symmetry */
   & when ( @border-side = vertical ) {
     border-left: 0;
     border-right: 0;
-    border-top: 0.3em solid transparent;
-    border-bottom: 0.3em solid transparent; /* border-bottom for symmetry */
+    border-top: @pretty-anchor-border-width solid transparent;
+    border-bottom: @pretty-anchor-border-width solid transparent; /* border-bottom for symmetry */
     padding-left: 0.1em;
     padding-right: 0.1em;
-    margin-right: 0.3em;
+    margin-right: @pretty-anchor-border-width;
   }
   .box-sizing( border-box ); /* padding/border should be included within the 100% width */
   text-decoration: none;
@@ -205,6 +227,10 @@ elements are set to the same height */
 /* style the search bar when it's inside a dropdown (medium, small) */
 .dropdown-searchInput( @header-search-width ) {
 
+  #user-info-dropdown-tray {
+    right: 0;
+  }
+
   #header-search-dropdown-tray {
     padding-left: @header-search-padding;
     padding-right: @header-search-padding;
@@ -233,27 +259,30 @@ elements are set to the same height */
   	right: @header-search-padding;
   }
 
-  [dir="ltr"] .searchButton {
+  [dir = ltr] .searchButton {
   	/* ooui-icon-arrowNext-ltr */
-  	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M10%202L8.59%203.42%2014.17%209H2v2h12.17l-5.58%205.59L10%2018l8-8-8-8z%22%2F%3E%3C%2Fsvg%3E%0A );
+  	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M10 2L8.59 3.42 14.17 9H2v2h12.17l-5.58 5.59L10 18l8-8-8-8z'/%3E%3C/svg%3E );
   }
 
-  [dir="rtl"] .searchButton {
+  [dir = rtl] .searchButton {
   	/* ooui-icon-arrowNext-rtl */
-  	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2%2010l8%208%201.4-1.4L5.8%2011H18V9H5.8l5.6-5.6L10%202z%22%2F%3E%3C%2Fsvg%3E );
+  	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M2 10l8 8 1.4-1.4L5.8 11H18V9H5.8l5.6-5.6L10 2z'/%3E%3C/svg%3E );
   }
 
-  .header-suggestions {
+  #header-suggestions {
     margin-top: @header-search-padding !important;
     width: @header-search-width !important;
 
+    .suggestions-result,
+    .suggestions-special {
+    	padding: 0.75em 0.5em !important;
+    }
+
     .suggestions-result {
-    	padding: @header-search-padding (@header-search-padding / 2) !important;
     	border-bottom: 1px solid @search-suggestions-border-color;
     }
 
     .suggestions-special {
-    	padding: @header-search-padding (@header-search-padding / 2) !important;
     	margin-top: 0 !important;
     }
   }
@@ -267,6 +296,58 @@ elements are set to the same height */
     width: @width;
     height: auto;
   }
+}
+
+/* sidebar as a menu */
+.use-sidebar-menu( @sidebar-width, @sidebar-background ) {
+  #sidebar-wrapper {
+    width: @sidebar-width;
+    left: -( @sidebar-width );
+    background: @sidebar-background;
+    z-index: @z-index-sidebar-menu;
+  }
+
+  #sidebar-toggler-checkbox:checked ~ #sidebar-wrapper {
+  	left: 0;
+  	/* only apply the box shadow when the sidebar is opened so the shadow doesn't
+  	appear on the edge of the screen when the sidebar is closed (just off the edge
+  	of the screen) */
+  	.stack-box-shadow();
+  }
+
+  .content-wrapper-width( 0, 0 );
+}
+
+.content-wrapper-width( @left, @right ) {
+  #content-wrapper,
+  .refreshed-toolbox-stuck {
+    left: @left;
+    right: @right;
+  }
+
+  #user-info-search-wrapper {
+    margin-right: @right;
+  }
+}
+
+.use-refreshed-toolbox-sticky( @header-height ) {
+  #refreshed-toolbox {
+    .position-sticky();
+    top: @header-height;
+  }
+
+  .refreshed-toolbox-stuck#refreshed-toolbox {
+    background-color: @content-backgound-color;
+    padding-left: @content-wrapper-padding;
+    padding-right: @content-wrapper-padding;
+    margin: 0 -( @content-wrapper-padding );
+    .stack-box-shadow();
+  }
+}
+
+.position-sticky() {
+  position: -webkit-sticky;
+  position: sticky;
 }
 
 /* additional flex mixins */

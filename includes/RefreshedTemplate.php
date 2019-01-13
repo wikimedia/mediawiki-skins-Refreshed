@@ -1,65 +1,67 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 class RefreshedTemplate extends BaseTemplate {
 	// list of inline svg icons used throughout the skin
 	private static $iconListAllDirections = [
-		'blockip' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-blockip ooui-icon-block">
+		'blockip' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-blockip ooui-icon-block" aria-hidden="true">
 										<path d="M10 1a9 9 0 1 0 9 9 9 9 0 0 0-9-9zm5 10H5V9h10z"/>
 									</svg>',
-		'citethispage' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-cite ooui-icon-reference">
+		'citethispage' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-cite ooui-icon-reference" aria-hidden="true">
 									<path d="M15 1v9l-2.78-2.78L9.44 10V1H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/>
 								</svg>',
-		'close' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-close ooui-icon-close">
+		'close' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-close ooui-icon-close" aria-hidden="true">
 									<path d="M3.636 2.224l14.142 14.142-1.414 1.414L2.222 3.638z"/>
 									<path d="M17.776 3.636L3.634 17.778 2.22 16.364 16.362 2.222z"/>
 								</svg>',
-		'delete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-delete ooui-icon-trash">
+		'delete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-delete ooui-icon-trash" aria-hidden="true">
 									<path d="M17 2h-3.5l-1-1h-5l-1 1H3v2h14zM4 17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V5H4z"/>
 								</svg>',
-		'edit' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-edit ooui-icon-edit">
+		'edit' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-edit ooui-icon-edit" aria-hidden="true">
 								<path d="M16.77 8l1.94-2a1 1 0 0 0 0-1.41l-3.34-3.3a1 1 0 0 0-1.41 0L12 3.23zm-5.81-3.71L1 14.25V19h4.75l9.96-9.96-4.75-4.75z"/>
 							</svg>',
-		'ellipsis' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ellipsis ooui-icon-ellipsis">
+		'ellipsis' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ellipsis ooui-icon-ellipsis" aria-hidden="true">
 										<circle cx="10" cy="10" r="2"/>
 										<circle cx="3" cy="10" r="2"/>
 										<circle cx="17" cy="10" r="2"/>
 									</svg>',
-		'emailuser' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-emailuser ooui-icon-message">
+		'emailuser' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-emailuser ooui-icon-message" aria-hidden="true">
 											<path d="M0 8v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-10 4z"/>
 											<path d="M18 2H2a2 2 0 0 0-2 2v2l10 4 10-4V4a2 2 0 0 0-2-2z"/>
 										</svg>',
-		'feeds' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="refreshed-icon refreshed-icon-feeds font-awesome-icon-rss-square">
+		'feeds' => '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="refreshed-icon refreshed-icon-feeds font-awesome-icon-rss-square" aria-hidden="true">
 											<path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"/>
 										</svg>',
-		'history' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-history ooui-icon-history">
+		'history' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-history ooui-icon-history" aria-hidden="true">
 										<path d="M9 6v5h.06l2.48 2.47 1.41-1.41L11 10.11V6H9z"/>
 										<path d="M10 1a9 9 0 0 0-7.85 13.35L.5 16H6v-5.5l-2.38 2.38A7 7 0 1 1 10 17v2a9 9 0 0 0 0-18z"/>
 									</svg>',
-		'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-info ooui-icon-info">
+		'info' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-info ooui-icon-info" aria-hidden="true">
 								<path d="M9.5 16A6.61 6.61 0 0 1 3 9.5 6.61 6.61 0 0 1 9.5 3 6.61 6.61 0 0 1 16 9.5 6.63 6.63 0 0 1 9.5 16zm0-14A7.5 7.5 0 1 0 17 9.5 7.5 7.5 0 0 0 9.5 2zm.5 6v4.08h1V13H8.07v-.92H9V9H8V8zM9 6h1v1H9z"/>
 							</svg>',
-		'more' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-more ooui-icon-ellipsis">
+		'more' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-more ooui-icon-ellipsis" aria-hidden="true">
 								<circle cx="10" cy="10" r="2"/>
 								<circle cx="3" cy="10" r="2"/>
 								<circle cx="17" cy="10" r="2"/>
 							</svg>',
-		'move' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-move ooui-icon-move">
+		'move' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-move ooui-icon-move" aria-hidden="true">
 								<path d="M19 10l-4-3v2h-4V5h2l-3-4-3 4h2v4H5V7l-4 3 4 3v-2h4v4H7l3 4 3-4h-2v-4h4v2l4-3z"/>
 							</svg>',
-		'permalink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-permalink ooui-icon-link">
+		'permalink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-permalink ooui-icon-link" aria-hidden="true">
 											<path d="M4.83 15h2.91a4.88 4.88 0 0 1-1.55-2H5a3 3 0 1 1 0-6h3a3 3 0 0 1 2.82 4h2.1a4.82 4.82 0 0 0 .08-.83v-.34A4.83 4.83 0 0 0 8.17 5H4.83A4.83 4.83 0 0 0 0 9.83v.34A4.83 4.83 0 0 0 4.83 15z"/>
 											<path d="M15.17 5h-2.91a4.88 4.88 0 0 1 1.55 2H15a3 3 0 1 1 0 6h-3a3 3 0 0 1-2.82-4h-2.1a4.82 4.82 0 0 0-.08.83v.34A4.83 4.83 0 0 0 11.83 15h3.34A4.83 4.83 0 0 0 20 10.17v-.34A4.83 4.83 0 0 0 15.17 5z"/>
 										</svg>',
-		'print' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-print ooui-icon-printer">
+		'print' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-print ooui-icon-printer" aria-hidden="true">
 									<path d="M5 1h10v4H5zm12 5H3a2 2 0 0 0-2 2v7h4v4h10v-4h4V8a2 2 0 0 0-2-2zm-3 12H6v-6h8zm2-8a1 1 0 1 1 1-1 1 1 0 0 1-1 1z"/>
 								</svg>',
-		'protect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-protect ooui-icon-unLock">
+		'protect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-protect ooui-icon-unLock" aria-hidden="true">
 										<path d="M16.07 8H15V5s0-5-5-5a4.63 4.63 0 0 0-4.88 4h2C7.31 2.93 8 2 10 2c3 0 3 2 3 3.5V8H3.93A1.93 1.93 0 0 0 2 9.93v8.15A1.93 1.93 0 0 0 3.93 20h12.14A1.93 1.93 0 0 0 18 18.07V9.93A1.93 1.93 0 0 0 16.07 8zM10 16a2 2 0 1 1 2-2 2 2 0 0 1-2 2z"/>
 									</svg>',
-		'purge' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-purge ooui-icon-reload">
+		'purge' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-purge ooui-icon-reload" aria-hidden="true">
 									<path d="M15.65 4.35A8 8 0 1 0 17.4 13h-2.22a6 6 0 1 1-1-7.22L11 9h7V2z"/>
 								</svg>',
-		'recentchangeslinked' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-recentchangeslinked ooui-icon-mapTrail">
+		'recentchangeslinked' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-recentchangeslinked ooui-icon-mapTrail" aria-hidden="true">
 																<path d="M20 6l-1-1-1.5 1.5L16 5l-1 1 1.5 1.5L15 9l1 1 1.5-1.5L19 10l1-1-1.5-1.5L20 6zm-9 8.5A3.54 3.54 0 0 1 7.5 18a3.5 3.5 0 0 1 0-7 3.54 3.54 0 0 1 3.5 3.5z"/>
 																<circle cx="7" cy="3" r="2"/>
 																<circle cx="13" cy="7" r="1"/>
@@ -69,128 +71,128 @@ class RefreshedTemplate extends BaseTemplate {
 																<circle cx="1" cy="9" r="1"/>
 																<circle cx="3" cy="12" r="1"/>
 															</svg>',
-		'refreshed-collapsible-collapse' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-collapsible-collapse ooui-icon-collapse">
+		'refreshed-collapsible-collapse' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-collapsible-collapse ooui-icon-collapse" aria-hidden="true">
 																					<path d="M1 13.75l1.5 1.5 7.5-7.5 7.5 7.5 1.5-1.5-9-9-9 9z"/>
 																				</svg>',
-		'refreshed-collapsible-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-collapsible-expand ooui-icon-expand">
+		'refreshed-collapsible-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-collapsible-expand ooui-icon-expand" aria-hidden="true">
 																				<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
 																			</svg>',
-		'refreshed-dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-dropdown-expand ooui-icon-expand">
+		'refreshed-dropdown-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-dropdown-expand ooui-icon-expand" aria-hidden="true">
 																			<path d="M19 6.25l-1.5-1.5-7.5 7.5-7.5-7.5L1 6.25l9 9 9-9z"/>
 																		</svg>',
-		'refreshed-menu' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-menu ooui-icon-menu">
+		'refreshed-menu' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-refreshed-menu ooui-icon-menu" aria-hidden="true">
 								<path d="M1 3v2h18V3zm0 8h18V9H1zm0 6h18v-2H1z"/>
 							</svg>',
-		'search' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-search ooui-icon-search">
+		'search' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-search ooui-icon-search" aria-hidden="true">
 									<path d="M19 17l-5.15-5.15a7 7 0 1 0-2 2L17 19zM3.5 8A4.5 4.5 0 1 1 8 12.5 4.5 4.5 0 0 1 3.5 8z"/>
 								</svg>',
-		'undelete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-undelete ooui-icon-unTrash">
+		'undelete' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-undelete ooui-icon-unTrash" aria-hidden="true">
 										<path d="M16 14.78L6.22 5l-1-1-2-2-2-2L0 1.22l4 4V17a2 2 0 0 0 2 2h8a2 2 0 0 0 2-1.8l2.8 2.8 1.2-1.22zM17 4V2h-3.5l-1-1h-5l-1 1h-.84l2 2H17zm-1 1H8.66L16 12.34V5z"/>
 									</svg>',
-		'unprotect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-unprotect ooui-icon-lock">
+		'unprotect' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-unprotect ooui-icon-lock" aria-hidden="true">
 										<path d="M16.07 8H15V5s0-5-5-5-5 5-5 5v3H3.93A1.93 1.93 0 0 0 2 9.93v8.15A1.93 1.93 0 0 0 3.93 20h12.14A1.93 1.93 0 0 0 18 18.07V9.93A1.93 1.93 0 0 0 16.07 8zM10 16a2 2 0 1 1 2-2 2 2 0 0 1-2 2zm3-8H7V5.5C7 4 7 2 10 2s3 2 3 3.5z"/>
 									</svg>',
-		'upload' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-upload ooui-icon-upload">
+		'upload' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-upload ooui-icon-upload" aria-hidden="true">
 									<path d="M17 12v5H3v-5H1v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5z"/>
 									<path d="M15 7l-5-6-5 6h4v8h2V7h4z"/>
 								</svg>',
-		'user-anon' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-anon ooui-icon-userAnonymous avatar avatar-no-socialprofile">
+		'user-anon' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-anon ooui-icon-userAnonymous avatar avatar-no-socialprofile" aria-hidden="true">
 											<path d="M15 2H5L4 8h12l-1-6zM0 10s2 1 10 1 10-1 10-1l-4-2H4zm6 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm8 0a3 3 0 1 0 3 3 3 3 0 0 0-3-3z"/>
 											<path d="M8 14h4v1H8z"/>
 										</svg>',
-		'user-loggedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-loggedin ooui-icon-userActive avatar avatar-no-socialprofile">
+		'user-loggedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-loggedin ooui-icon-userActive avatar avatar-no-socialprofile" aria-hidden="true">
 													<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
 													<circle cx="10" cy="6" r="5"/>
 												</svg>',
-		'userrights' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-userrights ooui-icon-key">
+		'userrights' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-userrights ooui-icon-key" aria-hidden="true">
 											<path d="M15 6a1.54 1.54 0 0 1-1.5-1.5 1.5 1.5 0 0 1 3 0A1.54 1.54 0 0 1 15 6zm-1.5-5A5.55 5.55 0 0 0 8 6.5a6.81 6.81 0 0 0 .7 2.8L1 17v2h4v-2h2v-2h2l3.2-3.2a5.85 5.85 0 0 0 1.3.2A5.55 5.55 0 0 0 19 6.5 5.55 5.55 0 0 0 13.5 1z"/>
 										</svg>',
-		'viewsource' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-viewsource ooui-icon-eye">
+		'viewsource' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-viewsource ooui-icon-eye" aria-hidden="true">
 											<path d="M10 7.5a2.5 2.5 0 1 0 2.5 2.5A2.5 2.5 0 0 0 10 7.5zm0 7a4.5 4.5 0 1 1 4.5-4.5 4.5 4.5 0 0 1-4.5 4.5zM10 3C3 3 0 10 0 10s3 7 10 7 10-7 10-7-3-7-10-7z"/>
 										</svg>',
-		'wikilove' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-wikilove ooui-icon-heart">
+		'wikilove' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-wikilove ooui-icon-heart" aria-hidden="true">
 										<path d="M14.75 1A5.24 5.24 0 0 0 10 4 5.24 5.24 0 0 0 0 6.25C0 11.75 10 19 10 19s10-7.25 10-12.75A5.25 5.25 0 0 0 14.75 1z"/>
 									</svg>'
 	];
 
 	private static $iconListLTR = [
-		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-addsection ooui-icon-speechBubbleAdd-ltr">
+		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-addsection ooui-icon-speechBubbleAdd-ltr" aria-hidden="true">
 											<path d="M17 1H3a2 2 0 0 0-2 2v16l4-4h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm-2 8h-4v4H9V9H5V7h4V3h2v4h4z"/>
 										</svg>',
-		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-contributions ooui-icon-signature-ltr">
+		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-contributions ooui-icon-signature-ltr" aria-hidden="true">
 													<path d="M0 18h20v1H0zm-.003-6.155l1.06-1.06 4.363 4.362-1.06 1.06z"/>
 													<path d="M.004 15.147l4.363-4.363 1.06 1.061-4.362 4.363zM17 5c0 9-11 9-11 9v-1.5s8 .5 9.5-6.5C16 4 15 2.5 14 2.5S11 4 10.75 10c-.08 2 .75 4.5 3.25 4.5 1.5 0 2-1 3.5-1a2.07 2.07 0 0 1 2.25 2.5h-1.5s.13-1-.5-1C16 15 16 16 14 16c0 0-4.75 0-4.75-6S12 1 14 1c.5 0 3 0 3 4z"/>
 												</svg>',
-		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-log refreshed-icon-viewDetails-ltr">
+		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-log refreshed-icon-viewDetails-ltr" aria-hidden="true">
 								<path d="M8 6h9v2H8zm0-3h11v2H8zM1 3h6v6H1zm7 11h9v2H8zm0-3h11v2H8zm-7 0h6v6H1z"/>
 							</svg>',
-		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-nstab ooui-icon-article-ltr">
+		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-nstab ooui-icon-article-ltr" aria-hidden="true">
 									<path d="M15 1H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM5 4h5v1H5zm0 2h5v1H5zm0 2h5v1H5zm10 7H5v-1h10zm0-2H5v-1h10zm0-2H5v-1h10zm0-2h-4V4h4z"/>
 								</svg>',
-		'refreshed-explore' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-refreshed-explore ooui-icon-map-ltr">
+		'refreshed-explore' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-refreshed-explore ooui-icon-map-ltr" aria-hidden="true">
 															<path d="M13 3L7 1 1 3v16l6-2 6 2 6-2V1zM7 14.89l-4 1.36V4.35L7 3zm10 .75L13 17V5.1l4-1.36z"/>
 														</svg>',
-		'refreshed-submenu-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-refreshed-submenu-expand ooui-icon-next-ltr">
+		'refreshed-submenu-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-refreshed-submenu-expand ooui-icon-next-ltr" aria-hidden="true">
 																		<path d="M6.2 1L4.8 2.5l7.4 7.5-7.4 7.5L6.2 19l9-9z"/>
 																	</svg>',
-		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-report-problem ooui-icon-feedback-ltr">
+		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-report-problem ooui-icon-feedback-ltr" aria-hidden="true">
 													<path d="M19 16L2 12a3.83 3.83 0 0 1-1-2.5A3.83 3.83 0 0 1 2 7l17-4z"/>
 													<rect width="4" height="8" x="4" y="9" rx="2" ry="2"/>
 												</svg>',
-		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-smwbrowserlink ooui-icon-puzzle-ltr">
+		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-smwbrowserlink ooui-icon-puzzle-ltr" aria-hidden="true">
 													<circle cx="17" cy="10" r="3"/>
 													<path d="M10.58 3A3 3 0 0 1 11 4.5a3 3 0 0 1-6 0A3 3 0 0 1 5.42 3H1v12a2 2 0 0 0 2 2h12V3z"/>
 												</svg>',
-		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-talk ooui-icon-speechBubbles-ltr">
+		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-talk ooui-icon-speechBubbles-ltr" aria-hidden="true">
 								<path d="M18 4h-1v7a2 2 0 0 1-2 2H4v1a2 2 0 0 0 2 2h10l4 4V6a2 2 0 0 0-2-2z"/>
 								<path d="M14 0H2a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
 							</svg>',
-		'view' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-view ooui-icon-book-ltr">
+		'view' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-view ooui-icon-book-ltr" aria-hidden="true">
 								<path d="M15 2a7.65 7.65 0 0 0-5 2 7.65 7.65 0 0 0-5-2H1v15h4a7.65 7.65 0 0 1 5 2 7.65 7.65 0 0 1 5-2h4V2zm2.5 13.5H14a4.38 4.38 0 0 0-3 1V5s1-1.5 4-1.5h2.5z"/>
 								<path d="M9 3.5h2v1H9z"/>
 							</svg>',
-		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-whatlinkshere ooui-icon-references-ltr">
+		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-ltr refreshed-icon-whatlinkshere ooui-icon-references-ltr" aria-hidden="true">
 													<path d="M3 6v12h4V6H3zm3 10H4v-1h2v1zm0-3H4v-1h2v1zm2-7v12h4V6H8zm3 10H9v-1h2v1zm0-3H9v-1h2v1zm.934-5.353L18 18l3.449-2.021-6.065-10.354-3.45 2.022zm7.643 7.111l-1.726 1.012-.506-.862 1.725-1.012.507.862zM18.06 12.17l-1.725 1.011-.506-.862 1.726-1.012.505.863z"/>
 												</svg>'
 	];
 
 	private static $iconListRTL = [
-		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-addsection ooui-icon-speechBubbleAdd-rtl">
+		'addsection' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-addsection ooui-icon-speechBubbleAdd-rtl" aria-hidden="true">
 											<path d="M1 3v10c0 1.1.9 2 2 2h12l4 4V3c0-1.1-.9-2-2-2H3c-1.1 0-2 .9-2 2zm4 4h4V3h2v4h4v2h-4v4H9V9H5V7z"/>
 										</svg>',
-		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-contributions ooui-icon-signature-rtl">
+		'contributions' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-contributions ooui-icon-signature-rtl" aria-hidden="true">
 													<path d="M0 18h20v1H0zm14.542-2.883l4.384-4.384 1.06 1.06-4.384 4.384z"/>
 													<path d="M14.54 11.86l1.06-1.062 4.384 4.384-1.06 1.061zM6 1c2 0 4.8 3 4.8 9S6 16 6 16c-2 0-2-1-3.8-1-.6 0-.5 1-.5 1H.2c0-.2-.1-.4 0-.7.1-1.1 1.1-2 2.3-1.8 1.5 0 2 1 3.5 1 2.5 0 3.3-2.5 3.3-4.5C9 4 7 2.5 6 2.5S4 4 4.5 6C6 13 14 12.5 14 12.5V14S3 14 3 5c0-4 2.5-4 3-4z"/>
 												</svg>',
-		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-log refreshed-icon-viewDetails-rtl">
+		'log' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-log refreshed-icon-viewDetails-rtl" aria-hidden="true">
 								<path d="M12 8H3V6h9v2zm0-3H1V3h11v2zm1-2h6v6h-6zm-1 13H3v-2h9v2zm0-3H1v-2h11v2zm1-2h6v6h-6z"/>
 							</svg>',
-		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-nstab ooui-icon-article-rtl">
+		'nstab' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-nstab ooui-icon-article-rtl" aria-hidden="true">
 									<path d="M3 3v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2zm12 2h-5V4h5zm0 2h-5V6h5zm0 2h-5V8h5zM5 14h10v1H5zm0-2h10v1H5zm0-2h10v1H5zm0-6h4v5H5z"/>
 								</svg>',
-		'refreshed-explore' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-refreshed-explore ooui-icon-map-rtl">
+		'refreshed-explore' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-refreshed-explore ooui-icon-map-rtl" aria-hidden="true">
 															<path d="M1 1v16l6 2 6-2 6 2V3l-6-2-6 2zm12 2l4 1.36v11.9l-4-1.36zM3 3.74L7 5.1V17l-4-1.36z"/>
 														</svg>',
-		'refreshed-submenu-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-refreshed-submenu-expand ooui-icon-next-rtl">
+		'refreshed-submenu-expand' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-refreshed-submenu-expand ooui-icon-next-rtl" aria-hidden="true">
 																		<path d="M4.8 10l9 9 1.4-1.5L7.8 10l7.4-7.5L13.8 1z"/>
 																	</svg>',
-		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-report-problem ooui-icon-feedback-rtl">
+		'report-problem' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-report-problem ooui-icon-feedback-rtl" aria-hidden="true">
 													<path d="M1 3l17 4c.6.7 1 1.6 1 2.5 0 .9-.4 1.8-1 2.5L1 16V3z"/>
 													<path d="M16 11v4c0 1.1-.9 2-2 2s-2-.9-2-2v-4c0-1.1.9-2 2-2s2 .9 2 2z"/>
 												</svg>',
-		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-smwbrowserlink ooui-icon-puzzle-rtl">
+		'smwbrowserlink' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-smwbrowserlink ooui-icon-puzzle-rtl" aria-hidden="true">
 													<circle cx="3" cy="10" r="3"/>
 													<path d="M9.42 3A2.94 2.94 0 0 0 9 4.5a3 3 0 0 0 6 0 2.94 2.94 0 0 0-.42-1.5H19v12a2 2 0 0 1-2 2H5V3z"/>
 												</svg>',
-		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-talk ooui-icon-speechBubbles-rtl">
+		'talk' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-talk ooui-icon-speechBubbles-rtl" aria-hidden="true">
 								<path d="M0 6v14l4-4h10c1.1 0 2-.9 2-2v-1H5c-1.1 0-2-.9-2-2V4H2C.9 4 0 4.9 0 6z"/>
 								<path d="M4 2v8c0 1.1.9 2 2 2h10l4 4V2c0-1.1-.9-2-2-2H6C4.9 0 4 .9 4 2z"/>
 							</svg>',
-		'view' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-view ooui-icon-book-rtl">
+		'view' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-view ooui-icon-book-rtl" aria-hidden="true">
 								<path d="M1 2v15h4a7.65 7.65 0 0 1 5 2 7.65 7.65 0 0 1 5-2h4V2h-4a7.65 7.65 0 0 0-5 2 7.65 7.65 0 0 0-5-2zm1.5 1.5H5C8 3.5 9 5 9 5v11.5a4.38 4.38 0 0 0-3-1H2.5z"/>
 								<path d="M9 3.5h2v1H9z"/>
 							</svg>',
-		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-whatlinkshere ooui-icon-references-rtl">
+		'whatlinkshere' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="2 2 20 20" class="refreshed-icon refreshed-icon-rtl refreshed-icon-whatlinkshere ooui-icon-references-rtl" aria-hidden="true">
 													<path d="M21.449 6v12h-4V6h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-2-7v12h-4V6h4zm-3 10h2v-1h-2v1zm0-3h2v-1h-2v1zm-.934-5.353L6.449 18 3 15.979 9.065 5.625l3.45 2.022zm-7.643 7.111l1.726 1.012.506-.862-1.725-1.012-.507.862zm1.517-2.588l1.725 1.011.506-.862-1.726-1.012-.505.863z"/>
 												</svg>'
 	];
@@ -668,7 +670,6 @@ class RefreshedTemplate extends BaseTemplate {
 	 */
 	private function renderUserDropdownItems( $dropdownPersonalTools ) {
 		foreach ( $dropdownPersonalTools as $keyAndIconName => $item ) {
-			$item['class'] = 'refreshed-dropdown-item header-dropdown-item user-info-dropdown-item';
 			echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, [ 'text-wrapper' => [ 'tag' => 'span' ] ] );
 		}
 	}
@@ -678,10 +679,8 @@ class RefreshedTemplate extends BaseTemplate {
 	 * in the header/sidebar.
 	 * @param array $siteNavigation an array containing info for the site
 	 *  navigation colapsible
-	 * @param string $mode whether generating for a 'dropdown' or a 'collapsible'
-	 *  (affects class names)
 	 */
-	private function renderSiteNavigationItems( $siteNavigation, $mode ) {
+	private function renderSiteNavigationItems( $siteNavigation ) {
 		// (each item in $siteNavigation was an output of
 		// parseSiteNavigationItem)
 		// we're making a bunch of list items here (<li> elements, but NOT ones
@@ -689,19 +688,11 @@ class RefreshedTemplate extends BaseTemplate {
 
 		// the classes to add to each of the dropdown anchors
 		$logoClassList = 'refreshed-logo refreshed-logo-other';
-		$listItemClassList = '';
-		if ( $mode === 'dropdown' ) {
-			$listItemClassList = 'refreshed-dropdown-item header-dropdown-item site-navigation-item';
-		} elseif ( $mode === 'collapsible' ) {
-			$listItemClassList = 'refreshed-collapsible-item site-navigation-item';
-		}
 
 		foreach ( $siteNavigation as $wikiLogoInfo ) {
 			// send each of the parsed pieces of wiki logo info to renderWikiLogo
 			// for rendering
-			echo Html::rawElement( 'li', [
-				'class' => 'refreshed-' . $mode . '-item site-navigation-item'
-			], $this->makeWikiLinkWithLogo( $wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'], $wikiLogoInfo['wikiURL'], $logoClassList ) );
+			echo Html::rawElement( 'li', [], $this->makeWikiLinkWithLogo( $wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'], $wikiLogoInfo['wikiURL'], $logoClassList ) );
 		}
 	}
 
@@ -743,32 +734,43 @@ class RefreshedTemplate extends BaseTemplate {
 	 * the header/sidebar.
 	 * @param array $headerCategoryDropdown an array containing info for a header
 	 *  category dropdown
-	 * @param string $prefix a prefix to attach to some of the classes of each li
-	 *  (such as 'header-category')
-	 * @param string $mode whether generating for a 'dropdown' or a 'collapsible'
-	 *  (affects class names)
-	 * @param int $index which number header category's dropdown is being
-	 *  generated
 	 */
-	private function renderHeaderCategoryItems( $headerCategoryDropdown, $index, $mode, $prefix ) {
-		$commonClassList = '';
-		if ( $mode === 'dropdown' ) {
-			$commonClassList = 'refreshed-dropdown-item header-dropdown-item ';
-		} elseif ( $mode === 'collapsible' ) {
-			$commonClassList = 'refreshed-collapsible-item ';
-		}
-
-		$prefixedClassList = $prefix . '-dropdown-item ' . $prefix . '-' . strval( $index ) . '-dropdown-item';
-		$classList = $commonClassList . $prefixedClassList;
+	private function renderHeaderCategoryItems( $headerCategoryDropdown ) {
 		foreach ( $headerCategoryDropdown as $key => $value ) {
 			// Since the header category items appear multiple times on the page,
 			// they shouldn't have any IDs (otherwise multiple elements would have
 			// the same ID)
 			unset( $value['id'] );
 
-			echo Html::rawElement( 'li', [
-				'class' => $classList,
-			], $this->makeLink( $key, $value, [ 'text-wrapper' => [ 'tag' => 'span' ] ] ) );
+			echo Html::rawElement( 'li', [], $this->makeLink( $key, $value, [ 'text-wrapper' => [ 'tag' => 'span' ] ] ) );
+		}
+	}
+
+	/**
+	 * Render one of the content sections of the sidebar
+	 * @param array $sub details on the section's content
+	 */
+	private function renderSidebarContentSection( $sub ) {
+		if ( is_array( $sub ) ) { // MW-generated stuff from the sidebar message
+			foreach ( $sub as $key => $action ) {
+				// append 'sidebar-item' class to a inside
+				if ( isset( $action['class'] ) ) {
+					$action['class'] .= ' sidebar-link';
+				} else {
+					$action['class'] = 'sidebar-link';
+				}
+				echo $this->makeListItem(
+					$key,
+					$action,
+					[
+						'link-class' => 'sidebar-item',
+						'link-fallback' => 'span'
+					]
+				);
+			}
+		} else {
+			// allow raw HTML block to be defined by extensions (like NewsBox)
+			echo $sub;
 		}
 	}
 
@@ -808,6 +810,7 @@ class RefreshedTemplate extends BaseTemplate {
 					$toolDetails['class'] = 'ca-subject';
 				}
 				$output['namespaces'][$toolName] = $toolDetails;
+
 			} else { // otherwise place the tool in its correct category
 				foreach ( $categories as $category => $toolNamesInCurrentCategory ) {
 					foreach ( $toolNamesInCurrentCategory as $toolNameInCurrentCategory ) {
@@ -836,41 +839,36 @@ class RefreshedTemplate extends BaseTemplate {
 		$toolboxCategories = [ 'page-tools', 'user-tools' ];
 		foreach ( $toolboxCategories as $category ) {
 			if ( !empty( $pageTools[$category] ) ) {
-				//echo Html::element( 'dt', [ 'class' => 'refreshed-dropdown-header' ], $this->getMsg( 'refreshed-' . $category  )->text() );
-				$this->renderPageToolsInCategory( 'list item', $pageTools, $category );
+				echo Html::element( 'dt', [ 'class' => 'refreshed-dropdown-header' ], $this->getMsg( 'refreshed-' . $category  )->text() );
+				$this->renderPageToolsInCategory( 'dropdown', $pageTools, $category );
 			}
 		}
 	}
 
 	/**
 	 * Render a link for talk pages pointing back to the corresponding subject page
+	 * @param object $linkRenderer the LinkRenderer
 	 * @param object $title the article's title
 	 */
-	private function renderBackToSubjectLink( $title ) {
-		echo Linker::link(
-			$title,
-			$this->getMsg( 'backlinksubtitle', $title->getPrefixedText() )->escaped(),
-			[ 'id' => 'back-to-subject' ]
-		);
+	private function renderBackToSubjectLink( $linkRenderer, $title ) {
+
+		echo Html::rawElement( 'li', [], $linkRenderer->makeLink(
+				$title,
+				$this->getMsg( 'backlinksubtitle', $title->getPrefixedText() )->escaped(),
+				[ 'id' => 'back-to-subject' ]
+		) );
 	}
 
 	/**
-	 * Render the page tools that are in the given category, either as list items,
-	 * description, or as links (a).
-	 * @param string $mode expects 'list item', 'link', or 'other tag'
+	 * Render the page tools that are in the given category, either wrapped in
+	 * li tags to fit inline in the toolbox (we wrap them in li because a lot of
+	 * MW features expect it--for example, double click to edit), or wrapped in
+	 * dd to fit in the toolbox dropdown.
+	 * @param string $mode expects 'dropdown' or 'inline'
 	 * @param array $pageTools an array of page tools generated by sortPageTools()
 	 * @param string $category the category of list items being generated
-	 * @param string $tag (optional) for 'other tag' mode, the type of wrapper tag
-	 *  to use
-	 * @param string $itemType (optional) for 'other tag' mode, the type of item
-	 *  ('dropdown') or ('inline') that the items inside the tag will be; this
-	 *  determines whether items will have the 'dropdown-tool-text' or
-	 *  'inline-tool-text' classes added; note if this is not specified, or if
-	 *  its value is neither 'dropdown' nor 'inline', 'other tag' mode will not
-	 *  render anything.
 	 */
-
-	private function renderPageToolsInCategory( $mode, $pageTools, $category, $tag = '', $itemType = '' ) {
+	private function renderPageToolsInCategory( $mode, $pageTools, $category ) {
 		// if category is invalid, do nothing
 		if ( !array_key_exists( $category, $pageTools ) ) {
 			return;
@@ -878,27 +876,79 @@ class RefreshedTemplate extends BaseTemplate {
 
 		$options = [ 'text-wrapper' => [ 'tag' => 'span', 'attributes' => [ ] ] ];
 
-		if ( $mode == 'list item' ) {
+		if ( $mode == 'dropdown' ) {
 			$options['text-wrapper']['attributes']['class'] = 'dropdown-tool-text';
+			$options['tag'] = 'dd';
 			foreach ( $pageTools[$category] as $keyAndIconName => $item ) {
 				echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, $options );
 			}
-		} elseif ( $mode == 'link' ) {
+		} elseif ( $mode == 'inline' ) {
 			$options['text-wrapper']['attributes']['class'] = 'inline-tool-text';
-			foreach ( $pageTools[$category] as $keyAndIconName => $item ) {
-				echo $this->makeLinkWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, $options );
+			if ( isset( $toolDetails['class'] ) ) {
+				$toolDetails['class'] .= ' ' . 'inline-tool-anchor';
+			} else {
+				$toolDetails['class'] = 'inline-tool-anchor';
 			}
-		} elseif ( $mode == 'other tag' && ( $itemType == 'dropdown' || $itemType == 'inline' ) ) {
-			$options['text-wrapper']['attributes']['class'] = $itemType . '-tool-text';
-			$options['tag'] = $tag;
 			foreach ( $pageTools[$category] as $keyAndIconName => $item ) {
 				echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, $options );
 			}
 		}
 	}
 
+	/**
+	 * Render extra footer items
+	 */
+	private function renderExtraFooterItems() {
+		 $footerExtra = '';
+		 Hooks::run( 'RefreshedFooter', [ &$footerExtra ] );
+		 echo $footerExtra;
+	 }
+
+	/**
+	 * Render a row of links in the footer.
+	 * @param string $category the type of links (used for a class name)
+	 * @param array $links an array containing info on the links
+	 */
+	private function renderFooterLinksRow( $category, $links ) {
+		$rowContents = '';
+		foreach ( $links as $link ) {
+			$rowContents .= Html::rawElement( 'li', [ 'class' => 'footer-row-item' ], $this->data[ $link ] );
+		}
+		echo Html::rawElement( 'ul', [ 'id' => 'footer-row-' . $category, 'class' => 'footer-row' ], $rowContents );
+	}
+
+	/**
+	 * Render the row of icons in the footer.
+	 * @param object $skin the skin object
+	 * @param array $footerIcons an array containing info on the blocks of icons
+	 */
+	private function renderFooterIconsRow( $skin, $footerIcons ) {
+		$rowContents = '';
+		foreach ( $footerIcons as $blockName => $blockIcons ) {
+			$rowContents .= $this->makeFooterIconsBlock( $skin, $blockName, $blockIcons );
+		}
+		echo Html::rawElement( 'ul', [ 'id' => 'footer-row-icons', 'class' => 'footer-row' ], $rowContents );
+	}
+
+	/**
+	 * Helper method for renderFooterIconsRow.
+	 * Render a block of icons in the footer.
+	 * @param object $skin the skin object
+	 * @param string $category the type of icons (used for a class name)
+	 * @param array $blockIcons an array containing info on the icons
+	 */
+	private function makeFooterIconsBlock( $skin, $blockName, $blockIcons ) {
+		$blockContents = '';
+		foreach ( $blockIcons as $icon ) {
+			$blockContents .= $skin->makeFooterIcon( $icon );
+		}
+		return Html::rawElement( 'li', [ 'id' => 'footer-row-' . htmlspecialchars( $blockName ), 'class' => 'footer-row-item' ], $blockContents );
+	}
+
 	public function execute() {
 		global $wgMemc, $wgRefreshedUseExploreWithoutHeaderCategories;
+
+		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
 
 		$skin = $this->getSkin();
 		$config = $skin->getConfig();
@@ -963,7 +1013,6 @@ class RefreshedTemplate extends BaseTemplate {
 		$dropdownPersonalTools = $personalTools['dropdown'];
 		$extraPersonalTools = $personalTools['extra'];
 
-		// @TODO remove toolbox
 		$pageTools = array_merge( $this->data['content_navigation']['views'], $this->data['content_actions'], $this->getToolbox() );
 		$pageTools = $this->sortPageTools( $pageTools );
 
@@ -980,6 +1029,8 @@ class RefreshedTemplate extends BaseTemplate {
 		}
 		$sidebarContents = array_merge( $this->data['sidebar'], $sidebarContentsWikiTools, $sidebarContentsLanguages );
 
+		$footerIcons = $this->getFooterIcons( 'icononly' );
+
 		// allow error handling in makeElementWithIconHelper:
 		// see https://secure.php.net/manual/en/simplexml.examples-errors.php
 		libxml_use_internal_errors( true );
@@ -988,25 +1039,27 @@ class RefreshedTemplate extends BaseTemplate {
 		$this->html( 'headelement' );
 		?>
 		<input type="checkbox" id="sidebar-toggler-checkbox" class="refreshed-checkbox">
-		<header id="header-wrapper">
+		<header id="header-wrapper" role="navigation">
 			<div id="sidebar-toggler" class="header-section">
 				<label for="sidebar-toggler-checkbox" id="sidebar-toggler-button" class="header-button header-button-textless">
 						<?php $this->renderIcon( 'refreshed-menu' ) ?>
+						<div class="refreshed-modal-background"></div>
 				</label>
 			</div>
 			<div id="site-navigation-header" class="site-navigation header-section">
 				<?php
 				if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
 					?>
-					<nav id="site-navigation-header-dropdown" class="site-navigation-full-logos multiple-wikis refreshed-dropdown">
+					<nav id="site-navigation-header-dropdown" class="site-navigation-full-logos multiple-wikis refreshed-dropdown" role="listbox">
 						<?php echo $thisWikiLinkWithLogo ?><!--
 			 	 --><input type="checkbox" id="site-navigation-header-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox"><!--
 			   --><label for="site-navigation-header-dropdown-checkbox" id="site-navigation-header-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless site-navigation-button">
 							<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
-							<span class="refreshed-dropdown-triangle"></span>
+							<div class="refreshed-dropdown-triangle"></div>
+							<div class="refreshed-modal-background"></div>
 						</label>
 						<ul id="site-navigation-header-dropdown-tray" class="refreshed-dropdown-tray site-navigation-tray">
-							<?php $this->renderSiteNavigationItems( $siteNavigation, 'dropdown' ); ?>
+							<?php $this->renderSiteNavigationItems( $siteNavigation ); ?>
 						</ul>
 					</nav>
 					<?php
@@ -1028,6 +1081,74 @@ class RefreshedTemplate extends BaseTemplate {
 				?>
 			</div>
 			<div id="header-categories-user-info-search-wrapper">
+				<div id="explore-header-categories" class="header-section">
+					<?php
+					if ( $headerCategories ) {
+						?>
+						<div id="explore-header-categories-overflow-hider">
+							<div id="explore-header-categories-sibling"></div>
+							<div id="explore-header-categories-dropdowns">
+								<div id="explore-dropdown" class="refreshed-dropdown" role="menu">
+									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+									<label for="explore-dropdown-checkbox" id="explore-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
+										<?php $this->renderIcon( 'refreshed-explore' ) ?>
+										<span class="header-category-name header-text"><?php echo $this->getMsg( 'Refreshed-explore' )->text() ?></span>
+										<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
+										<div class="refreshed-modal-background"></div>
+										<div class="refreshed-dropdown-triangle"></div>
+									</label>
+									<ul id="explore-dropdown-tray" class="refreshed-dropdown-tray">
+										<?php
+										$exploreIndex = 0;
+										foreach ( $headerCategories as $name => $headerCategoryDropdown ) {
+											?>
+											<li id="explore-submenu-<?php echo $exploreIndex ?>-dropdown" class="refreshed-dropdown explore-submenu-dropdown">
+												<input type="checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" class="refreshed-submenu-dropdown-checkbox refreshed-dropdown-checkbox refreshed-checkbox">
+												<label for="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-button" class="refreshed-dropdown-button explore-submenu-dropdown-button">
+													<a class="explore-submenu-dropdown-anchor">
+														<span class="explore-submenu-name"><?php echo htmlspecialchars( $name ) ?></span>
+														<?php $this->renderIcon( 'refreshed-submenu-expand' ) ?>
+													</a>
+													<div class="refreshed-modal-background"></div>
+												</label>
+												<ul id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-tray" class="explore-submenu-dropdown-tray refreshed-dropdown-tray">
+													<?php $this->renderHeaderCategoryItems( $headerCategoryDropdown ); ?>
+												</ul>
+											</li>
+											<?php
+											$exploreIndex++;
+										}
+										?>
+									</ul>
+								</div>
+								<div id="header-categories-dropdowns">
+									<?php
+									$headerCategoryDropdownIndex = 0;
+									foreach ( $headerCategories as $name => $headerCategoryDropdown ) {
+										?>
+										<div id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown" class="refreshed-dropdown header-category-dropdown" role="menu">
+											<input type="checkbox" id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+											<label for="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-checkbox" id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
+												<span class="header-category-name header-text"><?php echo htmlspecialchars( $name ) ?></span>
+												<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
+												<div class="refreshed-modal-background"></div>
+												<div class="refreshed-dropdown-triangle"></div>
+											</label>
+											<ul id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-tray" class="header-category-dropdown-tray refreshed-dropdown-tray">
+												<?php $this->renderHeaderCategoryItems( $headerCategoryDropdown ); ?>
+											</ul>
+										</div>
+										<?php
+										$headerCategoryDropdownIndex++;
+									}
+									?>
+								</div>
+							</div>
+						</div>
+						<?php
+					}
+					?>
+				</div>
 				<div id="user-info-search-wrapper">
 					<div id="user-info" class="header-section">
 						<?php if ( $extraPersonalTools ) { // if there are extra personal tools (e.g., for Echo)
@@ -1040,13 +1161,14 @@ class RefreshedTemplate extends BaseTemplate {
 							<?php
 						}
 						?>
-						<div id="user-info-dropdown" class="refreshed-dropdown">
+						<div id="user-info-dropdown" class="refreshed-dropdown" role="menu">
 							<input type="checkbox" id="user-info-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
 							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
 								<?php echo $this->makeAvatar( $user ) ?>
 								<span class="refreshed-username header-text"><?php echo $this->makeUsernameText( $user ) ?></span>
 								<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
-								<span class="refreshed-dropdown-triangle"></span>
+								<div class="refreshed-modal-background"></div>
+								<div class="refreshed-dropdown-triangle"></div>
 							</label>
 							<ul id="user-info-dropdown-tray" class="refreshed-dropdown-tray personal-tools">
 								<?php $this->renderUserDropdownItems( $dropdownPersonalTools ) ?>
@@ -1058,7 +1180,8 @@ class RefreshedTemplate extends BaseTemplate {
 							<input type="checkbox" id="header-search-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
 							<label for="header-search-dropdown-checkbox" id="header-search-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless">
 								<?php $this->renderIcon( 'search' ) ?>
-								<span class="refreshed-dropdown-triangle"></span>
+								<div class="refreshed-modal-background"></div>
+								<div class="refreshed-dropdown-triangle"></div>
 							</label>
 							<form id="header-search-dropdown-tray" class="search-form refreshed-dropdown-tray" action="<?php $this->text( 'wgScript' ) ?>" method="get">
 								<input type="hidden" name="title" value="<?php $this->text( 'searchtitle' ) ?>"/>
@@ -1084,71 +1207,6 @@ class RefreshedTemplate extends BaseTemplate {
 						</div>
 					</div>
 				</div>
-				<?php
-				if ( $headerCategories ) {
-					?>
-					<div id="explore-header-categories" class="header-section<?php if ( $wgRefreshedUseExploreWithoutHeaderCategories ) { echo ' explore-only'; } ?>">
-						<div id="explore-header-categories-overflow-hider">
-							<div id="explore-header-categories-sibling"></div>
-							<div id="explore-header-categories-dropdowns">
-								<div id="explore-dropdown" class="refreshed-dropdown">
-									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
-									<label for="explore-dropdown-checkbox" id="explore-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
-										<?php $this->renderIcon( 'refreshed-explore' ) ?>
-										<span class="header-category-name header-text"><?php echo $this->getMsg( 'Refreshed-explore' )->text() ?></span>
-										<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
-										<span class="refreshed-dropdown-triangle"></span>
-									</label>
-									<ul id="explore-dropdown-tray" class="refreshed-dropdown-tray">
-										<?php
-										$exploreIndex = 0;
-										foreach ( $headerCategories as $name => $headerCategoryDropdown ) {
-											?>
-											<li id="explore-submenu-<?php echo $exploreIndex ?>-dropdown" class="refreshed-dropdown explore-submenu-dropdown refreshed-dropdown-item">
-												<input type="checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
-												<label for="explore-submenu-<?php echo $exploreIndex ?>-dropdown-checkbox" id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-button" class="refreshed-dropdown-button explore-submenu-dropdown-button">
-													<a class="explore-submenu-dropdown-anchor">
-														<span class="explore-submenu-name"><?php echo htmlspecialchars( $name ) ?></span>
-														<?php $this->renderIcon( 'refreshed-submenu-expand' ) ?>
-													</a>
-												</label>
-												<ul id="explore-submenu-<?php echo $exploreIndex ?>-dropdown-tray" class="explore-submenu-dropdown-tray refreshed-dropdown-tray">
-													<?php $this->renderHeaderCategoryItems( $headerCategoryDropdown, $exploreIndex, 'dropdown', 'explore-submenu' ); ?>
-												</ul>
-											</li>
-											<?php
-											$exploreIndex++;
-										}
-										?>
-									</ul>
-								</div>
-								<div id="header-categories-dropdowns">
-									<?php
-									$headerCategoryDropdownIndex = 0;
-									foreach ( $headerCategories as $name => $headerCategoryDropdown ) {
-										?>
-										<div id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown" class="refreshed-dropdown header-category-dropdown">
-											<input type="checkbox" id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
-											<label for="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-checkbox" id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-button" class="refreshed-dropdown-button header-button header-category-dropdown-button">
-												<span class="header-category-name header-text"><?php echo htmlspecialchars( $name ) ?></span>
-												<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
-												<span class="refreshed-dropdown-triangle"></span>
-											</label>
-											<ul id="header-category-<?php echo $headerCategoryDropdownIndex ?>-dropdown-tray" class="header-category-dropdown-tray refreshed-dropdown-tray">
-												<?php $this->renderHeaderCategoryItems( $headerCategoryDropdown, $headerCategoryDropdownIndex, 'dropdown', 'header-category' ); ?>
-											</ul>
-										</div>
-										<?php
-										$headerCategoryDropdownIndex++;
-									}
-									?>
-								</div>
-							</div>
-						</div>
-					</div>
-					<?php
-				}
-				?>
 			</div>
 		</header>
 		<div id="sidebar-wrapper">
@@ -1158,7 +1216,7 @@ class RefreshedTemplate extends BaseTemplate {
 						<?php
 						if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
 							?>
-							<nav id="site-navigation-sidebar-collapsible" class="site-navigation-full-logos multiple-wikis refreshed-collapsible">
+							<nav id="site-navigation-sidebar-collapsible" class="site-navigation-full-logos multiple-wikis refreshed-collapsible" role="listbox">
 								<input type="checkbox" id="site-navigation-sidebar-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
 								<div id="site-navigation-sidebar-buttons-wrapper">
 									<?php echo $thisWikiLinkWithSidebarLogo ?><!--
@@ -1168,7 +1226,7 @@ class RefreshedTemplate extends BaseTemplate {
 									</label>
 								</div>
 								<ul id="site-navigation-sidebar-collapsible-tray" class="refreshed-collapsible-tray site-navigation-tray">
-									<?php $this->renderSiteNavigationItems( $siteNavigation, 'collapsible' ); ?>
+									<?php $this->renderSiteNavigationItems( $siteNavigation ); ?>
 								</ul>
 							</nav>
 							<?php
@@ -1189,7 +1247,7 @@ class RefreshedTemplate extends BaseTemplate {
 							$headerCategoryCollapsibleIndex = 0;
 							foreach ( $headerCategories as $name => $headerCategoryCollapsible ) {
 								?>
-								<div id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible" class="refreshed-collapsible header-category-collapsible sidebar-section">
+								<div id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible" class="refreshed-collapsible header-category-collapsible sidebar-section" role="menu">
 									<input type="checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
 									<label for="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-button" class="refreshed-collapsible-button header-button header-category-collapsible-button">
 										<span class="header-category-name sidebar-header header-category-sidebar-name"><?php echo htmlspecialchars( $name ) ?></span>
@@ -1199,7 +1257,7 @@ class RefreshedTemplate extends BaseTemplate {
 										</span>
 									</label>
 									<ul id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-tray" class="header-category-collapsible-tray refreshed-collapsible-tray">
-										<?php $this->renderHeaderCategoryItems( $headerCategoryCollapsible, $headerCategoryCollapsibleIndex, 'collapsible', 'header-category' ); ?>
+										<?php $this->renderHeaderCategoryItems( $headerCategoryCollapsible ); ?>
 									</ul>
 								</div>
 								<?php
@@ -1218,29 +1276,7 @@ class RefreshedTemplate extends BaseTemplate {
 					<div class="sidebar-content sidebar-section">
 						<span class="sidebar-header"><?php echo htmlspecialchars( $main ) ?></span>
 						<ul>
-							<?php
-							if ( is_array( $sub ) ) { // MW-generated stuff from the sidebar message
-								foreach ( $sub as $key => $action ) {
-									// append 'sidebar-item' class to a inside
-									if ( isset( $action['class'] ) ) {
-										$action['class'] .= ' sidebar-link';
-									} else {
-										$action['class'] = 'sidebar-link';
-									}
-									echo $this->makeListItem(
-										$key,
-										$action,
-										[
-											'link-class' => 'sidebar-item',
-											'link-fallback' => 'span'
-										]
-									);
-								}
-							} else {
-								// allow raw HTML block to be defined by extensions (like NewsBox)
-								echo $sub;
-							}
-							?>
+							<?php $this->renderSidebarContentSection( $sub ) ?>
 						</ul>
 					</div>
 					<?php
@@ -1251,132 +1287,100 @@ class RefreshedTemplate extends BaseTemplate {
 				?>
 			</div>
 		</div>
-		<div id="content-wrapper" class="mw-body-content">
-			<?php
-			if ( $this->data['sitenotice'] ) {
-				?>
-				<div id="site-notice" role="banner">
-					<?php $this->html( 'sitenotice' ) ?>
-				</div>
-			<?php
-			}
-			// Only output this if we need to (T153625)
-			if ( $this->data['newtalk'] ) {
-			?>
-			<div id="new-talk">
-				<?php $this->html( 'newtalk' ) ?>
-			</div>
-			<?php } ?>
-			<main id="content">
-				<article>
-					<header id="content-heading">
-						<?php
-						if ( method_exists( $this, 'getIndicators' ) ) {
-							echo $this->getIndicators();
-						}
-						?>
-						<h1 id="firstHeading"><?php $this->html( 'title' ) ?></h1>
-						<div id="main-title-messages">
-							<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>
-							<?php
-							if ( $this->data['subtitle'] || $this->data['undelete'] ) {
-								?>
-								<div id="contentSub"<?php $this->html( 'userlangattributes' ) ?>><?php $this->html( 'subtitle' ) ?><?php $this->html( 'undelete' ) ?></div>
-							<?php
-							}
-							?>
-						</div>
-					</header>
-					<input type="checkbox" id="toolbox-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
-					<div id="refreshed-toolbox" role="menubar">
-					<div id="toolbox-namespaces" class="toolbox-section">
-						<?php
-						if ( MWNamespace::isTalk( $titleNamespace ) ) { // if talk namespace
-							$this->renderBackToSubjectLink( $title );
-						}
-						$this->renderPageToolsInCategory( 'link', $pageTools, 'namespaces' );
-						?>
-					</div>
-					<div id="toolbox-main-actions">
-						<?php $this->renderPageToolsInCategory( 'other tag', $pageTools, 'watch', 'div', 'inline' ) ?>
-						<?php $this->renderPageToolsInCategory( 'link', $pageTools, 'main-actions' ) ?>
-					</div>
-					<?php if ( !empty( $pageTools['page-tools'] ) || !empty( $pageTools['user-tools'] ) ) {
-						?>
-						<div id="toolbox-dropdown" class="refreshed-dropdown toolbox-section">
-							<label for="toolbox-dropdown-checkbox" id="toolbox-dropdown-button" class="refreshed-dropdown-button">
-								<?php
-								$this->renderIcon( 'ellipsis' );
-								$this->renderIcon( 'refreshed-dropdown-expand' );
-								?>
-								<span id="toolbox-dropdown-triangle" class="refreshed-dropdown-triangle"></span>
-							</label>
-							<dl id="toolbox-dropdown-tray" class="refreshed-dropdown-tray">
-								<?php if ( !empty( $pageTools['page-tools'] ) ) {
-									?>
-									<dt><?php echo $this->getMsg( 'refreshed-page-tools' )->text()?></dt>
-									<?php
-									$this->renderPageToolsInCategory( 'other tag', $pageTools, 'page-tools', 'dd', 'dropdown' );
-								} ?>
-								<?php if ( !empty( $pageTools['user-tools'] ) ) {
-									?>
-									<dt><?php echo $this->getMsg( 'refreshed-user-tools' )->text()?></dt>
-									<?php
-									$this->renderPageToolsInCategory( 'other tag', $pageTools, 'user-tools', 'dd', 'dropdown' );
-								} ?>
-							</dl>
-						</div>
-						<?php
-					}
-					?>
-					</div>
-					<div id="bodyContent" role="article">
-						<?php $this->html( 'bodytext' ) ?>
-					</div>
-					</article>
-					<?php
-					$this->html( 'catlinks' );
-					if ( $this->data['dataAfterContent'] ) {
-						$this->html( 'dataAfterContent' );
-					}
-					?>
-				</main>
-		</div>
-		<footer id="footer">
-			<?php
-			$footerExtra = '';
-			Hooks::run( 'RefreshedFooter', [ &$footerExtra ] );
-			echo $footerExtra;
-
-			foreach ( $this->getFooterLinks() as $category => $links ) {
-				?>
-				<ul class="footer-row">
-					<?php
-					foreach ( $links as $link ) {
-						?>
-						<li class="footer-row-item"><?php $this->html( $link ); ?></li>
-						<?php
-						$noSkip = true;
-					}
-					?>
-				</ul>
+		<div id="content-footer-wrapper">
+			<div id="content-wrapper" class="mw-body-content" role="main">
 				<?php
-			}
-			$footerIcons = $this->getFooterIcons( 'icononly' );
-			if ( count( $footerIcons ) > 0 ) { ?>
-				<ul class="footer-row">
-				<?php foreach ( $footerIcons as $blockName => $footerIcons ) {
-						foreach ( $footerIcons as $icon ) {
-							?>
-							<li class="footer-row-item"><?php echo $skin->makeFooterIcon( $icon ); ?></li>
-							<?php
-						}
+				if ( $this->data['sitenotice'] ) {
+					?>
+					<div id="site-notice" role="banner">
+						<?php $this->html( 'sitenotice' ) ?>
+					</div>
+				<?php
+				}
+				// Only output this if we need to (T153625)
+				if ( $this->data['newtalk'] ) {
+				?>
+					<div id="new-talk">
+						<?php $this->html( 'newtalk' ) ?>
+					</div>
+				<?php
+				}
+				if ( method_exists( $this, 'getIndicators' ) ) {
+					echo $this->getIndicators();
 				}
 				?>
-				</ul> <?php
-			}
-			?>
-		</footer>
+				<main id="content">
+					<article>
+						<header id="content-heading">
+							<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
+							<div id="main-title-messages">
+								<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>
+								<?php
+								if ( $this->data['subtitle'] || $this->data['undelete'] ) {
+									?>
+									<div id="contentSub"<?php $this->html( 'userlangattributes' ) ?>><?php $this->html( 'subtitle' ) ?><?php $this->html( 'undelete' ) ?></div>
+								<?php
+								}
+								?>
+							</div>
+						</header>
+						<input type="checkbox" id="toolbox-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
+						<div id="refreshed-toolbox" role="menubar">
+							<ul id="p-namespaces" class="toolbox-section">
+								<?php
+								if ( MWNamespace::isTalk( $titleNamespace ) ) { // if talk namespace
+									$this->renderBackToSubjectLink( $linkRenderer, $title );
+								}
+								$this->renderPageToolsInCategory( 'inline', $pageTools, 'namespaces' );
+								?>
+							</ul>
+							<ul id="p-views" class="toolbox-section">
+								<?php $this->renderPageToolsInCategory( 'inline', $pageTools, 'watch' ) ?>
+								<?php $this->renderPageToolsInCategory( 'inline', $pageTools, 'main-actions' ) ?>
+							</ul>
+							<?php if ( !empty( $pageTools['page-tools'] ) || !empty( $pageTools['user-tools'] ) ) {
+								?>
+								<div id="p-tools" class="refreshed-dropdown toolbox-section toolbox-dropdown" role="menu">
+									<label for="toolbox-dropdown-checkbox" id="toolbox-dropdown-button" class="refreshed-dropdown-button" title="<?php echo $this->getMsg( 'toolbox' )->text() ?>" aria-label="<?php echo $this->getMsg( 'toolbox' )->text() ?>">
+										<?php
+										$this->renderIcon( 'ellipsis' );
+										$this->renderIcon( 'refreshed-dropdown-expand' );
+										?>
+										<div class="refreshed-modal-background"></div>
+										<span id="toolbox-dropdown-triangle" class="refreshed-dropdown-triangle"></span>
+									</label>
+									<dl id="toolbox-dropdown-tray" class="refreshed-dropdown-tray">
+										<?php $this->renderToolboxDropdownItems( $pageTools ) ?>
+									</dl>
+								</div>
+								<?php
+							}
+							?>
+							</div>
+							<div id="bodyContent" role="article">
+								<?php $this->html( 'bodytext' ) ?>
+							</div>
+						</article>
+						<?php
+						$this->html( 'catlinks' );
+						if ( $this->data['dataAfterContent'] ) {
+							$this->html( 'dataAfterContent' );
+						}
+						?>
+					</main>
+			</div>
+			<footer id="footer-wrapper">
+				<?php
+				$this->renderExtraFooterItems();
+				foreach ( $this->getFooterLinks() as $category => $links ) {
+					$this->renderFooterLinksRow( $category, $links );
+				}
+				if ( count( $footerIcons ) > 0 ) {
+					$this->renderFooterIconsRow( $skin, $footerIcons );
+				}
+				?>
+			</footer>
+		</div>
 		<?php
 		$this->printTrail();
 		echo Html::closeElement( 'body' );

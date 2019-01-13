@@ -1,4 +1,5 @@
 @import 'variables.less';
+@import 'mixins.less';
 
 /*******************************************************************************
 **************************** DROPDOWNS/COLLAPSIBLES ****************************
@@ -8,6 +9,10 @@
   left: 0;
   right: 0;
   font-size: @small-dropdown-tray-sidebar-font-size;
+}
+
+#user-info-dropdown-tray {
+	right: 0;
 }
 
 /*******************************************************************************
@@ -34,6 +39,10 @@ body {
   .site-navigation-full-logos {
     display: none;
   }
+}
+
+#header-categories-user-info-search-wrapper {
+	.flex-direction( row-reverse );
 }
 
 #explore-header-categories {
@@ -80,23 +89,32 @@ body {
 
 /* @TODO */
 
-#firstHeading,
-#main-title-messages {
+#content-heading {
   text-align: center;
 }
 
 #main-title-messages,
-#refreshed-toolbox {
+#p-namespaces,
+#p-views,
+#toolbox-dropdown-button {
   font-size: 1.25em;
+}
+
+.mw-indicators {
+	float: none;
+  text-align: right;
 }
 
 /* toolbox */
 
 #refreshed-toolbox {
+  /* allow horizontal scrolling if needed */
   overflow-x: auto;
+  /* no position: sticky */
+  position: initial;
 }
 
-#toolbox-namespaces .ca-subject { /* #toolbox-namespaces for specificity */
+#p-namespaces .ca-subject { /* #p-namespaces for specificity */
   display: none;
 }
 
@@ -104,22 +122,75 @@ body {
   display: none;
 }
 
-
 .inline-tool-text {
   display: none;
 }
 
-.toolbox-main-actions > a,
+.p-views > a,
 .combined-tools-dropdown {
   margin-left: 0.75em;
+}
+
+/* whitelist page indicators */
+.mw-indicator {
+	display: none;
+}
+
+#toc {
+  font-size: 1.5em;
+  width: 100%;
+  .box-sizing( border-box );
+}
+
+#catlinks {
+  text-align: center;
+  font-size: 1.2em;
+}
+
+/* Image thumbnails */
+.thumb {
+	width: 100% !important;
+	margin: 0 !important;
+}
+
+div.thumbinner { /* need to specify div so it can overwrite the CSS in commonContent.css */
+	width: auto !important;
+	padding: 0.75em 0 !important;
+	margin-bottom: 0.5em;
+}
+
+.thumbinner img {
+	width: 50%;
+	height: auto;
+	border: 0 !important;
+}
+
+.thumbcaption {
+	text-align: center !important;
+	margin-bottom: -.75em !important;
+}
+
+.magnify {
+	display: none;
+}
+
+/* Increase font size for editing menu - Brickimedia/brickimedia#301 */
+.action-edit input[type="text"],
+.action-edit input[type="number"],
+.action-edit textarea {
+	font-size: 1.063em;
 }
 
 /*******************************************************************************
 ************************************ FOOTER ************************************
 *******************************************************************************/
 
-/* @TODO */
+#footer-wrapper {
+  text-align: center;
+  font-size: 1.2em;
+}
 
-/*******************************************************************************
-************************************** OLD *************************************
-*******************************************************************************/
+.footer-row-item {
+  margin-left: @footer-item-spacing-horizontal / 2;
+  margin-right: @footer-item-spacing-horizontal / 2;
+}

@@ -1,4 +1,5 @@
 @import 'variables.less';
+@import 'mixins.less';
 
 /*******************************************************************************
 **************************** DROPDOWNS/COLLAPSIBLES ****************************
@@ -6,8 +7,16 @@
 
 /* Make right: 0; stick dropdown trays to the right edge of the dropdown,
 not the viewport */
-#toolbox-dropdown {
+#p-tools {
 	position: relative;
+}
+
+#user-info-dropdown-tray {
+	right: 1em;
+}
+
+.refreshed-dropdown-tray {
+	width: @medium-dropdown-tray-width;
 }
 
 /*******************************************************************************
@@ -22,18 +31,14 @@ not the viewport */
   padding: 0;
 }
 
-.refreshed-dropdown-tray {
-	width: @medium-dropdown-tray-width;
-}
-
-.site-navigation-logo-img {
-  max-width: @medium-site-navigation-logo-img-max-width;
-}
-
 #site-navigation-header {
   .site-navigation-icon-logos {
     display: none;
   }
+}
+
+.site-navigation-logo-img {
+  max-width: @medium-site-navigation-logo-img-max-width;
 }
 
 #explore-header-categories-dropdowns {
@@ -74,12 +79,10 @@ a#back-to-subject { /* a for specificity */
   display: none;
 }
 
+.mw-indicator {
+	display: inline;
+}
+
 /*******************************************************************************
 ************************************ FOOTER ************************************
-*******************************************************************************/
-
-/* @TODO */
-
-/*******************************************************************************
-************************************** OLD *************************************
 *******************************************************************************/

@@ -1,0 +1,269 @@
+@import 'mediawiki.mixins';
+
+.stack-box-shadow() {
+  .box-shadow( 0 3px 9px 0 @content-shadow-color );
+}
+
+.header-height( @height ) {
+  #header-wrapper {
+    height: @height;
+  }
+
+  #content-footer-wrapper {
+    margin-top: @height;
+  }
+
+  .refreshed-toolbox-stuck {
+    top: @height;
+  }
+
+  #sidebar {
+    margin-top: @height;
+  }
+
+  .resize-header-icons( @height / 2 );
+}
+
+/* explicitly inherit height so the text/images/svg inside have access to the
+element's full height, and make sure they're all vertically aligned the same way
+(especially labels)--for example this ensures all .refreshed-dropdown-triangle
+elements are set to the same height */
+.give-children-height() {
+  div,
+  nav,
+  a,
+  label {
+    height: 100%;
+    vertical-align: top;
+  }
+}
+
+/* the dropdown/sidebar links where a side border appears on hover */
+.pretty-anchor( @active: false, @font-color: auto, @active-background-color: initial, @border-side: horizontal ) {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+
+  & when not ( @font-color = auto ) {
+    color: @font-color;
+  }
+
+  & when not ( @border-side = vertical ) {
+    padding-left: 1em;
+    padding-right: 1em;
+    border-left: @pretty-anchor-border-width solid transparent;
+    border-right: @pretty-anchor-border-width solid transparent; /* border-right for symmetry */
+  }
+  & when ( @border-side = vertical ) {
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    border-top: @pretty-anchor-border-width solid transparent;
+    border-bottom: @pretty-anchor-border-width solid transparent; /* border-bottom for symmetry */
+    margin-right: @pretty-anchor-border-width;
+  }
+  text-decoration: none;
+  .box-sizing( border-box ); /* padding/border should be included within the 100% width */
+
+  &:focus,
+  &:hover,
+  &:active,
+  &.selected {
+    /* use currentColor not @font-color because, for example,
+    if @font-color = auto, then setting border-color to @font-color would set
+    border-color to auto... that is, border-color would be the auto value for
+    border-color, not the auto value for color */
+    & when not ( @border-side = vertical ) {
+      border-left-color: currentColor;
+    }
+    & when ( @border-side = vertical ) {
+      border-bottom-color: currentColor;
+    }
+  }
+
+  &:active {
+    background-color: @active-background-color;
+  }
+
+  & when ( @active = true ) {
+    & when not ( @border-side = vertical ) {
+      border-left-color: currentColor;
+    }
+    & when ( @border-side = vertical ) {
+      border-bottom-color: currentColor;
+    }
+    background-color: @active-background-color;
+  }
+
+  .refreshed-icon {
+    vertical-align: middle;
+  }
+}
+
+/* extra padding for some header buttons with text */
+.extra-header-button-padding() {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+/* customize the dropdown tray background color, active background color (the
+background color that links in the dropdown have when you click on them)
+and font color for text (not anchors) */
+.dropdown-tray-colors( @background-color, @active-background-color, @font-color ) {
+  .refreshed-dropdown-triangle::after {
+    border-bottom-color: @background-color;
+  }
+
+  .refreshed-dropdown-tray {
+    background-color: @backround-color;
+    color: @font-color;
+
+    a {
+      .pretty-anchor( @active-background-color: @active-background-color );
+    }
+  }
+}
+/* style the default text for the search bar */
+.searchInput-placeholder() {
+  color: @search-placeholder-text-font-color;
+  font-weight: 700;
+}
+
+/* style the search bar when it's inside a dropdown (medium, small) */
+.dropdown-searchInput( @header-search-width ) {
+
+  #header-search-dropdown-tray {
+    padding-left: @header-search-padding;
+    padding-right: @header-search-padding;
+    width: @header-search-width;
+    right: 0;
+  }
+
+  #searchInput { /* header search box */
+  	outline: 0;
+  	border-bottom: 3px solid transparent;
+  	/* padding-right is 0.5em more than padding-right of .searchButton to leave
+  	room for it */
+    padding-left: @header-search-padding / 2;
+  	padding-right: @header-search-height + @header-search-padding;
+    width: 100%;
+  }
+
+  #searchInput:focus {
+  	border-color: currentColor;
+  }
+
+  .searchButton {
+  	/* take up full height and stick to right side of #searchInput */
+  	top: 50%;
+  	transform: translateY( -50% );
+  	right: @header-search-padding;
+  }
+
+  [dir = ltr] .searchButton {
+  	/* ooui-icon-arrowNext-ltr */
+  	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M10 2L8.59 3.42 14.17 9H2v2h12.17l-5.58 5.59L10 18l8-8-8-8z'/%3E%3C/svg%3E );
+  }
+
+  [dir = rtl] .searchButton {
+  	/* ooui-icon-arrowNext-rtl */
+  	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M2 10l8 8 1.4-1.4L5.8 11H18V9H5.8l5.6-5.6L10 2z'/%3E%3C/svg%3E );
+  }
+
+  #header-suggestions {
+    margin-top: @header-search-padding !important;
+    width: @header-search-width !important;
+
+    .suggestions-result,
+    .suggestions-special {
+    	padding: 0.75em 0.5em !important;
+    }
+
+    .suggestions-result {
+    	border-bottom: 1px solid @search-suggestions-border-color;
+    }
+
+    .suggestions-special {
+    	margin-top: 0 !important;
+    }
+  }
+}
+
+/* adjust size of header icons */
+.resize-header-icons( @width ) {
+  .refreshed-icon-refreshed-menu,
+  .refreshed-icon-search,
+  .refreshed-icon-refreshed-explore {
+    width: @width;
+    height: auto;
+  }
+}
+
+/* sidebar as a menu */
+.use-sidebar-menu( @sidebar-width, @sidebar-background ) {
+  #sidebar-wrapper {
+    width: @sidebar-width;
+    left: -( @sidebar-width );
+    background: @sidebar-background;
+    z-index: @z-index-sidebar-menu;
+  }
+
+  #sidebar-toggler-checkbox:checked ~ #sidebar-wrapper {
+  	left: 0;
+  	/* only apply the box shadow when the sidebar is opened so the shadow doesn't
+  	appear on the edge of the screen when the sidebar is closed (just off the edge
+  	of the screen) */
+  	.stack-box-shadow();
+  }
+
+  .content-wrapper-width( 0, 0 );
+}
+
+.content-wrapper-width( @left, @right ) {
+  #content-footer-wrapper {
+    margin-left: @left;
+    margin-right: @right;
+  }
+  .refreshed-toolbox-stuck {
+    left: @left;
+    right: @right;
+  }
+
+  #user-info-search-wrapper {
+    margin-right: @right;
+  }
+}
+
+.use-refreshed-toolbox-sticky( @header-height ) {
+  #refreshed-toolbox {
+    /* position: sticky is assigned with JS, since if JS is disabled we don't
+    want the sticky behavior (we only want it if we can tell whether or not
+    the element is stuck, which we need JS for) */
+    top: @header-height;
+  }
+
+  .refreshed-toolbox-stuck#refreshed-toolbox {
+    background-color: @content-backgound-color;
+    padding-left: @content-wrapper-padding;
+    padding-right: @content-wrapper-padding;
+    margin: 0 -( @content-wrapper-padding );
+    .stack-box-shadow();
+  }
+}
+
+/* browser prefix mixins */
+
+.flex-direction( @value ) {
+  -webkit-flex-direction: @value; // Chrome 21.0-, Safari 6.1-
+	-moz-flex-direction: @value; // Firefox 18.0-
+	flex-direction: @value;
+}
+
+.flex-justify-content( @value ) {
+  -webkit-justify-content: @value; // Chrome 21.0-, Safari 6.1-
+	-moz-justify-content: @value; // Firefox 18.0-
+	justify-content: @value;
+}
+
+.flex-align-items( @value ) {
+  -webkit-align-items: @value; // Safari 7.0-
+  align-items: @value;
+}

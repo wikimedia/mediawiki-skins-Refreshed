@@ -14,30 +14,59 @@ if ( document.readyState === 'interactive' || document.readyState === 'complete'
 function runRefreshedJS() {
 
 	var Refreshed = {
+		positionStickyRules: [ 'sticky', '-webkit-sticky' ],
+		positionStickyAttributeToUse: null,
+		positionStickyClass: 'position-sticky',
 		toolbox: document.getElementById( 'refreshed-toolbox' ),
 		stuckClass: 'refreshed-toolbox-stuck',
 		toolboxHasStuckClass: false,
 		searchInput: document.getElementById( 'searchInput' ),
+		headerSearchDropdownCheckbox: document.getElementById( 'header-search-dropdown-checkbox' ),
 		suggestionsClass: 'suggestions',
 		headerSuggestionsId: 'header-suggestions',
 		body: document.body,
 		sidebarTogglerCheckbox: document.getElementById( 'sidebar-toggler-checkbox' ),
-		sidebarToggler: document.getElementById( 'sidebar-toggler' )
+		sidebarToggler: document.getElementById( 'sidebar-toggler' ),
+		headerWrapper: document.getElementById( 'header-wrapper' ),
+		dropdownCheckboxClass: 'refreshed-dropdown-checkbox',
+		dropdownButtonClass: 'refreshed-dropdown-button',
+		submenuDropdownCheckboxClass: 'refreshed-submenu-dropdown-checkbox',
+		elementOrParentsHaveDisplayNone: function( element ) {
+			// per https://stackoverflow.com/a/21696585; assumes element not fixed
+			return element.offsetParent === null;
+		}
 	};
 
-	/*******************************************************************************
-	************************************ TOOLBOX ***********************************
-	*******************************************************************************/
+	/*****************************************************************************
+	*********************************** TOOLBOX **********************************
+	*****************************************************************************/
 
-	/******** Add/remove class from toolbox based if toolbox is stuck/ not ********/
+	/******* Add/remove class from toolbox based if toolbox is stuck/ not *******/
 
-	if ( CSS.supports( 'position: sticky' ) || CSS.supports( 'position: -webkit-sticky' ) ) {
+	for ( var i = 0; i < Refreshed.positionStickyRules.length; i++ ) {
+		if ( CSS.supports( 'position', Refreshed.positionStickyRules[i] ) ) {
+			Refreshed.positionStickyAttributeToUse = Refreshed.positionStickyRules[i];
+			break;
+		}
+	}
+
+	// evaluates true if Refreshed.positionStickyAttributeToUse != null, so if we
+	// found a position sticky rule that is supported by this browser (in which
+	// case Refreshed.positionStickyAttributeToUse contains that rule)
+	if ( Refreshed.positionStickyAttributeToUse ) {
+
+		Refreshed.toolbox.classList.add( 'position-sticky' )
+
 		Refreshed.toolboxHasStuckClass = Refreshed.toolbox.classList.contains( Refreshed.stuckClass );
 
-		// returns true if the toolbox's top property (in pixels) is the distance that
-		// the toolbox is from the top of the viewport, as in that case, it is stuck
+		// returns true if the toolbox's top property (in px) is no less than the
+		// distance that the toolbox is from the top of the viewport, as in that
+		// case, it is stuck (if the two are equal) or we have scrolled past the
+		// body content, in which case the toolbox technically isn't stuck, but
+		// it should still be styles as if it were, since it's not in its original
+		// place
 		Refreshed.toolboxIsStuck = function() {
-			return parseFloat( window.getComputedStyle( this.toolbox ).getPropertyValue( 'top' ) ) == this.toolbox.getBoundingClientRect().top;
+			return parseFloat( window.getComputedStyle( this.toolbox ).getPropertyValue( 'top' ) ) >= this.toolbox.getBoundingClientRect().top;
 		};
 
 		// remove stuckClass from toolbox if toolbox isn't stuck;
@@ -58,12 +87,12 @@ function runRefreshedJS() {
 		} );
 	}
 
-	/*******************************************************************************
-	************************************ SEARCH ************************************
-	*******************************************************************************/
+	/*****************************************************************************
+	*********************************** SEARCH ***********************************
+	*****************************************************************************/
 
-	/***************** Clear the search bar when it's not focused; ****************/
-	/*********** focus the search bar when the search button is opened ************/
+	/**************** Clear the search bar when it's not focused; ***************/
+	/********** focus the search bar when the search button is opened ***********/
 
 	Refreshed.clearTopSearchBar = function() {
 		this.searchInput.value = '';
@@ -73,14 +102,14 @@ function runRefreshedJS() {
 		this.searchInput.focus();
 	};
 
-	$( '#header-search-dropdown-checkbox' ).change( function() {
+	Refreshed.headerSearchDropdownCheckbox.addEventListener( 'change', function() {
 		Refreshed.clearTopSearchBar();
 		if ( this.checked ) {
 			Refreshed.focusTopSearchBar();
 		}
 	} );
 
-	/*********** Add class to the suggestions box for the header search ***********/
+	/********** Add class to the suggestions box for the header search **********/
 
 	Refreshed.labelHeaderSuggestionsBox = function( headerSuggestions ) {
 		headerSuggestions.id = Refreshed.headerSuggestionsId;
@@ -109,9 +138,9 @@ function runRefreshedJS() {
 	Refreshed.searchSuggestionsMutationObserver = new MutationObserver( Refreshed.mutationCallback );
 	Refreshed.searchSuggestionsMutationObserver.observe( Refreshed.body, { childList: true, attributes: false, subtree: false } );
 
-	/*******************************************************************************
-	*********************************** CHECKBOXES *********************************
-	*******************************************************************************/
+	/*****************************************************************************
+	********************************** CHECKBOXES ********************************
+	*****************************************************************************/
 
 	/******** Hide dropdowns if their corresponding button is hidden; ***********/
 	/**************** hide sidebar when sidebar button is hidden ****************/
@@ -120,37 +149,67 @@ function runRefreshedJS() {
 	// dropdowns may stay open, after the viewport shrinks and the header category
 	// buttons disappear
 
-	Refreshed.hideDropdownsWithHiddenButtons = function() {
-		var checkbox = null;
-		var button = null;
-		var headerTopCoord = 0;
-		var buttonTopCoord = 0;
-		var headerBottomCoord = 0;
-		var buttonBottomCoord = 0;
-		$( '.refreshed-dropdown-tray' ).not(':visible').each( function() {
-			checkbox = $( this ).siblings( '.refreshed-checkbox' ).first();
-			button = $( this ).siblings( '.refreshed-dropdown-button' ).first();
-			// if the button has overflowed, its bottom is above the top of the
-			// header, or its top is above the bottom of the header
-			headerTopCoord = $( '#header-wrapper' ).offset().top;
-			buttonTopCoord = $( button ).offset().top;
-			headerBottomCoord = headerTopCoord + $( '#header-wrapper' ).outerHeight();
-			buttonBottomCoord = buttonTopCoord + $( button ).outerHeight();
-			if ( buttonBottomCoord <= headerTopCoord || buttonTopCoord >= headerBottomCoord ) {
-				checkbox.prop( 'checked', false );
-			}
-		} );
+	Refreshed.dropdownCheckboxes = Refreshed.headerWrapper.getElementsByClassName( Refreshed.dropdownCheckboxClass );
+
+	// returns true if element is entirely above/below container, otherwise false
+	Refreshed.elementOverflowsContainer = function( element, container ) {
+		// if the element is outside of the container, its bottom is above the top
+		// of the container, or its top is above the bottom of the container
+		var elementCoords = element.getBoundingClientRect();
+		var containerCoords = container.getBoundingClientRect();
+		return elementCoords.bottom <= containerCoords.top || elementCoords.top >= containerCoords.bottom;
 	};
 
-	Refreshed.hideSidebarWhenSidebarTogglerHidden = function() {
-		if ( Refreshed.sidebarTogglerCheckbox.checked && $( Refreshed.sidebarToggler ).is( ':hidden' ) ) {
-			Refreshed.sidebarTogglerCheckbox.checked = false;
+	// Takes in a dropdown checkbox.
+	// Returns a boolean if the checkbox should be disabled, otherwise false.
+	// A checkbox should be disabled if:
+	// 1) it has display: none, or
+	// 2) it is NOT a checkbox triggering an submenu and it has overflowed outside
+	//    headerWrapper
+	// (Note this process will correctly deal with disabling submenu checkboxes,
+	// because they will be disabled when the menu that contains them is hidden.)
+	Refreshed.dropdownCheckboxShouldBeDisabled = function( checkbox ) {
+		var button = checkbox.parentNode.getElementsByClassName( this.dropdownButtonClass ).item(0);
+		return this.elementOrParentsHaveDisplayNone( button ) ||
+		( !checkbox.classList.contains( Refreshed.submenuDropdownCheckboxClass ) && this.elementOverflowsContainer( button, this.headerWrapper ) );
+	};
+
+	// Hide dropdowns if their corresponding button is either explicitly hidden
+	// with display: none or is hidden because it is above or below headerWrapper.
+	// Note this method is designed to only apply to dropdowns in #header-wrapper,
+	// since the toolbox dropdown doesn't have its checkbox as the button's
+	// sibling, so a different method would be needed to target it
+	// (and the toolbox isn't ever hidden anyway, so it doesn't matter)
+	Refreshed.disableHiddenDropdownCheckboxes = function() {
+		for (var j = 0; j < Refreshed.dropdownCheckboxes.length; j++) {
+			// If the checkbox is hidden, uncheck and disable it.
+			// If the checkbox is not hidden, enable it.
+			if ( this.dropdownCheckboxShouldBeDisabled( this.dropdownCheckboxes[j] ) ) {
+				this.dropdownCheckboxes[j].checked = false;
+				this.dropdownCheckboxes[j].disabled = true;
+			} else {
+				this.dropdownCheckboxes[j].disabled = false;
+			}
 		}
 	};
 
+	Refreshed.hideSidebarWhenSidebarTogglerHidden = function() {
+		if ( this.sidebarTogglerCheckbox.checked && this.elementOrParentsHaveDisplayNone( this.sidebarToggler ) ) {
+			this.sidebarTogglerCheckbox.checked = false;
+		}
+	};
+
+	Refreshed.disableHiddenDropdownCheckboxes();
+
+	for (var k = 0; k < Refreshed.dropdownCheckboxes.length; k++) {
+		Refreshed.dropdownCheckboxes[k].addEventListener( 'change', function() {
+			Refreshed.disableHiddenDropdownCheckboxes();
+		} );
+	}
+
 	window.addEventListener( 'resize', function() {
-			Refreshed.hideDropdownsWithHiddenButtons();
-			Refreshed.hideSidebarWhenSidebarTogglerHidden();
+		Refreshed.disableHiddenDropdownCheckboxes();
+		Refreshed.hideSidebarWhenSidebarTogglerHidden();
 	} );
 
 }

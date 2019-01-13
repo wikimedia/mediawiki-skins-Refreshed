@@ -1,10 +1,32 @@
 @import 'variables.less';
+@import 'mixins.less';
 
 body {
 	font-family: @heading-font-stack;
 	background: @body-background;
-	.font-color( @body-font-color );
 	margin: 0;
+	color: @body-font-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: @content-font-color;
+}
+
+/* Unfortunately, SVGs inside anchor colored with :visited do not inherit their
+color normally (tested in Chrome, Safari, Firefox). As such, we're removing
+:visited styles from anchors that have SVGs, as otherwise the SVG would be a
+different color from the rest of the link.*/
+
+.refreshed-dropdown-tray a,
+#refreshed-toolbox a,
+.catlinks a {
+	color: #0645ad;
+}
+
+.refreshed-dropdown-tray li.new a,
+#refreshed-toolbox .new a,
+.catlinks a.new {
+	color: #ba0000;
 }
 
 .refreshed-icon {
@@ -37,23 +59,28 @@ body {
 	cursor: pointer;
 }
 
-#toolbox-dropdown-tray {
-	right: 0;
-}
-
 #toolbox-dropdown-button {
-	.flex-display( inline-flex );
-	.flex-align-items( center );
 	background: @content-dropdown-button-background;
 	padding: 0.25em;
 	vertical-align: middle;
-	color: @content-dropdown-button-font-color;
+	height: 100%;
+	margin-left: 0.3em;
+	.box-sizing( border-box );
+	.flex-display( inline-flex );
+	.flex-align-items( center );
 
-	&:hover,
-	&:focus,
-	&:active {
+	&:hover {
 		background: @content-dropdown-button-hover-background;
 	}
+
+	&:active {
+		background: @content-dropdown-button-active-background;
+	}
+
+	&:focus {
+		background: @content-dropdown-button-focus-background;
+	}
+
 }
 
 /*
@@ -69,7 +96,6 @@ body {
 	Instead we customize the width of a dummy element, then make the triangle at its top center with a pseudoelement.
 */
 .refreshed-dropdown-triangle {
-	display: none;
 	width: 50%;
 	height: 0;
 	position: absolute;
@@ -86,24 +112,23 @@ body {
 }
 
 .refreshed-dropdown-triangle::after {
-	content: "";
-	border-left: .4em solid transparent;
-	border-right: .4em solid transparent;
-	border-bottom: .4em solid @dropdown-tray-background-color;
+	content: '';
+	border-left: @dropdown-triangle-border-size solid transparent;
+	border-right: @dropdown-triangle-border-size solid transparent;
+	border-bottom: @dropdown-triangle-border-size solid @dropdown-tray-background-color;
 	position: absolute;
 	bottom: -( @dropdown-tray-margin-top );
 	left: 100%;
-	transform: translateX( -50% );
+	.transform( translateX( -50% ) );
 }
 
 .refreshed-dropdown-tray {
-	padding-top: @dropdown-tray-vertical-padding;
-	padding-bottom: @dropdown-tray-vertical-padding;
+	padding: @dropdown-tray-vertical-padding 0;
 	margin: 0;
-	position: absolute;
 	margin-top: @dropdown-tray-margin-top;
+	position: absolute;
 	line-height: 1.2em;
-	background: @dropdown-tray-background-color;
+	background-color: @dropdown-tray-background-color;
 	z-index: @z-index-dropdown-tray;
 	list-style-type: none;
 	color: @dropdown-tray-font-color;
@@ -112,15 +137,15 @@ body {
 	.stack-box-shadow();
 
 	a {
-		.pretty-anchor( @active-background-color: @dropdown-tray-hover-background-color );
+		.pretty-anchor( @active-background-color: @dropdown-tray-active-background-color );
 		/* center any icons relative to the link text */
-		.flex-display( );
+		.flex-display();
 		.flex-align-items( center );
 	}
 
 	.refreshed-icon {
 		.flex( @grow: 0, @shrink: 0 );
-		margin-right: @dropdown-tray-refreshed-icon-margin-left;
+		margin-right: @dropdown-tray-refreshed-icon-margin-right;
 	}
 
 	.refreshed-icon-refreshed-submenu-expand {
@@ -138,8 +163,11 @@ body {
 	dt {
 		margin: 0;
 		margin-left: @dropdown-tray-vertical-padding;
-		margin-bottom: 0.1em;
 	}
+}
+
+#toolbox-dropdown-tray {
+	right: 0;
 }
 
 /* giving the explore dropdown tray overflow: scroll would prevent the submenu
@@ -148,10 +176,11 @@ dropdown trays from appearing */
 	max-height: initial;
 	overflow: initial;
 }
+
 /* if an item in the toolbox has no icon, push it left to align with the items
 that do have icons */
 #toolbox-dropdown-tray span:first-child {
-	margin-left: @refreshed-icon-height + @dropdown-tray-refreshed-icon-margin-left;
+	margin-left: @refreshed-icon-height + @dropdown-tray-refreshed-icon-margin-right;
 }
 
 /* when the dropdown is open, give the label a huge child so clicking anywhere
@@ -161,30 +190,31 @@ their contents. The second selector is useful for the sidebar toggle checkbox,
 because it is not a sibling of the elements it affects (it can't be, since the
 two elements are in different containers). The checkbox should affect the
 sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
-.refreshed-dropdown-button::after,
-#sidebar-toggler-button::after {
-	content: "";
+.refreshed-modal-background {
+	content: '';
 	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	cursor: default;
+	pointer-events: none;
+	opacity: 0;
+	background: @modal-background;
 	/* z-index so this pseudoelement covers all dropdown buttons (the dropdown
 	buttons don't have a z-index, so the pseudoelement will cover them). */
 	z-index: @z-index-close-overlay;
-	pointer-events: none;
-	.transition( background-color 0.1s ease );
+	.transition( opacity 0.1s ease );
 	/* include the box-sizing so we can be confident that jQuery's outerHeight()
 	matches the actual height of the header */
 	.box-sizing( border-box );
 }
 
-/* a for specificity
-note these rules are overridden by .pretty-anchor() in
-.refreshed-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor
-so another copy is there too */
-a.explore-submenu-dropdown-anchor {
+#explore-dropdown-tray .refreshed-modal-background {
+	background: transparent;
+}
+
+.explore-submenu-dropdown-anchor {
 	.flex-display();
 	.flex-justify-content( space-between );
 	.flex-align-items( center );
@@ -200,29 +230,33 @@ a.explore-submenu-dropdown-anchor {
 	margin-top: 0;
 }
 
+.refreshed-checkbox:focus ~ .header-button.refreshed-dropdown-button,
+#sidebar-toggler-checkbox:focus ~ #header-wrapper #sidebar-toggler-button {
+	&:extend( .header-button:focus );
+}
+
 .refreshed-checkbox:checked ~ .header-button.refreshed-dropdown-button,
 #sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button {
-	background: @button-selected-background;
+	&:extend( .header-button:active );
+}
+
+#toolbox-dropdown-checkbox:focus ~ #refreshed-toolbox #toolbox-dropdown-button {
+	&:extend( #toolbox-dropdown-button:focus );
 }
 
 #toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-button {
-	background: @content-dropdown-button-hover-background;
-}
-
-/* reset CSS of feed links */
-a.feedlink {
-	background-image: none;
-	margin: 0;
+	&:extend( #toolbox-dropdown-button:active );
 }
 
 /* functionality */
 
-.refreshed-dropdown-tray {
+.refreshed-dropdown-tray,
+.refreshed-dropdown-triangle, {
 	display: none;
 }
 
-.refreshed-checkbox:checked ~ .refreshed-dropdown-tray,
-.refreshed-checkbox:checked ~ .refreshed-dropdown-button .refreshed-dropdown-triangle,
+.refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-tray,
+.refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-button .refreshed-dropdown-triangle,
 #toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-tray,
 #toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-triangle {
 	display: block;
@@ -233,21 +267,15 @@ a.feedlink {
 	z-index: @z-index-refreshed-toolbox-stuck-when-dropdown-open;
 }
 
-.refreshed-checkbox:checked ~ .refreshed-dropdown-button::after,
-#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button::after,
-#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-button::after {
-	background-color: @close-overlay-shadow-color;
+.refreshed-dropdown-checkbox:checked + .refreshed-dropdown-button > .refreshed-modal-background,
+#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler .refreshed-modal-background,
+#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox .refreshed-modal-background {
+	opacity: 1;
 	pointer-events: auto;
 }
 
-#explore-dropdown-tray .refreshed-checkbox:checked ~ .refreshed-dropdown-button::after {
-	background: transparent;
-}
-
 .refreshed-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor {
-	.pretty-anchor( @active: true, @active-background-color: @dropdown-tray-hover-background-color );
-	/* override .pretty-anchor() styles (the rules below are copied from a.explore-submenu-dropdown-anchor) */
-	.flex-display();
+	.pretty-anchor( @active: true, @active-background-color: @dropdown-tray-active-background-color );
 }
 
 /** collapsibles **/
@@ -256,11 +284,16 @@ a.feedlink {
 
 .refreshed-collapsible-button {
 	width: 100%;
-	box-sizing: border-box;
+	.box-sizing( border-box );
 }
 
 .header-category-collapsible-button {
 	padding: @header-category-collapsible-padding;
+}
+
+.refreshed-collapsible-tray a {
+	display: block;
+	.pretty-anchor( @font-color: currentColor );
 }
 
 .header-category-sidebar-name {
@@ -272,15 +305,15 @@ a.feedlink {
 	.flex( @grow: 0, @shrink: 0 );
 }
 
-// /* remove the margin that's applied to adjacent svgs */
-// .header-button svg.refreshed-icon {
-// 	margin: 0;
-// }
+.refreshed-checkbox:focus ~ .refreshed-collapsible-button,
+.refreshed-checkbox:focus ~ #site-navigation-sidebar-buttons-wrapper .refreshed-collapsible-button {
+	&:extend( .header-button:focus );
+}
 
 .refreshed-checkbox:checked ~ .refreshed-collapsible-button,
 .refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-collapsible-button,
 .refreshed-collapsible-tray {
-	background: @button-selected-background;
+	&:extend( .header-button:active );
 }
 
 /* functionality */
@@ -313,23 +346,26 @@ a.feedlink {
 
 #header-wrapper {
 	position: fixed;
-	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
 	background: @header-background;
 	z-index: @z-index-header;
+	/* height: SIZE-header-height; */
 	.flex-display();
 	.flex-direction( row );
 	.flex-justify-content( space-between );
 	.stack-box-shadow();
-	/* height: SIZE-header-height; */
 	.give-children-height();
 }
 
 .header-button {
+	cursor: pointer;
+	text-align: center;
+	background: @header-button-background;
 	.flex-display( inline-flex );
 	.flex-justify-content( center );
 	.flex-align-items( center );
-	cursor: pointer;
-	text-align: center;
 
 	/* remove default anchor styling (for text wiki logos) */
 	a& {
@@ -337,12 +373,16 @@ a.feedlink {
 		text-decoration: none;
 	}
 
+	&:focus {
+		background: @header-button-focus-background;
+	}
+
 	&:hover {
-		background: @button-hover-background;
+		background: @header-button-hover-background;
 	}
 
 	&:active {
-		background: @button-selected-background;
+		background: @header-button-active-background;
 	}
 }
 
@@ -379,11 +419,12 @@ opposed to the sidebar), space them out */
 	.box-sizing( border-box ); /* padding should be included within the 100% width */
 }
 
-#site-navigation-header-dropdown .refreshed-dropdown-button {
-	width: @site-navigation-toggle-width;
+#site-navigation-header-dropdown {
+	position: relative;
+	width: 100%; /* so tray can fit width of sidebar area rather than default width */
 
-	.site-navigation-button {
-		width: 100%;
+	.refreshed-dropdown-button {
+		width: @site-navigation-toggle-width;
 	}
 }
 
@@ -392,95 +433,11 @@ opposed to the sidebar), space them out */
 	text-align: center;
 	padding-left: 0;
 	padding-right: 0;
-	a {
-		border: 0;
-	}
 }
 
 #header-categories-user-info-search-wrapper {
 	.flex( @grow: 1, @shrink: 1 );
 	.flex-display();
-	.flex-direction( row-reverse );
-}
-
-#user-info-search-wrapper {
-	/* when user info hits the header categories, the header categories should
-	shrink, but the user info shouldn't */
-	.flex( @grow: 0, @shrink: 0 );
-}
-
-#extra-personal-tools,
-#user-info-dropdown {
-	display: inline-block;
-}
-
-#extra-personal-tools-tray {
-	.flex-display( inline-flex );
-	.flex-align-items( center );
-	margin: 0;
-	list-style: none;
-	height: 100%;
-}
-
-#pt-notifications-alert,
-#pt-notifications-notice {
-	margin: 0;
-	padding-right: 0.75em;
-}
-
-#pt-notifications-alert {
-	margin-right: 0.25em;
-}
-
-
-#user-info-dropdown-button {
-	.avatar {
-		width: @avatar-width;
-		height: @avatar-height;
-	}
-}
-
-#header-search-dropdown-tray {
-	/* width: SIZE-header-search-width; */
-	box-sizing: border-box;
-}
-
-#searchInput {
-	border: 0;
-	/*font-size: 1em;
-	padding: 0.25em; /* .searchButton's background-size + #searchInput's padding-top + #searchInput's padding-bottom = #searchInput's height */
-	.box-sizing( border-box );
-	-webkit-appearance: none; /* prevent Safari from styling input box */
-	border-radius: 0; /* prevent iOS from adding rounded corners to input box */
-	font-size: @header-search-font-size;
-	height: @header-search-height;
-	padding: @header-search-padding;
-	padding-right: @header-search-height; /* make room for search button */
-	width: 100%;
-
-	.mixin-placeholder( { .searchInput-placeholder(); } );
-
-	/* prevent Safari from styling input box (adding text indent)
-	per https://stackoverflow.com/a/11128262 */
-	&::-webkit-search-decoration {
-		-webkit-appearance: none;
-	}
-}
-
-.searchButton {
-	background-color: transparent;
-	border: 0;
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	font-size: inherit;
-	text-indent: -99999px;
-	width: @header-search-height;
-	height: @header-search-height;
-	background-position: center center;
-	background-size: 1.5em 1.5em;
-	background-repeat: no-repeat;
-	cursor: pointer;
 }
 
 #explore-header-categories {
@@ -533,6 +490,88 @@ the explore button which is at the top of it. */
 	.extra-header-button-padding();
 }
 
+#user-info-search-wrapper {
+	/* when user info hits the header categories, the header categories should
+	shrink, but the user info shouldn't */
+	.flex( @grow: 0, @shrink: 0 );
+}
+
+#extra-personal-tools,
+#user-info-dropdown {
+	display: inline-block;
+}
+
+#extra-personal-tools-tray {
+	.flex-display( inline-flex );
+	.flex-align-items( center );
+	margin: 0;
+	list-style: none;
+	height: 100%;
+}
+
+.mw-echo-ui-overlay {
+	z-index: @z-index-header !important; /* same as #header-wrapper and #header-suggestions */
+}
+
+#pt-notifications-alert,
+#pt-notifications-notice {
+	margin: 0;
+	padding-right: 0.75em;
+}
+
+#pt-notifications-alert {
+	margin-right: 0.25em;
+}
+
+#user-info-dropdown-button .avatar {
+	width: @avatar-width;
+	height: @avatar-height;
+}
+
+#header-search-dropdown-tray {
+	/* width: SIZE-header-search-width; */
+	.box-sizing( border-box );
+}
+
+#searchInput {
+	border: 0;
+	font-size: @header-search-font-size;
+	height: @header-search-height;
+	padding: @header-search-padding;
+	/* make room for search button */
+	padding-right: @header-search-height;
+	/* prevent iOS from adding rounded corners to input box */
+	border-radius: 0;
+	/* prevent Safari from styling input box */
+	-webkit-appearance: none;
+	width: 100%;
+	.box-sizing( border-box );
+
+	.mixin-placeholder( { .searchInput-placeholder(); } );
+
+	/* prevent Safari from styling input box (adding text indent)
+	per https://stackoverflow.com/a/11128262 */
+	&::-webkit-search-decoration {
+		-webkit-appearance: none;
+	}
+}
+
+.searchButton {
+	background-color: transparent;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	font-size: inherit;
+	text-indent: -99999px;
+	width: @header-search-height;
+	height: @header-search-height;
+	background-position: center center;
+	background-size: 1.5em 1.5em;
+	background-repeat: no-repeat;
+	cursor: pointer;
+}
+
 #header-suggestions {
 	.stack-box-shadow();
 
@@ -564,19 +603,20 @@ the explore button which is at the top of it. */
 		list-style-type: none;
 		margin: 0;
 		padding: @sidebar-ul-padding-top 0 @sidebar-ul-padding-bottom 0;
-
-		a {
-			.pretty-anchor( @font-color: currentColor );
-		}
 	}
+}
+
+.sidebar-section {
+	padding-bottom: @sidebar-section-padding-bottom;
 }
 
 .sidebar-header {
 		margin-left: @sidebar-header-padding;
 }
 
-.sidebar-section {
-	padding-bottom: @sidebar-section-padding-bottom;
+a.sidebar-item { /* a for specificity */
+	.pretty-anchor( @font-color: currentColor );
+	display: block;
 }
 
 #site-navigation-sidebar-buttons-wrapper {
@@ -594,10 +634,11 @@ the explore button which is at the top of it. */
 *******************************************************************************/
 
 #content-wrapper {
-	position: absolute;
 	background-color: @content-backgound-color;
 	color: @content-font-color;
+	font-family: @content-font-stack;
 	padding: @content-wrapper-padding;
+	.stack-box-shadow();
 }
 
 #main-title-messages {
@@ -612,23 +653,34 @@ the explore button which is at the top of it. */
 	.flex-align-items( initial );
 }
 
-#toolbox-namespaces {
+.position-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+#p-namespaces {
 	.flex( @grow: 1, @shrink: 1 );
 }
 
-#toolbox-main-actions,
-#toolbox-dropdown {
+#p-views,
+#p-tools {
 	.flex( @grow: 0, @shrink: 0 );
 }
 
 .toolbox-section {
 	display: inline-block;
 	vertical-align: top;
+	list-style-type: none;
+	margin: -( @pretty-anchor-border-width ) 0;
+
+	li {
+		display: inline;
+	}
 }
 
 /* so #back-to-subject collapses correctly, per
 https://css-tricks.com/flexbox-truncated-text/ */
-.toolbox-namespaces {
+#p-namespaces {
 	min-width: 5em;
 }
 
@@ -641,20 +693,26 @@ https://css-tricks.com/flexbox-truncated-text/ */
 	max-width: 100%;
 }
 
-#toolbox-namespaces a,
-#toolbox-main-actions a {
-	.pretty-anchor( @border-side: vertical );
-	margin-bottom: -( @pretty-anchor-border-width );
+#p-namespaces a,
+#p-views a {
 	padding-top: 0;
 	display: inline-block;
+	.pretty-anchor( @border-side: vertical );
+}
+
+#p-namespaces li.selected a,
+#p-views li.selected a {
+	.pretty-anchor( @active: true, @border-side: vertical );
+}
+
+#p-tools {
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 #ca-watch,
 #ca-unwatch {
 	display: inline;
-	margin: 0;
-	vertical-align: middle;
-	padding-bottom: @pretty-anchor-border-width;
 
 	a {
 		border: 0;
@@ -666,6 +724,12 @@ https://css-tricks.com/flexbox-truncated-text/ */
 		background-position: top right;
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
+		margin-bottom: 0;
+		vertical-align: middle;
+	}
+
+	.inline-tool-text {
+		display: none;
 	}
 }
 
@@ -673,7 +737,7 @@ https://css-tricks.com/flexbox-truncated-text/ */
 	#ca-watch,
 	#ca-unwatch {
 		.loading,
-		:hover {
+		a:hover {
 			/* ooui-icon-halfStar-ltr */
 			background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7zm-10 6.9V4.6l1.9 3.9h4.6l-3.73 3.4 1 4.28z'/%3E%3C/svg%3E );
 		}
@@ -684,7 +748,7 @@ https://css-tricks.com/flexbox-truncated-text/ */
 	#ca-watch,
 	#ca-unwatch {
 		.loading,
-		:hover {
+		a:hover {
 			/* ooui-icon-halfStar-rtl */
 			background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M5.4 12.5l-1.6 7 6.2-3.7 6.2 3.7-1.6-7L20 7h-7L10 .5 7 7H0l5.4 5.5zm.8 3.7l1-4.3-3.7-3.4h4.6L10 4.6v9.3l-3.8 2.3z'/%3E%3C/svg%3E );
 		}
@@ -701,22 +765,10 @@ https://css-tricks.com/flexbox-truncated-text/ */
 	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M20 7h-7L10 .5 7 7H0l5.46 5.47-1.64 7 6.18-3.7 6.18 3.73-1.63-7zm-10 6.9l-3.76 2.27 1-4.28L3.5 8.5h4.61L10 4.6l1.9 3.9h4.6l-3.73 3.4 1 4.28z'/%3E%3C/svg%3E%0A );
 }
 
-/*******************************************************************************
-************************************ FOOTER ************************************
-*******************************************************************************/
-
-/* @TODO */
-
-#footer {
-	display: none;
-}
-
-/*******************************************************************************
-************************************** OLD *************************************
-*******************************************************************************/
-
-#small-toolbox-wrapper {
-	display: none;
+/* reset CSS of feed links */
+a.feedlink {
+	background-image: none;
+	margin: 0;
 }
 
 #site-notice {
@@ -734,7 +786,7 @@ https://css-tricks.com/flexbox-truncated-text/ */
 	word-wrap: break-word;
 }
 
-#firstHeading {
+.firstHeading {
 	font-size: 2.68em;
 	padding: 0;
 	margin-bottom: 0;
@@ -746,68 +798,78 @@ https://css-tricks.com/flexbox-truncated-text/ */
 	float: right;
 }
 
-.mw-indicator {
-	display: inline;
+#mw-normal-catlinks::before,
+.toctitle h2::before {
+	content: '';
+	display: inline-block;
+	vertical-align: text-bottom;
+	background-position: center center;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	margin-right: 0.3em;
 }
 
-/********** Footer **********/
-
-#footer {
-	position: relative;
-	top: 3.5em;
-	text-align: center;
-	padding-bottom: 15px;
-	color: #ccc;
-	line-height: 1.5em;
+#mw-normal-catlinks::before {
+	width: 1em;
+	height: 1em;
 }
 
-#footer a {
-	color: #fff;
+.toctitle h2::before {
+	width: 1.2em;
+	height: 1.2em;
 }
 
-#footer img {
-	vertical-align: text-top;
+[dir = ltr] #mw-normal-catlinks::before {
+	/* ooui-icon-tag-ltr */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M18.72 11L9 1.28A1 1 0 0 0 8.35 1H2a1 1 0 0 0-1 1v6.35a1 1 0 0 0 .28.65L11 18.72a1 1 0 0 0 1.37 0l6.38-6.38a1 1 0 0 0-.03-1.34zM5 7a2 2 0 1 1 2-2 2 2 0 0 1-2 2z'/%3E%3C/svg%3E );
 }
 
-#footer #advert {
-	margin-bottom: 1em; /* enough spacing after ad */
+[dir = rtl] #mw-normal-catlinks::before {
+	/* ooui-icon-tag-rtl */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%230645ad'%3E%3Cpath d='M1.2 12.3l6.4 6.4c.4.4 1 .4 1.4 0L18.7 9c.2-.2.3-.4.3-.6V2c0-.6-.4-1-1-1h-6.4c-.2 0-.5.1-.6.3L1.3 11c-.4.4-.4 1-.1 1.3zM13 5c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z'/%3E%3C/svg%3E%0A );
 }
 
-#footer #advert p {
+[dir = ltr] .toctitle h2::before {
+	/* ooui-icon-stripeToC-ltr */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M5 3h14v2H5zm0 6h14v2H5zm0 6h14v2H5zM1 3h2v2H1zm0 6h2v2H1zm0 6h2v2H1z'/%3E%3C/svg%3E );
+}
+
+[dir = rtl] .toctitle h2::before {
+	/* ooui-icon-stripeToC-rtl */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M1 3h14v2H1zm0 6h14v2H1zm0 6h14v2H1zM17 3h2v2h-2zm0 6h2v2h-2zm0 6h2v2h-2z'/%3E%3C/svg%3E );
+}
+
+#catlinks {
 	margin: 0;
+	font-family: inherit;
+}
+/*******************************************************************************
+************************************ FOOTER ************************************
+*******************************************************************************/
+
+#footer-wrapper {
+	padding: 1em;
+	text-align: center;
+
+	a {
+		font-weight: bold;
+		color: currentColor;
+	}
 }
 
 .footer-row {
+	display: block;
+	list-style: none;
 	margin: 0;
 }
+
 .footer-row-item {
-	margin: 0 0.5em;
-	display: inline;
+	margin: 0;
+	margin-right: @footer-item-spacing-horizontal;
+	margin-bottom: @footer-item-spacing-vertical;
+	font-size: 0.8em;
 }
 
-/******************************** CONTENT/OTHER THINGS BEYOND CONTROL ******************************/
-#cats {
-	padding: 1em;
-}
-
-#content-wrapper p:first-of-type {
-	margin-top: 0;
-}
-
-/* dropdowns */
-#site-navigation-header-dropdown {
-	position: relative;
-	width: 100%; /* so tray can fit width of sidebar area rather than default width */
-}
-
-.site-navigation-button {
-	width: 2em;
-}
-
-#site-navigation-header-dropdown-tray {
-	width: 100%; /* ensure tray is as wide as #site-navigation-header */
-}
-
-.mw-echo-ui-overlay {
-	z-index: @z-index-header !important; /* same as #header-wrapper and #header-suggestions */
+#footer-row-places li {
+	display: inline-block;
 }

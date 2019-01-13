@@ -40,10 +40,10 @@
 	"ResourceModules": {
 		"skins.refreshed": {
 			"styles": {
-				"refreshed/wikifont/wikiglyphs.css": {
+				"refreshed/styles/screen/variables.less": {
 					"media": "screen"
 				},
-				"refreshed/styles/screen/variables.less": {
+				"refreshed/styles/screen/mixins.less": {
 					"media": "screen"
 				},
 				"refreshed/styles/screen/common.less": {
@@ -58,7 +58,7 @@
 				"refreshed/styles/screen/big.less": {
 					"media": "(min-width: 1001px)"
 				},
-				"refreshed/styles/print/print.css": {
+				"refreshed/styles/print/print.less": {
 					"media": "print"
 				}
 			}

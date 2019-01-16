@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.0 alpha",
+	"version": "4.0.0 beta.0",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -40,23 +40,20 @@
 	"ResourceModules": {
 		"skins.refreshed": {
 			"styles": {
-				"refreshed/styles/screen/variables.less": {
-					"media": "screen"
-				},
-				"refreshed/styles/screen/mixins.less": {
-					"media": "screen"
-				},
 				"refreshed/styles/screen/common.less": {
 					"media": "screen"
 				},
 				"refreshed/styles/screen/small.less": {
-					"media": "(max-width: 719px)"
+					"media": "screen"
 				},
 				"refreshed/styles/screen/medium.less": {
-					"media": "(min-width: 720px) and (max-width: 1000px)"
+					"media": "screen"
 				},
 				"refreshed/styles/screen/big.less": {
-					"media": "(min-width: 1001px)"
+					"media": "screen"
+				},
+				"refreshed/styles/screen/config-default.less": {
+					"media": "screen"
 				},
 				"refreshed/styles/print/print.less": {
 					"media": "print"

@@ -1,196 +1,167 @@
-@import 'variables.less';
-@import 'mixins.less';
+@import 'variables';
+@import 'mixins-private';
+@import 'mixins-public';
 
-/*******************************************************************************
-**************************** DROPDOWNS/COLLAPSIBLES ****************************
-*******************************************************************************/
+.mixin-small-layout-styles( {
+  /*****************************************************************************
+  *************************** DROPDOWNS/COLLAPSIBLES ***************************
+  *****************************************************************************/
 
-.refreshed-dropdown-tray {
-  left: 0;
-  right: 0;
-  font-size: @small-dropdown-tray-sidebar-font-size;
-}
+  .refreshed-dropdown-tray {
+    left: 0;
+    right: 0;
+    font-size: @small-dropdown-tray-sidebar-font-size;
+  }
 
-#user-info-dropdown-tray {
-	right: 0;
-}
+  #user-info-dropdown-tray {
+  	right: 0;
+  }
 
-/*******************************************************************************
-************************************ HEADER ************************************
-*******************************************************************************/
+  /*****************************************************************************
+  *********************************** HEADER ***********************************
+  *****************************************************************************/
 
-body {
-  overflow-x: hidden;
-}
+  body {
+    overflow-x: hidden;
+  }
 
-.header-height( @small-header-height );
-
-.header-button-textless,
-.header-button-textless-small {
-  width: @small-header-height;
-  padding: 0;
-}
-
-.site-navigation-logo-img {
-  max-width: @small-site-navigation-logo-img-max-width;
-}
-
-#site-navigation-header {
-  .site-navigation-full-logos {
+  #site-navigation-header .site-navigation-full-logos {
     display: none;
   }
-}
 
-#header-categories-user-info-search-wrapper {
-	.flex-direction( row-reverse );
-}
+  #header-categories-user-info-search-wrapper {
+  	.flex-direction( row-reverse );
+  }
 
-#explore-header-categories {
-  display: none;
-}
-
-/* in case they are re-enabled using Refreshed.css */
-#explore-header-categories-dropdowns {
-	margin-top: -( @small-header-height );
-}
-
-#searchInput {
-  width: 100%;
-}
-
-.dropdown-searchInput( @small-header-search-width );
-
-#header-suggestions {
-  left: 0 !important;
-  right: 0 !important;
-}
-
-
-#user-info-dropdown-button {
-  .refreshed-username,
-  .refreshed-icon-refreshed-dropdown-expand {
+  #explore-header-categories {
     display: none;
   }
-}
 
-/*******************************************************************************
-************************************ SIDEBAR ***********************************
-*******************************************************************************/
+  #user-info-dropdown-button {
+    .refreshed-username,
+    .refreshed-icon-refreshed-dropdown-expand {
+      display: none;
+    }
+  }
 
-.use-sidebar-menu( @small-sidebar-width, @sidebar-menu-background );
+  /* if you want to change this to -inline, you need to also change the
+  definition of .mixin-set-sidebar-width-small-layout in mixins.css */
+  .mixin-use-sidebar-menu();
 
-#sidebar-wrapper {
-  font-size: @small-dropdown-tray-sidebar-font-size;
-}
+  .mixin-use-searchInput-menu( @small-header-search-width, 0 );
 
-/*******************************************************************************
-************************************ CONTENT ***********************************
-*******************************************************************************/
+  /*****************************************************************************
+  *********************************** SIDEBAR **********************************
+  *****************************************************************************/
 
-/* @TODO */
+  #sidebar-wrapper {
+    font-size: @small-dropdown-tray-sidebar-font-size;
+  }
 
-#content-heading {
-  text-align: center;
-}
+  /*****************************************************************************
+  *********************************** CONTENT **********************************
+  *****************************************************************************/
 
-#main-title-messages,
-#p-namespaces,
-#p-views,
-#toolbox-dropdown-button {
-  font-size: 1.25em;
-}
+  #content-heading {
+    text-align: center;
+  }
 
-.mw-indicators {
-	float: none;
-  text-align: right;
-}
+  .mw-indicators {
+  	float: none;
+    text-align: right;
+  }
 
-/* toolbox */
+  /* toolbox */
 
-#refreshed-toolbox {
-  /* allow horizontal scrolling if needed */
-  overflow-x: auto;
-  /* no position: sticky */
-  position: initial;
-}
+  #refreshed-toolbox {
+    font-size: 1.25em;
+    /* allow horizontal scrolling if needed */
+    overflow-x: auto;
+  }
 
-#p-namespaces .ca-subject { /* #p-namespaces for specificity */
-  display: none;
-}
+  #p-namespaces .ca-subject { /* #p-namespaces for specificity */
+    display: none;
+  }
 
-.selected#ca-talk {
-  display: none;
-}
+  .selected#ca-talk {
+    display: none;
+  }
 
-.inline-tool-text {
-  display: none;
-}
+  .inline-tool-text {
+    display: none;
+  }
 
-.p-views > a,
-.combined-tools-dropdown {
-  margin-left: 0.75em;
-}
+  .p-views > a,
+  .combined-tools-dropdown {
+    margin-left: 0.75em;
+  }
 
-/* whitelist page indicators */
-.mw-indicator {
-	display: none;
-}
+  #toolbox-dropdown-tray {
+    /* don't use the larger font-size that the rest of #refreshed-toolbox uses */
+    font-size: inherit;
+  }
 
-#toc {
-  font-size: 1.5em;
-  width: 100%;
-  .box-sizing( border-box );
-}
+  /* whitelist page indicators */
+  .mw-indicator {
+  	display: none;
+  }
 
-#catlinks {
-  text-align: center;
-  font-size: 1.2em;
-}
+  #toc {
+    font-size: 1.5em;
+    width: 100%;
+    .box-sizing( border-box );
+  }
 
-/* Image thumbnails */
-.thumb {
-	width: 100% !important;
-	margin: 0 !important;
-}
+  #catlinks {
+    text-align: center;
+    font-size: 1.2em;
+  }
 
-div.thumbinner { /* need to specify div so it can overwrite the CSS in commonContent.css */
-	width: auto !important;
-	padding: 0.75em 0 !important;
-	margin-bottom: 0.5em;
-}
+  /* Image thumbnails */
+  .thumb {
+  	width: 100% !important;
+  	margin: 0 !important;
+  }
 
-.thumbinner img {
-	width: 50%;
-	height: auto;
-	border: 0 !important;
-}
+  div.thumbinner { /* need to specify div so it can overwrite the CSS in commonContent.css */
+  	width: auto !important;
+  	padding: 0.75em 0 !important;
+  	margin-bottom: 0.5em;
+  }
 
-.thumbcaption {
-	text-align: center !important;
-	margin-bottom: -.75em !important;
-}
+  .thumbinner img {
+  	width: 50%;
+  	height: auto;
+  	border: 0 !important;
+  }
 
-.magnify {
-	display: none;
-}
+  .thumbcaption {
+  	text-align: center !important;
+  	margin-bottom: -.75em !important;
+  }
 
-/* Increase font size for editing menu - Brickimedia/brickimedia#301 */
-.action-edit input[type="text"],
-.action-edit input[type="number"],
-.action-edit textarea {
-	font-size: 1.063em;
-}
+  .magnify {
+  	display: none;
+  }
 
-/*******************************************************************************
-************************************ FOOTER ************************************
-*******************************************************************************/
+  /* Increase font size for editing menu - Brickimedia/brickimedia#301 */
+  .action-edit input[type="text"],
+  .action-edit input[type="number"],
+  .action-edit textarea {
+  	font-size: 1.063em;
+  }
 
-#footer-wrapper {
-  text-align: center;
-  font-size: 1.2em;
-}
+  /*****************************************************************************
+  *********************************** FOOTER ***********************************
+  *****************************************************************************/
 
-.footer-row-item {
-  margin-left: @footer-item-spacing-horizontal / 2;
-  margin-right: @footer-item-spacing-horizontal / 2;
-}
+  #footer-wrapper {
+    text-align: center;
+    font-size: 1.2em;
+  }
+
+  .footer-row-item {
+    margin-left: @footer-item-spacing-horizontal / 2;
+    margin-right: @footer-item-spacing-horizontal / 2;
+  }
+} );

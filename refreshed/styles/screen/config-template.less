@@ -1,0 +1,297 @@
+@import url( PUT_URL_HERE );
+
+/*******************************************************************************
+********************************************************************************
+***************************** BASIC CONFIG TEMPLATE ****************************
+********************************************************************************
+*******************************************************************************/
+
+/* This is a LESS file that is compiled into CSS for use at
+MediaWiki:Refreshed.css.
+
+How to use this template:
+Save the LESS file somewhere on your wiki, maybe at MediaWiki:Refreshed.less.
+Protect it so random users can't edit it!
+
+Optionally, change the page information button (find the button, or view history
+and change the &action=history part to &action=info) and change the page's
+content model to CSS. It may make editing easier. If you do this, the site may
+warn you that the page contains invalid CSS when you edit it. This is not a
+cause for concern--the file isn't valid CSS because it's LESS!
+
+Make a note of the latest commit to Refreshed when you downloaded it.
+Browse the file tree for that commit online, either at GitHub or on
+phabricator.mediawiki.org. Find the URL to the raw copy of mixins.less, and
+replace the URL in the first line of this file with the URL to that raw copy.
+Repeat whenever you download a new version of the skin!
+
+Most parts of the template are optional; if you want to use the default value of
+a property, delete it from this template. One exception is that some mixins take
+multiple properties as inputs and require all those properties to be explicitly
+written out. For example, if you choose to use .mixin-set-dropdown-tray-colors,
+you need to pass all three parameters into it.
+
+Once you're satisfied with your LESS, copy/paste it into a compiler.
+For example, there is one at beautifytools.com/less-compiler.php. Take the CSS
+and copy/paste it into MediaWiki:Refreshed.css. That's it!
+
+Hopefully in the future, MediaWiki will be able to compile this LESS for you!
+(See https://phabricator.wikimedia.org/T56864.)
+*/
+
+/*******************************************************************************
+***************************** STYLES FOR ALL LAYOUTS ***************************
+*******************************************************************************/
+
+body {
+  /* background for the page */
+  background: value; /* TODO */
+  /* font family for the page */
+  font-family: value; /* TODO */
+}
+
+#header-wrapper,
+#sidebar-wrapper,
+#footer-wrapper {
+  /* font color for the header, sidebar, and footer */
+  color: value; /* TODO */
+}
+
+#header-wrapper {
+  /* background for the header */
+  background: value; /* TODO */
+}
+
+/*** "header buttons" (the buttons in the header, the wiki logo button in the
+sidebar in the small layout, and arrow button next to that logo) **/
+.mixin-set-header-button-styles( {
+  /* background for a header button */
+  background: value; /* TODO */
+  /* background for a header button */
+  color: value; /* TODO */
+
+  &span,
+  &svg,
+  &img {
+    /* opacity for text or icons in a header button */
+    opacity: value; /* TODO */
+  }
+} );
+/* :focus styles */
+.mixin-set-header-button-styles-focus( {
+  /* background for a header button when it's focused */
+  background: value; /* TODO */
+  /* background for a header button when it's focused */
+  color: value; /* TODO */
+
+  &span,
+  &svg,
+  &img {
+    /* opacity for text or icons in a header button when it's focused */
+    opacity: value; /* TODO */
+  }
+} );
+/* :hover styles */
+.mixin-set-header-button-styles-hover( {
+  /* background for a header button when it's hovered over */
+  background: value; /* TODO */
+  /* background for a header button when it's hovered over */
+  color: value; /* TODO */
+
+  &span,
+  &svg,
+  &img {
+    /* opacity for text or icons in a header button when it's hovered over */
+    opacity: value; /* TODO */
+  }
+} );
+/* :active styles */
+.mixin-set-header-button-styles-active( {
+  /* background for a header button when it's active */
+  background: value; /* TODO */
+  /* background for a header button when it's active */
+  color: value; /* TODO */
+
+  &span,
+  &svg,
+  &img {
+    /* opacity for text or icons in a header button when it's active */
+    opacity: value; /* TODO */
+  }
+} );
+
+/* sidebar buttons (the buttons for the header categories that are in the
+sidebar in the small layout) */
+.mixin-set-sidebar-button-styles( {
+  /* background for a sidebar button */
+  background: value; /* TODO */
+  /* background for a sidebar button */
+  color: value; /* TODO */
+  /* opacity for text or icons in a sidebar button */
+  opacity: value; /* TODO */
+} );
+/* :focus styles */
+.mixin-set-sidebar-button-styles-focus( {
+  /* background for a sidebar button when it's focused */
+  background: value; /* TODO */
+  /* background for a sidebar button when it's focused */
+  color: value; /* TODO */
+  /* opacity for text or icons in a sidebar button when it's focused */
+  opacity: value; /* TODO */
+} );
+/* :hover styles */
+.mixin-set-sidebar-button-styles-hover( {
+  /* background for a sidebar button when it's hovered over */
+  background: value; /* TODO */
+  /* background for a sidebar button when it's hovered over */
+  color: value; /* TODO */
+  /* opacity for text or icons in a sidebar button when it's hovered over */
+  opacity: value; /* TODO */
+} );
+/* :active styles */
+.mixin-set-sidebar-button-styles-active( {
+  /* background for a sidebar button when it's active */
+  background: value; /* TODO */
+  /* background for a sidebar button when it's active */
+  color: value; /* TODO */
+  /* opacity for text or icons in a sidebar button when it's active */
+  opacity: value; /* TODO */
+} );
+
+/* the button that opens the tools dropdown in the toolbox */
+.mixin-set-toolbox-dropdown-button-styles({
+  /* background for the toolbox dropdown button */
+  background: value; /* TODO */
+  /* background for the toolbox dropdown button */
+  color: value; /* TODO */
+  /* opacity for text or icons in the toolbox dropdown button */
+  opacity: value; /* TODO */
+});
+/* :focus styles */
+.mixin-set-toolbox-dropdown-button-styles-focus({
+  /* background for the toolbox dropdown button when it's focused */
+  background: value; /* TODO */
+  /* background for the toolbox dropdown button when it's focused */
+  color: value; /* TODO */
+  /* opacity for text or icons in the toolbox dropdown button when it's focused */
+  opacity: value; /* TODO */
+});
+/* :hover styles */
+.mixin-set-toolbox-dropdown-button-styles-hover({
+  /* background for the toolbox dropdown button when it's hovered over */
+  background: value; /* TODO */
+  /* background for the toolbox dropdown button when it's hovered over */
+  color: value; /* TODO */
+  /* opacity for text or icons in the toolbox dropdown button when it's hovered over */
+  opacity: value; /* TODO */
+});
+/* :active styles */
+.mixin-set-toolbox-dropdown-button-styles-active({
+  /* background for the toolbox dropdown button when it's active */
+  background: value; /* TODO */
+  /* background for the toolbox dropdown button when it's active */
+  color: value; /* TODO */
+  /* opacity for text or icons in the toolbox dropdown button when it's active */
+  opacity: value; /* TODO */
+});
+
+/* set the colors of dropdown trays (dropdown trays that are opened by buttons
+in the header, and the tray opened by the toolbox dropdown button) */
+/* note that @active-background-color is the background-color of links when they
+are active (clicked on), and @font-color is the color of non-link text */
+.mixin-set-dropdown-tray-colors(
+  @background-color: value, /* TODO */
+  @active-background-color: value, /* TODO */
+  @font-color: value /* TODO */
+);
+
+.refreshed-collapsible-tray {
+  /* set the colors of collapsible trays (for example, in the small layout, the
+  trays in the sidebar) */
+  background-color: value; /* TODO */
+}
+
+#content-wrapper {
+  /* background-color for the page content */
+  background-color: value; /* TODO */
+  /* font family for the page content */
+  font-family: value; /* TODO */
+  /* font color for the page content */
+  color: value; /* TODO */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* font family for headings */
+  font-family: value; /* TODO */
+  /* font color for headings */
+  color: value; /* TODO */
+}
+
+/*******************************************************************************
+***************************** STYLES FOR BIG LAYOUT ****************************
+*******************************************************************************/
+
+.mixin-big-layout-styles( {
+  /* height for the header */
+  .mixin-set-header-height( @height: value /* TODO */ );
+
+  /* width for the sidebar */
+  .mixin-set-sidebar-width-big-layout( @width: value, /* TODO */ );
+
+  /* how far away the content is from the edge of the viewport on the side
+  opposite the side that the sidebar is on */
+  .mixin-set-content-margin-sidebar-opposite-side( @margin: value /* TODO */ );
+
+  /* make the toolbox stick to the top when you scroll down;
+  specify its background-color when stuck */
+  .mixin-use-refreshed-toolbox-sticky( @background-color: /* TODO */ );
+} );
+
+/*******************************************************************************
+**************************** STYLES FOR MEDIUM LAYOUT **************************
+*******************************************************************************/
+
+.mixin-medium-layout-styles( {
+  /* height for the header */
+  .mixin-set-header-height( @height: value /* TODO */ );
+
+  /* width for the sidebar */
+  .mixin-set-sidebar-width-medium-layout( @width: value /* TODO */ );
+
+  #sidebar-wrapper {
+    /* background for the sidebar */
+    background: value; /* TODO */
+  }
+
+  /* make the toolbox stick to the top when you scroll down;
+  specify its background-color when stuck */
+  .mixin-use-refreshed-toolbox-sticky( @background-color: /* TODO */ );
+} );
+
+/*******************************************************************************
+**************************** STYLES FOR SMALL LAYOUT ***************************
+*******************************************************************************/
+
+.mixin-small-layout-styles( {
+  /* height for the header */
+  .mixin-set-header-height( @height: value /* TODO */ );
+
+  /* width for the sidebar */
+  .mixin-set-sidebar-width-small-layout( @width: value /* TODO */ );
+
+  #sidebar-wrapper {
+    /* background for the sidebar */
+    background: value; /* TODO */
+  }
+} );
+
+/*******************************************************************************
+********************************************************************************
+*************************** END BASIC CONFIG TEMPLATE **************************
+********************************************************************************
+*******************************************************************************/

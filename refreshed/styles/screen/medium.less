@@ -1,88 +1,70 @@
-@import 'variables.less';
-@import 'mixins.less';
+@import 'variables';
+@import 'mixins-private';
+@import 'mixins-public';
 
-/*******************************************************************************
-**************************** DROPDOWNS/COLLAPSIBLES ****************************
-*******************************************************************************/
+.mixin-medium-layout-styles( {
+	/*****************************************************************************
+	*************************** DROPDOWNS/COLLAPSIBLES ***************************
+	*****************************************************************************/
 
-/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
-not the viewport */
-#p-tools {
-	position: relative;
-}
+	/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
+	not the viewport */
+	#p-tools {
+		position: relative;
+	}
 
-#user-info-dropdown-tray {
-	right: 1em;
-}
+	#user-info-dropdown-tray {
+		right: 1em;
+	}
 
-.refreshed-dropdown-tray {
-	width: @medium-dropdown-tray-width;
-}
+	.refreshed-dropdown-tray {
+		width: @medium-dropdown-tray-width;
+	}
 
-/*******************************************************************************
-************************************ HEADER ************************************
-*******************************************************************************/
+	/* if you want to change this to -inline, you need to also change the
+	definition of .mixin-set-sidebar-width-medium-layout in mixins.css */
+	.mixin-use-sidebar-menu();
 
-.header-height( @medium-header-height );
+	.mixin-use-searchInput-menu( @medium-header-search-width, auto );
 
-.header-button-textless,
-.header-button-textless-medium {
-  width: @medium-header-height;
-  padding: 0;
-}
+	/*****************************************************************************
+	*********************************** HEADER ***********************************
+	*****************************************************************************/
 
-#site-navigation-header {
-  .site-navigation-icon-logos {
-    display: none;
-  }
-}
+	#site-navigation-header {
+	  .site-navigation-icon-logos {
+	    display: none;
+	  }
+	}
 
-.site-navigation-logo-img {
-  max-width: @medium-site-navigation-logo-img-max-width;
-}
+	/* don't use the .header-button-textless styles on medium or big */
+	#user-info-dropdown-button {
+		width: auto;
+	  .mixin-extra-header-button-padding();
+	}
 
-#explore-header-categories-dropdowns {
-	margin-top: -( @medium-header-height );
-}
+	/*****************************************************************************
+	*********************************** SIDEBAR **********************************
+	*****************************************************************************/
 
-.dropdown-searchInput( @medium-header-search-width );
+	#site-navigation-sidebar-header-categories-sidebar-wrapper {
+	  display: none;
+	}
 
-#header-suggestions {
-  right: 0 !important;
-}
+	/*****************************************************************************
+	*********************************** CONTENT **********************************
+	*****************************************************************************/
 
-#user-info-dropdown-button {
-  .extra-header-button-padding();
-}
+	/* toolbox */
+	a#back-to-subject { /* a for specificity */
+	  display: none;
+	}
 
-/*******************************************************************************
-************************************ SIDEBAR ***********************************
-*******************************************************************************/
+	.mw-indicator {
+		display: inline;
+	}
 
-
-.use-sidebar-menu( @medium-sidebar-width, @sidebar-menu-background );
-
-#site-navigation-sidebar-header-categories-sidebar-wrapper {
-  display: none;
-}
-
-/*******************************************************************************
-************************************ CONTENT ***********************************
-*******************************************************************************/
-
-/* @TODO */
-
-.use-refreshed-toolbox-sticky( @medium-header-height );
-
-/* toolbox */
-a#back-to-subject { /* a for specificity */
-  display: none;
-}
-
-.mw-indicator {
-	display: inline;
-}
-
-/*******************************************************************************
-************************************ FOOTER ************************************
-*******************************************************************************/
+	/*****************************************************************************
+	*********************************** FOOTER ***********************************
+	*****************************************************************************/
+} );

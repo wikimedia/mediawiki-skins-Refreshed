@@ -1,15 +1,15 @@
-@import 'variables.less';
-@import 'mixins.less';
+@import 'variables';
+@import 'mixins-private';
+@import 'mixins-public';
 
 body {
-	font-family: @heading-font-stack;
-	background: @body-background;
 	margin: 0;
-	color: @body-font-color;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	color: @content-font-color;
+.refreshed-icon {
+	width: @refreshed-icon-dimension;
+	height: @refreshed-icon-dimension;
+	fill: currentColor;
 }
 
 /* Unfortunately, SVGs inside anchor colored with :visited do not inherit their
@@ -27,12 +27,6 @@ different color from the rest of the link.*/
 #refreshed-toolbox .new a,
 .catlinks a.new {
 	color: #ba0000;
-}
-
-.refreshed-icon {
-	width: auto; /* in execution, often same as @refreshed-icon-height */
-	height: @refreshed-icon-height;
-	fill: currentColor;
 }
 
 /*******************************************************************************
@@ -60,7 +54,6 @@ different color from the rest of the link.*/
 }
 
 #toolbox-dropdown-button {
-	background: @content-dropdown-button-background;
 	padding: 0.25em;
 	vertical-align: middle;
 	height: 100%;
@@ -68,19 +61,6 @@ different color from the rest of the link.*/
 	.box-sizing( border-box );
 	.flex-display( inline-flex );
 	.flex-align-items( center );
-
-	&:hover {
-		background: @content-dropdown-button-hover-background;
-	}
-
-	&:active {
-		background: @content-dropdown-button-active-background;
-	}
-
-	&:focus {
-		background: @content-dropdown-button-focus-background;
-	}
-
 }
 
 /*
@@ -115,7 +95,7 @@ different color from the rest of the link.*/
 	content: '';
 	border-left: @dropdown-triangle-border-size solid transparent;
 	border-right: @dropdown-triangle-border-size solid transparent;
-	border-bottom: @dropdown-triangle-border-size solid @dropdown-tray-background-color;
+	border-bottom: @dropdown-triangle-border-size solid;
 	position: absolute;
 	bottom: -( @dropdown-tray-margin-top );
 	left: 100%;
@@ -128,17 +108,14 @@ different color from the rest of the link.*/
 	margin-top: @dropdown-tray-margin-top;
 	position: absolute;
 	line-height: 1.2em;
-	background-color: @dropdown-tray-background-color;
 	z-index: @z-index-dropdown-tray;
 	list-style-type: none;
-	color: @dropdown-tray-font-color;
 	max-height: 60vh;
 	overflow-y: auto;
-	.stack-box-shadow();
+	.mixin-stack-box-shadow();
 
 	a {
-		.pretty-anchor( @active-background-color: @dropdown-tray-active-background-color );
-		/* center any icons relative to the link text */
+		/* vertically center any icons relative to the link text */
 		.flex-display();
 		.flex-align-items( center );
 	}
@@ -171,16 +148,16 @@ different color from the rest of the link.*/
 }
 
 /* giving the explore dropdown tray overflow: scroll would prevent the submenu
-dropdown trays from appearing */
+dropdown trays from appearing, so we overwrite it here */
 #explore-dropdown-tray {
 	max-height: initial;
 	overflow: initial;
 }
 
-/* if an item in the toolbox has no icon, push it left to align with the items
-that do have icons */
+/* if an item in the toolbox dropdown has no icon, push it left to align with
+the items that do have icons */
 #toolbox-dropdown-tray span:first-child {
-	margin-left: @refreshed-icon-height + @dropdown-tray-refreshed-icon-margin-right;
+	margin-left: @refreshed-icon-dimension + @dropdown-tray-refreshed-icon-margin-right;
 }
 
 /* when the dropdown is open, give the label a huge child so clicking anywhere
@@ -197,10 +174,10 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	bottom: 0;
 	left: 0;
 	right: 0;
+	background-color: @modal-background-color;
 	cursor: default;
 	pointer-events: none;
 	opacity: 0;
-	background: @modal-background;
 	/* z-index so this pseudoelement covers all dropdown buttons (the dropdown
 	buttons don't have a z-index, so the pseudoelement will cover them). */
 	z-index: @z-index-close-overlay;
@@ -230,24 +207,6 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	margin-top: 0;
 }
 
-.refreshed-checkbox:focus ~ .header-button.refreshed-dropdown-button,
-#sidebar-toggler-checkbox:focus ~ #header-wrapper #sidebar-toggler-button {
-	&:extend( .header-button:focus );
-}
-
-.refreshed-checkbox:checked ~ .header-button.refreshed-dropdown-button,
-#sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button {
-	&:extend( .header-button:active );
-}
-
-#toolbox-dropdown-checkbox:focus ~ #refreshed-toolbox #toolbox-dropdown-button {
-	&:extend( #toolbox-dropdown-button:focus );
-}
-
-#toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-button {
-	&:extend( #toolbox-dropdown-button:active );
-}
-
 /* functionality */
 
 .refreshed-dropdown-tray,
@@ -274,10 +233,13 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	pointer-events: auto;
 }
 
-.refreshed-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor {
-	.pretty-anchor( @active: true, @active-background-color: @dropdown-tray-active-background-color );
+#sidebar-toggler-checkbox:checked ~ #sidebar-wrapper {
+	left: 0;
+	/* only apply the box shadow when the sidebar is opened so the shadow doesn't
+	appear on the edge of the screen when the sidebar is closed (just off the edge
+	of the screen) */
+	.mixin-stack-box-shadow();
 }
-
 /** collapsibles **/
 
 /* style */
@@ -293,7 +255,7 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 
 .refreshed-collapsible-tray a {
 	display: block;
-	.pretty-anchor( @font-color: currentColor );
+	.mixin-pretty-anchor( @font-color: currentColor );
 }
 
 .header-category-sidebar-name {
@@ -303,17 +265,6 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 
 .header-categories-sidebar-collapsible-icons-wrapper {
 	.flex( @grow: 0, @shrink: 0 );
-}
-
-.refreshed-checkbox:focus ~ .refreshed-collapsible-button,
-.refreshed-checkbox:focus ~ #site-navigation-sidebar-buttons-wrapper .refreshed-collapsible-button {
-	&:extend( .header-button:focus );
-}
-
-.refreshed-checkbox:checked ~ .refreshed-collapsible-button,
-.refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-collapsible-button,
-.refreshed-collapsible-tray {
-	&:extend( .header-button:active );
 }
 
 /* functionality */
@@ -327,14 +278,12 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	display: block;
 }
 
-.refreshed-checkbox:checked ~ .refreshed-collapsible-button .refreshed-icon-refreshed-collapsible-expand,
-.refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-icon-refreshed-collapsible-expand {
+.refreshed-collapsible-checkbox:checked ~ .refreshed-collapsible-button .refreshed-icon-refreshed-collapsible-expand {
 	display: none;
 }
 
-.refreshed-checkbox:checked ~ .refreshed-collapsible-tray,
-.refreshed-checkbox:checked ~ .refreshed-collapsible-button .refreshed-icon-refreshed-collapsible-collapse,
-.refreshed-checkbox:checked ~ #site-navigation-sidebar-buttons-wrapper .refreshed-icon-refreshed-collapsible-collapse {
+.refreshed-collapsible-checkbox:checked ~ .refreshed-collapsible-tray,
+.refreshed-collapsible-checkbox:checked ~ .refreshed-collapsible-button .refreshed-icon-refreshed-collapsible-collapse {
 	display: block;
 }
 
@@ -349,20 +298,19 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	top: 0;
 	left: 0;
 	right: 0;
-	background: @header-background;
 	z-index: @z-index-header;
 	/* height: SIZE-header-height; */
 	.flex-display();
 	.flex-direction( row );
 	.flex-justify-content( space-between );
-	.stack-box-shadow();
-	.give-children-height();
+	.mixin-stack-box-shadow();
+	.mixin-give-children-height();
 }
 
-.header-button {
+.header-button,
+.sidebar-button {
 	cursor: pointer;
 	text-align: center;
-	background: @header-button-background;
 	.flex-display( inline-flex );
 	.flex-justify-content( center );
 	.flex-align-items( center );
@@ -372,18 +320,10 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 		color: inherit;
 		text-decoration: none;
 	}
+}
 
-	&:focus {
-		background: @header-button-focus-background;
-	}
-
-	&:hover {
-		background: @header-button-hover-background;
-	}
-
-	&:active {
-		background: @header-button-active-background;
-	}
+.header-button-textless {
+	padding: 0;
 }
 
 /* if multiple items inside a header button that's actually in the header (as
@@ -414,22 +354,25 @@ opposed to the sidebar), space them out */
 
 .site-navigation-logo-img,
 .site-navigation-logo-text {
-	/* width: SIZE-logo-img-width; */
-	.extra-header-button-padding();
+	.mixin-extra-header-button-padding();
 	.box-sizing( border-box ); /* padding should be included within the 100% width */
+}
+
+.site-navigation-logo-img {
+	max-width: 100%;
+	max-height: 100%;
 }
 
 #site-navigation-header-dropdown {
 	position: relative;
 	width: 100%; /* so tray can fit width of sidebar area rather than default width */
-
-	.refreshed-dropdown-button {
-		width: @site-navigation-toggle-width;
-	}
 }
 
-.site-navigation-tray,
-#sidebar-wrapper .site-navigation-tray { /* #sidebar-wrapper for specificity */
+.site-navigation-button {
+	width: @site-navigation-toggle-width;
+}
+
+.site-navigation-tray {
 	text-align: center;
 	padding-left: 0;
 	padding-right: 0;
@@ -479,7 +422,7 @@ the explore button which is at the top of it. */
 }
 
 #explore-dropdown-button {
-	.extra-header-button-padding();
+	.mixin-extra-header-button-padding();
 }
 
 .header-category-dropdown {
@@ -487,7 +430,7 @@ the explore button which is at the top of it. */
 }
 
 .header-category-dropdown-button {
-	.extra-header-button-padding();
+	.mixin-extra-header-button-padding();
 }
 
 #user-info-search-wrapper {
@@ -502,11 +445,11 @@ the explore button which is at the top of it. */
 }
 
 #extra-personal-tools-tray {
-	.flex-display( inline-flex );
-	.flex-align-items( center );
 	margin: 0;
 	list-style: none;
 	height: 100%;
+	.flex-display( inline-flex );
+	.flex-align-items( center );
 }
 
 .mw-echo-ui-overlay {
@@ -529,7 +472,6 @@ the explore button which is at the top of it. */
 }
 
 #header-search-dropdown-tray {
-	/* width: SIZE-header-search-width; */
 	.box-sizing( border-box );
 }
 
@@ -547,14 +489,18 @@ the explore button which is at the top of it. */
 	width: 100%;
 	.box-sizing( border-box );
 
-	.mixin-placeholder( { .searchInput-placeholder(); } );
-
 	/* prevent Safari from styling input box (adding text indent)
 	per https://stackoverflow.com/a/11128262 */
 	&::-webkit-search-decoration {
 		-webkit-appearance: none;
 	}
 }
+
+/* default search bar text */
+.mixin-set-searchInput-placeholder-styles( {
+  color: @search-placeholder-text-font-color;
+  font-weight: 700;
+} );
 
 .searchButton {
 	background-color: transparent;
@@ -570,10 +516,15 @@ the explore button which is at the top of it. */
 	background-size: 1.5em 1.5em;
 	background-repeat: no-repeat;
 	cursor: pointer;
+
+	/* take up full height and stick to right side of #searchInput */
+	top: 50%;
+	.transform( translateY( -50% ) );
+	right: @header-search-padding;
 }
 
 #header-suggestions {
-	.stack-box-shadow();
+	.mixin-stack-box-shadow();
 
 	.suggestions-results {
 		border: 0 !important;
@@ -583,7 +534,7 @@ the explore button which is at the top of it. */
 
 	.suggestions-special {
 		border: 0;
-		.stack-box-shadow();
+		.mixin-stack-box-shadow();
 	}
 }
 
@@ -597,13 +548,15 @@ the explore button which is at the top of it. */
 	bottom: 0;
 	overflow-y: auto;
 	padding-top: 1em;
-	/* width: @SIZE-sidebar-width; */
 
 	ul {
 		list-style-type: none;
 		margin: 0;
-		padding: @sidebar-ul-padding-top 0 @sidebar-ul-padding-bottom 0;
 	}
+}
+
+.sidebar-content ul {
+	padding: @sidebar-ul-padding-top 0 @sidebar-ul-padding-bottom 0;
 }
 
 .sidebar-section {
@@ -615,18 +568,17 @@ the explore button which is at the top of it. */
 }
 
 a.sidebar-item { /* a for specificity */
-	.pretty-anchor( @font-color: currentColor );
+	.mixin-pretty-anchor( @font-color: currentColor );
 	display: block;
 }
 
-#site-navigation-sidebar-buttons-wrapper {
+#site-navigation-sidebar-collapsible {
 	text-align: center;
-	height: @big-header-height;
-	.give-children-height();
 }
 
+.refreshed-logo-sidebar-current,
 #site-navigation-sidebar-collapsible-button {
-	width: @site-navigation-toggle-width;
+	vertical-align: top;
 }
 
 /*******************************************************************************
@@ -634,11 +586,8 @@ a.sidebar-item { /* a for specificity */
 *******************************************************************************/
 
 #content-wrapper {
-	background-color: @content-backgound-color;
-	color: @content-font-color;
-	font-family: @content-font-stack;
 	padding: @content-wrapper-padding;
-	.stack-box-shadow();
+	.mixin-stack-box-shadow();
 }
 
 #main-title-messages {
@@ -651,11 +600,13 @@ a.sidebar-item { /* a for specificity */
 	padding-bottom: @pretty-anchor-border-width;
 	.flex-display();
 	.flex-align-items( initial );
-}
 
-.position-sticky {
-  position: -webkit-sticky;
-  position: sticky;
+	&.refreshed-toolbox-sticky.refreshed-toolbox-stuck {
+		padding-left: @content-wrapper-padding;
+		padding-right: @content-wrapper-padding;
+		margin: 0 -( @content-wrapper-padding );
+		.mixin-stack-box-shadow();
+	}
 }
 
 #p-namespaces {
@@ -686,7 +637,6 @@ https://css-tricks.com/flexbox-truncated-text/ */
 
 #back-to-subject {
 	border-bottom: initial;
-	font-size: 1.1em;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
@@ -697,12 +647,12 @@ https://css-tricks.com/flexbox-truncated-text/ */
 #p-views a {
 	padding-top: 0;
 	display: inline-block;
-	.pretty-anchor( @border-side: vertical );
+	.mixin-pretty-anchor( @border-side: vertical );
 }
 
 #p-namespaces li.selected a,
 #p-views li.selected a {
-	.pretty-anchor( @active: true, @border-side: vertical );
+	.mixin-pretty-anchor( @active: true, @border-side: vertical );
 }
 
 #p-tools {
@@ -726,6 +676,7 @@ https://css-tricks.com/flexbox-truncated-text/ */
 		background-repeat: no-repeat;
 		margin-bottom: 0;
 		vertical-align: middle;
+		.box-sizing( border-box );
 	}
 
 	.inline-tool-text {

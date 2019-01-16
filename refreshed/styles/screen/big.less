@@ -1,125 +1,70 @@
-@import 'variables.less';
-@import 'mixins.less';
+@import 'variables';
+@import 'mixins-private';
+@import 'mixins-public';
 
-/*******************************************************************************
-**************************** DROPDOWNS/COLLAPSIBLES ****************************
-*******************************************************************************/
+.mixin-big-layout-styles( {
+	/*****************************************************************************
+	*************************** DROPDOWNS/COLLAPSIBLES ***************************
+	*****************************************************************************/
 
-/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
-not the viewport */
-#p-tools {
-	position: relative;
-}
+	/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
+	not the viewport */
+	#p-tools {
+		position: relative;
+	}
 
-/* toolbox */
-a#back-to-subject { /* a for specificity */
-  display: none;
-}
+	/* toolbox */
+	a#back-to-subject { /* a for specificity */
+	  display: none;
+	}
 
-/*******************************************************************************
-************************************ HEADER ************************************
-*******************************************************************************/
+	/*****************************************************************************
+	*********************************** HEADER ***********************************
+	*****************************************************************************/
 
-.header-height( @big-header-height );
+	.refreshed-dropdown-tray {
+		width: @big-dropdown-tray-width;
+	}
 
-.header-button-textless,
-.header-button-textless-big {
-  width: @big-header-height;
-  padding: 0;
-}
+	#site-navigation-header {
+	  .site-navigation-icon-logos {
+	    display: none;
+	  }
+	}
 
-.refreshed-dropdown-tray {
-	width: @big-dropdown-tray-width;
-}
+	/* don't use the .header-button-textless styles on medium or big */
+	#user-info-dropdown-button {
+		width: auto;
+	  .mixin-extra-header-button-padding();
+	}
 
-.single-wiki .refreshed-logo-current {
-	min-width: @big-sidebar-width;
-}
+	/* if you want to change this to -menu, you need to also change the definition
+	of .mixin-set-sidebar-width-big-layout in mixins.css */
+	.mixin-use-sidebar-inline();
 
-.site-navigation-logo-img {
-  max-width: @big-site-navigation-logo-img-max-width;
-}
+	.mixin-use-searchInput-inline( @big-header-search-width );
 
-#site-navigation-header {
-  .site-navigation-icon-logos {
-    display: none;
-  }
-}
+	/*****************************************************************************
+	*********************************** SIDEBAR **********************************
+	*****************************************************************************/
 
-#explore-header-categories-dropdowns {
-	margin-top: -( @big-header-height );
-}
+	#site-navigation-sidebar-header-categories-sidebar-wrapper {
+	  display: none;
+	}
 
-#sidebar-toggler {
-  display: none;
-}
+	/*****************************************************************************
+	*********************************** CONTENT **********************************
+	*****************************************************************************/
 
-#header-search-dropdown-button {
-  display: none;
-}
+	#back-to-subject {
+	  display: none;
+	}
 
-#header-search-dropdown-tray {
-  /* override normal search dropdown styles */
-  background: none;
-  margin: inherit;
-  padding: inherit;
-  top: 0;
-  height: inherit;
-  z-index: initial;
-  .box-shadow( none );
-  .flex-display( inline-flex );
-  .flex-justify-content( center );
-  .flex-align-items( center );
+	.mw-indicator {
+		display: inline;
+	}
 
-  /* ensure .searchButton is positioned relative to this */
-  position: relative;
-
-  /* search dropdown should be wide enough to fit search bar */
-	width: @big-header-search-width;
-}
-
-.searchButton {
-	/* take up full height and stick to right side of #searchInput */
-	top: 0.5em;
-	bottom: 0.5em;
-	right: 0;
-	/* ooui-icon-search */
-	background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M19%2017l-5.15-5.15a7%207%200%201%200-2%202L17%2019zM3.5%208A4.5%204.5%200%201%201%208%2012.5%204.5%204.5%200%200%201%203.5%208z%22%2F%3E%3C%2Fsvg%3E );
-}
-
-#user-info-dropdown-button {
-  .extra-header-button-padding();
-}
-
-/*******************************************************************************
-************************************ SIDEBAR ***********************************
-*******************************************************************************/
-
-#sidebar-wrapper {
-  width: @big-sidebar-width;
-}
-
-#site-navigation-sidebar-header-categories-sidebar-wrapper {
-  display: none;
-}
-
-/*******************************************************************************
-************************************ CONTENT ***********************************
-*******************************************************************************/
-
-/* @TODO */
-
-.content-wrapper-width( @big-sidebar-width, @big-content-right );
-.use-refreshed-toolbox-sticky( @big-header-height );
-
-#back-to-subject {
-  display: none;
-}
-
-.mw-indicator {
-	display: inline;
-}
-
-/*******************************************************************************
-************************************ FOOTER ************************************
-*******************************************************************************/
+	/*****************************************************************************
+	*********************************** FOOTER ***********************************
+	*****************************************************************************/
+} );

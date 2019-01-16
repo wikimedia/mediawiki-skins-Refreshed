@@ -1,0 +1,164 @@
+@import 'variables';
+@import 'mediawiki.mixins';
+@import 'mixins-public';
+
+/* The mixins in this file are intended for internal use and cannot be called
+from the custom LESS, which imports mixins-config.less but not this file.
+When these mixins are called, they are called in common.less, big.less,
+medium.less, and small.less rather than any config-*.less file.
+
+These mixins are sectioned off from the config files for several reasons,
+including:
+
+* Some of these mixins control fairly set-in-stone parts of the interface,
+like whether the search bar appears always or if a button must be pressed to
+access it. Placing these mixins here makes it a bit harder to make some
+potentially user-unfriendly changes. All this isn't to say that you can't make
+those changes if you want to--you just can't make them in one line of LESS.
+
+* Since MediaWiki can't (yet) compile LESS that's written on-wiki into
+CSS, if someone makes a change to MediaWiki:Refreshed.less, they'll have to
+compile it off-site themselves and then copy it into MediaWiki:Refreshed.css to
+have their styles apply. That LESS is not being compiled by MediaWiki, so that
+LESS can't import any of the useful LESS files that ResourceLoader provides by
+default. Some of the mixins here rely on those ResourceLoader files, so those
+mixins should be compiled by ResourceLoader, so they shoudn't be used in any
+on-wiki LESS.
+
+Hopefully in the future MediaWiki will support on-wiki LESS, making the second
+point irrelevant (see https://phabricator.wikimedia.org/T56864). */
+
+/* extra padding for some header buttons with text */
+.mixin-extra-header-button-padding() {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+/* box shadow for header, content, dropdowns */
+.mixin-stack-box-shadow() {
+  .box-shadow( 0 3px 9px 0 @content-shadow-color );
+}
+
+/* explicitly inherit height so the text/images/svg inside have access to the
+element's full height, and make sure they're all vertically aligned the same way
+(especially labels)--for example this ensures all .refreshed-dropdown-triangle
+elements are set to the same height */
+.mixin-give-children-height() {
+  div,
+  nav,
+  a,
+  label {
+    height: 100%;
+    vertical-align: top;
+  }
+}
+
+/* style the default text for the search bar */
+.mixin-set-searchInput-placeholder-styles( @rules ) {
+  .mixin-placeholder( @rules );
+}
+
+/* keep sidebar open (instead of having it open when a button in the header is
+clicked) */
+.mixin-use-sidebar-inline() {
+  #sidebar-toggler {
+    display: none;
+  }
+}
+
+/* hide the sidebar, and have it open when a button in the header is clicked */
+.mixin-use-sidebar-menu() {
+  #sidebar-wrapper {
+    z-index: @z-index-sidebar-menu;
+  }
+}
+
+/* place the search bar directly in the header */
+.mixin-use-searchInput-inline( @header-search-width ) {
+	#header-search-dropdown-tray {
+	  /* override normal search dropdown styles */
+	  background: none;
+	  margin: inherit;
+	  padding: inherit;
+	  height: inherit;
+	  z-index: initial;
+	  .box-shadow( none );
+    display: inline-block;
+
+	  /* ensure .searchButton is positioned relative to this */
+	  position: relative;
+
+	  /* search dropdown should be wide enough to fit search bar */
+		width: @header-search-width;
+	}
+
+  #searchInput {
+    position: absolute;
+    top: 50%;
+    margin-top: -( @header-search-height / 2 );
+  }
+
+	.searchButton {
+		right: 0;
+		/* ooui-icon-search */
+		background-image: url( data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M19%2017l-5.15-5.15a7%207%200%201%200-2%202L17%2019zM3.5%208A4.5%204.5%200%201%201%208%2012.5%204.5%204.5%200%200%201%203.5%208z%22%2F%3E%3C%2Fsvg%3E );
+	}
+
+  #header-search-dropdown-button {
+    display: none;
+  }
+}
+
+/* place the search bar inside a dropdown accessible from a header button */
+.mixin-use-searchInput-menu( @header-search-width, @suggestions-left ) {
+  #header-search-dropdown-tray {
+    padding-left: @header-search-padding;
+    padding-right: @header-search-padding;
+    width: @header-search-width;
+    right: 0;
+  }
+
+  #searchInput { /* header search box */
+  	outline: 0;
+  	border-bottom: 3px solid transparent;
+  	/* padding-right is 0.5em more than padding-right of .searchButton to leave
+  	room for it */
+    padding-left: @header-search-padding / 2;
+  	padding-right: @header-search-height + @header-search-padding;
+    width: 100%;
+  }
+
+  #searchInput:focus {
+  	border-color: currentColor;
+  }
+
+  [dir = ltr] .searchButton {
+  	/* ooui-icon-arrowNext-ltr */
+  	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M10 2L8.59 3.42 14.17 9H2v2h12.17l-5.58 5.59L10 18l8-8-8-8z'/%3E%3C/svg%3E );
+  }
+
+  [dir = rtl] .searchButton {
+  	/* ooui-icon-arrowNext-rtl */
+  	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M2 10l8 8 1.4-1.4L5.8 11H18V9H5.8l5.6-5.6L10 2z'/%3E%3C/svg%3E );
+  }
+
+  #header-suggestions {
+    margin-top: @header-search-padding !important;
+    width: @header-search-width !important;
+    left: @suggestions-left !important;
+    right: 0 !important;
+
+    .suggestions-result,
+    .suggestions-special {
+    	padding: 0.75em 0.5em !important;
+    }
+
+    .suggestions-result {
+    	border-bottom: 1px solid @search-suggestions-border-color;
+    }
+
+    .suggestions-special {
+    	margin-top: 0 !important;
+    }
+  }
+}

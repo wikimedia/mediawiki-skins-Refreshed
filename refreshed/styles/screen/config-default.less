@@ -1,0 +1,233 @@
+@import 'mixins-public';
+@import 'variables';
+
+/* This is the default configuration of Refreshed.
+It consists of two parts: a filled-in version of the basic config template, and
+some extra advanced configuration. */
+
+@body-background: #194a8d;
+@header-sidebar-footer-font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@header-sidebar-footer-font-color: #fff;
+@header-background: linear-gradient( to left, #040f28 0, #103ca2 50%, #040f28 100% );
+@header-button-background: transparent;
+@header-button-focus-background: royalblue;
+@header-button-hover-background: midnightblue;
+@header-button-active-background: @header-button-hover-background;
+@toolbox-dropdown-button-background: #eee;
+@toolbox-dropdown-button-not-focus-color: @content-font-color;
+@toolbox-dropdown-button-focus-background: @header-button-focus-background;
+@toolbox-dropdown-button-focus-color: @header-sidebar-footer-font-color;
+@toolbox-dropdown-button-hover-background: #ccc;
+@toolbox-dropdown-button-active-background: @toolbox-dropdown-button-hover-background;
+@content-background-color: #fff;
+@content-font-stack: @header-sidebar-footer-font-stack;
+@content-font-color: #252525;
+@dropdown-tray-background-color: @content-background-color;
+@dropdown-tray-active-background-color: #eee;
+@dropdown-tray-font-color: @content-font-color;
+@big-header-height: 3em;
+@big-sidebar-width: 12em;
+@big-content-margin-right: 1em;
+@medium-header-height: 3em;
+@small-header-height: 2.5em;
+@medium-sidebar-width: @big-sidebar-width;
+@small-sidebar-width: 75%;
+
+/*******************************************************************************
+********************************************************************************
+***************************** BASIC CONFIG TEMPLATE ****************************
+********************************************************************************
+*******************************************************************************/
+
+/*
+How to use this template:
+Make a copy and fill in the template as make Refreshed look the way you want.
+If you want to use the default value of a property, delete it from this
+template.
+Save the LESS file somewhere on your wiki, maybe at
+MediaWiki:Refreshed.css/template.
+
+An example of a filled-in copy of this template is available at
+config-default.less.
+*/
+/*******************************************************************************
+***************************** STYLES FOR ALL LAYOUTS ***************************
+*******************************************************************************/
+
+body {
+  /* background for the page */
+  background: @body-background;
+  /* font family for the page */
+  font-family: @header-sidebar-footer-font-stack;
+}
+
+#header-wrapper,
+#sidebar-wrapper,
+#footer-wrapper {
+  /* font color for the header, sidebar, and footer */
+  color: @header-sidebar-footer-font-color;
+}
+
+#header-wrapper {
+  /* background for the header */
+  background: @header-background;
+}
+
+/*** "header buttons" (the buttons in the header, the wiki logo button in the
+sidebar in the small layout, and arrow button next to that logo) **/
+.mixin-set-header-button-styles( {
+  /* background for a header button */
+  background: @header-button-background;
+} );
+/* :focus styles */
+.mixin-set-header-button-styles-focus( {
+  /* background for a header button when it's focused */
+  background: @header-button-focus-background;
+} );
+/* :hover styles */
+.mixin-set-header-button-styles-hover( {
+  /* background for a header button when it's hovered over */
+  background: @header-button-hover-background;
+} );
+/* :active styles */
+.mixin-set-header-button-styles-active( {
+  /* background for a header button when it's active */
+  background: @header-button-active-background;
+} );
+
+/* sidebar buttons (the buttons for the header categories that are in the
+sidebar in the small layout) */
+.mixin-set-sidebar-button-styles( {
+  /* background for a sidebar button */
+  background: @header-button-background;
+} );
+/* :focus styles */
+.mixin-set-sidebar-button-styles-focus( {
+  /* background for a sidebar button when it's focused */
+  background: @header-button-focus-background;
+} );
+/* :hover styles */
+.mixin-set-sidebar-button-styles-hover( {
+  /* background for a sidebar button when it's hovered over */
+  background: @header-button-hover-background;
+} );
+/* :active styles */
+.mixin-set-sidebar-button-styles-active( {
+  /* background for a sidebar button when it's active */
+  background: @header-button-active-background;
+} );
+
+/* the button that opens the tools dropdown in the toolbox */
+.mixin-set-toolbox-dropdown-button-styles({
+  background: @toolbox-dropdown-button-background;
+  color: @toolbox-dropdown-button-not-focus-color;
+});
+.mixin-set-toolbox-dropdown-button-styles-focus({
+  background: @toolbox-dropdown-button-focus-background;
+  color: @toolbox-dropdown-button-focus-color;
+});
+.mixin-set-toolbox-dropdown-button-styles-hover({
+  background: @toolbox-dropdown-button-hover-background;
+});
+.mixin-set-toolbox-dropdown-button-styles-active({
+  background: @toolbox-dropdown-button-active-background;
+});
+
+/* set the colors of dropdown trays (for example, dropdown trays that are opened
+by buttons in the header) */
+/* note that @active-background-color is the background-color of links when they
+are active (clicked on), and @font-color is the color of non-link text */
+.mixin-set-dropdown-tray-colors(
+  @background-color: @dropdown-tray-background-color,
+  @active-background-color: @dropdown-tray-active-background-color,
+  @font-color: @dropdown-tray-font-color
+);
+
+.refreshed-collapsible-tray {
+  /* set the colors of collapsible trays (for example, the site navigation tray
+  in the sidebar of the small layout) */
+  background-color: @header-button-active-background;
+}
+
+#content-wrapper {
+  /* background-color for the page content */
+  background-color: @content-background-color;
+  /* font family for the page content */
+  font-family: @content-font-stack;
+  /* font color for the page content */
+  color: @content-font-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* font color for headings */
+  color: @content-font-color;
+}
+
+/*******************************************************************************
+***************************** STYLES FOR BIG LAYOUT ****************************
+*******************************************************************************/
+
+.mixin-big-layout-styles( {
+  /* height for the header */
+  .mixin-set-header-height( @height: @big-header-height );
+
+  /* width for the sidebar */
+  .mixin-set-sidebar-width-big-layout( @width: @big-sidebar-width );
+
+  /* how far away the content is from the edge of the viewport on the side
+  opposite the side that the sidebar is on */
+  .mixin-set-content-margin-sidebar-opposite-side( @margin: @big-content-margin-right );
+
+  /* make the toolbox stick to the top when you scroll down;
+  specify its background-color when stuck */
+  .mixin-use-refreshed-toolbox-sticky( @background-color: @content-background-color );
+} );
+
+/*******************************************************************************
+**************************** STYLES FOR MEDIUM LAYOUT **************************
+*******************************************************************************/
+
+.mixin-medium-layout-styles( {
+  /* height for the header */
+  .mixin-set-header-height( @height: @medium-header-height );
+
+  /* width for the sidebar */
+  .mixin-set-sidebar-width-medium-layout( @width: @medium-sidebar-width );
+
+  #sidebar-wrapper {
+    /* background for the sidebar */
+    background: @body-background;
+  }
+
+  /* make the toolbox stick to the top when you scroll down;
+  specify its background-color when stuck */
+  .mixin-use-refreshed-toolbox-sticky( @background-color: @content-background-color );
+} );
+
+/*******************************************************************************
+**************************** STYLES FOR SMALL LAYOUT ***************************
+*******************************************************************************/
+
+.mixin-small-layout-styles( {
+  /* height for the header */
+  .mixin-set-header-height( @height: @small-header-height );
+
+  /* width for the sidebar */
+  .mixin-set-sidebar-width-small-layout( @width: @small-sidebar-width );
+
+  #sidebar-wrapper {
+    /* background for the sidebar */
+    background: @body-background;
+  }
+} );
+
+/*******************************************************************************
+********************************************************************************
+*************************** END BASIC CONFIG TEMPLATE **************************
+********************************************************************************
+*******************************************************************************/

@@ -15,10 +15,11 @@ function runRefreshedJS() {
 
 	var Refreshed = {
 		positionStickyRules: [ 'sticky', '-webkit-sticky' ],
-		positionStickyAttributeToUse: null,
-		positionStickyClass: 'position-sticky',
+		shouldUseSticky: false,
+		stickyClass: 'refreshed-toolbox-sticky',
 		toolbox: document.getElementById( 'refreshed-toolbox' ),
 		stuckClass: 'refreshed-toolbox-stuck',
+		headlineClass: 'mw-headline',
 		toolboxHasStuckClass: false,
 		searchInput: document.getElementById( 'searchInput' ),
 		headerSearchDropdownCheckbox: document.getElementById( 'header-search-dropdown-checkbox' ),
@@ -43,19 +44,16 @@ function runRefreshedJS() {
 
 	/******* Add/remove class from toolbox based if toolbox is stuck/ not *******/
 
-	for ( var i = 0; i < Refreshed.positionStickyRules.length; i++ ) {
-		if ( CSS.supports( 'position', Refreshed.positionStickyRules[i] ) ) {
-			Refreshed.positionStickyAttributeToUse = Refreshed.positionStickyRules[i];
+	for ( var stickyCounter = 0; stickyCounter < Refreshed.positionStickyRules.length; stickyCounter++ ) {
+		if ( CSS.supports( 'position', Refreshed.positionStickyRules[stickyCounter] ) ) {
+			Refreshed.shouldUseSticky = true;
 			break;
 		}
 	}
 
-	// evaluates true if Refreshed.positionStickyAttributeToUse != null, so if we
-	// found a position sticky rule that is supported by this browser (in which
-	// case Refreshed.positionStickyAttributeToUse contains that rule)
-	if ( Refreshed.positionStickyAttributeToUse ) {
+	if ( Refreshed.shouldUseSticky ) {
 
-		Refreshed.toolbox.classList.add( 'position-sticky' )
+		Refreshed.toolbox.classList.add( Refreshed.stickyClass );
 
 		Refreshed.toolboxHasStuckClass = Refreshed.toolbox.classList.contains( Refreshed.stuckClass );
 
@@ -78,8 +76,25 @@ function runRefreshedJS() {
 			}
 		};
 
+		Refreshed.headlines = document.getElementsByClassName( Refreshed.headlineClass );
+
+		// adjust the padding-top and margin-top of the headlines so when a link
+		// to that specific headline is clicked, the headline isn't blocked by the
+		// toolbox
+		Refreshed.updateHeadlineSpacing = function() {
+			var toolboxHeight = window.getComputedStyle( this.toolbox ).getPropertyValue( 'height' );
+			for ( var headlineCounter = 0; headlineCounter < this.headlines.length; headlineCounter++ ) {
+				var currentStyle = window.getComputedStyle( this.headlines[headlineCounter] );
+				var currentPaddingTop = currentStyle.getPropertyValue( 'padding-top' );
+				var currentMarginTop = currentStyle.getPropertyValue( 'margin-top' );
+				this.headlines[headlineCounter].style.paddingTop = parseFloat( currentPaddingTop ) + parseFloat( toolboxHeight ) + 'px';
+				this.headlines[headlineCounter].style.marginTop = parseFloat( currentMarginTop ) - parseFloat( toolboxHeight ) + 'px';
+			}
+		};
+
 		// run once in case the toolbox starts out as stuck on page load
 		Refreshed.updateToolboxClasses();
+		Refreshed.updateHeadlineSpacing();
 
 		// attach/detach the toolbox to the top depending on scroll position
 		window.addEventListener( 'scroll', function() {
@@ -181,14 +196,14 @@ function runRefreshedJS() {
 	// sibling, so a different method would be needed to target it
 	// (and the toolbox isn't ever hidden anyway, so it doesn't matter)
 	Refreshed.disableHiddenDropdownCheckboxes = function() {
-		for (var j = 0; j < Refreshed.dropdownCheckboxes.length; j++) {
+		for (var hiddenDropdownCounter = 0; hiddenDropdownCounter < Refreshed.dropdownCheckboxes.length; hiddenDropdownCounter++) {
 			// If the checkbox is hidden, uncheck and disable it.
 			// If the checkbox is not hidden, enable it.
-			if ( this.dropdownCheckboxShouldBeDisabled( this.dropdownCheckboxes[j] ) ) {
-				this.dropdownCheckboxes[j].checked = false;
-				this.dropdownCheckboxes[j].disabled = true;
+			if ( this.dropdownCheckboxShouldBeDisabled( this.dropdownCheckboxes[hiddenDropdownCounter] ) ) {
+				this.dropdownCheckboxes[hiddenDropdownCounter].checked = false;
+				this.dropdownCheckboxes[hiddenDropdownCounter].disabled = true;
 			} else {
-				this.dropdownCheckboxes[j].disabled = false;
+				this.dropdownCheckboxes[hiddenDropdownCounter].disabled = false;
 			}
 		}
 	};
@@ -201,8 +216,8 @@ function runRefreshedJS() {
 
 	Refreshed.disableHiddenDropdownCheckboxes();
 
-	for (var k = 0; k < Refreshed.dropdownCheckboxes.length; k++) {
-		Refreshed.dropdownCheckboxes[k].addEventListener( 'change', function() {
+	for (var checkboxCounter = 0; checkboxCounter < Refreshed.dropdownCheckboxes.length; checkboxCounter++) {
+		Refreshed.dropdownCheckboxes[checkboxCounter].addEventListener( 'change', function() {
 			Refreshed.disableHiddenDropdownCheckboxes();
 		} );
 	}

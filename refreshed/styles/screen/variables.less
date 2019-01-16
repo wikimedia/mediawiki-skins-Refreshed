@@ -1,4 +1,12 @@
+/***************************** layout breakpoints *****************************/
+@medium-layout-min-width: 720px;
+@medium-layout-max-width: 1000px;
+
+@big-layout-min-width: ( @medium-layout-max-width + 1px );
+@small-layout-max-width: ( @medium-layout-min-width - 1px );
+
 /********************************* z-indexes **********************************/
+
 /* see https://www.mediawiki.org/wiki/Manual:Coding_conventions/CSS#z-index;
 we assign the header 101 not 100 so the toolbox can be beneath the header
 and still be above content */
@@ -26,58 +34,24 @@ appears above the dropdown and thus is not underneath its drop shadow */
 /* so it appears above all header stuff and all close overlays */
 @z-index-sidebar-menu: @z-index-close-overlay + 1;
 
-/************************ backgrounds/background colors ***********************/
-@body-background: #194a8d;
-
-@header-background: linear-gradient( to left, #040f28 0, #103ca2 50%, #040f28 100% );
-
-/* also used for collapsibles */
-@header-button-background: transparent;
-@header-button-hover-background: midnightblue;
-@header-button-active-background: @header-button-hover-background;
-@header-button-focus-background: royalblue;
-
-@sidebar-menu-background: @body-background;
-
-@content-backgound-color: #fff;
-
-@content-dropdown-button-background: #eee;
-@content-dropdown-button-hover-background: #ccc;
-@content-dropdown-button-active-background: @content-dropdown-button-hover-background;
-@content-dropdown-button-focus-background: #ddd;
-
-
-@dropdown-tray-background-color: @content-backgound-color;
-@dropdown-tray-active-background-color: #eee;
-
-@modal-background: rgba( 0, 0, 0, 0.2 );
-
-/******************************** font stacks *********************************/
-/* also sidebar, header, content headings */
-@heading-font-stack: sans-serif;
-/* also dropdowns */
-@content-font-stack: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-
-/******************************** font colors *********************************/
-/* also sidebar, header, content headings */
-@body-font-color: #fff;
-@search-placeholder-text-font-color: #808080;
-@content-font-color: #252525;
-@dropdown-tray-font-color: @content-font-color;
-
 /******************************** other colors ********************************/
+
+@search-placeholder-text-font-color: #808080;
+@modal-background-color: rgba(0, 0, 0, 0.2);
 @content-shadow-color: rgba( 75, 75, 75, 0.4 );
 @search-suggestions-border-color: #ddd;
 @firstHeading-border-color: #ddd;
 
 /************************* avatar and icon properties *************************/
-@refreshed-icon-height: 1em;
+
+@refreshed-icon-dimension: 1em;
 
 /* dimensions of avatar (SocialProfile or default icons) */
 @avatar-width: 30px;
 @avatar-height: auto;
 
 /***************************** dropdown properties ****************************/
+
 @dropdown-triangle-border-size: 0.4em;
 
 @dropdown-tray-refreshed-icon-margin-right: 0.4em;
@@ -85,22 +59,17 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @small-dropdown-tray-sidebar-font-size: 1.2em;
 
 /* width for dropdown trays */
-@big-dropdown-tray-width: @big-sidebar-width;
+@big-dropdown-tray-width: 12em;
 @medium-dropdown-tray-width: @big-dropdown-tray-width;
+
 @dropdown-tray-margin-top: -3px;
 @dropdown-tray-vertical-padding: 0.5em;
 
 /***************************** header properties ******************************/
-/* height of header */
-@big-header-height: 3em;
-@medium-header-height: 3em;
-@small-header-height: 2.5em;
 
 /* site navigation header section (wiki homepage link) */
 @site-navigation-toggle-width: 2em; /* this is also used for the sidebar */
-@big-site-navigation-logo-img-max-width: @big-sidebar-width - @site-navigation-toggle-width;
-@medium-site-navigation-logo-img-max-width: @big-site-navigation-logo-img-max-width;
-@small-site-navigation-logo-img-max-width: @big-site-navigation-logo-img-max-width;
+@default-site-navigation-max-width: 12em; /* used for the sidebar menu */
 
 /* header categories */
 @header-category-collapsible-padding: 0.25em 0.25em 0.25em 0;
@@ -117,10 +86,6 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @explore-header-categories-sibling-width: 1px;
 
 /***************************** sidebar properties *****************************/
-/* sidebar width */
-@big-sidebar-width: 12em;
-@medium-sidebar-width: @big-sidebar-width;
-@small-sidebar-width: 75%;
 
 @sidebar-header-padding: 0.25em;
 @sidebar-section-padding-bottom: 0.25em;
@@ -129,16 +94,18 @@ appears above the dropdown and thus is not underneath its drop shadow */
 @sidebar-ul-padding-bottom: 0.5em;
 
 /***************************** content properties *****************************/
+
 /* content position, padding */
-@big-content-right: 1em;
 @content-wrapper-padding: 1em;
 
 /* toolbox */
 @refreshed-toolbox-height: 2em;
 
 /****************************** footer properties *****************************/
+
 @footer-item-spacing-horizontal: 1em;
 @footer-item-spacing-vertical: 1em;
 
 /****************************** other properties ******************************/
+
 @pretty-anchor-border-width: 0.3em;

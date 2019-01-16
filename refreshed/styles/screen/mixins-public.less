@@ -1,0 +1,361 @@
+@import 'variables';
+
+/*******************************************************************************
+******************************* Property mixins ********************************
+*******************************************************************************/
+
+.flex-direction( @value ) {
+  -webkit-flex-direction: @value; // Chrome 21.0-, Safari 6.1-
+	-moz-flex-direction: @value; // Firefox 18.0-
+	flex-direction: @value;
+}
+
+.flex-justify-content( @value ) {
+  -webkit-justify-content: @value; // Chrome 21.0-, Safari 6.1-
+	-moz-justify-content: @value; // Firefox 18.0-
+	justify-content: @value;
+}
+
+.flex-align-items( @value ) {
+  -webkit-align-items: @value; // Safari 7.0-
+  align-items: @value;
+}
+
+.position-sticky() {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+
+/*******************************************************************************
+***************************** Other styling mixins *****************************
+*******************************************************************************/
+/* Maybe intended for internal use, but they can be used in custom LESS too. */
+
+/* the dropdown/sidebar links where a side border appears on hover */
+.mixin-pretty-anchor( @active: false, @font-color: auto, @active-background-color: initial, @border-side: horizontal ) {
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+
+  & when not ( @font-color = auto ) {
+    color: @font-color;
+  }
+
+  & when not ( @border-side = vertical ) {
+    padding-left: 1em;
+    padding-right: 1em;
+    border-left: @pretty-anchor-border-width solid transparent;
+    border-right: @pretty-anchor-border-width solid transparent; /* border-right for symmetry */
+  }
+  & when ( @border-side = vertical ) {
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    border-top: @pretty-anchor-border-width solid transparent;
+    border-bottom: @pretty-anchor-border-width solid transparent; /* border-bottom for symmetry */
+    margin-right: @pretty-anchor-border-width;
+  }
+  text-decoration: none;
+
+  &:focus,
+  &:hover,
+  &:active,
+  &.selected {
+    /* use currentColor not @font-color because, for example,
+    if @font-color = auto, then setting border-color to @font-color would set
+    border-color to auto... that is, border-color would be the auto value for
+    border-color, not the auto value for color */
+    & when not ( @border-side = vertical ) {
+      border-left-color: currentColor;
+    }
+    & when ( @border-side = vertical ) {
+      border-bottom-color: currentColor;
+    }
+  }
+
+  &:active {
+    background-color: @active-background-color;
+  }
+
+  & when ( @active = true ) {
+    & when not ( @border-side = vertical ) {
+      border-left-color: currentColor;
+    }
+    & when ( @border-side = vertical ) {
+      border-bottom-color: currentColor;
+    }
+    background-color: @active-background-color;
+  }
+
+  .refreshed-icon {
+    vertical-align: middle;
+  }
+}
+
+/* make styles exclusive to the big, medium, or small layouts */
+.mixin-big-layout-styles( @rules ) {
+  @media ( min-width: @big-layout-min-width ) {
+    @rules();
+  }
+}
+.mixin-medium-layout-styles( @rules ) {
+  @media ( min-width: @medium-layout-min-width ) and ( max-width: @medium-layout-max-width ) {
+    @rules();
+  }
+}
+.mixin-small-layout-styles( @rules ) {
+  @media ( max-width: @small-layout-max-width ) {
+    @rules();
+  }
+}
+
+/*******************************************************************************
+**************************** Standard config mixins ****************************
+*******************************************************************************/
+/* Mixins used for basic configuration in the LESS template. */
+
+/* Set the height of the header */
+.mixin-set-header-height( @height ) {
+
+  #header-wrapper,
+  .refreshed-logo-sidebar-current,
+  #site-navigation-sidebar-collapsible-button {
+    height: @height;
+  }
+
+  #explore-header-categories-dropdowns {
+    margin-top: -( @height );
+  }
+
+  #content-footer-wrapper {
+    margin-top: @height;
+  }
+
+  #refreshed-toolbox {
+    top: @height;
+  }
+
+  #sidebar {
+    margin-top: @height;
+  }
+
+  .header-button-textless {
+    width: @height;
+  }
+
+  /* When you click a section link (for example, when you click a link in th
+  table of contents), ensure the headline that you jump to isn't blocked by
+  the header.
+  Note these properties are adjusted with JS to account for the toolbox if it's
+  set to sticky. */
+  .mw-headline {
+    padding-top: @height;
+    margin-top: -@height;
+  }
+
+  .mixin-helper-resize-header-icons( @height / 2 );
+}
+
+/* Set the width of the sidebar */
+.mixin-set-sidebar-width-big-layout( @width ) {
+  .mixin-helper-set-sidebar-width-inline( @width );
+}
+
+/* Set the width of the sidebar */
+.mixin-set-sidebar-width-medium-layout( @width ) {
+  .mixin-helper-set-sidebar-width-menu( @width );
+}
+
+/* Set the width of the sidebar */
+.mixin-set-sidebar-width-small-layout( @width ) {
+  .mixin-helper-set-sidebar-width-menu( @width );
+}
+
+/* apply @rules to the buttons in the header and the site navigation buttons
+in the sidebar, as well as the "collapsible buttons" (useful for
+blanket-applying styles to a bunch of different buttons) */
+.mixin-set-header-button-styles( @rules ) {
+  .header-button {
+    @rules();
+  }
+}
+.mixin-set-header-button-styles-focus( @rules ) {
+  .header-button:focus,
+  .refreshed-dropdown-checkbox:focus ~ .header-button.refreshed-dropdown-button,
+  .refreshed-collapsible-checkbox:focus ~ .header-button.refreshed-collapsible-button,
+  #sidebar-toggler-checkbox:focus ~ #header-wrapper #sidebar-toggler-button {
+    @rules();
+  }
+}
+.mixin-set-header-button-styles-hover( @rules ) {
+  .header-button:hover {
+    @rules();
+  }
+}
+.mixin-set-header-button-styles-active( @rules ) {
+  .header-button:active,
+  .refreshed-dropdown-checkbox:checked ~ .header-button.refreshed-dropdown-button,
+  .refreshed-collapsible-checkbox:checked ~ .header-button.refreshed-collapsible-button,
+  #sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button {
+    @rules();
+  }
+}
+
+/* "sidebar buttons" (the buttons for the header categories that are in the
+sidebar in the small layout) */
+.mixin-set-sidebar-button-styles( @rules ) {
+  .sidebar-button {
+    @rules();
+  }
+}
+.mixin-set-sidebar-button-styles-focus( @rules ) {
+  .sidebar-button:focus,
+  .refreshed-collapsible-checkbox:focus ~ .sidebar-button.refreshed-collapsible-button {
+    @rules();
+  }
+}
+.mixin-set-sidebar-button-styles-hover( @rules ) {
+  .sidebar-button:hover {
+    @rules();
+  }
+}
+.mixin-set-sidebar-button-styles-active( @rules ) {
+  .sidebar-button:active,
+  .refreshed-collapsible-checkbox:checked ~ .sidebar-button.refreshed-collapsible-button {
+    @rules();
+  }
+}
+
+/* make the toolbox stick to the top as you scroll down the page */
+.mixin-use-refreshed-toolbox-sticky( @background-color ) {
+  /* position: sticky is assigned with JS, since if JS is disabled we don't
+  want the sticky behavior (we only want it if we can tell whether or not
+  the element is stuck, which we need JS for) */
+
+  .refreshed-toolbox-sticky {
+    .position-sticky();
+  }
+
+  .refreshed-toolbox-stuck {
+    background-color: @background-color;
+  }
+}
+
+/* toolbox dropdown button styles */
+.mixin-set-toolbox-dropdown-button-styles( @rules ) {
+  #toolbox-dropdown-button {
+    @rules();
+  }
+}
+.mixin-set-toolbox-dropdown-button-styles-focus( @rules ) {
+  #toolbox-dropdown-checkbox:focus ~ #refreshed-toolbox #toolbox-dropdown-button {
+    @rules();
+  }
+}
+.mixin-set-toolbox-dropdown-button-styles-hover( @rules ) {
+  #toolbox-dropdown-button:hover {
+    @rules();
+  }
+}
+.mixin-set-toolbox-dropdown-button-styles-active( @rules ) {
+  #toolbox-dropdown-checkbox:checked ~ #refreshed-toolbox #toolbox-dropdown-button {
+    @rules();
+  }
+}
+
+/* customize the dropdown tray background color, active background color (the
+background color that links in the dropdown have when you click on them)
+and font color for text (not anchors) */
+.mixin-set-dropdown-tray-colors( @background-color, @active-background-color, @font-color ) {
+  .refreshed-dropdown-triangle::after {
+    border-bottom-color: @background-color;
+  }
+
+  .refreshed-dropdown-tray {
+    background-color: @background-color;
+    color: @font-color;
+
+    a {
+      .mixin-pretty-anchor( @active-background-color: @active-background-color );
+    }
+  }
+
+  .refreshed-dropdown-checkbox:checked ~ .refreshed-dropdown-button .explore-submenu-dropdown-anchor {
+    .mixin-pretty-anchor( @active: true, @active-background-color: @active-background-color );
+  }
+}
+
+/* set how far away the page content is from the edge of the viewport
+on the side opposite the one the sidebar is on */
+.mixin-set-content-margin-sidebar-opposite-side( @margin ) {
+  #content-footer-wrapper {
+    margin-right: @margin;
+  }
+  .refreshed-toolbox-stuck {
+    right: @margin;
+  }
+
+  #user-info-search-wrapper {
+    margin-right: @margin;
+  }
+}
+
+/*******************************************************************************
+********************************* Helper mixins ********************************
+*******************************************************************************/
+/* These helper mixins were written to be called by other mixins in this file.
+They may not be of much help if they're used directly in custom LESS. */
+
+/* adjust size of header icons */
+.mixin-helper-resize-header-icons( @width ) {
+  .refreshed-icon-refreshed-menu,
+  .refreshed-icon-search,
+  .refreshed-icon-refreshed-explore {
+    width: @width;
+    height: auto;
+  }
+}
+
+/* adjust width of sidebar when it's set to be always open */
+.mixin-helper-set-sidebar-width-inline( @width ) {
+  #sidebar-wrapper {
+    width: @width;
+  }
+
+  #content-footer-wrapper {
+    margin-left: @width;
+  }
+
+  .mixin-helper-set-site-navigation-max-width( @width );
+  .mixin-helper-set-content-margin-sidebar-side( @width );
+}
+
+/* adjust width of sidebar when it's triggered by pressing a button */
+.mixin-helper-set-sidebar-width-menu( @width ) {
+  #sidebar-wrapper {
+    width: @width;
+    left: -( @width );
+  }
+
+  .mixin-helper-set-site-navigation-max-width();
+}
+
+/* set how far away the page content is from the edge of the viewport
+on the side the sidebar is on */
+.mixin-helper-set-content-margin-sidebar-side( @margin ) {
+  #content-footer-wrapper {
+    margin-left: @margin;
+  }
+  .refreshed-toolbox-stuck {
+    left: @margin;
+  }
+}
+
+/* Helper mixin: Set the max-width of wiki logos in the site navigation
+dropdowns. */
+.mixin-helper-set-site-navigation-max-width( @width: @default-site-navigation-max-width ) {
+  .refreshed-logo-current,
+  .refreshed-logo-other .site-navigation-logo-img,
+  .refreshed-logo-other .site-navigation-logo-text {
+    max-width: @width - @site-navigation-toggle-width;
+  }
+}

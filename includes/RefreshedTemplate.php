@@ -946,7 +946,7 @@ class RefreshedTemplate extends BaseTemplate {
 	}
 
 	public function execute() {
-		global $wgMemc, $wgRefreshedUseExploreWithoutHeaderCategories;
+		global $wgMemc;
 
 		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
 
@@ -1053,7 +1053,7 @@ class RefreshedTemplate extends BaseTemplate {
 					<nav id="site-navigation-header-dropdown" class="site-navigation-full-logos multiple-wikis refreshed-dropdown" role="listbox">
 						<?php echo $thisWikiLinkWithLogo ?><!--
 			 	 --><input type="checkbox" id="site-navigation-header-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox"><!--
-			   --><label for="site-navigation-header-dropdown-checkbox" id="site-navigation-header-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless site-navigation-button">
+			   --><label for="site-navigation-header-dropdown-checkbox" id="site-navigation-header-dropdown-button" class="refreshed-dropdown-button header-button site-navigation-button">
 							<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 							<div class="refreshed-dropdown-triangle"></div>
 							<div class="refreshed-modal-background"></div>
@@ -1163,7 +1163,7 @@ class RefreshedTemplate extends BaseTemplate {
 						?>
 						<div id="user-info-dropdown" class="refreshed-dropdown" role="menu">
 							<input type="checkbox" id="user-info-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
-							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless-small">
+							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-button" class="refreshed-dropdown-button header-button-textless header-button">
 								<?php echo $this->makeAvatar( $user ) ?>
 								<span class="refreshed-username header-text"><?php echo $this->makeUsernameText( $user ) ?></span>
 								<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
@@ -1178,7 +1178,7 @@ class RefreshedTemplate extends BaseTemplate {
 					<div id="header-search" class="header-section">
 						<div id="header-search-dropdown" class="refreshed-dropdown">
 							<input type="checkbox" id="header-search-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
-							<label for="header-search-dropdown-checkbox" id="header-search-dropdown-button" class="refreshed-dropdown-button header-button header-button-textless">
+							<label for="header-search-dropdown-checkbox" id="header-search-dropdown-button" class="refreshed-dropdown-button header-button-textless header-button">
 								<?php $this->renderIcon( 'search' ) ?>
 								<div class="refreshed-modal-background"></div>
 								<div class="refreshed-dropdown-triangle"></div>
@@ -1218,13 +1218,11 @@ class RefreshedTemplate extends BaseTemplate {
 							?>
 							<nav id="site-navigation-sidebar-collapsible" class="site-navigation-full-logos multiple-wikis refreshed-collapsible" role="listbox">
 								<input type="checkbox" id="site-navigation-sidebar-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
-								<div id="site-navigation-sidebar-buttons-wrapper">
-									<?php echo $thisWikiLinkWithSidebarLogo ?><!--
-								--><label for="site-navigation-sidebar-collapsible-checkbox" id="site-navigation-sidebar-collapsible-button" class="site-navigation-button refreshed-collapsible-button header-button">
-										<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
-										<?php $this->renderIcon( 'refreshed-collapsible-collapse' ) ?>
-									</label>
-								</div>
+								<?php echo $thisWikiLinkWithSidebarLogo ?><!--
+							--><label for="site-navigation-sidebar-collapsible-checkbox" id="site-navigation-sidebar-collapsible-button" class="site-navigation-button refreshed-collapsible-button header-button">
+									<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
+									<?php $this->renderIcon( 'refreshed-collapsible-collapse' ) ?>
+								</label>
 								<ul id="site-navigation-sidebar-collapsible-tray" class="refreshed-collapsible-tray site-navigation-tray">
 									<?php $this->renderSiteNavigationItems( $siteNavigation ); ?>
 								</ul>
@@ -1249,7 +1247,7 @@ class RefreshedTemplate extends BaseTemplate {
 								?>
 								<div id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible" class="refreshed-collapsible header-category-collapsible sidebar-section" role="menu">
 									<input type="checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
-									<label for="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-button" class="refreshed-collapsible-button header-button header-category-collapsible-button">
+									<label for="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-button" class="sidebar-button refreshed-collapsible-button header-category-collapsible-button">
 										<span class="header-category-name sidebar-header header-category-sidebar-name"><?php echo htmlspecialchars( $name ) ?></span>
 										<span class="header-categories-sidebar-collapsible-icons-wrapper">
 											<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
@@ -1347,7 +1345,7 @@ class RefreshedTemplate extends BaseTemplate {
 										$this->renderIcon( 'refreshed-dropdown-expand' );
 										?>
 										<div class="refreshed-modal-background"></div>
-										<span id="toolbox-dropdown-triangle" class="refreshed-dropdown-triangle"></span>
+										<div id="toolbox-dropdown-triangle" class="refreshed-dropdown-triangle"></div>
 									</label>
 									<dl id="toolbox-dropdown-tray" class="refreshed-dropdown-tray">
 										<?php $this->renderToolboxDropdownItems( $pageTools ) ?>

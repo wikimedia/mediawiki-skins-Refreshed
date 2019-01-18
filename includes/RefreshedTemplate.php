@@ -1211,7 +1211,7 @@ class RefreshedTemplate extends BaseTemplate {
 		</header>
 		<div id="sidebar-wrapper">
 			<div id="sidebar">
-				<div id="site-navigation-sidebar-header-categories-sidebar-wrapper">
+				<div id="site-navigation-sidebar-heading-categories-sidebar-wrapper">
 					<div id="site-navigation-sidebar" class="site-navigation sidebar-section">
 						<?php
 						if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
@@ -1219,7 +1219,7 @@ class RefreshedTemplate extends BaseTemplate {
 							<nav id="site-navigation-sidebar-collapsible" class="site-navigation-full-logos multiple-wikis refreshed-collapsible" role="listbox">
 								<input type="checkbox" id="site-navigation-sidebar-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
 								<?php echo $thisWikiLinkWithSidebarLogo ?><!--
-							--><label for="site-navigation-sidebar-collapsible-checkbox" id="site-navigation-sidebar-collapsible-button" class="site-navigation-button refreshed-collapsible-button header-button">
+							--><label for="site-navigation-sidebar-collapsible-checkbox" id="site-navigation-sidebar-collapsible-button" class="site-navigation-button refreshed-collapsible-button sidebar-button">
 									<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
 									<?php $this->renderIcon( 'refreshed-collapsible-collapse' ) ?>
 								</label>
@@ -1231,7 +1231,7 @@ class RefreshedTemplate extends BaseTemplate {
 						} else { // if only one wiki
 							?>
 							<div id="site-navigation-sidebar-buttons-wrapper" class="site-navigation-full-logos single-wiki">
-								<?php echo $thisWikiLinkWithLogo ?>
+								<?php echo $thisWikiLinkWithSidebarLogo ?>
 							</div>
 						<?php
 						}
@@ -1248,7 +1248,7 @@ class RefreshedTemplate extends BaseTemplate {
 								<div id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible" class="refreshed-collapsible header-category-collapsible sidebar-section" role="menu">
 									<input type="checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
 									<label for="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-checkbox" id="header-category-<?php echo $headerCategoryCollapsibleIndex ?>-collapsible-button" class="sidebar-button refreshed-collapsible-button header-category-collapsible-button">
-										<span class="header-category-name sidebar-header header-category-sidebar-name"><?php echo htmlspecialchars( $name ) ?></span>
+										<span class="header-category-name sidebar-heading header-category-sidebar-name"><?php echo htmlspecialchars( $name ) ?></span>
 										<span class="header-categories-sidebar-collapsible-icons-wrapper">
 											<?php $this->renderIcon( 'refreshed-collapsible-expand' ) ?>
 											<?php $this->renderIcon( 'refreshed-collapsible-collapse' ) ?>
@@ -1272,7 +1272,7 @@ class RefreshedTemplate extends BaseTemplate {
 				foreach ( $sidebarContents as $main => $sub ) {
 					?>
 					<div class="sidebar-content sidebar-section">
-						<span class="sidebar-header"><?php echo htmlspecialchars( $main ) ?></span>
+						<span class="sidebar-heading"><?php echo htmlspecialchars( $main ) ?></span>
 						<ul>
 							<?php $this->renderSidebarContentSection( $sub ) ?>
 						</ul>

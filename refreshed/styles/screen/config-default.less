@@ -35,139 +35,127 @@ some extra advanced configuration. */
 
 /*******************************************************************************
 ********************************************************************************
-***************************** BASIC CONFIG TEMPLATE ****************************
+************************** START BASIC CONFIG TEMPLATE *************************
 ********************************************************************************
 *******************************************************************************/
 
-/*
-How to use this template:
-Make a copy and fill in the template as make Refreshed look the way you want.
-If you want to use the default value of a property, delete it from this
-template.
-Save the LESS file somewhere on your wiki, maybe at
-MediaWiki:Refreshed.css/template.
-
-An example of a filled-in copy of this template is available at
-config-default.less.
-*/
 /*******************************************************************************
 ***************************** STYLES FOR ALL LAYOUTS ***************************
 *******************************************************************************/
 
-body {
-  /* background for the page */
-  background: @body-background;
-  /* font family for the page */
-  font-family: @header-sidebar-footer-font-stack;
+@media screen {
+  body {
+    /* background for the page */
+    background: @body-background;
+    /* font family for the page */
+    font-family: @header-sidebar-footer-font-stack;
+  }
+
+  #header-wrapper,
+  #sidebar-wrapper,
+  #footer-wrapper {
+    /* font color for the header, sidebar, and footer */
+    color: @header-sidebar-footer-font-color;
+  }
+
+  #header-wrapper {
+    /* background for the header */
+    background: @header-background;
+  }
+
+  /* "header buttons" (the buttons in the header, the wiki logo button in the
+  sidebar in the small layout, and arrow button next to that logo) */
+  .mixin-set-header-button-styles( {
+    /* background for a header button */
+    background: @header-button-background;
+  } );
+  /* :focus styles */
+  .mixin-set-header-button-styles-focus( {
+    /* background for a header button when it's focused */
+    background: @header-button-focus-background;
+  } );
+  /* :hover styles */
+  .mixin-set-header-button-styles-hover( {
+    /* background for a header button when it's hovered over */
+    background: @header-button-hover-background;
+  } );
+  /* :active styles */
+  .mixin-set-header-button-styles-active( {
+    /* background for a header button when it's active */
+    background: @header-button-active-background;
+  } );
+
+  /* sidebar buttons (the buttons for the header categories that are in the
+  sidebar in the small layout) */
+  .mixin-set-sidebar-button-styles( {
+    /* background for a sidebar button */
+    background: @header-button-background;
+  } );
+  /* :focus styles */
+  .mixin-set-sidebar-button-styles-focus( {
+    /* background for a sidebar button when it's focused */
+    background: @header-button-focus-background;
+  } );
+  /* :hover styles */
+  .mixin-set-sidebar-button-styles-hover( {
+    /* background for a sidebar button when it's hovered over */
+    background: @header-button-hover-background;
+  } );
+  /* :active styles */
+  .mixin-set-sidebar-button-styles-active( {
+    /* background for a sidebar button when it's active */
+    background: @header-button-active-background;
+  } );
+
+  /* the button that opens the tools dropdown in the toolbox */
+  .mixin-set-toolbox-dropdown-button-styles({
+    background: @toolbox-dropdown-button-background;
+    color: @toolbox-dropdown-button-not-focus-color;
+  });
+  .mixin-set-toolbox-dropdown-button-styles-focus({
+    background: @toolbox-dropdown-button-focus-background;
+    color: @toolbox-dropdown-button-focus-color;
+  });
+  .mixin-set-toolbox-dropdown-button-styles-hover({
+    background: @toolbox-dropdown-button-hover-background;
+    color: @toolbox-dropdown-button-not-focus-color;
+  });
+  .mixin-set-toolbox-dropdown-button-styles-active({
+    background: @toolbox-dropdown-button-active-background;
+    color: @toolbox-dropdown-button-not-focus-color;
+  });
+
+  /* set the colors of dropdown trays (for example, dropdown trays that are
+  opened by buttons in the header) */
+  /* note that @active-background-color is the background-color of links when
+  they are active (clicked on), and @font-color is the color of non-link text */
+  .mixin-set-dropdown-tray-colors(
+    @background-color: @dropdown-tray-background-color,
+    @active-background-color: @dropdown-tray-active-background-color,
+    @font-color: @dropdown-tray-font-color
+  );
+
+  .refreshed-collapsible-tray {
+    /* set the colors of collapsible trays (for example, the site navigation
+    tray in the sidebar of the small layout) */
+    background-color: @header-button-active-background;
+  }
+
+  #content-wrapper {
+    /* background-color for the page content */
+    background-color: @content-background-color;
+    /* font family for the page content */
+    font-family: @content-font-stack;
+    /* font color for the page content */
+    color: @content-font-color;
+  }
+
+  .firstHeading,
+  .mw-headline {
+    /* font color for headings */
+    color: @content-font-color;
+  }
 }
-
-#header-wrapper,
-#sidebar-wrapper,
-#footer-wrapper {
-  /* font color for the header, sidebar, and footer */
-  color: @header-sidebar-footer-font-color;
-}
-
-#header-wrapper {
-  /* background for the header */
-  background: @header-background;
-}
-
-/*** "header buttons" (the buttons in the header, the wiki logo button in the
-sidebar in the small layout, and arrow button next to that logo) **/
-.mixin-set-header-button-styles( {
-  /* background for a header button */
-  background: @header-button-background;
-} );
-/* :focus styles */
-.mixin-set-header-button-styles-focus( {
-  /* background for a header button when it's focused */
-  background: @header-button-focus-background;
-} );
-/* :hover styles */
-.mixin-set-header-button-styles-hover( {
-  /* background for a header button when it's hovered over */
-  background: @header-button-hover-background;
-} );
-/* :active styles */
-.mixin-set-header-button-styles-active( {
-  /* background for a header button when it's active */
-  background: @header-button-active-background;
-} );
-
-/* sidebar buttons (the buttons for the header categories that are in the
-sidebar in the small layout) */
-.mixin-set-sidebar-button-styles( {
-  /* background for a sidebar button */
-  background: @header-button-background;
-} );
-/* :focus styles */
-.mixin-set-sidebar-button-styles-focus( {
-  /* background for a sidebar button when it's focused */
-  background: @header-button-focus-background;
-} );
-/* :hover styles */
-.mixin-set-sidebar-button-styles-hover( {
-  /* background for a sidebar button when it's hovered over */
-  background: @header-button-hover-background;
-} );
-/* :active styles */
-.mixin-set-sidebar-button-styles-active( {
-  /* background for a sidebar button when it's active */
-  background: @header-button-active-background;
-} );
-
-/* the button that opens the tools dropdown in the toolbox */
-.mixin-set-toolbox-dropdown-button-styles({
-  background: @toolbox-dropdown-button-background;
-  color: @toolbox-dropdown-button-not-focus-color;
-});
-.mixin-set-toolbox-dropdown-button-styles-focus({
-  background: @toolbox-dropdown-button-focus-background;
-  color: @toolbox-dropdown-button-focus-color;
-});
-.mixin-set-toolbox-dropdown-button-styles-hover({
-  background: @toolbox-dropdown-button-hover-background;
-});
-.mixin-set-toolbox-dropdown-button-styles-active({
-  background: @toolbox-dropdown-button-active-background;
-});
-
-/* set the colors of dropdown trays (for example, dropdown trays that are opened
-by buttons in the header) */
-/* note that @active-background-color is the background-color of links when they
-are active (clicked on), and @font-color is the color of non-link text */
-.mixin-set-dropdown-tray-colors(
-  @background-color: @dropdown-tray-background-color,
-  @active-background-color: @dropdown-tray-active-background-color,
-  @font-color: @dropdown-tray-font-color
-);
-
-.refreshed-collapsible-tray {
-  /* set the colors of collapsible trays (for example, the site navigation tray
-  in the sidebar of the small layout) */
-  background-color: @header-button-active-background;
-}
-
-#content-wrapper {
-  /* background-color for the page content */
-  background-color: @content-background-color;
-  /* font family for the page content */
-  font-family: @content-font-stack;
-  /* font color for the page content */
-  color: @content-font-color;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  /* font color for headings */
-  color: @content-font-color;
-}
-
 /*******************************************************************************
 ***************************** STYLES FOR BIG LAYOUT ****************************
 *******************************************************************************/

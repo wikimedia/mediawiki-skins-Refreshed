@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.0 beta.0",
+	"version": "4.0.0 beta.1",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -43,18 +43,10 @@
 				"refreshed/styles/screen/common.less": {
 					"media": "screen"
 				},
-				"refreshed/styles/screen/small.less": {
-					"media": "screen"
-				},
-				"refreshed/styles/screen/medium.less": {
-					"media": "screen"
-				},
-				"refreshed/styles/screen/big.less": {
-					"media": "screen"
-				},
-				"refreshed/styles/screen/config-default.less": {
-					"media": "screen"
-				},
+				"refreshed/styles/screen/small.less": {},
+				"refreshed/styles/screen/medium.less": {},
+				"refreshed/styles/screen/big.less": {},
+				"refreshed/styles/screen/config-default.less": {},
 				"refreshed/styles/print/print.less": {
 					"media": "print"
 				}
@@ -82,10 +74,7 @@
 			],
 			"+mediawiki.action.history.styles": "refreshed/mediawiki/action.history.styles.css",
 			"+mediawiki.action.view.filepage": "refreshed/mediawiki/action.view.filepage.css",
-			"+mediawiki.action.view.postEdit": "refreshed/mediawiki/action.view.postEdit.css",
 			"+mediawiki.diff.styles": "refreshed/mediawiki/diff.styles.css",
-			"+mediawiki.feedlink": "refreshed/mediawiki/feedlink.css",
-			"+mediawiki.skinning.elements": "refreshed/mediawiki/skinning.elements.css",
 			"+mediawiki.skinning.interface": "refreshed/mediawiki/skinning.interface.css",
 			"+mediawiki.special.changeslist.enhanced": "refreshed/mediawiki/special.changeslist.enhanced.css",
 			"+mediawiki.special.preferences.styles": "refreshed/mediawiki/special.preferences.styles.css",

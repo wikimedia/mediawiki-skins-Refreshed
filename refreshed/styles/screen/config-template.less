@@ -1,11 +1,3 @@
-@import url( PUT_URL_HERE );
-
-/*******************************************************************************
-********************************************************************************
-***************************** BASIC CONFIG TEMPLATE ****************************
-********************************************************************************
-*******************************************************************************/
-
 /* This is a LESS file that is compiled into CSS for use at
 MediaWiki:Refreshed.css.
 
@@ -21,9 +13,9 @@ cause for concern--the file isn't valid CSS because it's LESS!
 
 Make a note of the latest commit to Refreshed when you downloaded it.
 Browse the file tree for that commit online, either at GitHub or on
-phabricator.mediawiki.org. Find the URL to the raw copy of mixins.less, and
-replace the URL in the first line of this file with the URL to that raw copy.
-Repeat whenever you download a new version of the skin!
+phabricator.mediawiki.org. Find the URL to the raw copy of mixins-public.less,
+and replace the URL in the first line of this file with the URL to that raw
+copy. Repeat whenever you download a new version of the skin!
 
 Most parts of the template are optional; if you want to use the default value of
 a property, delete it from this template. One exception is that some mixins take
@@ -38,6 +30,14 @@ and copy/paste it into MediaWiki:Refreshed.css. That's it!
 Hopefully in the future, MediaWiki will be able to compile this LESS for you!
 (See https://phabricator.wikimedia.org/T56864.)
 */
+
+/*******************************************************************************
+********************************************************************************
+************************** START BASIC CONFIG TEMPLATE *************************
+********************************************************************************
+*******************************************************************************/
+
+@import url('PUT_URL_HERE');
 
 /*******************************************************************************
 ***************************** STYLES FOR ALL LAYOUTS ***************************
@@ -62,17 +62,17 @@ body {
   background: value; /* TODO */
 }
 
-/*** "header buttons" (the buttons in the header, the wiki logo button in the
-sidebar in the small layout, and arrow button next to that logo) **/
+/* "header buttons" (the buttons in the header, the wiki logo button in the
+sidebar in the small layout, and arrow button next to that logo) */
 .mixin-set-header-button-styles( {
   /* background for a header button */
   background: value; /* TODO */
-  /* background for a header button */
+  /* font color for a header button */
   color: value; /* TODO */
 
-  &span,
-  &svg,
-  &img {
+  span,
+  svg,
+  img {
     /* opacity for text or icons in a header button */
     opacity: value; /* TODO */
   }
@@ -81,12 +81,12 @@ sidebar in the small layout, and arrow button next to that logo) **/
 .mixin-set-header-button-styles-focus( {
   /* background for a header button when it's focused */
   background: value; /* TODO */
-  /* background for a header button when it's focused */
+  /* font color for a header button when it's focused */
   color: value; /* TODO */
 
-  &span,
-  &svg,
-  &img {
+  span,
+  svg,
+  img {
     /* opacity for text or icons in a header button when it's focused */
     opacity: value; /* TODO */
   }
@@ -95,12 +95,12 @@ sidebar in the small layout, and arrow button next to that logo) **/
 .mixin-set-header-button-styles-hover( {
   /* background for a header button when it's hovered over */
   background: value; /* TODO */
-  /* background for a header button when it's hovered over */
+  /* font color for a header button when it's hovered over */
   color: value; /* TODO */
 
-  &span,
-  &svg,
-  &img {
+  span,
+  svg,
+  img {
     /* opacity for text or icons in a header button when it's hovered over */
     opacity: value; /* TODO */
   }
@@ -109,12 +109,12 @@ sidebar in the small layout, and arrow button next to that logo) **/
 .mixin-set-header-button-styles-active( {
   /* background for a header button when it's active */
   background: value; /* TODO */
-  /* background for a header button when it's active */
+  /* font color for a header button when it's active */
   color: value; /* TODO */
 
-  &span,
-  &svg,
-  &img {
+  span,
+  svg,
+  img {
     /* opacity for text or icons in a header button when it's active */
     opacity: value; /* TODO */
   }
@@ -125,7 +125,7 @@ sidebar in the small layout) */
 .mixin-set-sidebar-button-styles( {
   /* background for a sidebar button */
   background: value; /* TODO */
-  /* background for a sidebar button */
+  /* font color for a sidebar button */
   color: value; /* TODO */
   /* opacity for text or icons in a sidebar button */
   opacity: value; /* TODO */
@@ -134,7 +134,7 @@ sidebar in the small layout) */
 .mixin-set-sidebar-button-styles-focus( {
   /* background for a sidebar button when it's focused */
   background: value; /* TODO */
-  /* background for a sidebar button when it's focused */
+  /* font color for a sidebar button when it's focused */
   color: value; /* TODO */
   /* opacity for text or icons in a sidebar button when it's focused */
   opacity: value; /* TODO */
@@ -143,7 +143,7 @@ sidebar in the small layout) */
 .mixin-set-sidebar-button-styles-hover( {
   /* background for a sidebar button when it's hovered over */
   background: value; /* TODO */
-  /* background for a sidebar button when it's hovered over */
+  /* font color for a sidebar button when it's hovered over */
   color: value; /* TODO */
   /* opacity for text or icons in a sidebar button when it's hovered over */
   opacity: value; /* TODO */
@@ -152,7 +152,7 @@ sidebar in the small layout) */
 .mixin-set-sidebar-button-styles-active( {
   /* background for a sidebar button when it's active */
   background: value; /* TODO */
-  /* background for a sidebar button when it's active */
+  /* font color for a sidebar button when it's active */
   color: value; /* TODO */
   /* opacity for text or icons in a sidebar button when it's active */
   opacity: value; /* TODO */
@@ -162,7 +162,7 @@ sidebar in the small layout) */
 .mixin-set-toolbox-dropdown-button-styles({
   /* background for the toolbox dropdown button */
   background: value; /* TODO */
-  /* background for the toolbox dropdown button */
+  /* font color for the toolbox dropdown button */
   color: value; /* TODO */
   /* opacity for text or icons in the toolbox dropdown button */
   opacity: value; /* TODO */
@@ -171,7 +171,7 @@ sidebar in the small layout) */
 .mixin-set-toolbox-dropdown-button-styles-focus({
   /* background for the toolbox dropdown button when it's focused */
   background: value; /* TODO */
-  /* background for the toolbox dropdown button when it's focused */
+  /* font color for the toolbox dropdown button when it's focused */
   color: value; /* TODO */
   /* opacity for text or icons in the toolbox dropdown button when it's focused */
   opacity: value; /* TODO */
@@ -180,7 +180,7 @@ sidebar in the small layout) */
 .mixin-set-toolbox-dropdown-button-styles-hover({
   /* background for the toolbox dropdown button when it's hovered over */
   background: value; /* TODO */
-  /* background for the toolbox dropdown button when it's hovered over */
+  /* font color for the toolbox dropdown button when it's hovered over */
   color: value; /* TODO */
   /* opacity for text or icons in the toolbox dropdown button when it's hovered over */
   opacity: value; /* TODO */
@@ -189,7 +189,7 @@ sidebar in the small layout) */
 .mixin-set-toolbox-dropdown-button-styles-active({
   /* background for the toolbox dropdown button when it's active */
   background: value; /* TODO */
-  /* background for the toolbox dropdown button when it's active */
+  /* font color for the toolbox dropdown button when it's active */
   color: value; /* TODO */
   /* opacity for text or icons in the toolbox dropdown button when it's active */
   opacity: value; /* TODO */
@@ -220,12 +220,8 @@ are active (clicked on), and @font-color is the color of non-link text */
   color: value; /* TODO */
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.firstHeading,
+.mw-headline {
   /* font family for headings */
   font-family: value; /* TODO */
   /* font color for headings */
@@ -241,15 +237,18 @@ h6 {
   .mixin-set-header-height( @height: value /* TODO */ );
 
   /* width for the sidebar */
-  .mixin-set-sidebar-width-big-layout( @width: value, /* TODO */ );
+  .mixin-set-sidebar-width-big-layout( @width: value /* TODO */ );
 
   /* how far away the content is from the edge of the viewport on the side
   opposite the side that the sidebar is on */
   .mixin-set-content-margin-sidebar-opposite-side( @margin: value /* TODO */ );
 
+  /* pick one of the following two mixins, and delete/comment out the other */
   /* make the toolbox stick to the top when you scroll down;
   specify its background-color when stuck */
-  .mixin-use-refreshed-toolbox-sticky( @background-color: /* TODO */ );
+  .mixin-use-refreshed-toolbox-sticky( @background-color: value /* TODO */ );
+  /* do NOT use make the toolbox stick to the top when you scroll down */
+  .mixin-disable-refreshed-toolbox-sticky();
 } );
 
 /*******************************************************************************
@@ -266,11 +265,16 @@ h6 {
   #sidebar-wrapper {
     /* background for the sidebar */
     background: value; /* TODO */
+    /* font color for the sidebar */
+    color: value; /* TODO */
   }
 
+  /* pick one of the following two mixins, and delete/comment out the other */
   /* make the toolbox stick to the top when you scroll down;
   specify its background-color when stuck */
-  .mixin-use-refreshed-toolbox-sticky( @background-color: /* TODO */ );
+  .mixin-use-refreshed-toolbox-sticky( @background-color: value /* TODO */ );
+  /* do NOT use make the toolbox stick to the top when you scroll down */
+  .mixin-disable-refreshed-toolbox-sticky();
 } );
 
 /*******************************************************************************
@@ -287,6 +291,8 @@ h6 {
   #sidebar-wrapper {
     /* background for the sidebar */
     background: value; /* TODO */
+    /* font color for the sidebar */
+    color: value; /* TODO */
   }
 } );
 

@@ -26,7 +26,6 @@
   position: sticky;
 }
 
-
 /*******************************************************************************
 ***************************** Other styling mixins *****************************
 *******************************************************************************/
@@ -91,19 +90,24 @@
   }
 }
 
+/* box shadow for header, content, dropdowns, etc. */
+.mixin-stack-box-shadow() {
+  box-shadow: 0 3px 9px 0 @content-shadow-color;
+}
+
 /* make styles exclusive to the big, medium, or small layouts */
 .mixin-big-layout-styles( @rules ) {
-  @media ( min-width: @big-layout-min-width ) {
+  @media screen and ( min-width: @big-layout-min-width ) {
     @rules();
   }
 }
 .mixin-medium-layout-styles( @rules ) {
-  @media ( min-width: @medium-layout-min-width ) and ( max-width: @medium-layout-max-width ) {
+  @media screen and ( min-width: @medium-layout-min-width ) and ( max-width: @medium-layout-max-width ) {
     @rules();
   }
 }
 .mixin-small-layout-styles( @rules ) {
-  @media ( max-width: @small-layout-max-width ) {
+  @media screen and ( max-width: @small-layout-max-width ) {
     @rules();
   }
 }
@@ -134,7 +138,12 @@
     top: @height;
   }
 
-  #sidebar {
+  /* If we use an inline sidebar, we'll eventually only want #sidebar-wrapper
+  to have the margin-top so the sidebar is below the header.
+  If we use a menu sidebar, we'll eventually only want #sidebar to have the
+  margin-top so the takes up the viewport's whole height when it opens. */
+  #sidebar-wrapper,
+  #sidebar, {
     margin-top: @height;
   }
 
@@ -237,6 +246,26 @@ sidebar in the small layout) */
 
   .refreshed-toolbox-stuck {
     background-color: @background-color;
+    padding-left: @content-wrapper-padding;
+    padding-right: @content-wrapper-padding;
+    margin: 0 -( @content-wrapper-padding );
+    .mixin-stack-box-shadow();
+  }
+}
+
+/* disable the toolbox sticky effect (so don't use the styles from
+.mixin-use-refreshed-toolbox-stick) */
+.mixin-disable-refreshed-toolbox-sticky() {
+  .refreshed-toolbox-sticky {
+    position: static;
+  }
+
+  .refreshed-toolbox-stuck {
+    background-color: inherit;
+    padding-left: inherit;
+    padding-right: inherit;
+    margin: inherit;
+    box-shadow: none;
   }
 }
 
@@ -317,6 +346,7 @@ They may not be of much help if they're used directly in custom LESS. */
 
 /* adjust width of sidebar when it's set to be always open */
 .mixin-helper-set-sidebar-width-inline( @width ) {
+
   #sidebar-wrapper {
     width: @width;
   }
@@ -325,7 +355,7 @@ They may not be of much help if they're used directly in custom LESS. */
     margin-left: @width;
   }
 
-  .mixin-helper-set-site-navigation-max-width( @width );
+  .mixin-helper-set-site-navigation-max-width-inline( @width );
   .mixin-helper-set-content-margin-sidebar-side( @width );
 }
 
@@ -336,7 +366,7 @@ They may not be of much help if they're used directly in custom LESS. */
     left: -( @width );
   }
 
-  .mixin-helper-set-site-navigation-max-width();
+  .mixin-helper-set-site-navigation-max-width-menu();
 }
 
 /* set how far away the page content is from the edge of the viewport
@@ -352,10 +382,39 @@ on the side the sidebar is on */
 
 /* Helper mixin: Set the max-width of wiki logos in the site navigation
 dropdowns. */
-.mixin-helper-set-site-navigation-max-width( @width: @default-site-navigation-max-width ) {
-  .refreshed-logo-current,
+/* when the sidebar is inline, the site navigation should be the same width
+as the sidebar */
+.mixin-helper-set-site-navigation-max-width-inline( @sidebar-width ) {
+  .single-wiki .refreshed-logo-current,
   .refreshed-logo-other .site-navigation-logo-img,
   .refreshed-logo-other .site-navigation-logo-text {
+    width: @sidebar-width;
+    max-width: @sidebar-width;
+  }
+
+  .multiple-wikis .refreshed-logo-current {
+    width: @sidebar-width - @site-navigation-toggle-width;
+    max-width: @sidebar-width - @site-navigation-toggle-width;
+  }
+
+  #site-navigation-header-dropdown-tray {
+    min-width: @sidebar-width;
+  }
+}
+/* when the sidebar is in a menu, the site navigation should be as wide as the
+default given width */
+.mixin-helper-set-site-navigation-max-width-menu( @width: @default-site-navigation-max-width ) {
+  .single-wiki .refreshed-logo-current,
+  .refreshed-logo-other .site-navigation-logo-img,
+  .refreshed-logo-other .site-navigation-logo-text {
+    max-width: @width;
+  }
+
+  .multiple-wikis .refreshed-logo-current {
     max-width: @width - @site-navigation-toggle-width;
+  }
+
+  #site-navigation-header-dropdown-tray {
+    min-width: @width;
   }
 }

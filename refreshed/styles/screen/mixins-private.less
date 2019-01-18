@@ -34,11 +34,6 @@ point irrelevant (see https://phabricator.wikimedia.org/T56864). */
   padding-right: 0.5em;
 }
 
-/* box shadow for header, content, dropdowns */
-.mixin-stack-box-shadow() {
-  .box-shadow( 0 3px 9px 0 @content-shadow-color );
-}
-
 /* explicitly inherit height so the text/images/svg inside have access to the
 element's full height, and make sure they're all vertically aligned the same way
 (especially labels)--for example this ensures all .refreshed-dropdown-triangle
@@ -64,12 +59,18 @@ clicked) */
   #sidebar-toggler {
     display: none;
   }
+  div#sidebar { /* div for specificity */
+    margin-top: 0;
+  }
 }
 
 /* hide the sidebar, and have it open when a button in the header is clicked */
 .mixin-use-sidebar-menu() {
   #sidebar-wrapper {
     z-index: @z-index-sidebar-menu;
+  }
+  div#sidebar-wrapper { /* div for specificity */
+    margin-top: 0;
   }
 }
 

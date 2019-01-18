@@ -1,4 +1,54 @@
 {
+	"name": "mediawiki/refreshed-skin",
+	"type": "mediawiki-skin",
+	"description": "A clean, modern MediaWiki skin with extensive CSS customisability",
+	"keywords": [
+		"wiki",
+		"MediaWiki",
+		"skin"
+	],
+	"homepage": "https://www.mediawiki.org/wiki/Skin:Vector",
+	"license": "GPL-2.0-or-later",
+	"authors": [
+		{
+			"name": "Adam Carter"
+		},
+		{
+			"name": "Drew1200"
+		},
+		{
+			"name": "George Barnick"
+		},
+		{
+			"name": "Jack Phoenix"
+		},
+		{
+			"name": "Lewis Cawte"
+		},
+		{
+			"name": "MacFan4000"
+		},
+		{
+			"name": "MtMNC"
+		},
+		{
+			"name": "Samantha Nguyen"
+		},
+		{
+			"name": "Seaside98"
+		},
+		{
+			"name": "ShermanTheMythran"
+		},
+		{
+			"name": "SirComputer"
+		}
+	],
+	"support": {
+		"wiki": "https://www.mediawiki.org/wiki/Skin:Refreshed",
+		"forum": "https://www.mediawiki.org/wiki/Skin_talk:Refreshed",
+		"source": "https://phabricator.wikimedia.org/diffusion/1893/"
+	},
 	"config": {
 		"optimize-autoloader": true,
 		"prepend-autoloader": false

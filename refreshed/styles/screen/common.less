@@ -138,8 +138,10 @@ different color from the rest of the link.*/
 	}
 
 	dt {
-		margin: 0;
-		margin-left: @dropdown-tray-vertical-padding;
+		margin: 0.2em 0 0.2em @dropdown-tray-vertical-padding;
+		&:first-of-type {
+			margin-top: 0;
+		}
 	}
 }
 
@@ -355,12 +357,19 @@ opposed to the sidebar), space them out */
 .site-navigation-logo-img,
 .site-navigation-logo-text {
 	.mixin-extra-header-button-padding();
-	.box-sizing( border-box ); /* padding should be included within the 100% width */
 }
 
+/* header logo for current wiki */
 .site-navigation-logo-img {
 	max-width: 100%;
 	max-height: 100%;
+}
+
+.refreshed-logo-other {
+  .site-navigation-logo-img,
+  .site-navigation-logo-text {
+    display: inline-block;
+  }
 }
 
 #site-navigation-header-dropdown {
@@ -499,7 +508,7 @@ the explore button which is at the top of it. */
 /* default search bar text */
 .mixin-set-searchInput-placeholder-styles( {
   color: @search-placeholder-text-font-color;
-  font-weight: 700;
+	font-weight: normal;
 } );
 
 .searchButton {
@@ -563,8 +572,8 @@ the explore button which is at the top of it. */
 	padding-bottom: @sidebar-section-padding-bottom;
 }
 
-.sidebar-header {
-		margin-left: @sidebar-header-padding;
+.sidebar-heading {
+		margin-left: @sidebar-heading-padding;
 }
 
 a.sidebar-item { /* a for specificity */
@@ -572,7 +581,7 @@ a.sidebar-item { /* a for specificity */
 	display: block;
 }
 
-#site-navigation-sidebar-collapsible {
+#site-navigation-sidebar {
 	text-align: center;
 }
 
@@ -600,13 +609,6 @@ a.sidebar-item { /* a for specificity */
 	padding-bottom: @pretty-anchor-border-width;
 	.flex-display();
 	.flex-align-items( initial );
-
-	&.refreshed-toolbox-sticky.refreshed-toolbox-stuck {
-		padding-left: @content-wrapper-padding;
-		padding-right: @content-wrapper-padding;
-		margin: 0 -( @content-wrapper-padding );
-		.mixin-stack-box-shadow();
-	}
 }
 
 #p-namespaces {

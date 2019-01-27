@@ -20,10 +20,3 @@
 	padding: 0;
 	border: 0;
 }
-
-/* stopping wikitables from overflowing, adding .scrollshadow-type scrolling */
-#bodyContent .wikitable {
-	overflow-x: auto;
-	display: block;
-	border: 0;
-}

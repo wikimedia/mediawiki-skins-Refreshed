@@ -30,6 +30,7 @@ function runRefreshedJS() {
 		sidebarToggler: document.getElementById( 'sidebar-toggler' ),
 		headerWrapper: document.getElementById( 'header-wrapper' ),
 		dropdownCheckboxClass: 'refreshed-dropdown-checkbox',
+		labelClass: 'refreshed-label',
 		dropdownButtonClass: 'refreshed-dropdown-button',
 		submenuDropdownCheckboxClass: 'refreshed-submenu-dropdown-checkbox',
 		elementOrParentsHaveDisplayNone: function( element ) {
@@ -157,14 +158,33 @@ function runRefreshedJS() {
 	********************************** CHECKBOXES ********************************
 	*****************************************************************************/
 
+	Refreshed.dropdownCheckboxes = Refreshed.headerWrapper.getElementsByClassName( Refreshed.dropdownCheckboxClass );
+
+	Refreshed.labelsForCheckboxes = Refreshed.body.getElementsByClassName( Refreshed.labelClass );
+
+	// for the given label element, return its corresponding checkbox
+	Refreshed.getCheckboxOfLabel = function( label ) {
+		return document.getElementById( label.getAttribute( 'for' ) );
+	};
+
+	console.log( 'running new version' );
+
+	/********* Prevent buttons from maintaining :focus when they are clicked ********/
+	for ( var labelCounter = 0; labelCounter < Refreshed.labelsForCheckboxes.length; labelCounter++ ) {
+		Refreshed.labelsForCheckboxes[labelCounter].addEventListener( 'mousedown', function( e ) {
+			console.log( '---starting work for #' + this.getAttribute( 'id' ) + '---' );
+			Refreshed.getCheckboxOfLabel( this ).checked = false;
+			console.log( 'unchecked #' + Refreshed.getCheckboxOfLabel( this ).getAttribute( 'id' ) );
+			console.log( '---ending work for #' + this.getAttribute( 'id' ) + '---' );
+		} );
+	}
+
 	/******** Hide dropdowns if their corresponding button is hidden; ***********/
 	/**************** hide sidebar when sidebar button is hidden ****************/
 
 	// for example, the header category checkboxes may stay checked, so their
 	// dropdowns may stay open, after the viewport shrinks and the header category
 	// buttons disappear
-
-	Refreshed.dropdownCheckboxes = Refreshed.headerWrapper.getElementsByClassName( Refreshed.dropdownCheckboxClass );
 
 	// returns true if element is entirely above/below container, otherwise false
 	Refreshed.elementOverflowsContainer = function( element, container ) {

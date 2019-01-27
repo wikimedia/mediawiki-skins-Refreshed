@@ -188,7 +188,6 @@ blanket-applying styles to a bunch of different buttons) */
   }
 }
 .mixin-set-header-button-styles-focus( @rules ) {
-  .header-button:focus,
   .refreshed-dropdown-checkbox:focus ~ .header-button.refreshed-dropdown-button,
   .refreshed-collapsible-checkbox:focus ~ .header-button.refreshed-collapsible-button,
   #sidebar-toggler-checkbox:focus ~ #header-wrapper #sidebar-toggler-button {
@@ -204,7 +203,7 @@ blanket-applying styles to a bunch of different buttons) */
   .header-button:active,
   .refreshed-dropdown-checkbox:checked ~ .header-button.refreshed-dropdown-button,
   .refreshed-collapsible-checkbox:checked ~ .header-button.refreshed-collapsible-button,
-  #sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button {
+  #sidebar-toggler-checkbox:checked ~ #header-wrapper #sidebar-toggler-button{
     @rules();
   }
 }
@@ -217,7 +216,6 @@ sidebar in the small layout) */
   }
 }
 .mixin-set-sidebar-button-styles-focus( @rules ) {
-  .sidebar-button:focus,
   .refreshed-collapsible-checkbox:focus ~ .sidebar-button.refreshed-collapsible-button {
     @rules();
   }

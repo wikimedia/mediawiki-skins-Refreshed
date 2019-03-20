@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.0 beta.2",
+	"version": "4.0.0 beta.3",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -64,18 +64,12 @@
 	},
 	"ResourceModuleSkinStyles": {
 		"refreshed": {
-			"ext.echo.styles.alert": "refreshed/extensions/Echo/echo.alert.less",
-			"ext.echo.styles.badge": "refreshed/extensions/Echo/echo.badge.less",
 			"ext.echo.styles.notifications": "refreshed/extensions/Echo/echo.notifications.less",
 			"ext.echo.ui.desktop": "refreshed/extensions/Echo/echo.ui.NotificationBadgeWidget.less",
-			"ext.echo.ui": [
-				"refreshed/extensions/Echo/echo.ui.overlay.less",
-				"refreshed/extensions/Echo/echo.ui.less"
-			],
+			"ext.echo.ui": "refreshed/extensions/Echo/echo.ui.overlay.less",
 			"+mediawiki.action.history.styles": "refreshed/mediawiki/action.history.styles.css",
 			"+mediawiki.action.view.filepage": "refreshed/mediawiki/action.view.filepage.css",
 			"+mediawiki.diff.styles": "refreshed/mediawiki/diff.styles.css",
-			"+mediawiki.skinning.content": "refreshed/mediawiki/skinning.content.css",
 			"+mediawiki.skinning.interface": "refreshed/mediawiki/skinning.interface.css",
 			"+mediawiki.special.changeslist.enhanced": "refreshed/mediawiki/special.changeslist.enhanced.css",
 			"+mediawiki.special.preferences.styles": "refreshed/mediawiki/special.preferences.styles.css",

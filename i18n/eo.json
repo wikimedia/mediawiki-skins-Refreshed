@@ -1,8 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robin van der Vliet"
+			"Robin van der Vliet",
+			"Mirin"
 		]
 	},
-	"refreshed-advert": "Reklamo"
+	"refreshed-advert": "Reklamo",
+	"refreshed-desc": "Pura, moderna MediaVikia etoso, vaste agordebla per CSS"
 }

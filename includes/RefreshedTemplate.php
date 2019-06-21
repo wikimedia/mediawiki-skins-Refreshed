@@ -96,11 +96,11 @@ class RefreshedTemplate extends BaseTemplate {
 									<path d="M17 12v5H3v-5H1v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5z"/>
 									<path d="M15 7l-5-6-5 6h4v8h2V7h4z"/>
 								</svg>',
-		'user-anon' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-anon ooui-icon-userAnonymous avatar avatar-no-socialprofile" aria-hidden="true">
+		'user-anon' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-anon ooui-icon-userAnonymous avatar-image" aria-hidden="true">
 											<path d="M15 2H5L4 8h12l-1-6zM0 10s2 1 10 1 10-1 10-1l-4-2H4zm6 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm8 0a3 3 0 1 0 3 3 3 3 0 0 0-3-3z"/>
 											<path d="M8 14h4v1H8z"/>
 										</svg>',
-		'user-loggedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-loggedin ooui-icon-userActive avatar avatar-no-socialprofile" aria-hidden="true">
+		'user-loggedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" class="refreshed-icon refreshed-icon-user-loggedin ooui-icon-userActive avatar-image" aria-hidden="true">
 													<path d="M10 12.5c-5.92 0-9 3.5-9 5.5v1h18v-1c0-2-3.08-5.5-9-5.5z"/>
 													<circle cx="10" cy="6" r="5"/>
 												</svg>',
@@ -582,33 +582,49 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @return string
 	 */
 	private function makeAvatar( $user ) {
-		// if using SocialProfile (logged in or not), return SocialProfile avatar
+
+		$wrapperClassList = 'avatar';
+		$imageClassList = 'avatar-image';
+
+		// update wrapper classes
+		if ( $this->data['loggedin'] ) {
+			$wrapperClassList .= ' avatar-logged-in';
+		} else {
+			$wrapperClassList .= ' avatar-logged-out';
+		}
+
+		// if using SocialProfile, return the SocialProfile avatar
 		if ( class_exists( 'wAvatar' ) ) {
-			$avatar = new wAvatar( $user->getId(), 'l' );
-			return $avatar->makeAvatarURL( [
-				'class' => 'avatar avatar-image'
+			$image = (new wAvatar( $user->getId(), 'l' ))->makeAvatarURL( [
+				'class' => $imageClassList
 			] );
-		} elseif ( $this->data['loggedin'] ) { // if no SocialProfile and user is logged in...
-			// if wiki has not set custom image for logged in users...
-			if ( $this->getMsg( 'refreshed-icon-logged-in' )->isDisabled() ) {
-				return $this->makeIcon( 'user-loggedin' );
-			} else { // if wiki has set custom image for logged in users...
-				return Html::element( 'img', [
-					'src' => $this->getMsg( 'refreshed-icon-logged-in' )->escaped(),
-					'class' => 'avatar avatar-no-socialprofile avatar-image'
-				] );
-			}
-		} else { // if no SocialProfile and user is not logged in...
-			// if wiki has not set a custom image for logged out users
-			if ( $this->getMsg( 'refreshed-icon-logged-out' )->isDisabled() ) {
-				return $this->makeIcon( 'user-anon' );
-			} else { // if wiki has set custom image for logged out users
-				return Html::element( 'img', [
-					'src' => $this->getMsg( 'refreshed-icon-logged-out' )->escaped(),
-					'class' => 'avatar avatar-no-socialprofile avatar-image'
-				] );
+		} else {  // if not using SocialProfile...
+			$wrapperClassList .= ' avatar-no-socialprofile';
+
+			// use the appropriate site-defined custom avatar if given;
+			// otherwise, use the skin's default avatar
+			if ( $this->data['loggedin'] ) {
+				if ( $this->getMsg( 'refreshed-icon-logged-in' )->isDisabled() ) {
+					$image = $this->makeIcon( 'user-loggedin' );
+				} else { // if wiki has set custom image for logged in users
+					$image = Html::element( 'img', [
+						'src' => $this->getMsg( 'refreshed-icon-logged-in' )->escaped(),
+						'class' => $imageClassList
+					] );
+				}
+			} else {
+				if ( $this->getMsg( 'refreshed-icon-logged-out' )->isDisabled() ) {
+					$image = $this->makeIcon( 'user-anon' );
+				} else { // if wiki has set custom image for logged out users
+					$image = Html::element( 'img', [
+						'src' => $this->getMsg( 'refreshed-icon-logged-out' )->escaped(),
+						'class' => $imageClassList
+					] );
+				}
 			}
 		}
+
+		return Html::rawElement( 'span', [ 'class' => $wrapperClassList ], $image );
 	}
 
 	/**
@@ -1313,17 +1329,17 @@ class RefreshedTemplate extends BaseTemplate {
 								echo $this->getIndicators();
 							}
 							?>
-							<div id="main-title-messages">
-								<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>
-								<?php
-								if ( $this->data['subtitle'] || $this->data['undelete'] ) {
-									?>
-									<div id="contentSub"<?php $this->html( 'userlangattributes' ) ?>><?php $this->html( 'subtitle' ) ?><?php $this->html( 'undelete' ) ?></div>
-								<?php
-								}
-								?>
-							</div>
 						</header>
+						<div id="main-title-messages">
+							<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>
+							<?php
+							if ( $this->data['subtitle'] || $this->data['undelete'] ) {
+								?>
+								<div id="contentSub"<?php $this->html( 'userlangattributes' ) ?>><?php $this->html( 'subtitle' ) ?><?php $this->html( 'undelete' ) ?></div>
+							<?php
+							}
+							?>
+						</div>
 						<input type="checkbox" id="toolbox-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
 						<div id="refreshed-toolbox" role="menubar">
 							<ul id="p-namespaces" class="toolbox-section">

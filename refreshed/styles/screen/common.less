@@ -470,7 +470,7 @@ the explore button which is at the top of it. */
 	margin-right: 0.25em;
 }
 
-#user-info-dropdown-button .avatar {
+#user-info-dropdown-button .avatar-image {
 	width: @avatar-width;
 	height: @avatar-height;
 }
@@ -594,6 +594,10 @@ a.sidebar-item { /* a for specificity */
 	.mixin-stack-box-shadow();
 }
 
+#content-heading {
+	.flex-display();
+}
+
 #main-title-messages {
 	border-bottom: 1px solid @firstHeading-border-color;
 }
@@ -700,9 +704,11 @@ a.feedlink {
 	line-height: 1.5em;
 	font-size: 0.875em;
 	word-wrap: break-word;
+	overflow: hidden; /* account for floated content when calculating height */
 }
 
 .firstHeading {
+	.flex( @grow: 1, @shrink: 1 );
 	font-size: 2.68em;
 	padding: 0;
 	margin-bottom: 0;
@@ -711,7 +717,7 @@ a.feedlink {
 }
 
 .mw-indicators {
-	float: right;
+	.flex( @grow: 0, @shrink: 0 );
 }
 
 /*******************************************************************************

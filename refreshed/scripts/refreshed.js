@@ -167,18 +167,6 @@ function runRefreshedJS() {
 		return document.getElementById( label.getAttribute( 'for' ) );
 	};
 
-	console.log( 'running new version' );
-
-	/********* Prevent buttons from maintaining :focus when they are clicked ********/
-	for ( var labelCounter = 0; labelCounter < Refreshed.labelsForCheckboxes.length; labelCounter++ ) {
-		Refreshed.labelsForCheckboxes[labelCounter].addEventListener( 'mousedown', function( e ) {
-			console.log( '---starting work for #' + this.getAttribute( 'id' ) + '---' );
-			Refreshed.getCheckboxOfLabel( this ).checked = false;
-			console.log( 'unchecked #' + Refreshed.getCheckboxOfLabel( this ).getAttribute( 'id' ) );
-			console.log( '---ending work for #' + this.getAttribute( 'id' ) + '---' );
-		} );
-	}
-
 	/******** Hide dropdowns if their corresponding button is hidden; ***********/
 	/**************** hide sidebar when sidebar button is hidden ****************/
 

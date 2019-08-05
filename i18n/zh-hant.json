@@ -1,9 +1,10 @@
 {
 	"@metadata": {
 		"authors": [
-			"Cwlin0416"
+			"Cwlin0416",
+			"Winston Sung"
 		]
 	},
 	"refreshed-advert": "廣告",
-	"refreshed-desc": "擁有大量 CSS 自訂性的一個簡潔、現代的 MediaWiki 外觀"
+	"refreshed-desc": "一個簡潔、現代、擁有大量 CSS 自訂性的 MediaWiki 佈景主題"
 }

@@ -408,20 +408,20 @@ class RefreshedTemplate extends BaseTemplate {
 			// use the appropriate site-defined custom avatar if given;
 			// otherwise, use the skin's default avatar
 			if ( $this->data['loggedin'] ) {
-				if ( $this->getMsg( 'refreshed-icon-logged-in' )->isDisabled() ) {
+				if ( $this->getMsg( 'refreshed-icon-logged-in' )->inContentLanguage()->isDisabled() ) {
 					$image = $this->makeIcon( 'user-loggedin' );
-				} else { // if wiki has set custom image for logged in users
+				} else {  // if wiki has set custom image for logged in users
 					$image = Html::element( 'img', [
-						'src' => $this->getMsg( 'refreshed-icon-logged-in' )->escaped(),
+						'src' => $this->getMsg( 'refreshed-icon-logged-in' )->inContentLanguage()->escaped(),
 						'class' => $imageClassList
 					] );
 				}
 			} else {
-				if ( $this->getMsg( 'refreshed-icon-logged-out' )->isDisabled() ) {
+				if ( $this->getMsg( 'refreshed-icon-logged-out' )->inContentLanguage()->isDisabled() ) {
 					$image = $this->makeIcon( 'user-anon' );
-				} else { // if wiki has set custom image for logged out users
+				} else {  // if wiki has set custom image for logged out users
 					$image = Html::element( 'img', [
-						'src' => $this->getMsg( 'refreshed-icon-logged-out' )->escaped(),
+						'src' => $this->getMsg( 'refreshed-icon-logged-out' )->inContentLanguage()->escaped(),
 						'class' => $imageClassList
 					] );
 				}
@@ -571,7 +571,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @param array $sub details on the section's content
 	 */
 	private function renderSidebarContentSection( $sub ) {
-		if ( is_array( $sub ) ) { // MW-generated stuff from the sidebar message
+		if ( is_array( $sub ) ) {  // MW-generated stuff from the sidebar message
 			foreach ( $sub as $key => $action ) {
 				// append 'sidebar-item' class to a inside
 				if ( isset( $action['class'] ) ) {
@@ -631,7 +631,7 @@ class RefreshedTemplate extends BaseTemplate {
 				}
 				$output['namespaces'][$toolName] = $toolDetails;
 
-			} else { // otherwise place the tool in its correct category
+			} else {  // otherwise place the tool in its correct category
 				foreach ( $categories as $category => $toolNamesInCurrentCategory ) {
 					foreach ( $toolNamesInCurrentCategory as $toolNameInCurrentCategory ) {
 						if ( $toolName == $toolNameInCurrentCategory ) {
@@ -796,39 +796,39 @@ class RefreshedTemplate extends BaseTemplate {
 
 		// url to this wiki's homepage/page you visit when logo is clicked;
 		// to be used with renderCurrentWikiLogoAndLink
-		$thisWikiURLMsg = $skin->msg( 'refreshed-this-wiki-url' );
-		if ( $thisWikiURLMsg->isDisabled() ) {
+		if ( $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->isDisabled() ) {
 			$thisWikiURL = htmlspecialchars( Title::newMainPage()->getFullURL() );
 		} else {
-			$thisWikiURL = $skin->msg( 'refreshed-this-wiki-url' )->escaped();
+			$thisWikiURL = $skin->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->escaped();
 		}
 
 		// url to this wiki's logo image (or null if no such image);
 		// to be used with renderCurrentWikiLogoAndLink
-		$thisLogoURLMsg = $skin->msg( 'refreshed-this-wiki-wordmark' );
-		if ( $thisLogoURLMsg->isDisabled() ) {
-			$thisLogoURL = null;
+		// when picking logo, prioritize the user's language over the content language
+		if ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->isDisabled() ) {
+			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->escaped();
+		} elseif ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->isDisabled() ) {
+			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->escaped();
 		} else {
-			$thisLogoURL = $skin->msg( 'refreshed-this-wiki-wordmark' )->escaped();
+			$thisLogoURL = null;
 		}
 
 		// this wiki's name; to be used with renderCurrentWikiLogoAndLink
 		$thisWikiName = $config->get( 'Sitename' );
 
-		// anchor containing this wiki's logo
-		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current header-button', $skin->msg( 'Tooltip-p-logo' ) );
-		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current refreshed-logo-sidebar-current header-button', $skin->msg( 'Tooltip-p-logo' ) );
+		// anchors containing this wiki's logo
+		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current header-button', $this->getMsg( 'Tooltip-p-logo' ) );
+		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current refreshed-logo-sidebar-current header-button', $this->getMsg( 'Tooltip-p-logo' ) );
 
-		$thisWikiMobileLogo = $skin->msg( 'refreshed-this-wiki-mobile-logo' );
-		$thisWikiMobileLogoImgElement = '';
-		if ( !$thisWikiMobileLogo->isDisabled() ) {
-			$thisWikiMobileLogoImgElement = Html::element( 'img', [
-				'src' => $thisWikiMobileLogo->escaped(),
-				'alt' => $config->get( 'Sitename' ),
-				'class' => 'site-navigation-logo-img site-navigation-logo-icon'
-			] );
+		// this wiki's mobile logo image (if there is one)
+		// when picking logo, prioritize the user's language over the content language
+		if ( !$this->getMsg( 'refreshed-this-wiki-mobile-logo' )->isDisabled() ) {
+			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' );
+		} else {
+			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' )->inContentLanguage();
 		}
 
+		// tools
 		$personalTools = $this->getAndRearrangePersonalTools();
 		$dropdownPersonalTools = $personalTools['dropdown'];
 		$extraPersonalTools = $personalTools['extra'];
@@ -849,6 +849,7 @@ class RefreshedTemplate extends BaseTemplate {
 		}
 		$sidebarContents = array_merge( $this->data['sidebar'], $sidebarContentsWikiTools, $sidebarContentsLanguages );
 
+		// footer
 		$footerIcons = $this->getFooterIcons( 'icononly' );
 
 		// allow error handling in makeElementWithIconHelper:
@@ -868,7 +869,7 @@ class RefreshedTemplate extends BaseTemplate {
 			</div>
 			<div id="site-navigation-header" class="site-navigation header-section">
 				<?php
-				if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
+				if ( $siteNavigation ) {  // if there is a site dropdown (so there are multiple wikis)
 					?>
 					<nav id="site-navigation-header-dropdown" class="site-navigation-full-logos multiple-wikis refreshed-dropdown" role="listbox">
 						<?php echo $thisWikiLinkWithLogo ?><!--
@@ -883,7 +884,7 @@ class RefreshedTemplate extends BaseTemplate {
 						</ul>
 					</nav>
 					<?php
-				} else { // if only one wiki
+				} else {  // if only one wiki
 					?>
 					<div class="site-navigation-full-logos single-wiki">
 						<?php echo $thisWikiLinkWithLogo ?>
@@ -891,10 +892,12 @@ class RefreshedTemplate extends BaseTemplate {
 				<?php
 				}
 
-				if ( !$thisWikiMobileLogo->isDisabled() ) { // if a mobile logo has been defined
+				if ( !$thisMobileLogoURL->isDisabled() ) {  // if a mobile logo has been defined
 					?>
 					<div class="site-navigation-icon-logos">
-						<a class="main header-button" href="<?php echo $thisWikiURL ?>"><?php echo $thisWikiMobileLogoImgElement ?></a>
+						<a class="main header-button" href="<?php echo $thisWikiURL ?>">
+							<img src="<?php echo $thisMobileLogoURL->escaped() ?>" alt="<?php echo $thisWikiName ?>" class="site-navigation-logo-img site-navigation-logo-icon" />
+						</a>
 					</div>
 					<?php
 				}
@@ -971,7 +974,7 @@ class RefreshedTemplate extends BaseTemplate {
 				</div>
 				<div id="user-info-search-wrapper">
 					<div id="user-info" class="header-section">
-						<?php if ( $extraPersonalTools ) { // if there are extra personal tools (e.g., for Echo)
+						<?php if ( $extraPersonalTools ) {  // if there are extra personal tools (e.g., for Echo)
 							?>
 							<div id="extra-personal-tools">
 								<ul id="extra-personal-tools-tray">
@@ -1034,7 +1037,7 @@ class RefreshedTemplate extends BaseTemplate {
 				<div id="site-navigation-sidebar-heading-categories-sidebar-wrapper">
 					<div id="site-navigation-sidebar" class="site-navigation sidebar-section">
 						<?php
-						if ( $siteNavigation ) { // if there is a site dropdown (so there are multiple wikis)
+						if ( $siteNavigation ) {  // if there is a site dropdown (so there are multiple wikis)
 							?>
 							<nav id="site-navigation-sidebar-collapsible" class="site-navigation-full-logos multiple-wikis refreshed-collapsible" role="listbox">
 								<input type="checkbox" id="site-navigation-sidebar-collapsible-checkbox" class="refreshed-collapsible-checkbox refreshed-checkbox">
@@ -1048,7 +1051,7 @@ class RefreshedTemplate extends BaseTemplate {
 								</ul>
 							</nav>
 							<?php
-						} else { // if only one wiki
+						} else {  // if only one wiki
 							?>
 							<div id="site-navigation-sidebar-buttons-wrapper" class="site-navigation-full-logos single-wiki">
 								<?php echo $thisWikiLinkWithSidebarLogo ?>
@@ -1148,7 +1151,7 @@ class RefreshedTemplate extends BaseTemplate {
 						<div id="refreshed-toolbox" role="menubar">
 							<ul id="p-namespaces" class="toolbox-section">
 								<?php
-								if ( MWNamespace::isTalk( $titleNamespace ) ) { // if talk namespace
+								if ( MWNamespace::isTalk( $titleNamespace ) ) {  // if talk namespace
 									$this->renderBackToSubjectLink( $linkRenderer, $title );
 								}
 								$this->renderPageToolsInCategory( 'inline', $pageTools, 'namespaces' );

@@ -507,6 +507,7 @@ class RefreshedTemplate extends BaseTemplate {
 													// is enabled by default.
 													// I wasn't able to get 'rss' working
 													// locally either, so...
+													// @phan-suppress-next-line PhanTypeArraySuspiciousNullable
 													$dataForLink = $toolData['links']['atom'];
 												} else {
 													$dataForLink = $toolData;

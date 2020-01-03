@@ -1,43 +1,5 @@
-/* This is a LESS file that is compiled into CSS for use at
-MediaWiki:Refreshed.css.
-
-How to use this template:
-Save the LESS file somewhere on your wiki, maybe at MediaWiki:Refreshed.less.
-Protect it so random users can't edit it!
-
-Optionally, change the page information button (find the button, or view history
-and change the &action=history part to &action=info) and change the page's
-content model to CSS. It may make editing easier. If you do this, the site may
-warn you that the page contains invalid CSS when you edit it. This is not a
-cause for concern--the file isn't valid CSS because it's LESS!
-
-Make a note of the latest commit to Refreshed when you downloaded it.
-Browse the file tree for that commit online, either at GitHub or on
-phabricator.mediawiki.org. Find the URL to the raw copy of mixins-public.less,
-and replace the URL in the first line of this file with the URL to that raw
-copy. Repeat whenever you download a new version of the skin!
-
-Most parts of the template are optional; if you want to use the default value of
-a property, delete it from this template. One exception is that some mixins take
-multiple properties as inputs and require all those properties to be explicitly
-written out. For example, if you choose to use .mixin-set-dropdown-tray-colors,
-you need to pass all three parameters into it.
-
-Once you're satisfied with your LESS, copy/paste it into a compiler.
-For example, there is one at beautifytools.com/less-compiler.php. Take the CSS
-and copy/paste it into MediaWiki:Refreshed.css. That's it!
-
-Hopefully in the future, MediaWiki will be able to compile this LESS for you!
-(See https://phabricator.wikimedia.org/T56864.)
-*/
-
-/*******************************************************************************
-********************************************************************************
-************************** START BASIC CONFIG TEMPLATE *************************
-********************************************************************************
-*******************************************************************************/
-
-@import url('PUT_URL_HERE');
+@import 'mixins-public';
+@import 'variables';
 
 /*******************************************************************************
 ***************************** STYLES FOR ALL LAYOUTS ***************************

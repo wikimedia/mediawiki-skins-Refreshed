@@ -160,22 +160,22 @@ class RefreshedTemplate extends BaseTemplate {
 			$iconName = 'nstab';
 		}
 
-		// get the icon if it's direction-independent
-		$output = file_get_contents(__DIR__ . '/../refreshed/icons/no-direction/' . $iconName . '.svg');
-
-		// get the icon if it's direction-dependent
-		if ( $output === false ) {
-			$output = file_get_contents(__DIR__ . '/../refreshed/icons/' . $this->getSkin()->getLanguage()->getDir() . '/' . $iconName . '.svg');
+		// get the icon
+		$direction_dependent_url = __DIR__ . '/../refreshed/icons/' . $this->getSkin()->getLanguage()->getDir() . '/' . $iconName . '.svg';
+		$direction_independent_url = __DIR__ . '/../refreshed/icons/no-direction/' . $iconName . '.svg';
+		if ( file_exists( $direction_dependent_url ) ) {
+			return file_get_contents( $direction_dependent_url );
+		} elseif ( file_exists( $direction_independent_url ) ) {
+			return file_get_contents( $direction_independent_url );
+		} else {
+			return false;
 		}
 
-		// return the icon as a string if it exists, otherwise false
-		return $output;
 	}
 
 	/**
 	 * Render an inline SVG containing the inputted icon to the page.
 	 * @param string|null $iconName string or null if no icon
-	 * @return string
 	 */
 	private function renderIcon( $iconName ) {
 		// if the icon doesn't exist, then makeIcon will return false,
@@ -199,7 +199,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs); optional
 	 * @return string string representing the list item
 	 */
-	private function makeListItemWithIconAtStart( $iconName = '', $key, $item, $options = [] ) {
+	private function makeListItemWithIconAtStart( $iconName, $key, $item, $options = [] ) {
 		return $this->makeElementWithIconHelper( 'list item', $iconName, $key, $item, $options, 'start' );
 	}
 
@@ -219,7 +219,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs); optional
 	 * @return string string representing the link
 	 */
-	private function makeLinkWithIconAtStart( $iconName = '', $key, $item, $options = [] ) {
+	private function makeLinkWithIconAtStart( $iconName, $key, $item, $options = [] ) {
 		return $this->makeElementWithIconHelper( 'link', $iconName, $key, $item, $options, 'start' );
 	}
 
@@ -239,7 +239,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs); optional
 	 * @return string string representing the list item
 	 */
-	private function makeListItemWithIconAtEnd( $iconName = '', $key, $item, $options = [] ) {
+	private function makeListItemWithIconAtEnd( $iconName, $key, $item, $options = [] ) {
 		return $this->makeElementWithIconHelper( 'list item', $iconName, $key, $item, $options, 'end' );
 	}
 
@@ -259,7 +259,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 *  (see docs); optional
 	 * @return string string representing the link
 	 */
-	private function makeLinkWithIconAtEnd( $iconName = '', $key, $item, $options = [] ) {
+	private function makeLinkWithIconAtEnd( $iconName, $key, $item, $options = [] ) {
 		return $this->makeElementWithIconHelper( 'link', $iconName, $key, $item, $options, 'end' );
 	}
 
@@ -399,7 +399,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 		// if using SocialProfile, return the SocialProfile avatar
 		if ( class_exists( 'wAvatar' ) ) {
-			$image = (new wAvatar( $user->getId(), 'l' ))->makeAvatarURL( [
+			$image = (new wAvatar( $user->getId(), 'l' ))->getAvatarURL( [
 				'class' => $imageClassList
 			] );
 		} else {  // if not using SocialProfile...
@@ -486,7 +486,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render the list items to be displayed in the header's user dropdown.
-	 * @param array $personalTools
+	 * @param array $dropdownPersonalTools
 	 */
 	private function renderUserDropdownItems( $dropdownPersonalTools ) {
 		foreach ( $dropdownPersonalTools as $keyAndIconName => $item ) {
@@ -606,7 +606,7 @@ class RefreshedTemplate extends BaseTemplate {
 		// which category each tool belongs in
 		$categories = [
 			'namespaces' => [ 'talk' ], // also anything starting with "nstab-"
-			'main-actions' => [ 've-edit', 'edit',	'view', 'history', 'addsection', 'viewsource' ],
+			'main-actions' => [ 've-edit', 'edit', 'view', 'history', 'addsection', 'viewsource' ],
 			'page-tools' => [ 'delete', 'rename', 'protect', 'unprotect', 'move', 'whatlinkshere', 'recentchangeslinked', 'print', 'permalink', 'info', 'citethispage', 'feeds' ],
 			'user-tools' => [ 'contributions', 'blockip', 'userrights', 'log', 'wikilove' ],
 			'watch' => [ 'watch', 'unwatch' ],
@@ -704,11 +704,6 @@ class RefreshedTemplate extends BaseTemplate {
 			}
 		} elseif ( $mode == 'inline' ) {
 			$options['text-wrapper']['attributes']['class'] = 'inline-tool-text';
-			if ( isset( $toolDetails['class'] ) ) {
-				$toolDetails['class'] .= ' ' . 'inline-tool-anchor';
-			} else {
-				$toolDetails['class'] = 'inline-tool-anchor';
-			}
 			foreach ( $pageTools[$category] as $keyAndIconName => $item ) {
 				echo $this->makeListItemWithIconAtStart( $keyAndIconName, $keyAndIconName, $item, $options );
 			}
@@ -754,7 +749,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * Helper method for renderFooterIconsRow.
 	 * Render a block of icons in the footer.
 	 * @param object $skin the skin object
-	 * @param string $category the type of icons (used for a class name)
+	 * @param string $blockName the type of icons (used for an id name)
 	 * @param array $blockIcons an array containing info on the icons
 	 */
 	private function makeFooterIconsBlock( $skin, $blockName, $blockIcons ) {
@@ -799,7 +794,7 @@ class RefreshedTemplate extends BaseTemplate {
 		if ( $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->isDisabled() ) {
 			$thisWikiURL = htmlspecialchars( Title::newMainPage()->getFullURL() );
 		} else {
-			$thisWikiURL = $skin->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->escaped();
+			$thisWikiURL = $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->escaped();
 		}
 
 		// url to this wiki's logo image (or null if no such image);

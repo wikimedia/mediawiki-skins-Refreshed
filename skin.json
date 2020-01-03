@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.0 beta.6",
+	"version": "4.0.0",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -47,6 +47,7 @@
 				"refreshed/styles/screen/medium.less": {},
 				"refreshed/styles/screen/big.less": {},
 				"refreshed/styles/screen/config-default.less": {},
+				"refreshed/styles/screen/custom.less": {},
 				"refreshed/styles/print/print.less": {
 					"media": "print"
 				}

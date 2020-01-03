@@ -1,0 +1,70 @@
+@import 'variables';
+@import 'mixins-private';
+@import 'mixins-public';
+
+.mixin-medium-layout-styles( {
+	/*****************************************************************************
+	*************************** DROPDOWNS/COLLAPSIBLES ***************************
+	*****************************************************************************/
+
+	/* Make right: 0; stick dropdown trays to the right edge of the dropdown,
+	not the viewport */
+	#p-tools {
+		position: relative;
+	}
+
+	#user-info-dropdown-tray {
+		right: 1em;
+	}
+
+	.refreshed-dropdown-tray {
+		width: @medium-dropdown-tray-width;
+	}
+
+	/* if you want to change this to -inline, you need to also change the
+	definition of .mixin-set-sidebar-width-medium-layout in mixins.css */
+	.mixin-use-sidebar-menu();
+
+	.mixin-use-searchInput-menu( @medium-header-search-width, auto );
+
+	/*****************************************************************************
+	*********************************** HEADER ***********************************
+	*****************************************************************************/
+
+	#site-navigation-header {
+		.site-navigation-icon-logos {
+			display: none;
+		}
+	}
+
+	/* don't use the .header-button-textless styles on medium or big */
+	#user-info-dropdown-button {
+		width: auto;
+		.mixin-extra-header-button-padding();
+	}
+
+	/*****************************************************************************
+	*********************************** SIDEBAR **********************************
+	*****************************************************************************/
+
+	#site-navigation-sidebar-heading-categories-sidebar-wrapper {
+		display: none;
+	}
+
+	/*****************************************************************************
+	*********************************** CONTENT **********************************
+	*****************************************************************************/
+
+	/* toolbox */
+	a#back-to-subject { /* a for specificity */
+		display: none;
+	}
+
+	.mw-indicator {
+		display: inline-block;
+	}
+
+	/*****************************************************************************
+	*********************************** FOOTER ***********************************
+	*****************************************************************************/
+} );

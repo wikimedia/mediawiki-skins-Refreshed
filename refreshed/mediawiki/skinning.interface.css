@@ -16,40 +16,41 @@
 /* Category links */
 #catlinks {
 	background: none;
-	margin: 0 0.9em -.5em 0.9em;
+	margin: 0;
 	padding: 0;
 	border: 0;
-	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
-.catlinks li {
-	border-color: #ddd;
-}
-
-.printfooter {
-	display: none;
-}
-
-/* stopping wikitables from overflowing, adding .scrollshadow-type scrolling */
-#bodyContent .wikitable {
-	overflow-x: auto;
-	display: block;
-	border: 0;
-	/* same as .scrollshadow, but #f9f9f9 instead of white */
-	background:
-		linear-gradient(90deg, #f9f9f9 20%, rgba(255,255,255,0)),
-		linear-gradient(270deg, #f9f9f9 20%, rgba(255,255,255,0)) 100% 0,
-		linear-gradient(90deg, #e3e3e3 10%, rgba(255,255,255,0)),
-		linear-gradient(270deg, #e3e3e3 10%, rgba(255,255,255,0)) 100% 0;
+#mw-normal-catlinks::before,
+.toctitle h2::before {
+	content: '';
+	display: inline-block;
+	vertical-align: text-bottom;
+	background-position: center center;
+	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
-	background-attachment: local, local, scroll, scroll;
+	margin-right: 0.3em;
 }
 
-/* [[MediaWiki:Noarticletext]] (the notice shown on nonexistent pages) */
-div.noarticletext {
-	border: 1px solid #ccc;
-	background: #fff;
-	color: #000;
-	padding: 0.2em 1em;
+#mw-normal-catlinks::before {
+	width: 1em;
+	height: 1em;
+}
+
+.toctitle h2::before {
+	width: 1.2em;
+	height: 1.2em;
+}
+
+/* category background images are specified in mixins-public.less so they can
+use variables */
+
+[dir = ltr] .toctitle h2::before {
+	/* ooui-icon-stripeToC-ltr */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M5 3h14v2H5zm0 6h14v2H5zm0 6h14v2H5zM1 3h2v2H1zm0 6h2v2H1zm0 6h2v2H1z'/%3E%3C/svg%3E );
+}
+
+[dir = rtl] .toctitle h2::before {
+	/* ooui-icon-stripeToC-rtl */
+	background-image: url( data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath d='M1 3h14v2H1zm0 6h14v2H1zm0 6h14v2H1zM17 3h2v2h-2zm0 6h2v2h-2zm0 6h2v2h-2z'/%3E%3C/svg%3E );
 }

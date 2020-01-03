@@ -27,21 +27,6 @@ class SkinRefreshed extends SkinTemplate {
 			] )
 		);
 
-		// Inject webfont loader CSS file inline here so that it'll work even for IE11
-		// Conditional comments aren't supported in IE10+ so we have no way of loading
-		// this just for IE, so better to have all font declarations here (and
-		// maybe one day we'll rename the file to just "fontloader.css" or something)
-		// Based on some quick-ish testing on 25 July 2016, it appears that font
-		// declarations need to be loaded before they're used so that they work
-		// under IE(11).
-		// See https://phabricator.wikimedia.org/T134653 for more info.
-		$out->addHeadItem( 'webfontfix',
-			 Html::element( 'link', [
-				'href' => $wgLocalStylePath . '/Refreshed/refreshed/styles/screen/iefontfix.css',
-				'rel' => 'stylesheet'
-			] )
-		);
-
 		// Add JavaScript via ResourceLoader
 		$out->addModules( 'skins.refreshed.js' );
 	}

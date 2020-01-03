@@ -3,12 +3,17 @@
 		"authors": []
 	},
 	"refreshed-advert": "Advertisement",
+	"refreshed-action-addsection": "Add topic",
 	"refreshed-desc": "A clean, modern MediaWiki skin with extensive CSS customisability",
+	"refreshed-explore": "Explore",
 	"refreshed-icon-logged-in": "-",
 	"refreshed-icon-logged-out": "-",
 	"refreshed-navigation": "-",
+	"refreshed-page-tools": "Page tools",
 	"refreshed-this-wiki-mobile-logo": "-",
 	"refreshed-this-wiki-url": "-",
 	"refreshed-this-wiki-wordmark": "",
-	"refreshed-wiki-dropdown": ""
+	"refreshed-user-tools": "User tools",
+	"refreshed-wiki-dropdown": "",
+	"refreshed-wiki-tools": "Wiki tools"
 }

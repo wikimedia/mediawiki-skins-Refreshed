@@ -1,0 +1,111 @@
+/***************************** layout breakpoints *****************************/
+@medium-layout-min-width: 720px;
+@medium-layout-max-width: 1000px;
+
+@big-layout-min-width: ( @medium-layout-max-width + 1px );
+@small-layout-max-width: ( @medium-layout-min-width - 1px );
+
+/********************************* z-indexes **********************************/
+
+/* see https://www.mediawiki.org/wiki/Manual:Coding_conventions/CSS#z-index;
+we assign the header 101 not 100 so the toolbox can be beneath the header
+and still be above content */
+@z-index-header: 101;
+/* if there are any elements in #bodyContent that have their own stacking
+context, they will appear higher than #refreshed-toolbox since they appear
+later in the DOM. To prevent this, we give #refreshed-toolbox a positive
+z-index. Specifically, we assume the header has a high enough z-index to sit
+above everything in #bodyContent, and we set up a guaranteed index right below
+the header that's still above the content, so we use that. */
+@z-index-refreshed-toolbox: @z-index-header - 1;
+/* When the toolbox is stuck to the top and the dropdown is open, the toolbox
+should be placed higher than the header. Otherwise the close overlay for the
+dropdown appears behind the header. */
+@z-index-refreshed-toolbox-stuck-when-dropdown-open: @z-index-header + 1;
+/* close overlays should appear above the header */
+@z-index-close-overlay: @z-index-header + 1;
+/* More than @z-index-dropdown close-overlay so dropdowns appears above the
+close overlay. Less than @z-index-dropdown-triangle to ensure the triangle
+appears above the dropdown and thus is not underneath its drop shadow */
+@z-index-dropdown-tray: @z-index-close-overlay + 1;
+/* 1 more than z-index of .refreshed-dropdown-tray to ensure the triangle
+appears above the dropdown and thus is not underneath its drop shadow */
+@z-index-dropdown-triangle: @z-index-dropdown-tray + 1;
+/* so it appears above all header stuff and all close overlays */
+@z-index-sidebar-menu: @z-index-close-overlay + 1;
+
+/******************************** other colors ********************************/
+
+@search-placeholder-text-font-color: #808080;
+@modal-background-color: rgba(0, 0, 0, 0.2);
+@content-shadow-color: rgba( 75, 75, 75, 0.4 );
+@search-suggestions-border-color: #ddd;
+@firstHeading-border-color: #ddd;
+
+/************************* avatar and icon properties *************************/
+
+@refreshed-icon-dimension: 1em;
+
+/* dimensions of avatar (SocialProfile or default icons) */
+@avatar-width: 30px;
+@avatar-height: auto;
+
+/***************************** dropdown properties ****************************/
+
+@dropdown-triangle-border-size: 0.4em;
+
+@dropdown-tray-refreshed-icon-margin-right: 0.4em;
+
+@small-dropdown-tray-sidebar-font-size: 1.2em;
+
+/* width for dropdown trays */
+@big-dropdown-tray-width: 12em;
+@medium-dropdown-tray-width: @big-dropdown-tray-width;
+
+@dropdown-tray-margin-top: -3px;
+@dropdown-tray-vertical-padding: 0.5em;
+
+/***************************** header properties ******************************/
+
+/* site navigation header section (wiki homepage link) */
+@site-navigation-toggle-width: 2em; /* this is also used for the sidebar */
+@default-site-navigation-max-width: 12em; /* used for the sidebar menu */
+
+/* header categories */
+@header-category-collapsible-padding: 0.25em 0.25em 0.25em 0;
+
+/* header search box */
+@header-search-font-size: 1em;
+@header-search-height: 2em;
+@header-search-padding: 0.5em;
+@big-header-search-width: 15em;
+@medium-header-search-width: 20em;
+@small-header-search-width: 100%;
+
+/* width of placeholder that ensures proper explore button behavior on resize */
+@explore-header-categories-sibling-width: 1px;
+
+/***************************** sidebar properties *****************************/
+
+@sidebar-heading-padding: 0.25em;
+@sidebar-section-padding-bottom: 0.25em;
+
+@sidebar-ul-padding-top: 0.25em;
+@sidebar-ul-padding-bottom: 0.5em;
+
+/***************************** content properties *****************************/
+
+/* content position, padding */
+@content-wrapper-padding: 1em;
+
+/* toolbox */
+@refreshed-toolbox-height: 2em;
+
+/****************************** footer properties *****************************/
+
+@footer-item-spacing-horizontal: 1em;
+@footer-item-spacing-vertical: 1em;
+
+/****************************** other properties ******************************/
+
+@pretty-anchor-border-width: 0.3em;

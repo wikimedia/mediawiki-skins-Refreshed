@@ -632,7 +632,8 @@ class RefreshedTemplate extends BaseTemplate {
 		$categories = [
 			'namespaces' => [ 'talk' ], // also anything starting with "nstab-"
 			'main-actions' => [
-				've-edit', 'edit', 'view', 'history', 'addsection', 'viewsource'
+				've-edit', 'edit', 'view', 'history', 'addsection', 'viewsource',
+				'report-problem'
 			],
 			'page-tools' => [
 				'delete', 'rename', 'protect', 'unprotect', 'move', 'whatlinkshere',

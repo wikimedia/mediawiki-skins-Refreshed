@@ -1,18 +1,15 @@
-/****** The code that runs in scroll events was written without jQuery for
-faster performance. Speed isn't as important here, so this code uses
-jQuery for readability. ******/
+/****** The code that runs in scroll events was written without jQuery for faster performance. ******/
 
 // based on https://stackoverflow.com/a/39993724
 if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
 	runRefreshedJS();
 } else {
-	document.addEventListener('DOMContentLoaded', function () {
+	document.addEventListener( 'DOMContentLoaded', function () {
 		runRefreshedJS();
 	} );
 }
 
 function runRefreshedJS() {
-
 	var Refreshed = {
 		positionStickyRules: [ 'sticky', '-webkit-sticky' ],
 		shouldUseSticky: false,
@@ -43,7 +40,7 @@ function runRefreshedJS() {
 	*********************************** TOOLBOX **********************************
 	*****************************************************************************/
 
-	/******* Add/remove class from toolbox based if toolbox is stuck/ not *******/
+	/******* Add/remove class from toolbox based if toolbox is stuck/not *******/
 
 	for ( var stickyCounter = 0; stickyCounter < Refreshed.positionStickyRules.length; stickyCounter++ ) {
 		if ( CSS.supports( 'position', Refreshed.positionStickyRules[stickyCounter] ) ) {
@@ -53,7 +50,6 @@ function runRefreshedJS() {
 	}
 
 	if ( Refreshed.shouldUseSticky ) {
-
 		Refreshed.toolbox.classList.add( Refreshed.stickyClass );
 
 		Refreshed.toolboxHasStuckClass = Refreshed.toolbox.classList.contains( Refreshed.stuckClass );
@@ -126,7 +122,6 @@ function runRefreshedJS() {
 	} );
 
 	/********** Add class to the suggestions box for the header search **********/
-
 	Refreshed.labelHeaderSuggestionsBox = function( headerSuggestions ) {
 		headerSuggestions.id = Refreshed.headerSuggestionsId;
 	};
@@ -152,7 +147,11 @@ function runRefreshedJS() {
 	};
 
 	Refreshed.searchSuggestionsMutationObserver = new MutationObserver( Refreshed.mutationCallback );
-	Refreshed.searchSuggestionsMutationObserver.observe( Refreshed.body, { childList: true, attributes: false, subtree: false } );
+	Refreshed.searchSuggestionsMutationObserver.observe( Refreshed.body, {
+		childList: true,
+		attributes: false,
+		subtree: false
+	} );
 
 	/*****************************************************************************
 	********************************** CHECKBOXES ********************************
@@ -192,7 +191,7 @@ function runRefreshedJS() {
 	// (Note this process will correctly deal with disabling submenu checkboxes,
 	// because they will be disabled when the menu that contains them is hidden.)
 	Refreshed.dropdownCheckboxShouldBeDisabled = function( checkbox ) {
-		var button = checkbox.parentNode.getElementsByClassName( this.dropdownButtonClass ).item(0);
+		var button = checkbox.parentNode.getElementsByClassName( this.dropdownButtonClass ).item( 0 );
 		return this.elementOrParentsHaveDisplayNone( button ) ||
 		( !checkbox.classList.contains( Refreshed.submenuDropdownCheckboxClass ) && this.elementOverflowsContainer( button, this.headerWrapper ) );
 	};
@@ -204,7 +203,7 @@ function runRefreshedJS() {
 	// sibling, so a different method would be needed to target it
 	// (and the toolbox isn't ever hidden anyway, so it doesn't matter)
 	Refreshed.disableHiddenDropdownCheckboxes = function() {
-		for (var hiddenDropdownCounter = 0; hiddenDropdownCounter < Refreshed.dropdownCheckboxes.length; hiddenDropdownCounter++) {
+		for ( var hiddenDropdownCounter = 0; hiddenDropdownCounter < Refreshed.dropdownCheckboxes.length; hiddenDropdownCounter++ ) {
 			// If the checkbox is hidden, uncheck and disable it.
 			// If the checkbox is not hidden, enable it.
 			if ( this.dropdownCheckboxShouldBeDisabled( this.dropdownCheckboxes[hiddenDropdownCounter] ) ) {
@@ -224,7 +223,7 @@ function runRefreshedJS() {
 
 	Refreshed.disableHiddenDropdownCheckboxes();
 
-	for (var checkboxCounter = 0; checkboxCounter < Refreshed.dropdownCheckboxes.length; checkboxCounter++) {
+	for ( var checkboxCounter = 0; checkboxCounter < Refreshed.dropdownCheckboxes.length; checkboxCounter++ ) {
 		Refreshed.dropdownCheckboxes[checkboxCounter].addEventListener( 'change', function() {
 			Refreshed.disableHiddenDropdownCheckboxes();
 		} );
@@ -234,5 +233,4 @@ function runRefreshedJS() {
 		Refreshed.disableHiddenDropdownCheckboxes();
 		Refreshed.hideSidebarWhenSidebarTogglerHidden();
 	} );
-
 }

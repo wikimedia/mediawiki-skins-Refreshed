@@ -13,8 +13,6 @@ class SkinRefreshed extends SkinTemplate {
 	 * @param OutputPage $out
 	 */
 	public function initPage( OutputPage $out ) {
-		global $wgLocalStylePath;
-
 		parent::initPage( $out );
 
 		$out->addMeta( 'viewport', 'width=device-width' );

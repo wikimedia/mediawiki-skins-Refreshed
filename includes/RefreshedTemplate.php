@@ -55,6 +55,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * name|logo URL|, or name|logo URL), 'wikiURL' => '#'.
 	 * - Finally if neither is provided (name or name||) then both of the above
 	 * apply.
+	 *
 	 * @param string $line Line (beginning with a *) from a MediaWiki: message
 	 * @return array attributes for the resulting link
 	 */
@@ -140,6 +141,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Return an inline SVG containing the inputted icon, as a string.
+	 *
 	 * @param string|null $iconName string or null if no icon
 	 * @return string|bool string if the icon exists, otherwise false
 	 */
@@ -170,11 +172,11 @@ class RefreshedTemplate extends BaseTemplate {
 		} else {
 			return false;
 		}
-
 	}
 
 	/**
 	 * Render an inline SVG containing the inputted icon to the page.
+	 *
 	 * @param string|null $iconName string or null if no icon
 	 */
 	private function renderIcon( $iconName ) {
@@ -190,6 +192,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * (If the icon name isn't recognized, or the list item or icon HTML can't
 	 * be parsed for whatever reason, the list item is returned without
 	 * adding the icon.)
+	 *
 	 * @param string $iconName the name of the icon
 	 * @param string $key the "$key" for the standard makeLink/makeListItem
 	 *  (see docs)
@@ -210,6 +213,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * (If the icon name isn't recognized, or the link or icon HTML can't
 	 * be parsed for whatever reason, the link is returned without
 	 * adding the icon.)
+	 *
 	 * @param string $iconName the name of the icon
 	 * @param string $key the "$key" for the standard makeLink/makeListItem
 	 *  (see docs)
@@ -230,6 +234,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * (If the icon name isn't recognized, or the list item or icon HTML can't
 	 * be parsed for whatever reason, the list item is returned without
 	 * adding the icon.)
+	 *
 	 * @param string $iconName the name of the icon
 	 * @param string $key the "$key" for the standard makeLink/makeListItem
 	 *  (see docs)
@@ -250,6 +255,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * (If the icon name isn't recognized, or the link or icon HTML can't
 	 * be parsed for whatever reason, the link is returned without
 	 * adding the icon.)
+	 *
 	 * @param string $iconName the name of the icon
 	 * @param string $key the "$key" for the standard makeLink/makeListItem
 	 *  (see docs)
@@ -274,6 +280,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * assuming $iconName is specified. (If the icon name isn't recognized, or the=
 	 * list item/link or icon HTML can't be parsed for whatever reason, the list
 	 * item/link is returned without adding the icon.)
+	 *
 	 * @param string $mode Expects either 'list item' or 'link'
 	 * @param string $iconName the name of the icon
 	 * @param string $key the "$key" for the standard makeLink/makeListItem
@@ -360,7 +367,8 @@ class RefreshedTemplate extends BaseTemplate {
 	 * Given $text, load it into a DOMDocument as HTML. If all goes as planned
 	 * (the input doesn't break the parser), return the resulting DOMDocument.
 	 * Otherwise, echo errors and return false.
-	 * @param string $text the text to interpret as HTML (shouldn't contain html
+	 *
+	 * @param string $text The text to interpret as HTML (shouldn't contain html
 	 *  or body tags)
 	 * @return DOMDocument|bool DOMDocument if no errors, otherwise false
 	 */
@@ -382,11 +390,11 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Return the user's avatar element as a string (if using SocialProfile).
 	 * Otherwise, return the appropriate placeholder element as a string.
+	 *
 	 * @param User $user
 	 * @return string
 	 */
 	private function makeAvatar( $user ) {
-
 		$wrapperClassList = 'avatar';
 		$imageClassList = 'avatar-image';
 
@@ -399,7 +407,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 		// if using SocialProfile, return the SocialProfile avatar
 		if ( class_exists( 'wAvatar' ) ) {
-			$image = (new wAvatar( $user->getId(), 'l' ))->getAvatarURL( [
+			$image = ( new wAvatar( $user->getId(), 'l' ) )->getAvatarURL( [
 				'class' => $imageClassList
 			] );
 		} else {  // if not using SocialProfile...
@@ -433,6 +441,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Get the username text (string) to be displayed in the header.
+	 *
 	 * @param User $user
 	 * @return string
 	 */
@@ -450,8 +459,10 @@ class RefreshedTemplate extends BaseTemplate {
 	 * tools. The "dropdown" tools are the ones that should go into the user info
 	 * dropdown, and the "extra" tools (like Echo ones) are ones that should be
 	 * placed next to the user dropdown.
+	 *
 	 * Inspired by and partially adapted from the Timeless skin's getUserLinks
 	 * function.
+	 *
 	 * @return array $rearrangedPersonalTools where the key "dropdown" contains
 	 *  the dropdown tools, and the key "extra" contains the extra tools.
 	 */
@@ -469,13 +480,18 @@ class RefreshedTemplate extends BaseTemplate {
 				 unset( $dropdownTools[$currentToolToMove] );
 			 }
 		 }
-		 return [ 'dropdown' => $dropdownTools, 'extra' => $extraTools ];
+
+		 return [
+			 'dropdown' => $dropdownTools,
+			 'extra' => $extraTools
+		 ];
 	 }
 
 	/**
 	 * Render the list items to be displayed next to the user dropdown
 	 * (e.g., for Echo).
 	 * Inspired by how Timeless handles Echo.
+	 *
 	 * @param array $extraPersonalTools
 	 */
 	private function renderExtraPersonalTools( $extraPersonalTools ) {
@@ -486,6 +502,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render the list items to be displayed in the header's user dropdown.
+	 *
 	 * @param array $dropdownPersonalTools
 	 */
 	private function renderUserDropdownItems( $dropdownPersonalTools ) {
@@ -497,6 +514,7 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Render the items of the site navigation dropdown/collapsible to appear
 	 * in the header/sidebar.
+	 *
 	 * @param array $siteNavigation an array containing info for the site
 	 *  navigation colapsible
 	 */
@@ -512,17 +530,21 @@ class RefreshedTemplate extends BaseTemplate {
 		foreach ( $siteNavigation as $wikiLogoInfo ) {
 			// send each of the parsed pieces of wiki logo info to renderWikiLogo
 			// for rendering
-			echo Html::rawElement( 'li', [], $this->makeWikiLinkWithLogo( $wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'], $wikiLogoInfo['wikiURL'], $logoClassList ) );
+			echo Html::rawElement( 'li', [], $this->makeWikiLinkWithLogo(
+				$wikiLogoInfo['wikiName'], $wikiLogoInfo['logoURL'],
+				$wikiLogoInfo['wikiURL'], $logoClassList
+			) );
 		}
 	}
 
 	/**
 	 * Output as a string an anchor for a wiki, with the wiki's logo inside.
-	 * @param string $wikiName the wiki's name
+	 *
+	 * @param string $wikiName The wiki's name
 	 * @param string|null $logoURL URL to the wiki's logo image (if null, render
 	 *  logo as text)
-	 * @param string $wikiURL the URL the anchor goes to
-	 * @param string $classList a list of the classes to add to the outputted
+	 * @param string $wikiURL The URL the anchor goes to
+	 * @param string $classList A list of the classes to add to the outputted
 	 *  anchor element
 	 * @param string $wikiTitle (optional) text to use as the anchor's title
 	 *  attribute instead of $wikiName
@@ -552,7 +574,8 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Render the items of the header category dropdown/collapsible to appear in
 	 * the header/sidebar.
-	 * @param array $headerCategoryDropdown an array containing info for a header
+	 *
+	 * @param array $headerCategoryDropdown An array containing info for a header
 	 *  category dropdown
 	 */
 	private function renderHeaderCategoryItems( $headerCategoryDropdown ) {
@@ -568,7 +591,8 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render one of the content sections of the sidebar
-	 * @param array $sub details on the section's content
+	 *
+	 * @param array $sub Details on the section's content
 	 */
 	private function renderSidebarContentSection( $sub ) {
 		if ( is_array( $sub ) ) {  // MW-generated stuff from the sidebar message
@@ -597,7 +621,8 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Sort all of the content actions into categories for easier use.
 	 * Inspired by and adapted from Skin:Timeless.
-	 * @param array $tools the tools to sort
+	 *
+	 * @param array $tools The tools to sort
 	 * @return array where each key is a category and each item is an array of
 	 *  the page tools in that category (if nothing is in a category, that
 	 *  category's key corresponds to an empty array)
@@ -606,8 +631,14 @@ class RefreshedTemplate extends BaseTemplate {
 		// which category each tool belongs in
 		$categories = [
 			'namespaces' => [ 'talk' ], // also anything starting with "nstab-"
-			'main-actions' => [ 've-edit', 'edit', 'view', 'history', 'addsection', 'viewsource' ],
-			'page-tools' => [ 'delete', 'rename', 'protect', 'unprotect', 'move', 'whatlinkshere', 'recentchangeslinked', 'print', 'permalink', 'info', 'citethispage', 'feeds' ],
+			'main-actions' => [
+				've-edit', 'edit', 'view', 'history', 'addsection', 'viewsource'
+			],
+			'page-tools' => [
+				'delete', 'rename', 'protect', 'unprotect', 'move', 'whatlinkshere',
+				'recentchangeslinked', 'print', 'permalink', 'info', 'citethispage',
+				'feeds'
+			],
 			'user-tools' => [ 'contributions', 'blockip', 'userrights', 'log', 'wikilove' ],
 			'watch' => [ 'watch', 'unwatch' ],
 			'other' => [ 'upload', 'specialpages' ] // and anything that doesn't fit in other categories
@@ -621,7 +652,6 @@ class RefreshedTemplate extends BaseTemplate {
 
 		// populate the output array with tools
 		foreach ( $tools as $toolName => $toolDetails ) {
-
 			// special case: if a key starts with "nstab-" then put it in namespaces
 			if ( strpos( $toolName, 'nstab-' ) === 0 ) {
 				if ( isset( $toolDetails['class'] ) ) {
@@ -630,7 +660,6 @@ class RefreshedTemplate extends BaseTemplate {
 					$toolDetails['class'] = 'ca-subject';
 				}
 				$output['namespaces'][$toolName] = $toolDetails;
-
 			} else {  // otherwise place the tool in its correct category
 				foreach ( $categories as $category => $toolNamesInCurrentCategory ) {
 					foreach ( $toolNamesInCurrentCategory as $toolNameInCurrentCategory ) {
@@ -653,13 +682,17 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render the page tools in the toolbox dropdown.
-	 * @param array $pageTools an array of page tools generated by sortPageTools()
+	 *
+	 * @param array $pageTools Page tools generated by sortPageTools()
 	 */
 	private function renderToolboxDropdownItems( $pageTools ) {
 		$toolboxCategories = [ 'page-tools', 'user-tools' ];
 		foreach ( $toolboxCategories as $category ) {
 			if ( !empty( $pageTools[$category] ) ) {
-				echo Html::element( 'dt', [ 'class' => 'refreshed-dropdown-header' ], $this->getMsg( 'refreshed-' . $category )->text() );
+				echo Html::element( 'dt',
+					[ 'class' => 'refreshed-dropdown-header' ],
+					$this->getMsg( 'refreshed-' . $category )->text()
+				);
 				$this->renderPageToolsInCategory( 'dropdown', $pageTools, $category );
 			}
 		}
@@ -667,11 +700,11 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render a link for talk pages pointing back to the corresponding subject page
-	 * @param object $linkRenderer the LinkRenderer
-	 * @param object $title the article's title
+	 *
+	 * @param \MediaWiki\Linker\LinkRenderer $linkRenderer The LinkRenderer
+	 * @param Title $title The article's title
 	 */
 	private function renderBackToSubjectLink( $linkRenderer, $title ) {
-
 		echo Html::rawElement( 'li', [], $linkRenderer->makeLink(
 				$title,
 				$this->getMsg( 'backlinksubtitle', $title->getPrefixedText() )->escaped(),
@@ -684,9 +717,10 @@ class RefreshedTemplate extends BaseTemplate {
 	 * li tags to fit inline in the toolbox (we wrap them in li because a lot of
 	 * MW features expect it--for example, double click to edit), or wrapped in
 	 * dd to fit in the toolbox dropdown.
-	 * @param string $mode expects 'dropdown' or 'inline'
-	 * @param array $pageTools an array of page tools generated by sortPageTools()
-	 * @param string $category the category of list items being generated
+	 *
+	 * @param string $mode Expects 'dropdown' or 'inline'
+	 * @param array $pageTools An array of page tools generated by sortPageTools()
+	 * @param string $category The category of list items being generated
 	 */
 	private function renderPageToolsInCategory( $mode, $pageTools, $category ) {
 		// if category is invalid, do nothing
@@ -694,7 +728,12 @@ class RefreshedTemplate extends BaseTemplate {
 			return;
 		}
 
-		$options = [ 'text-wrapper' => [ 'tag' => 'span', 'attributes' => [ ] ] ];
+		$options = [
+			'text-wrapper' => [
+				'tag' => 'span',
+				'attributes' => []
+			]
+		];
 
 		if ( $mode == 'dropdown' ) {
 			$options['text-wrapper']['attributes']['class'] = 'dropdown-tool-text';
@@ -721,8 +760,9 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render a row of links in the footer.
-	 * @param string $category the type of links (used for a class name)
-	 * @param array $links an array containing info on the links
+	 *
+	 * @param string $category The type of links (used for a class name)
+	 * @param array $links An array containing info on the links
 	 */
 	private function renderFooterLinksRow( $category, $links ) {
 		$rowContents = '';
@@ -734,8 +774,9 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * Render the row of icons in the footer.
-	 * @param object $skin the skin object
-	 * @param array $footerIcons an array containing info on the blocks of icons
+	 *
+	 * @param ContextSource|IContextSource|MessageLocalizer|Skin $skin The skin object
+	 * @param array $footerIcons An array containing info on the blocks of icons
 	 */
 	private function renderFooterIconsRow( $skin, $footerIcons ) {
 		$rowContents = '';
@@ -748,7 +789,8 @@ class RefreshedTemplate extends BaseTemplate {
 	/**
 	 * Helper method for renderFooterIconsRow.
 	 * Render a block of icons in the footer.
-	 * @param object $skin the skin object
+	 *
+	 * @param ContextSource|IContextSource|MessageLocalizer|Skin $skin the skin object
 	 * @param string $blockName the type of icons (used for an id name)
 	 * @param array $blockIcons an array containing info on the icons
 	 */
@@ -757,7 +799,10 @@ class RefreshedTemplate extends BaseTemplate {
 		foreach ( $blockIcons as $icon ) {
 			$blockContents .= $skin->makeFooterIcon( $icon );
 		}
-		return Html::rawElement( 'li', [ 'id' => 'footer-row-' . htmlspecialchars( $blockName ), 'class' => 'footer-row-item' ], $blockContents );
+		return Html::rawElement( 'li', [
+			'id' => 'footer-row-' . htmlspecialchars( $blockName ),
+			'class' => 'footer-row-item'
+		], $blockContents );
 	}
 
 	public function execute() {
@@ -812,8 +857,16 @@ class RefreshedTemplate extends BaseTemplate {
 		$thisWikiName = $config->get( 'Sitename' );
 
 		// anchors containing this wiki's logo
-		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current header-button', $this->getMsg( 'Tooltip-p-logo' ) );
-		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo( $thisWikiName, $thisLogoURL, $thisWikiURL, 'refreshed-logo refreshed-logo-current refreshed-logo-sidebar-current header-button', $this->getMsg( 'Tooltip-p-logo' ) );
+		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo(
+			$thisWikiName, $thisLogoURL, $thisWikiURL,
+			'refreshed-logo refreshed-logo-current header-button',
+			$this->getMsg( 'tooltip-p-logo' )
+		);
+		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo(
+			$thisWikiName, $thisLogoURL, $thisWikiURL,
+			'refreshed-logo refreshed-logo-current refreshed-logo-sidebar-current header-button',
+			$this->getMsg( 'tooltip-p-logo' )
+		);
 
 		// this wiki's mobile logo image (if there is one)
 		// when picking logo, prioritize the user's language over the content language
@@ -910,7 +963,7 @@ class RefreshedTemplate extends BaseTemplate {
 									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
 									<label for="explore-dropdown-checkbox" id="explore-dropdown-button" class="refreshed-label refreshed-dropdown-button header-button header-category-dropdown-button">
 										<?php $this->renderIcon( 'refreshed-explore' ) ?>
-										<span class="header-category-name header-text"><?php echo $this->getMsg( 'Refreshed-explore' )->text() ?></span>
+										<span class="header-category-name header-text"><?php echo $this->getMsg( 'refreshed-explore' )->text() ?></span>
 										<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 										<div class="refreshed-modal-background"></div>
 										<div class="refreshed-dropdown-triangle"></div>

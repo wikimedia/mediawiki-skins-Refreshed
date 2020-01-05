@@ -107,7 +107,7 @@ class RefreshedTemplate extends BaseTemplate {
 
 	/**
 	 * @param string $messageKey Name of a MediaWiki: message
-	 * @return array
+	 * @return array|null
 	 */
 	private function getLines( $messageKey ) {
 		$title = Title::newFromText( $messageKey, NS_MEDIAWIKI );

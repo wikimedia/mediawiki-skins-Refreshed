@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "Реклама",
-	"refreshed-desc": "Чисто и современо руво за МедијаВики со голема прилагодливост на CSS"
+	"refreshed-action-addsection": "Додај тема",
+	"refreshed-desc": "Чисто и современо руво за МедијаВики со голема прилагодливост на CSS",
+	"refreshed-explore": "Истражи",
+	"refreshed-page-tools": "Алатки за страници",
+	"refreshed-user-tools": "кориснички алатки",
+	"refreshed-wiki-tools": "Викиалатки"
 }

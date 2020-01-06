@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Joedalton"
+			"Joedalton",
+			"Saederup92"
 		]
 	},
 	"refreshed-advert": "Annonce",
-	"refreshed-desc": "Et rent, moderne MediaWiki-tema med gode CSS-tilpasningsmuligheder"
+	"refreshed-action-addsection": "Tilføj emne",
+	"refreshed-desc": "Et rent, moderne MediaWiki-tema med gode CSS-tilpasningsmuligheder",
+	"refreshed-explore": "Udforsk",
+	"refreshed-page-tools": "Sideværktøjer",
+	"refreshed-user-tools": "Brugerværktøjer",
+	"refreshed-wiki-tools": "Wikiværktøjer"
 }

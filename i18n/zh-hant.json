@@ -2,9 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"Cwlin0416",
-			"Winston Sung"
+			"Winston Sung",
+			"Kly"
 		]
 	},
 	"refreshed-advert": "廣告",
-	"refreshed-desc": "一個簡潔、現代、擁有大量 CSS 自訂性的 MediaWiki 佈景主題"
+	"refreshed-action-addsection": "新增主題",
+	"refreshed-desc": "一個簡潔、現代、擁有大量 CSS 自訂性的 MediaWiki 佈景主題",
+	"refreshed-explore": "探索",
+	"refreshed-page-tools": "頁面工具",
+	"refreshed-user-tools": "使用者工具",
+	"refreshed-wiki-tools": "Wiki 工具"
 }

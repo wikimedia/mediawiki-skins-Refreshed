@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dgstranz"
+			"Dgstranz",
+			"Fitoschido"
 		]
 	},
 	"refreshed-advert": "Anuncio",
-	"refreshed-desc": "Un tema MediaWiki moderno y limpio, con amplias posibilidades de personalización con CSS"
+	"refreshed-action-addsection": "Añadir tema",
+	"refreshed-desc": "Un tema MediaWiki moderno y limpio, con amplias posibilidades de personalización con CSS",
+	"refreshed-explore": "Explorar",
+	"refreshed-page-tools": "Herramientas de la página",
+	"refreshed-user-tools": "Herramientas del usuario",
+	"refreshed-wiki-tools": "Herramientas del wiki"
 }

@@ -6,5 +6,10 @@
 		]
 	},
 	"refreshed-advert": "বিজ্ঞাপন",
-	"refreshed-desc": "একটি পরিষ্কার, আধুনিক মিডিয়াউইকি আবরণসহ বিস্তর CSS স্বনির্ধারনতা"
+	"refreshed-action-addsection": "প্রসঙ্গ যোগ করুন",
+	"refreshed-desc": "একটি পরিষ্কার, আধুনিক মিডিয়াউইকি আবরণসহ বিস্তর CSS স্বনির্ধারনতা",
+	"refreshed-explore": "অন্বেষণ করুন",
+	"refreshed-page-tools": "পাতার সরঞ্জাম",
+	"refreshed-user-tools": "ব্যবহারকারী সরঞ্জাম",
+	"refreshed-wiki-tools": "উইকি সরঞ্জাম"
 }

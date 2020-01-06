@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "إعلان",
-	"refreshed-desc": "برنامج ميدياويكي مساعد نظيف وحديث مع CSS شامل يمكن تخصيصه"
+	"refreshed-action-addsection": "أضف موضوعا",
+	"refreshed-desc": "برنامج ميدياويكي مساعد نظيف وحديث مع CSS شامل يمكن تخصيصه",
+	"refreshed-explore": "استكشف",
+	"refreshed-page-tools": "أدوات الصفحات",
+	"refreshed-user-tools": "أدوات المستخدم",
+	"refreshed-wiki-tools": "ادوات الويكي"
 }

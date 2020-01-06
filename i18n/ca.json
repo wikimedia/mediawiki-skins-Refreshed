@@ -1,4 +1,13 @@
 {
-	"@metadata": [],
-	"refreshed-advert": "Publicitat"
+	"@metadata": {
+		"authors": [
+			"Fitoschido"
+		]
+	},
+	"refreshed-advert": "Publicitat",
+	"refreshed-action-addsection": "Afegeix un tema",
+	"refreshed-explore": "Explora",
+	"refreshed-page-tools": "Eines de la pàgina",
+	"refreshed-user-tools": "Eines de l’usuari",
+	"refreshed-wiki-tools": "Eines del wiki"
 }

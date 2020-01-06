@@ -2,9 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"!Silent",
-			"Felipe L. Ewald"
+			"Felipe L. Ewald",
+			"Eduardo Addad de Oliveira"
 		]
 	},
 	"refreshed-advert": "Anúncio",
-	"refreshed-desc": "Um tema MediaWiki moderno e limpo, com ampla customização usando CSS"
+	"refreshed-action-addsection": "Adicionar tópico",
+	"refreshed-desc": "Um tema MediaWiki moderno e limpo, com ampla customização usando CSS",
+	"refreshed-explore": "Explorar",
+	"refreshed-page-tools": "Ferramentas de páginas",
+	"refreshed-user-tools": "Ferramentas do usuário",
+	"refreshed-wiki-tools": "Ferramentas da wiki"
 }

@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "Annons",
-	"refreshed-desc": "Ett rent och modernt MediaWiki-utseende med omfattande CSS-anpassningsbarhet"
+	"refreshed-action-addsection": "Lägg till ämne",
+	"refreshed-desc": "Ett rent och modernt MediaWiki-utseende med omfattande CSS-anpassningsbarhet",
+	"refreshed-explore": "Utforska",
+	"refreshed-page-tools": "Sidverktyg",
+	"refreshed-user-tools": "Användarverktyg",
+	"refreshed-wiki-tools": "Wikiverktyg"
 }

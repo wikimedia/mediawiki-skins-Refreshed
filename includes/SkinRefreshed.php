@@ -48,10 +48,8 @@ class SkinRefreshed extends SkinTemplate {
 	 * @see https://phabricator.wikimedia.org/T166943
 	 */
 	public static function onPageContentSaveComplete( $wikiPage, $user, $content, $summary, $isMinor, $isWatch, $section, $flags, $revision, $status, $baseRevId ) {
-		global $wgLang, $wgMemc;
-
-		$contLang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage();
-		$cache = ( $wgLang->getCode() == $contLang->getCode() );
+		global $wgLang, $wgContLang, $wgMemc;
+		$cache = ( $wgLang->getCode() == $wgContLang->getCode() );
 
 		if ( !$cache ) {
 			return true;

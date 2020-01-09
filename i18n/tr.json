@@ -2,9 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"TmY e12",
-			"ToprakM"
+			"ToprakM",
+			"BaRaN6161 TURK"
 		]
 	},
 	"refreshed-advert": "Reklâm",
-	"refreshed-desc": "Kapsamlı CSS özelliğine sahip, temiz, modern bir MediaWiki skini"
+	"refreshed-action-addsection": "Konu ekle",
+	"refreshed-desc": "Kapsamlı CSS özelliğine sahip, temiz, modern bir MediaWiki skini",
+	"refreshed-explore": "Keşfet",
+	"refreshed-page-tools": "Sayfa araçları",
+	"refreshed-user-tools": "Kullanıcı araçları",
+	"refreshed-wiki-tools": "Viki araçları"
 }

@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "Advertentie",
-	"refreshed-desc": "Een nette, moderne MediaWiki vormgeving met uitgebreide CSS aanpasbaarheid"
+	"refreshed-action-addsection": "Onderwerp toevoegen",
+	"refreshed-desc": "Een nette, moderne MediaWiki vormgeving met uitgebreide CSS aanpasbaarheid",
+	"refreshed-explore": "Verkennen",
+	"refreshed-page-tools": "Paginahulpmiddelen",
+	"refreshed-user-tools": "Gebruikershulpmiddelen",
+	"refreshed-wiki-tools": "Wikihulpmiddelen"
 }

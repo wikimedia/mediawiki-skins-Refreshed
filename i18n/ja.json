@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Otokoume"
+			"Otokoume",
+			"Buntschann"
 		]
 	},
 	"refreshed-advert": "広告",
+	"refreshed-action-addsection": "話題を追加",
 	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンなスキン"
 }

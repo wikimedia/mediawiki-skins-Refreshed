@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Woytecr"
+			"Woytecr",
+			"Rail"
 		]
 	},
 	"refreshed-advert": "Reklama",
-	"refreshed-desc": "Przejrzysta, nowoczesna skórka MediaWiki z obszernymi możliwościami dostosowywania CSS"
+	"refreshed-action-addsection": "Dodaj temat",
+	"refreshed-desc": "Przejrzysta, nowoczesna skórka MediaWiki z obszernymi możliwościami dostosowywania CSS",
+	"refreshed-explore": "Odkrywaj",
+	"refreshed-page-tools": "Narzędzia dla stron",
+	"refreshed-user-tools": "Narzędzia użytkownika",
+	"refreshed-wiki-tools": "Narzędzia Wiki"
 }

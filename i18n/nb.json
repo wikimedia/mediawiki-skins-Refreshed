@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "Annonse",
-	"refreshed-desc": "En ren, moderne MediaWiki-drakt med gode CSS-tilpasningsmuligheter"
+	"refreshed-action-addsection": "Legg til emne",
+	"refreshed-desc": "En ren, moderne MediaWiki-drakt med gode CSS-tilpasningsmuligheter",
+	"refreshed-explore": "Utforsk",
+	"refreshed-page-tools": "Sideverktøy",
+	"refreshed-user-tools": "Brukerverktøy",
+	"refreshed-wiki-tools": "Wikiverktøy"
 }

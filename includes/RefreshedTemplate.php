@@ -300,6 +300,8 @@ class RefreshedTemplate extends BaseTemplate {
 			$outputUnedited = $this->makeListItem( $key, $item, $options );
 		} elseif ( $mode === 'link' ) {
 			$outputUnedited = $this->makeLink( $key, $item, $options );
+		} else {
+			$outputUnedited = '';
 		}
 
 		// Get the HTML of the icon we want to add (returns empty string if no icon)
@@ -340,6 +342,8 @@ class RefreshedTemplate extends BaseTemplate {
 			$firstATagChild = $firstATagInListItemOrLink->firstChild;
 		} elseif ( $iconPosition === 'end' ) {
 			$firstATagChild = $firstATagInListItemOrLink->lastChild;
+		} else {
+			$firstATagChild = null;
 		}
 
 		$iconInIconDOM = $iconDOM->documentElement;

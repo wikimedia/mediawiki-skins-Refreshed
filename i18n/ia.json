@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "Publicitate",
-	"refreshed-desc": "Un apparentia nette e moderne pro MediaWiki con ample possibilitates de personalisation per medio de CSS"
+	"refreshed-action-addsection": "Adder topico",
+	"refreshed-desc": "Un apparentia nette e moderne pro MediaWiki con ample possibilitates de personalisation per medio de CSS",
+	"refreshed-explore": "Explorar",
+	"refreshed-page-tools": "Instrumentos de pagina",
+	"refreshed-user-tools": "Instrumentos de usator",
+	"refreshed-wiki-tools": "Instrumentos wiki"
 }

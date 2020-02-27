@@ -5,5 +5,10 @@
 		]
 	},
 	"refreshed-advert": "Publicidá",
-	"refreshed-desc": "Un aspeutu de MediaWiki llimpiu y modernu con una estensa personalización con CSS"
+	"refreshed-action-addsection": "Amestar un asuntu",
+	"refreshed-desc": "Un aspeutu de MediaWiki llimpiu y modernu con una estensa personalización con CSS",
+	"refreshed-explore": "Esplorar",
+	"refreshed-page-tools": "Ferramientes de páxina",
+	"refreshed-user-tools": "Ferramientes d'usuariu",
+	"refreshed-wiki-tools": "Ferramientes wiki"
 }

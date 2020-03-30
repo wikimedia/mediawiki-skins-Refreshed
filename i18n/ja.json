@@ -2,10 +2,11 @@
 	"@metadata": {
 		"authors": [
 			"Otokoume",
-			"Buntschann"
+			"Buntschann",
+			"Shirayuki"
 		]
 	},
 	"refreshed-advert": "広告",
 	"refreshed-action-addsection": "話題を追加",
-	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンなスキン"
+	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンな MediaWiki 外装"
 }

@@ -2,14 +2,15 @@
 	"@metadata": {
 		"authors": [
 			"1917 Ekim Devrimi",
-			"Kumkumuk"
+			"Kumkumuk",
+			"Mirzali"
 		]
 	},
 	"refreshed-advert": "Reklam",
 	"refreshed-action-addsection": "Mewzu vıraze",
 	"refreshed-desc": "Pak kı,  modern cikdê MediaWiki ya herayen CSS xo dest kerê",
 	"refreshed-explore": "Keşıf",
-	"refreshed-page-tools": "Hacete pela",
+	"refreshed-page-tools": "Hacetê pelan",
 	"refreshed-user-tools": "Hacetê karberi",
 	"refreshed-wiki-tools": "Hacetê wiki"
 }

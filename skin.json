@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.1",
+	"version": "4.0.2",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -31,6 +31,7 @@
 		"RefreshedTemplate": "includes/RefreshedTemplate.php"
 	},
 	"Hooks": {
+		"EchoCanAbortNewMessagesAlert": "SkinRefreshed::onEchoCanAbortNewMessagesAlert",
 		"PageContentSaveComplete": "SkinRefreshed::onPageContentSaveComplete"
 	},
 	"ResourceFileModulePaths": {
@@ -76,6 +77,9 @@
 			"+mediawiki.special.preferences.styles": "refreshed/mediawiki/special.preferences.styles.css",
 			"+mediawiki.special.userlogin.common.styles": "refreshed/mediawiki/special.userlogin.common.css"
 		}
+	},
+	"config": {
+		"RefreshedEchoCanAbortNewMessagesAlert": true
 	},
 	"manifest_version": 1
 }

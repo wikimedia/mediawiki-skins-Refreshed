@@ -75,4 +75,16 @@ class SkinRefreshed extends SkinTemplate {
 		}
 	}
 
+	/**
+	 * Returns whether or not Echo is allowed to disable the default "you have new messages" banner.
+	 * Set $wgRefreshedEchoCanAbortNewMessagesAlert to false to display the banner in addition to
+	 * a standard Echo notification when users receive new messages.
+	 *
+	 * @see https://phabricator.wikimedia.org/rECHO87053b91a68c1a980563b3a722af2cd5b631a533
+	 */
+	 public static function onEchoCanAbortNewMessagesAlert() {
+		 global $wgRefreshedEchoCanAbortNewMessagesAlert;
+		 return $wgRefreshedEchoCanAbortNewMessagesAlert;
+	 }
+
 }

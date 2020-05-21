@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Facenapalm"
+			"Facenapalm",
+			"Okras"
 		]
 	},
 	"refreshed-advert": "Реклама",
-	"refreshed-desc": "Чистая, современная тема оформления MediaWiki с расширенной кастомизацией CSS"
+	"refreshed-action-addsection": "Добавить тему",
+	"refreshed-desc": "Чистая, современная тема оформления MediaWiki с расширенной кастомизацией CSS",
+	"refreshed-explore": "Обзор",
+	"refreshed-page-tools": "Инструменты для страниц",
+	"refreshed-user-tools": "Пользовательские инструменты",
+	"refreshed-wiki-tools": "Вики-инструменты"
 }

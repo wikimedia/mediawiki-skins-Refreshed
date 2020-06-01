@@ -5,5 +5,9 @@
 		]
 	},
 	"refreshed-advert": "Mainos",
-	"refreshed-desc": "Puhdas, nykyaikainen MediaWiki-ulkoasu laajalla CSS-muokattavuudella"
+	"refreshed-action-addsection": "Lisää aihe",
+	"refreshed-desc": "Puhdas, nykyaikainen MediaWiki-ulkoasu laajalla CSS-muokattavuudella",
+	"refreshed-page-tools": "Sivutyökalut",
+	"refreshed-user-tools": "Käyttäjätyökalut",
+	"refreshed-wiki-tools": "Wiki-työkalut"
 }

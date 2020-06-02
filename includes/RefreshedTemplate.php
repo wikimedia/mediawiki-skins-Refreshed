@@ -433,7 +433,7 @@ class RefreshedTemplate extends BaseTemplate {
 					$image = $this->makeIcon( 'user-anon' );
 				} else {  // if wiki has set custom image for logged out users
 					$image = Html::element( 'img', [
-						'src' => $this->getMsg( 'refreshed-icon-logged-out' )->inContentLanguage()->escaped(),
+						'src' => $this->getMsg( 'refreshed-icon-logged-out' )->inContentLanguage()->text(),
 						'class' => $imageClassList
 					] );
 				}
@@ -712,7 +712,7 @@ class RefreshedTemplate extends BaseTemplate {
 	private function renderBackToSubjectLink( $linkRenderer, $title ) {
 		echo Html::rawElement( 'li', [], $linkRenderer->makeLink(
 				$title,
-				$this->getMsg( 'backlinksubtitle', $title->getPrefixedText() )->escaped(),
+				$this->getMsg( 'backlinksubtitle', $title->getPrefixedText() )->text(),
 				[ 'id' => 'back-to-subject' ]
 		) );
 	}
@@ -805,7 +805,7 @@ class RefreshedTemplate extends BaseTemplate {
 			$blockContents .= $skin->makeFooterIcon( $icon );
 		}
 		return Html::rawElement( 'li', [
-			'id' => 'footer-row-' . htmlspecialchars( $blockName ),
+			'id' => Sanitizer::escapeIdForAttribute( 'footer-row-' . $blockName ),
 			'class' => 'footer-row-item'
 		], $blockContents );
 	}
@@ -865,12 +865,12 @@ class RefreshedTemplate extends BaseTemplate {
 		$thisWikiLinkWithLogo = $this->makeWikiLinkWithLogo(
 			$thisWikiName, $thisLogoURL, $thisWikiURL,
 			'refreshed-logo refreshed-logo-current header-button',
-			$this->getMsg( 'tooltip-p-logo' )
+			$this->getMsg( 'tooltip-p-logo' )->text()
 		);
 		$thisWikiLinkWithSidebarLogo = $this->makeWikiLinkWithLogo(
 			$thisWikiName, $thisLogoURL, $thisWikiURL,
 			'refreshed-logo refreshed-logo-current refreshed-logo-sidebar-current header-button',
-			$this->getMsg( 'tooltip-p-logo' )
+			$this->getMsg( 'tooltip-p-logo' )->text()
 		);
 
 		// this wiki's mobile logo image (if there is one)

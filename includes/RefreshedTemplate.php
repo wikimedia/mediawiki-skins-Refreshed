@@ -424,7 +424,7 @@ class RefreshedTemplate extends BaseTemplate {
 					$image = $this->makeIcon( 'user-loggedin' );
 				} else {  // if wiki has set custom image for logged in users
 					$image = Html::element( 'img', [
-						'src' => $this->getMsg( 'refreshed-icon-logged-in' )->inContentLanguage()->escaped(),
+						'src' => $this->getMsg( 'refreshed-icon-logged-in' )->inContentLanguage()->text(),
 						'class' => $imageClassList
 					] );
 				}
@@ -842,18 +842,18 @@ class RefreshedTemplate extends BaseTemplate {
 		// url to this wiki's homepage/page you visit when logo is clicked;
 		// to be used with renderCurrentWikiLogoAndLink
 		if ( $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->isDisabled() ) {
-			$thisWikiURL = htmlspecialchars( Title::newMainPage()->getFullURL() );
+			$thisWikiURL = Title::newMainPage()->getFullURL();
 		} else {
-			$thisWikiURL = $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->escaped();
+			$thisWikiURL = $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->text();
 		}
 
 		// url to this wiki's logo image (or null if no such image);
 		// to be used with renderCurrentWikiLogoAndLink
 		// when picking logo, prioritize the user's language over the content language
 		if ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->isDisabled() ) {
-			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->escaped();
+			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->text();
 		} elseif ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->isDisabled() ) {
-			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->escaped();
+			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->text();
 		} else {
 			$thisLogoURL = null;
 		}
@@ -968,7 +968,7 @@ class RefreshedTemplate extends BaseTemplate {
 									<input type="checkbox" id="explore-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
 									<label for="explore-dropdown-checkbox" id="explore-dropdown-button" class="refreshed-label refreshed-dropdown-button header-button header-category-dropdown-button">
 										<?php $this->renderIcon( 'refreshed-explore' ) ?>
-										<span class="header-category-name header-text"><?php echo $this->getMsg( 'refreshed-explore' )->text() ?></span>
+										<span class="header-category-name header-text"><?php echo $this->getMsg( 'refreshed-explore' )->escaped() ?></span>
 										<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 										<div class="refreshed-modal-background"></div>
 										<div class="refreshed-dropdown-triangle"></div>
@@ -1041,7 +1041,7 @@ class RefreshedTemplate extends BaseTemplate {
 							<input type="checkbox" id="user-info-dropdown-checkbox" class="refreshed-dropdown-checkbox refreshed-checkbox">
 							<label for="user-info-dropdown-checkbox" id="user-info-dropdown-button" class="refreshed-label refreshed-dropdown-button header-button-textless header-button">
 								<?php echo $this->makeAvatar( $user ) ?>
-								<span class="refreshed-username header-text"><?php echo $this->makeUsernameText( $user ) ?></span>
+								<span class="refreshed-username header-text"><?php echo htmlspecialchars( $this->makeUsernameText( $user ) ) ?></span>
 								<?php $this->renderIcon( 'refreshed-dropdown-expand' ) ?>
 								<div class="refreshed-modal-background"></div>
 								<div class="refreshed-dropdown-triangle"></div>
@@ -1150,7 +1150,10 @@ class RefreshedTemplate extends BaseTemplate {
 					<div class="sidebar-content sidebar-section">
 						<span class="sidebar-heading"><?php echo htmlspecialchars( $main ) ?></span>
 						<ul>
-							<?php $this->renderSidebarContentSection( $sub ) ?>
+							<?php
+								// @phan-suppress-next-line SecurityCheck-XSS
+								$this->renderSidebarContentSection( $sub )
+							?>
 						</ul>
 					</div>
 					<?php
@@ -1217,7 +1220,7 @@ class RefreshedTemplate extends BaseTemplate {
 							<?php if ( !empty( $pageTools['page-tools'] ) || !empty( $pageTools['user-tools'] ) ) {
 								?>
 								<div id="p-tools" class="refreshed-dropdown toolbox-section toolbox-dropdown" role="menu">
-									<label for="toolbox-dropdown-checkbox" id="toolbox-dropdown-button" class="refreshed-label refreshed-dropdown-button" title="<?php echo $this->getMsg( 'toolbox' )->text() ?>" aria-label="<?php echo $this->getMsg( 'toolbox' )->text() ?>">
+									<label for="toolbox-dropdown-checkbox" id="toolbox-dropdown-button" class="refreshed-label refreshed-dropdown-button" title="<?php echo $this->getMsg( 'toolbox' )->escaped() ?>" aria-label="<?php echo $this->getMsg( 'toolbox' )->escaped() ?>">
 										<?php
 										$this->renderIcon( 'ellipsis' );
 										$this->renderIcon( 'refreshed-dropdown-expand' );

@@ -119,13 +119,14 @@
 	}
 
 	/* Image thumbnails */
-	.thumb {
+	.thumb.thumb { /* class repeated for specificity */
 		width: 100% !important;
 		margin: 0 !important;
 		text-align: center;
+		float: none;
 	}
 
-	div.thumbinner { /* need to specify div so it can overwrite the CSS in commonContent.css */
+	.thumbinner.thumbinner { /* class repeated for specificity */
 		width: 50% !important;
 		padding: 0.75em 0 !important;
 		margin-bottom: 0.5em;

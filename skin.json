@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.3",
+	"version": "4.0.4",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -18,6 +18,9 @@
 	"descriptionmsg": "refreshed-desc",
 	"license-name": "GPL-2.0-or-later",
 	"type": "skin",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
 	"ValidSkinNames": {
 		"refreshed": "Refreshed"
 	},
@@ -32,7 +35,7 @@
 	},
 	"Hooks": {
 		"EchoCanAbortNewMessagesAlert": "SkinRefreshed::onEchoCanAbortNewMessagesAlert",
-		"PageContentSaveComplete": "SkinRefreshed::onPageContentSaveComplete"
+		"PageSaveComplete": "SkinRefreshed::onPageSaveComplete"
 	},
 	"ResourceFileModulePaths": {
 		"localBasePath": "",

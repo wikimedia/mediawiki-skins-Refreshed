@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"A2y4",
 			"Buntschann",
 			"Otokoume",
 			"Shirayuki"
@@ -8,5 +9,7 @@
 	},
 	"refreshed-advert": "広告",
 	"refreshed-action-addsection": "話題を追加",
-	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンな MediaWiki 外装"
+	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンな MediaWiki 外装",
+	"refreshed-user-tools": "ユーザーツール",
+	"refreshed-wiki-tools": "ウィキツール"
 }

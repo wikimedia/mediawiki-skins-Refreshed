@@ -3,6 +3,7 @@
 		"authors": [
 			"A2y4",
 			"Buntschann",
+			"Omotecho",
 			"Otokoume",
 			"Shirayuki"
 		]
@@ -10,6 +11,8 @@
 	"refreshed-advert": "広告",
 	"refreshed-action-addsection": "話題を追加",
 	"refreshed-desc": "豊富な CSS のカスタマイズ性を含んだ、クリーンでモダンな MediaWiki 外装",
+	"refreshed-explore": "探してみよう",
+	"refreshed-page-tools": "ページツール",
 	"refreshed-user-tools": "ユーザーツール",
 	"refreshed-wiki-tools": "ウィキツール"
 }

@@ -1,5 +1,7 @@
 <?php
 
+use MediaWiki\MediaWikiServices;
+
 // inherit main code from SkinTemplate, set the CSS and template filter
 class SkinRefreshed extends SkinTemplate {
 	public $skinname = 'refreshed',
@@ -41,16 +43,18 @@ class SkinRefreshed extends SkinTemplate {
 	}
 
 	/**
-	 * Updates memcached data when a new version of some Refreshed interface message
+	 * Updates cached data when a new version of some Refreshed interface message
 	 * is saved.
 	 * The caching is done in RefreshedTemplate::execute().
 	 *
 	 * @see https://phabricator.wikimedia.org/T166943
 	 */
 	public static function onPageSaveComplete( WikiPage $wikiPage ) {
-		global $wgLang, $wgContLang, $wgMemc;
+		global $wgLang;
 
-		if ( $wgLang->getCode() != $wgContLang->getCode() ) {
+		$services = MediaWikiServices::getInstance();
+		$contLang = $services->getContentLanguage();
+		if ( $wgLang->getCode() != $contLang->getCode() ) {
 			return true;
 		}
 
@@ -58,18 +62,18 @@ class SkinRefreshed extends SkinTemplate {
 		if (
 			$title instanceof Title &&
 			$title->inNamespace( NS_MEDIAWIKI )
-		)
-		{
+		) {
+			$cache = $services->getMainWANObjectCache();
 			$pageName = $title->getText();
 			$cacheKey = '';
 			if ( $pageName == 'Refreshed-wiki-dropdown' ) {
-				$cacheKey = $wgMemc->makeKey( 'refreshed', 'dropdownmenu' );
+				$cacheKey = $cache->makeKey( 'refreshed', 'dropdownmenu' );
 			} elseif ( $pageName == 'Refreshed-navigation' ) {
-				$cacheKey = $wgMemc->makeKey( 'refreshed', 'header' );
+				$cacheKey = $cache->makeKey( 'refreshed', 'header' );
 			}
 
 			if ( $cacheKey ) {
-				$wgMemc->delete( $cacheKey );
+				$cache->delete( $cacheKey );
 			}
 		}
 	}

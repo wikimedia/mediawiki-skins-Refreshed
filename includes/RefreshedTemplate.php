@@ -811,9 +811,9 @@ class RefreshedTemplate extends BaseTemplate {
 	}
 
 	public function execute() {
-		global $wgMemc;
-
-		$linkRenderer = MediaWikiServices::getInstance()->getLinkRenderer();
+		$services = MediaWikiServices::getInstance();
+		$cache = $services->getMainWANObjectCache();
+		$linkRenderer = $services->getLinkRenderer();
 
 		$skin = $this->getSkin();
 		$config = $skin->getConfig();
@@ -824,19 +824,19 @@ class RefreshedTemplate extends BaseTemplate {
 		$title = $titleBase->getSubjectPage();
 		$titleNamespace = $titleBase->getNamespace();
 
-		$key = $wgMemc->makeKey( 'refreshed', 'header' );
-		$headerCategories = $wgMemc->get( $key );
+		$key = $cache->makeKey( 'refreshed', 'header' );
+		$headerCategories = $cache->get( $key );
 		if ( !$headerCategories ) {
 			$headerCategories = [];
 			$skin->addToSidebar( $headerCategories, 'refreshed-navigation' );
-			$wgMemc->set( $key, $headerCategories, 60 * 60 * 24 ); // 24 hours
+			$cache->set( $key, $headerCategories, 60 * 60 * 24 ); // 24 hours
 		}
 
-		$dropdownCacheKey = $wgMemc->makeKey( 'refreshed', 'dropdownmenu' );
-		$siteNavigation = $wgMemc->get( $dropdownCacheKey );
+		$dropdownCacheKey = $cache->makeKey( 'refreshed', 'dropdownmenu' );
+		$siteNavigation = $cache->get( $dropdownCacheKey );
 		if ( !$siteNavigation ) {
 			$siteNavigation = $this->parseSiteNavigationMenu( 'Refreshed-wiki-dropdown' );
-			$wgMemc->set( $dropdownCacheKey, $siteNavigation, 60 * 60 * 24 ); // 24 hours
+			$cache->set( $dropdownCacheKey, $siteNavigation, 60 * 60 * 24 ); // 24 hours
 		}
 
 		// url to this wiki's homepage/page you visit when logo is clicked;

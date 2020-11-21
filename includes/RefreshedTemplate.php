@@ -948,7 +948,7 @@ class RefreshedTemplate extends BaseTemplate {
 				if ( !$thisMobileLogoURL->isDisabled() ) {  // if a mobile logo has been defined
 					?>
 					<div class="site-navigation-icon-logos">
-						<a class="main header-button" href="<?php echo $thisWikiURL ?>">
+						<a class="main header-button" href="<?php echo htmlspecialchars( $thisWikiURL ) ?>">
 							<img src="<?php echo $thisMobileLogoURL->escaped() ?>" alt="<?php echo $thisWikiName ?>" class="site-navigation-logo-img site-navigation-logo-icon" />
 						</a>
 					</div>

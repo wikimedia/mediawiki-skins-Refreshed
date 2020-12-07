@@ -1,6 +1,8 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Revision\RevisionAccessException;
+use MediaWiki\Revision\SlotRecord;
 
 class RefreshedTemplate extends BaseTemplate {
 
@@ -112,10 +114,18 @@ class RefreshedTemplate extends BaseTemplate {
 	 */
 	private function getLines( $messageKey ) {
 		$title = Title::newFromText( $messageKey, NS_MEDIAWIKI );
-		$revision = Revision::newFromTitle( $title );
-		if ( is_object( $revision ) ) {
-			$contentText = ContentHandler::getContentText( $revision->getContent() );
-			if ( trim( $contentText ) != '' ) {
+		$revision = MediaWikiServices::getInstance()->getRevisionLookup()->getRevisionByTitle( $title );
+		if ( $revision !== null ) {
+			$contentObj = null;
+			try {
+				$contentObj = $revision->getContent( SlotRecord::MAIN );
+			} catch ( RevisionAccessException $ex ) {
+			}
+			$contentText = '';
+			if ( $contentObj !== null ) {
+				$contentText = trim( ContentHandler::getContentText( $contentObj ) );
+			}
+			if ( $contentText !== '' ) {
 				$temp = $this->getMessageAsArray( $messageKey );
 				if ( count( $temp ) > 0 ) {
 					wfDebugLog( 'Refreshed', sprintf( 'Get LOCAL %s, which contains %s lines', $messageKey, count( $temp ) ) );

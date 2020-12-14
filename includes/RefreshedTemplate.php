@@ -1197,11 +1197,7 @@ class RefreshedTemplate extends BaseTemplate {
 					<article>
 						<header id="content-heading">
 							<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
-							<?php
-							if ( method_exists( $this, 'getIndicators' ) ) {
-								echo $this->getIndicators();
-							}
-							?>
+							<?php echo $this->getIndicators(); ?>
 						</header>
 						<div id="main-title-messages">
 							<div id="siteSub"><?php $this->msg( 'tagline' ) ?></div>

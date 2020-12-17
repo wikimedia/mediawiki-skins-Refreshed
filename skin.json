@@ -70,6 +70,7 @@
 	"ResourceModuleSkinStyles": {
 		"refreshed": {
 			"ext.echo.styles.notifications": "refreshed/extensions/Echo/echo.notifications.less",
+			"+ext.echo.styles.badge": "refreshed/extensions/Echo/echo.styles.badge.less",
 			"ext.echo.ui.desktop": "refreshed/extensions/Echo/echo.ui.NotificationBadgeWidget.less",
 			"ext.echo.ui": "refreshed/extensions/Echo/echo.ui.overlay.less",
 			"+mediawiki.action.history.styles": "refreshed/mediawiki/action.history.styles.css",

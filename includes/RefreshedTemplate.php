@@ -389,6 +389,8 @@ class RefreshedTemplate extends BaseTemplate {
 	private function loadHTMLHandleErrors( $text ) {
 		// error handling per https://secure.php.net/manual/en/simplexml.examples-errors.php
 		$doc = new DOMDocument();
+		// Let's speak UTF-8 like all civilized people do (references T266864, same issue in the RandomImage ext.)
+		$text = mb_convert_encoding( $text, 'HTML-ENTITIES', 'UTF-8' );
 		// config doesn't include doctype, html, or body tags per
 		// https://stackoverflow.com/a/22490902
 		$html = $doc->loadHTML( $text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );

@@ -4,6 +4,7 @@
 			"Gomoko",
 			"Thibaut120094",
 			"Trial",
+			"Verdy p",
 			"Wladek92"
 		]
 	},
@@ -11,7 +12,7 @@
 	"refreshed-action-addsection": "Ajouter un sujet",
 	"refreshed-desc": "Un habillage propre et moderne pour MediaWiki avec une personnalisation CSS complète",
 	"refreshed-explore": "Explorer",
-	"refreshed-page-tools": "Outils de page",
-	"refreshed-user-tools": "Outils utilisateur",
+	"refreshed-page-tools": "Outils de la page",
+	"refreshed-user-tools": "Outils de l’utilisateur",
 	"refreshed-wiki-tools": "Outils wiki"
 }

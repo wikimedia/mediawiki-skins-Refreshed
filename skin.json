@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.4",
+	"version": "4.0.5",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -78,7 +78,6 @@
 			"+mediawiki.diff.styles": "refreshed/mediawiki/diff.styles.css",
 			"+mediawiki.skinning.interface": "refreshed/mediawiki/skinning.interface.css",
 			"+mediawiki.special.changeslist.enhanced": "refreshed/mediawiki/special.changeslist.enhanced.css",
-			"+mediawiki.special.preferences.styles": "refreshed/mediawiki/special.preferences.styles.css",
 			"+mediawiki.special.userlogin.common.styles": "refreshed/mediawiki/special.userlogin.common.css"
 		}
 	},

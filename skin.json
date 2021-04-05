@@ -22,7 +22,18 @@
 		"MediaWiki": ">= 1.35.0"
 	},
 	"ValidSkinNames": {
-		"refreshed": "Refreshed"
+		"refreshed": {
+			"displayname": "Refreshed",
+			"class": "SkinRefreshed",
+			"args": [ {
+				"name": "refreshed",
+				"styles": [
+					"mediawiki.skinning.interface",
+					"mediawiki.skinning.content.externallinks",
+					"skins.refreshed"
+				]
+			} ]
+		}
 	},
 	"MessagesDirs": {
 		"SkinRefreshed": [

@@ -31,17 +31,6 @@ class SkinRefreshed extends SkinTemplate {
 		$out->addModules( 'skins.refreshed.js' );
 	}
 
-	function setupSkinUserCss( OutputPage $out ) {
-		parent::setupSkinUserCss( $out );
-
-		// Add CSS via ResourceLoader
-		$out->addModuleStyles( [
-			'mediawiki.skinning.interface',
-			'mediawiki.skinning.content.externallinks',
-			'skins.refreshed'
-		] );
-	}
-
 	/**
 	 * Updates cached data when a new version of some Refreshed interface message
 	 * is saved.

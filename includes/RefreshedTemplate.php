@@ -898,7 +898,11 @@ class RefreshedTemplate extends BaseTemplate {
 		$dropdownPersonalTools = $personalTools['dropdown'];
 		$extraPersonalTools = $personalTools['extra'];
 
-		$pageTools = array_merge( $this->data['content_navigation']['views'], $this->data['content_actions'], $this->getToolbox() );
+		$pageTools = array_merge(
+			$this->data['content_navigation']['views'],
+			$this->data['content_actions'],
+			$this->data['sidebar']['TOOLBOX']
+		);
 		$pageTools = $this->sortPageTools( $pageTools );
 
 		unset( $this->data['sidebar']['SEARCH'] );
@@ -915,7 +919,14 @@ class RefreshedTemplate extends BaseTemplate {
 		$sidebarContents = array_merge( $this->data['sidebar'], $sidebarContentsWikiTools, $sidebarContentsLanguages );
 
 		// footer
-		$footerIcons = $this->getFooterIcons( 'icononly' );
+		$footerIcons = $this->get( 'footericons' );
+		foreach ( $footerIcons as $footerIconsKey => &$footerIconsBlock ) {
+			foreach ( $footerIconsBlock as $footerIconKey => $footerIcon ) {
+				if ( !isset( $footerIcon['src'] ) ) {
+					unset( $footerIconsBlock[$footerIconKey] );
+				}
+			}
+		}
 
 		// allow error handling in makeElementWithIconHelper:
 		// see https://secure.php.net/manual/en/simplexml.examples-errors.php

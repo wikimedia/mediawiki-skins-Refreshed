@@ -14,8 +14,8 @@ body {
 }
 
 /* underline links to differentiate between regular text */
-a,
-a.external {
+a:after,
+a.external:after {
 	font-weight: bold;
 	text-decoration: underline !important;
 }
@@ -63,6 +63,15 @@ a.external {
 	font-size: 0.8em;
 }
 
-#footer-row-places li {
-	display: inline-block;
+/* This is (hopefully) the "This page was last edited..." text
+ * Confusingly, though, the footer text things don't have IDs so we can't be 100% sure
+ * The other item w/ this class is the copyright text and that we _do_ want to show
+ */
+.footer-row-item:first-of-type {
+	display: none;
+}
+
+#footer-row-places,
+#footer-row-icons {
+	display: none;
 }

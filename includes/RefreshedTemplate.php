@@ -862,7 +862,11 @@ class RefreshedTemplate extends BaseTemplate {
 		// url to this wiki's logo image (or null if no such image);
 		// to be used with renderCurrentWikiLogoAndLink
 		// when picking logo, prioritize the user's language over the content language
-		if ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->isDisabled() ) {
+		$coreLogos = ResourceLoaderSkinModule::getAvailableLogos( $config );
+		if ( isset( $coreLogos['wordmark'] ) ) {
+			$wordmarkData = $coreLogos['wordmark'];
+			$thisLogoURL = $wordmarkData['src'];
+		} elseif ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->isDisabled() ) {
 			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->text();
 		} elseif ( !$this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->isDisabled() ) {
 			$thisLogoURL = $this->getMsg( 'refreshed-this-wiki-wordmark' )->inContentLanguage()->text();
@@ -887,12 +891,15 @@ class RefreshedTemplate extends BaseTemplate {
 
 		// this wiki's mobile logo image (if there is one)
 		// when picking logo, prioritize the user's language over the content language
-		if ( !$this->getMsg( 'refreshed-this-wiki-mobile-logo' )->isDisabled() ) {
+		if ( isset( $coreLogos['icon'] ) ) {
+			$thisMobileLogoURL = $coreLogos['icon'];
+		} elseif ( !$this->getMsg( 'refreshed-this-wiki-mobile-logo' )->isDisabled() ) {
 			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' );
-		} else {
+		} elseif ( !$this->getMsg( 'refreshed-this-wiki-mobile-logo' )->inContentLanguage()->isDisabled() ) {
 			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' )->inContentLanguage();
+		} else {
+			$thisMobileLogoURL = null;
 		}
-
 		// tools
 		$personalTools = $this->getAndRearrangePersonalTools();
 		$dropdownPersonalTools = $personalTools['dropdown'];

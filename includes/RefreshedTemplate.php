@@ -1169,9 +1169,12 @@ class RefreshedTemplate extends BaseTemplate {
 				<?php
 
 				foreach ( $sidebarContents as $main => $sub ) {
+					// maybe $main is a MediaWiki: message title, like 'newsbox-title'...
+					$msgObj = $skin->msg( $main );
+					$headerTitle = $msgObj->exists() ? $msgObj->text() : $main;
 					?>
 					<div class="sidebar-content sidebar-section">
-						<span class="sidebar-heading"><?php echo htmlspecialchars( $main ) ?></span>
+						<span class="sidebar-heading"><?php echo htmlspecialchars( $headerTitle ) ?></span>
 						<ul>
 							<?php
 								// @phan-suppress-next-line SecurityCheck-XSS

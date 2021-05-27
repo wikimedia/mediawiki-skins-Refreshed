@@ -1209,7 +1209,7 @@ class RefreshedTemplate extends BaseTemplate {
 				<?php
 				}
 				?>
-				<main id="content">
+				<main>
 					<article>
 						<header id="content-heading">
 							<h1 id="firstHeading" class="firstHeading"><?php $this->html( 'title' ) ?></h1>
@@ -1258,7 +1258,7 @@ class RefreshedTemplate extends BaseTemplate {
 							}
 							?>
 							</div>
-							<div id="bodyContent" role="article">
+							<div id="content" role="article">
 								<?php $this->html( 'bodytext' ) ?>
 							</div>
 						</article>

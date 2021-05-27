@@ -11,11 +11,11 @@
 we assign the header 101 not 100 so the toolbox can be beneath the header
 and still be above content */
 @z-index-header: 101;
-/* if there are any elements in #bodyContent that have their own stacking
+/* if there are any elements in #content that have their own stacking
 context, they will appear higher than #refreshed-toolbox since they appear
 later in the DOM. To prevent this, we give #refreshed-toolbox a positive
 z-index. Specifically, we assume the header has a high enough z-index to sit
-above everything in #bodyContent, and we set up a guaranteed index right below
+above everything in #content, and we set up a guaranteed index right below
 the header that's still above the content, so we use that. */
 @z-index-refreshed-toolbox: @z-index-header - 1;
 /* When the toolbox is stuck to the top and the dropdown is open, the toolbox

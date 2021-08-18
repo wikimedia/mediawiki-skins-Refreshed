@@ -894,12 +894,13 @@ class RefreshedTemplate extends BaseTemplate {
 		if ( isset( $coreLogos['icon'] ) ) {
 			$thisMobileLogoURL = $coreLogos['icon'];
 		} elseif ( !$this->getMsg( 'refreshed-this-wiki-mobile-logo' )->isDisabled() ) {
-			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' );
+			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' )->escaped();
 		} elseif ( !$this->getMsg( 'refreshed-this-wiki-mobile-logo' )->inContentLanguage()->isDisabled() ) {
-			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' )->inContentLanguage();
+			$thisMobileLogoURL = $this->getMsg( 'refreshed-this-wiki-mobile-logo' )->inContentLanguage()->escaped();
 		} else {
 			$thisMobileLogoURL = null;
 		}
+
 		// tools
 		$personalTools = $this->getAndRearrangePersonalTools();
 		$dropdownPersonalTools = $personalTools['dropdown'];
@@ -975,11 +976,11 @@ class RefreshedTemplate extends BaseTemplate {
 				<?php
 				}
 
-				if ( !$thisMobileLogoURL->isDisabled() ) {  // if a mobile logo has been defined
+				if ( $thisMobileLogoURL !== null ) {  // if a mobile logo has been defined
 					?>
 					<div class="site-navigation-icon-logos">
 						<a class="main header-button" href="<?php echo htmlspecialchars( $thisWikiURL ) ?>">
-							<img src="<?php echo $thisMobileLogoURL->escaped() ?>" alt="<?php echo $thisWikiName ?>" class="site-navigation-logo-img site-navigation-logo-icon" />
+							<img src="<?php echo $thisMobileLogoURL ?>" alt="<?php echo $thisWikiName ?>" class="site-navigation-logo-img site-navigation-logo-icon" />
 						</a>
 					</div>
 					<?php

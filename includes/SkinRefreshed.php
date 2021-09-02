@@ -48,10 +48,7 @@ class SkinRefreshed extends SkinTemplate {
 		}
 
 		$title = $wikiPage->getTitle();
-		if (
-			$title instanceof Title &&
-			$title->inNamespace( NS_MEDIAWIKI )
-		) {
+		if ( $title->inNamespace( NS_MEDIAWIKI ) ) {
 			$cache = $services->getMainWANObjectCache();
 			$pageName = $title->getText();
 			$cacheKey = '';

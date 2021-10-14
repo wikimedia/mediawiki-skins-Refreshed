@@ -834,7 +834,7 @@ class RefreshedTemplate extends BaseTemplate {
 		// Title processing
 		$titleBase = $skin->getTitle();
 		$title = $titleBase->getSubjectPage();
-		$titleNamespace = $titleBase->getNamespace();
+		$isTalkNamespace = $services->getNamespaceInfo()->isTalk( $titleBase->getNamespace() );
 
 		$key = $cache->makeKey( 'refreshed', 'header' );
 		$headerCategories = $cache->get( $key );
@@ -1237,7 +1237,7 @@ class RefreshedTemplate extends BaseTemplate {
 						<div id="refreshed-toolbox" role="menubar">
 							<ul id="p-namespaces" class="toolbox-section">
 								<?php
-								if ( MWNamespace::isTalk( $titleNamespace ) ) {  // if talk namespace
+								if ( $isTalkNamespace ) {  // if talk namespace
 									$this->renderBackToSubjectLink( $linkRenderer, $title );
 								}
 								$this->renderPageToolsInCategory( 'inline', $pageTools, 'namespaces' );

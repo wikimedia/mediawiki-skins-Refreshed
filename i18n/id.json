@@ -3,9 +3,15 @@
 		"authors": [
 			"Rachmat.Wahidi",
 			"Rachmat04",
-			"William Surya Permana"
+			"William Surya Permana",
+			"Daud I.F. Argana"
 		]
 	},
 	"refreshed-advert": "Iklan",
-	"refreshed-desc": "Kulit MediaWiki yang modern dan bersih dengan pengubahsuaian CSS yang luas"
+	"refreshed-action-addsection": "Tambahkan topik",
+	"refreshed-desc": "Kulit MediaWiki yang modern dan bersih dengan pengubahsuaian CSS yang luas",
+	"refreshed-explore": "Jelajahi",
+	"refreshed-page-tools": "Peralatan halaman",
+	"refreshed-user-tools": "Peralatan pengguna",
+	"refreshed-wiki-tools": "Peralatan wiki"
 }

@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Metalhead64"
+			"Metalhead64",
+			"Umherirrender"
 		]
 	},
 	"refreshed-advert": "Werbung",
-	"refreshed-desc": "Eine saubere, moderne MediaWiki-Benutzeroberfläche mit vielen CSS-Anpassungsmöglichkeiten"
+	"refreshed-action-addsection": "Abschnitt hinzufügen",
+	"refreshed-desc": "Eine saubere, moderne MediaWiki-Benutzeroberfläche mit vielen CSS-Anpassungsmöglichkeiten",
+	"refreshed-explore": "Entdecken",
+	"refreshed-page-tools": "Seitenwerkzeuge",
+	"refreshed-user-tools": "Benutzerwerkzeuge",
+	"refreshed-wiki-tools": "Wikiwerkzeuge"
 }

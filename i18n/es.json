@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Dgstranz",
-			"Fitoschido"
+			"Fitoschido",
+			"Jakeukalane"
 		]
 	},
 	"refreshed-advert": "Anuncio",
@@ -11,5 +12,5 @@
 	"refreshed-explore": "Explorar",
 	"refreshed-page-tools": "Herramientas de la página",
 	"refreshed-user-tools": "Herramientas del usuario",
-	"refreshed-wiki-tools": "Herramientas del wiki"
+	"refreshed-wiki-tools": "Herramientas de la wiki"
 }

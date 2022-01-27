@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Michel Bakni",
 			"ديفيد"
 		]
 	},
 	"refreshed-advert": "إعلان",
-	"refreshed-action-addsection": "أضف موضوعا",
+	"refreshed-action-addsection": "أضِف موضوعاً",
 	"refreshed-desc": "برنامج ميدياويكي مساعد نظيف وحديث مع CSS شامل يمكن تخصيصه",
 	"refreshed-explore": "استكشف",
 	"refreshed-page-tools": "أدوات الصفحات",

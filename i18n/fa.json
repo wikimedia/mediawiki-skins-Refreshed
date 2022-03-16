@@ -1,11 +1,12 @@
 {
 	"@metadata": {
 		"authors": [
+			"Beginneruser",
 			"Reza1615"
 		]
 	},
 	"refreshed-advert": "تبلیغات",
-	"refreshed-action-addsection": "افزودن مبحث",
+	"refreshed-action-addsection": "افزودن بحث",
 	"refreshed-desc": "یک افزونهٔ زیبا و مدرن که از CSS شخصی‌سازی شده پشتیبانی می‌کند",
 	"refreshed-explore": "کاوش"
 }

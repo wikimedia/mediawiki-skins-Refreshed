@@ -93,7 +93,10 @@
 		}
 	},
 	"config": {
-		"RefreshedEchoCanAbortNewMessagesAlert": true
+		"RefreshedEchoCanAbortNewMessagesAlert": {
+			"value": true,
+			"description": "Set this variable to false to enable the displaying of classic, usually orange \"you have new messages\" banner in Refreshed."
+		}
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }

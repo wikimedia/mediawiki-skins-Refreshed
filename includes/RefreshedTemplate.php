@@ -49,7 +49,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 * "wikiURL" (string|null)
 	 * (This array will eventually be used to construct a link in the site
 	 * dropdown via renderSiteNavigationItems.)
-	 * Each line follows this format of text seperated by pipe symbols:
+	 * Each line follows this format of text separated by pipe symbols:
 	 * name|logo URL|wiki URL.
 	 * Special cases:
 	 * - If no logo URL is provided (name||wiki URL), 'logoURL' => null.

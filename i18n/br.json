@@ -1,6 +1,12 @@
 {
 	"@metadata": {
-		"authors": []
+		"authors": [
+			"Huñvreüs"
+		]
 	},
-	"refreshed-advert": "Bomm bruderezh"
+	"refreshed-advert": "Bomm bruderezh",
+	"refreshed-action-addsection": "Ouzhpennañ ur gaoz",
+	"refreshed-page-tools": "Ostilhoù evit ar pajennoù",
+	"refreshed-user-tools": "Benvegoù implijer",
+	"refreshed-wiki-tools": "Ostilhoù wiki"
 }

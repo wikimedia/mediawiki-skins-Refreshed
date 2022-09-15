@@ -941,7 +941,6 @@ class RefreshedTemplate extends BaseTemplate {
 		libxml_use_internal_errors( true );
 
 		// Output the <html> tag and whatnot
-		$this->html( 'headelement' );
 		?>
 		<input type="checkbox" id="sidebar-toggler-checkbox" class="refreshed-checkbox">
 		<header id="header-wrapper" role="navigation">
@@ -1291,8 +1290,5 @@ class RefreshedTemplate extends BaseTemplate {
 			</footer>
 		</div>
 		<?php
-		$this->printTrail();
-		echo Html::closeElement( 'body' );
-		echo Html::closeElement( 'html' );
 	}
 }

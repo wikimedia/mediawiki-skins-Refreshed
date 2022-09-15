@@ -4,33 +4,6 @@ use MediaWiki\MediaWikiServices;
 
 // inherit main code from SkinTemplate, set the CSS and template filter
 class SkinRefreshed extends SkinTemplate {
-	public $skinname = 'refreshed',
-		$stylename = 'refreshed',
-		$template = 'RefreshedTemplate',
-		$headerNav = [];
-
-	/**
-	 * Initializes OutputPage and sets up skin-specific parameters
-	 *
-	 * @param OutputPage $out
-	 */
-	public function initPage( OutputPage $out ) {
-		parent::initPage( $out );
-
-		$out->addMeta( 'viewport', 'width=device-width' );
-
-		// prevent iOS from zooming out when the sidebar is opened
-		$out->addHeadItem( 'viewportforios',
-			Html::element( 'meta', [
-				'name' => 'viewport',
-				'content' => 'width=device-width, initial-scale=1.0'
-			] )
-		);
-
-		// Add JavaScript via ResourceLoader
-		$out->addModules( 'skins.refreshed.js' );
-	}
-
 	/**
 	 * Updates cached data when a new version of some Refreshed interface message
 	 * is saved.

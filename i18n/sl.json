@@ -1,9 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Dbc334"
+			"Dbc334",
+			"Eleassar"
 		]
 	},
 	"refreshed-advert": "Oglas",
-	"refreshed-desc": "Čista, sodobna kođa MediaWiki z obsežno možnostjo prilagoditve CSS"
+	"refreshed-action-addsection": "Dodaj temo",
+	"refreshed-desc": "Čista, sodobna kođa MediaWiki z obsežno možnostjo prilagoditve CSS",
+	"refreshed-explore": "Raziskuj",
+	"refreshed-page-tools": "Orodja strani",
+	"refreshed-user-tools": "Uporabniška orodja",
+	"refreshed-wiki-tools": "Vikiorodja"
 }

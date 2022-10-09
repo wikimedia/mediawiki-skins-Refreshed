@@ -1184,7 +1184,6 @@ class RefreshedTemplate extends BaseTemplate {
 						<span class="sidebar-heading"><?php echo htmlspecialchars( $headerTitle ) ?></span>
 						<ul>
 							<?php
-								// @phan-suppress-next-line SecurityCheck-XSS
 								$this->renderSidebarContentSection( $sub )
 							?>
 						</ul>

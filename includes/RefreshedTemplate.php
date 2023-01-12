@@ -381,7 +381,7 @@ class RefreshedTemplate extends BaseTemplate {
 		$doc = new DOMDocument();
 		// config doesn't include doctype, html, or body tags per
 		// https://stackoverflow.com/a/22490902
-		$html = $doc->loadHTML( $text, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		$html = $doc->loadHTML( '<!doctype html><html><head><meta charset="UTF-8"/></head><body>' . $text . '</body></html>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		if ( $html === false ) {
 			foreach ( libxml_get_errors() as $error ) {
 				echo "\n", $error->message;

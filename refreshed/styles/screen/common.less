@@ -87,7 +87,7 @@ different color from the rest of the link. */
 	position: absolute;
 	bottom: -( @dropdown-tray-margin-top );
 	left: 100%;
-	.transform( translateX( -50% ) );
+	transform: translateX( -50% );
 }
 
 .refreshed-dropdown-tray {
@@ -171,7 +171,7 @@ sidebar button (in #header-wrapper) and the sidebar (in #sidebar-wrapper). */
 	/* z-index so this pseudoelement covers all dropdown buttons (the dropdown
 	buttons don't have a z-index, so the pseudoelement will cover them). */
 	z-index: @z-index-close-overlay;
-	.transition( opacity 0.1s ease );
+	transition: opacity 0.1s ease;
 	/* include the box-sizing so we can be confident that jQuery's outerHeight()
 	matches the actual height of the header */
 	box-sizing: border-box;
@@ -523,7 +523,7 @@ the explore button which is at the top of it. */
 
 	/* take up full height and stick to right side of #searchInput */
 	top: 50%;
-	.transform( translateY( -50% ) );
+	transform: translateY( -50% );
 	right: @header-search-padding;
 }
 

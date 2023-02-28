@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.6",
+	"version": "4.0.7",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -50,6 +50,7 @@
 	},
 	"Hooks": {
 		"EchoCanAbortNewMessagesAlert": "SkinRefreshed::onEchoCanAbortNewMessagesAlert",
+		"PageDeleteComplete": "SkinRefreshed::onPageDeleteComplete",
 		"PageSaveComplete": "SkinRefreshed::onPageSaveComplete"
 	},
 	"ResourceFileModulePaths": {

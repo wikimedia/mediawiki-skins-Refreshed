@@ -1187,6 +1187,15 @@ class RefreshedTemplate extends BaseTemplate {
 						</ul>
 					</div>
 					<?php
+					// Need this nonsense to support NewsBox in MW 1.39+ using the new hooks (urgh)
+					$content = $skin->getAfterPortlet( $main );
+					if ( $content !== '' ) {
+						echo Html::rawElement(
+							'div',
+							[ 'class' => [ 'after-portlet', 'after-portlet-' . $main ] ],
+							$content
+						);
+					}
 				}
 
 				// Hook point for injecting ads

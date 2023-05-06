@@ -769,7 +769,7 @@ class RefreshedTemplate extends BaseTemplate {
 	 */
 	private function renderExtraFooterItems() {
 		 $footerExtra = '';
-		 Hooks::run( 'RefreshedFooter', [ &$footerExtra ] );
+		 MediaWikiServices::getInstance()->getHookContainer()->run( 'RefreshedFooter', [ &$footerExtra ] );
 		 echo $footerExtra;
 	 }
 
@@ -1199,7 +1199,7 @@ class RefreshedTemplate extends BaseTemplate {
 				}
 
 				// Hook point for injecting ads
-				Hooks::run( 'RefreshedInSidebar', [ $this ] );
+				MediaWikiServices::getInstance()->getHookContainer()->run( 'RefreshedInSidebar', [ $this ] );
 				?>
 			</div>
 		</div>

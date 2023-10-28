@@ -480,26 +480,31 @@ class RefreshedTemplate extends BaseTemplate {
 	 * @return array $rearrangedPersonalTools where the key "dropdown" contains
 	 *  the dropdown tools, and the key "extra" contains the extra tools.
 	 */
-	 private function getAndRearrangePersonalTools() {
-		 $dropdownTools = $this->getPersonalTools();
-		 $extraTools = [];
-		 // list of tool names that should be removed from the dropdown tools and be
-		 // added to the extra tools
-		 // (these tools are echo badges)
-		 $toolsToMove = [ 'notifications-alert', 'notifications-notice' ];
+	private function getAndRearrangePersonalTools() {
+		$dropdownTools = $this->getPersonalTools();
+		$extraTools = [];
+		// list of tool names that should be removed from the dropdown tools and be
+		// added to the extra tools
+		// (these tools are echo badges)
+		$toolsToMove = [ 'notifications-alert', 'notifications-notice' ];
 
-		 foreach ( $toolsToMove as $currentToolToMove ) {
-			 if ( isset( $dropdownTools[$currentToolToMove] ) ) {
-				 $extraTools[$currentToolToMove] = $dropdownTools[$currentToolToMove];
-				 unset( $dropdownTools[$currentToolToMove] );
-			 }
-		 }
+		foreach ( $toolsToMove as $currentToolToMove ) {
+			if ( isset( $dropdownTools[$currentToolToMove] ) ) {
+				$extraTools[$currentToolToMove] = $dropdownTools[$currentToolToMove];
+				unset( $dropdownTools[$currentToolToMove] );
+			}
+		}
 
-		 return [
-			 'dropdown' => $dropdownTools,
-			 'extra' => $extraTools
-		 ];
-	 }
+		// Unset the "you have a new Talk page message" thing altogether, it's pointless
+		if ( isset( $dropdownTools['talk-alert'] ) && $dropdownTools['talk-alert'] ) {
+			unset( $dropdownTools['talk-alert'] );
+		}
+
+		return [
+			'dropdown' => $dropdownTools,
+			'extra' => $extraTools
+		];
+	}
 
 	/**
 	 * Render the list items to be displayed next to the user dropdown
@@ -1213,14 +1218,6 @@ class RefreshedTemplate extends BaseTemplate {
 					</div>
 				<?php
 				}
-				// Only output this if we need to (T153625)
-				if ( $this->data['newtalk'] ) {
-				?>
-					<div id="new-talk">
-						<?php $this->html( 'newtalk' ) ?>
-					</div>
-				<?php
-				}
 				?>
 				<main>
 					<article>
@@ -1271,6 +1268,16 @@ class RefreshedTemplate extends BaseTemplate {
 							}
 							?>
 							</div>
+							<?php
+							// Only output this if we need to (T153625)
+							if ( $this->data['newtalk'] ) {
+							?>
+							<div id="new-talk" class="usermessage">
+								<?php $this->html( 'newtalk' ) ?>
+							</div>
+							<?php
+							}
+							?>
 							<div id="content" role="article">
 								<?php $this->html( 'bodytext' ) ?>
 							</div>

@@ -7,6 +7,7 @@
 			"Umherirrender"
 		]
 	},
+	"refreshed-prefs-talkpage": "{{optional}}\nLink to the skin's talk page on MediaWiki.org; it is shown before the preview link in skin preferences on Special:Preferences. Inspired by [https://phabricator.wikimedia.org/T307113 T307113].",
 	"refreshed-advert": "The header shown above the footer advert\n{{Identical|Advertisement}}",
 	"refreshed-action-addsection": "The text for the Add Section action button",
 	"refreshed-desc": "{{desc|name=Refreshed|url=https://www.mediawiki.org/wiki/Skin:Refreshed|what=skin}}",

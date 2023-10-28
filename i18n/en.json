@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": []
 	},
+	"refreshed-prefs-talkpage": "[[mw:Skin talk:Refreshed|{{int:talk}}]]",
 	"refreshed-advert": "Advertisement",
 	"refreshed-action-addsection": "Add topic",
 	"refreshed-desc": "A clean, modern MediaWiki skin with extensive CSS customisability",

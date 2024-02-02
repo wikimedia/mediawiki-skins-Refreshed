@@ -3,6 +3,7 @@
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Revision\RevisionAccessException;
 use MediaWiki\Revision\SlotRecord;
+use MediaWiki\ResourceLoader\SkinModule;
 
 class RefreshedTemplate extends BaseTemplate {
 
@@ -865,7 +866,7 @@ class RefreshedTemplate extends BaseTemplate {
 		// url to this wiki's logo image (or null if no such image);
 		// to be used with renderCurrentWikiLogoAndLink
 		// when picking logo, prioritize the user's language over the content language
-		$coreLogos = ResourceLoaderSkinModule::getAvailableLogos( $config );
+		$coreLogos = SkinModule::getAvailableLogos( $config );
 		if ( isset( $coreLogos['wordmark'] ) ) {
 			$wordmarkData = $coreLogos['wordmark'];
 			$thisLogoURL = $wordmarkData['src'];

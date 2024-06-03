@@ -1,0 +1,5 @@
+/* Fixes issue with the "describe your changes" dialog visibility
+100 is the lowest value that works, as per testing */
+.ve-ui-overlay-global {
+	z-index: 100;
+}

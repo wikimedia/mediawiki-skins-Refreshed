@@ -1,6 +1,6 @@
 {
 	"name": "Refreshed",
-	"version": "4.0.7",
+	"version": "4.0.8",
 	"author": [
 		"Adam Carter",
 		"Drew1200",
@@ -104,6 +104,7 @@
 			"+ext.echo.styles.badge": "refreshed/extensions/Echo/echo.styles.badge.less",
 			"ext.echo.ui.desktop": "refreshed/extensions/Echo/echo.ui.NotificationBadgeWidget.less",
 			"ext.echo.ui": "refreshed/extensions/Echo/echo.ui.overlay.less",
+			"+ext.visualEditor.core": "refreshed/extensions/VisualEditor/ext.visualEditor.core.css",
 			"+mediawiki.action.history.styles": "refreshed/mediawiki/action.history.styles.css",
 			"+mediawiki.action.view.filepage": "refreshed/mediawiki/action.view.filepage.css",
 			"+mediawiki.diff.styles": "refreshed/mediawiki/diff.styles.css",

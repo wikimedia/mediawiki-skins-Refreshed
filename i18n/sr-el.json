@@ -1,9 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
-			"Zoranzoki21"
+			"Zoranzoki21",
+			"Jack Phoenix"
 		]
 	},
 	"refreshed-advert": "Oglas",
-	"refreshed-desc": "Jasna, moderna Medijaviki tema sa proširenom CSS prilagodljivošću"
+	"refreshed-action-addsection": "Dodaj temu",
+	"refreshed-desc": "Jasna, moderna Medijaviki tema sa proširenom CSS prilagodljivošću",
+	"refreshed-explore": "Istraži",
+	"refreshed-page-tools": "Alatke za stranicu",
+	"refreshed-wiki-tools": "Viki alatke"
 }

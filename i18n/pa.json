@@ -1,8 +1,14 @@
 {
 	"@metadata": {
 		"authors": [
+			"Cabal",
 			"Tow"
 		]
 	},
-	"refreshed-advert": "ਵਿਗਿਆਪਨ"
+	"refreshed-advert": "ਵਿਗਿਆਪਨ",
+	"refreshed-action-addsection": "ਵਿਸ਼ਾ ਜੋੜੋ",
+	"refreshed-explore": "ਪੜਚੋਲ ਕਰੋ",
+	"refreshed-page-tools": "ਸਫ਼ੇ ਦੇ ਸੰਦ",
+	"refreshed-user-tools": "ਵਰਤੋਂਕਾਰ ਸੰਦ",
+	"refreshed-wiki-tools": "ਵਿਕੀ ਸੰਦ"
 }

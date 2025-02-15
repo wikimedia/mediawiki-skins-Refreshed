@@ -15,6 +15,7 @@
 		"SirComputer"
 	],
 	"url": "https://www.mediawiki.org/wiki/Skin:Refreshed",
+	"namemsg": "skinname-refreshed",
 	"descriptionmsg": "refreshed-desc",
 	"license-name": "GPL-2.0-or-later",
 	"type": "skin",

@@ -21,5 +21,6 @@
 	"refreshed-this-wiki-wordmark": "{{notranslate}}\nURL to the wiki's wordmark logo (which should be 144x30px), because the Refreshed skin does not use [[mediawikiwiki:Manual:$wgLogo|$wgLogo]]",
 	"refreshed-user-tools": "Label for some page user-related actions in the toolbox dropdown",
 	"refreshed-wiki-dropdown": "{{notranslate}}\nMessage for configuring the wiki dropdown menu.\nThe syntax is:\n* Name of the wiki|URL to the wiki's logo|Wiki's URL\nEntries are separated by newlines.\nFor example:\n* English Wikipedia|http://www.example.com/images/wikipedia-wordmark-logo.svg|https://en.wikipedia.org\n* Brickipedia|http://images.brickimedia.org/b/b4/Brickipedia.svg|http://en.brickimedia.org/",
-	"refreshed-wiki-tools": "Label for some general site tools in the sidebar"
+	"refreshed-wiki-tools": "Label for some general site tools in the sidebar",
+	"skinname-refreshed": "{{name}}"
 }

@@ -47,7 +47,7 @@ class SkinRefreshed extends SkinTemplate {
 	 * or [[MediaWiki:Refreshed-navigation]] was impacted (either edited or deleted), deletes
 	 * cached data.
 	 *
-	 * @param Title|MediaWiki\Page\ProperPageIdentity $title
+	 * @param MediaWiki\Title\Title|MediaWiki\Page\ProperPageIdentity $title
 	 */
 	public static function purgeCacheKeys( $title ) {
 		global $wgLang;

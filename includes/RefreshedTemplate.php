@@ -1,9 +1,11 @@
 <?php
 
+use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\ResourceLoader\SkinModule;
 use MediaWiki\Revision\RevisionAccessException;
 use MediaWiki\Revision\SlotRecord;
-use MediaWiki\ResourceLoader\SkinModule;
+use MediaWiki\Title\Title;
 
 class RefreshedTemplate extends BaseTemplate {
 

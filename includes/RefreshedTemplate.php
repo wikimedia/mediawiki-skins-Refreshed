@@ -80,10 +80,11 @@ class RefreshedTemplate extends BaseTemplate {
 			$logoURL = trim( $line_temp[1] );
 		}
 
+		$urlProtocols = MediaWikiServices::getInstance()->getUrlUtils()->validProtocols();
 		// get link from third chunk if it exists and is a URL
 		if (
 			isset( $line_temp[2] ) &&
-			preg_match( '/^(?:' . wfUrlProtocols() . ')/', $line_temp[2] )
+			preg_match( '/^(?:' . $urlProtocols . ')/', $line_temp[2] )
 		)
 		{
 			$wikiURL = $line_temp[2];

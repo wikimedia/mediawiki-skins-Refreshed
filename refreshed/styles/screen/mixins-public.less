@@ -156,9 +156,8 @@
 	the header.
 	Note these properties are adjusted with JS to account for the toolbox if it's
 	set to sticky. */
-	.mw-headline {
-		padding-top: @height;
-		margin-top: -@height;
+	html {
+		scroll-padding-top: @height;
 	}
 
 	.mixin-helper-resize-header-icons( @height / 2 );

@@ -16,7 +16,6 @@ function runRefreshedJS() {
 		stickyClass: 'refreshed-toolbox-sticky',
 		toolbox: document.getElementById( 'refreshed-toolbox' ),
 		stuckClass: 'refreshed-toolbox-stuck',
-		headlineClass: 'mw-headline',
 		toolboxHasStuckClass: false,
 		searchInput: document.getElementById( 'searchInput' ),
 		headerSearchDropdownCheckbox: document.getElementById( 'header-search-dropdown-checkbox' ),
@@ -73,25 +72,17 @@ function runRefreshedJS() {
 			}
 		};
 
-		Refreshed.headlines = document.getElementsByClassName( Refreshed.headlineClass );
-
-		// adjust the padding-top and margin-top of the headlines so when a link
-		// to that specific headline is clicked, the headline isn't blocked by the
-		// toolbox
-		Refreshed.updateHeadlineSpacing = function() {
-			var toolboxHeight = window.getComputedStyle( this.toolbox ).getPropertyValue( 'height' );
-			for ( var headlineCounter = 0; headlineCounter < this.headlines.length; headlineCounter++ ) {
-				var currentStyle = window.getComputedStyle( this.headlines[headlineCounter] );
-				var currentPaddingTop = currentStyle.getPropertyValue( 'padding-top' );
-				var currentMarginTop = currentStyle.getPropertyValue( 'margin-top' );
-				this.headlines[headlineCounter].style.paddingTop = parseFloat( currentPaddingTop ) + parseFloat( toolboxHeight ) + 'px';
-				this.headlines[headlineCounter].style.marginTop = parseFloat( currentMarginTop ) - parseFloat( toolboxHeight ) + 'px';
-			}
+		// adjust the scroll-padding-top of the html node so when a link
+		// to a headline is clicked, the headline isn't blocked by the toolbox
+		Refreshed.updateScrollPadding = function() {
+			const toolboxHeightPx = document.getElementById( 'refreshed-toolbox' ).offsetHeight
+			const currentScrollPaddingTopPx = window.getComputedStyle( document.documentElement ).getPropertyValue( 'scroll-padding-top' );
+			document.documentElement.style.scrollPaddingTop = parseFloat( currentScrollPaddingTopPx ) + parseFloat( toolboxHeightPx ) + 'px';
 		};
 
 		// run once in case the toolbox starts out as stuck on page load
 		Refreshed.updateToolboxClasses();
-		Refreshed.updateHeadlineSpacing();
+		Refreshed.updateScrollPadding();
 
 		// attach/detach the toolbox to the top depending on scroll position
 		window.addEventListener( 'scroll', function() {

@@ -31,12 +31,6 @@ class RefreshedTemplate extends BaseTemplate {
 				}
 
 				$node = $this->parseSiteNavigationItem( $line );
-				for ( $x = $i; $x >= 0; $x-- ) {
-					if ( $x == 0 ) {
-						break;
-					}
-				}
-
 				$nodes[$i + 1] = $node;
 				$i++;
 			}
@@ -123,7 +117,7 @@ class RefreshedTemplate extends BaseTemplate {
 			$contentObj = null;
 			try {
 				$contentObj = $revision->getContent( SlotRecord::MAIN );
-			} catch ( RevisionAccessException $ex ) {
+			} catch ( RevisionAccessException ) {
 			}
 			$contentText = '';
 			if ( $contentObj !== null ) {

@@ -1,8 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ahmed-Najib-Biabani-Ibrahimkhel"
+			"Ahmed-Najib-Biabani-Ibrahimkhel",
+			"شاه زمان پټان"
 		]
 	},
-	"refreshed-advert": "خبرتيا"
+	"refreshed-advert": "خبرتيا",
+	"refreshed-action-addsection": "سرليک ورگډول",
+	"refreshed-desc": "يوه سپا، هممهاله مېډياويکي پوښۍ له پراخه سي‌اېس‌اېس سمونو سره",
+	"refreshed-explore": "سپړنه",
+	"refreshed-page-tools": "مخ‌ توکي",
+	"refreshed-user-tools": "کارن توکي",
+	"refreshed-wiki-tools": "ويکي توکي"
 }

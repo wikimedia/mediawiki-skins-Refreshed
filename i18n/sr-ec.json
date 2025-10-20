@@ -3,9 +3,12 @@
 		"authors": [
 			"Aca",
 			"BadDog",
+			"Milicevic01",
 			"Obsuser"
 		]
 	},
 	"refreshed-advert": "Оглас",
-	"refreshed-desc": "Јасна, модерна Медијавики тема са проширеном CSS прилагодљивошћу"
+	"refreshed-action-addsection": "Додај тему",
+	"refreshed-desc": "Јасна, модерна Медијавики тема са проширеном CSS прилагодљивошћу",
+	"refreshed-explore": "Истражи"
 }

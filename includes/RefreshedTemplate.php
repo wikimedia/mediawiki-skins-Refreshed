@@ -1,5 +1,6 @@
 <?php
 
+use MediaWiki\Content\TextContent;
 use MediaWiki\Html\Html;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\ResourceLoader\SkinModule;
@@ -126,8 +127,8 @@ class RefreshedTemplate extends BaseTemplate {
 			} catch ( RevisionAccessException $ex ) {
 			}
 			$contentText = '';
-			if ( $contentObj !== null ) {
-				$contentText = trim( ContentHandler::getContentText( $contentObj ) );
+			if ( $contentObj instanceof TextContent ) {
+				$contentText = trim( $contentObj->getText() );
 			}
 			if ( $contentText !== '' ) {
 				$temp = $this->getMessageAsArray( $messageKey );

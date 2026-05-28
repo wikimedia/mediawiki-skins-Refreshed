@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Revi",
-			"Ykhwong"
+			"Ykhwong",
+			"Tensama0415"
 		]
 	},
 	"refreshed-advert": "광고",
@@ -11,5 +12,6 @@
 	"refreshed-explore": "탐색",
 	"refreshed-page-tools": "문서 도구",
 	"refreshed-user-tools": "사용자 도구",
-	"refreshed-wiki-tools": "위키 도구"
+	"refreshed-wiki-tools": "위키 도구",
+	"skinname-refreshed": "리프레시드"
 }

@@ -3,14 +3,17 @@
 		"authors": [
 			"BaRaN6161 TURK",
 			"TmY e12",
-			"ToprakM"
+			"ToprakM",
+			"HakanIST"
 		]
 	},
+	"refreshed-prefs-talkpage": "[[mw:Skin talk:Refreshed|{{int:talk}}]]",
 	"refreshed-advert": "Reklam",
 	"refreshed-action-addsection": "Konu ekle",
 	"refreshed-desc": "Kapsamlı CSS özelliğine sahip, temiz, modern bir MediaWiki görünümü",
 	"refreshed-explore": "Keşfet",
 	"refreshed-page-tools": "Sayfa araçları",
 	"refreshed-user-tools": "Kullanıcı araçları",
-	"refreshed-wiki-tools": "Viki araçları"
+	"refreshed-wiki-tools": "Viki araçları",
+	"skinname-refreshed": "Refreshed"
 }

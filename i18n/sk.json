@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Wizzard"
+		]
+	},
+	"refreshed-prefs-talkpage": "[[mw:Skin talk:Refreshed|{{int:talk}}]]",
+	"refreshed-advert": "Reklama",
+	"refreshed-action-addsection": "Pridať tému",
+	"refreshed-desc": "Čistá, moderná MediaWiki téma vzhľadu s rozsiahlymi možnosťami prispôsobenia cez CSS",
+	"refreshed-explore": "Preskúmať",
+	"refreshed-page-tools": "Nástroje stránky",
+	"refreshed-user-tools": "Nástroje používateľa",
+	"refreshed-wiki-tools": "Nástroje wiki",
+	"skinname-refreshed": "Refreshed"
+}

@@ -863,7 +863,9 @@ class RefreshedTemplate extends BaseTemplate {
 		if ( $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->isDisabled() ) {
 			$thisWikiURL = Title::newMainPage()->getFullURL();
 		} else {
-			$thisWikiURL = $this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->text();
+			$thisWikiURL = Skin::makeInternalOrExternalUrl(
+				$this->getMsg( 'refreshed-this-wiki-url' )->inContentLanguage()->text()
+			);
 		}
 
 		// url to this wiki's logo image (or null if no such image);

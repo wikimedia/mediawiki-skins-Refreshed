@@ -1,12 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"PanWor",
 			"Rail",
 			"Woytecr"
 		]
 	},
 	"refreshed-advert": "Reklama",
-	"refreshed-action-addsection": "Dodaj temat",
+	"refreshed-action-addsection": "Dodaj wątek",
 	"refreshed-desc": "Przejrzysta, nowoczesna skórka MediaWiki z obszernymi możliwościami dostosowywania CSS",
 	"refreshed-explore": "Odkrywaj",
 	"refreshed-page-tools": "Narzędzia dla stron",

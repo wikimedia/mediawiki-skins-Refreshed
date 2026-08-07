@@ -1,7 +1,10 @@
 {
 	"config": {
 		"optimize-autoloader": true,
-		"prepend-autoloader": false
+		"prepend-autoloader": false,
+		"audit": {
+			"block-insecure": false
+		}
 	},
 	"require-dev": {
 		"mediawiki/mediawiki-phan-config": "0.20.0",

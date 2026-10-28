@@ -6,5 +6,10 @@
 		]
 	},
 	"refreshed-advert": "Реклама",
-	"refreshed-desc": "Изчистен, модерен облик за MediaWiki с богати възможности за стилизиране с CSS"
+	"refreshed-action-addsection": "Добавяне на тема",
+	"refreshed-desc": "Изчистен, модерен облик за MediaWiki с богати възможности за стилизиране с CSS",
+	"refreshed-explore": "Разгледайте!",
+	"refreshed-page-tools": "Инструменти за страниците",
+	"refreshed-user-tools": "Потребителски инструменти",
+	"refreshed-wiki-tools": "Уики инструменти"
 }
